@@ -27,5 +27,5 @@ def wallaroo_json(data):
    # return a dictionary, with the fields the model expect
     return {
        'tensor_fields': ['model_input'],
-       'model_input': pprocessed.to_numpy().tolist()
+       'tensor': pprocessed.to_numpy().tolist()
     }
