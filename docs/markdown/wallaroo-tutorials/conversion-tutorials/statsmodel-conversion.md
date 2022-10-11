@@ -24,7 +24,7 @@ This example provides the following:
 ## Steps
 
 The following steps will perform the following:
-    
+
 1. Upload the `statsmodel` ML model `bike_day_model.pkl` into a Wallaroo.
 2. Deploy the model into a pipeline.
 3. Run a test inference.

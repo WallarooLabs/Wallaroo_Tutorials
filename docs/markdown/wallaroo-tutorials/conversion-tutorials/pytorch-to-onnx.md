@@ -43,7 +43,6 @@ class BikeShareRegressor(torch.nn.Module):
     def __init__(self):
         super(BikeShareRegressor, self).__init__()
 
-        
         self.net = nn.Sequential(nn.Linear(input_size, l1),
                                  torch.nn.ReLU(),
                                  torch.nn.Dropout(p=dropout),
@@ -68,7 +67,7 @@ model = torch.load("./pytorch_bikesharingmodel.pt")
 ### Convert_ONNX Inputs
 
 Now we will define our method `Convert_ONNX()` which has the following inputs:
-    
+
 * **PyTorchModel**: the PyTorch we are converting.
 * **modelInputs**: the model input or tuple for multiple inputs.
 * **onnxPath**: The location to save the onnx file.
@@ -80,7 +79,6 @@ Now we will define our method `Convert_ONNX()` which has the following inputs:
   `{'modelInput' : { 0 : 'batch_size'}, 'modelOutput' : {0 : 'batch_size'}}`
 * **export_params**:  Whether to store the trained parameter weight inside the model file.  Defaults to `True`.
 * **do_constant_folding**: Sets whether to execute constant folding for optimization.  Defaults to `True`.
-  
 
 ```python
 #Function to Convert to ONNX 
@@ -126,7 +124,6 @@ dummy_input = torch.randn(1, input_size, requires_grad=True).to(device)
 Convert_ONNX()
 ```
 
-     
     Model has been converted to ONNX
 
 ## Conclusion

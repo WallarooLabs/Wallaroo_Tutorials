@@ -1,3 +1,5 @@
+The Wallaroo 101 tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-101).
+
 ## Introduction
 
 Welcome to the Wallaroo, the fastest, easiest, and most efficient production ready machine learning system.

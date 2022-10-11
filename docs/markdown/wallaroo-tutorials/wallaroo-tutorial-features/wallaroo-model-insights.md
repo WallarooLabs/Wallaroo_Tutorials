@@ -1,12 +1,12 @@
 This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_insights).
 
-## Model Insights Tutorial
+## Wallaroo Assays Tutorial
 
 Select [Steps](#steps) to skip the introduction and jump right into the code sample.
 
 ## Introduction
 
-The Model Insights feature lets you monitor how the environment that your model operates within changes in ways that affect the model's predictions.  This allows you to intervene (aka retrain a model) in an efficient and timely manner. Changes in the inputs, **data drift**, can occur due to errors in the data processing pipeline or due to changes in the environment such as user behavior.
+The Wallaroo Assays feature lets you monitor how the environment that your model operates within changes in ways that affect the model's predictions.  This allows you to intervene (aka retrain a model) in an efficient and timely manner. Changes in the inputs, **data drift**, can occur due to errors in the data processing pipeline or due to changes in the environment such as user behavior.
 
 The validation framework performs per inference range checks with count frequency based thresholds for alerts and is ideal for catching many errors in input and output data.
 
@@ -55,7 +55,7 @@ The following configuration is used to connect to the pipeline used, and display
 plt.rcParams["figure.figsize"] = (12,6)
 pd.options.display.float_format = '{:,.2f}'.format
 
-workspace_name = 'housepricedrifts'
+workspace_name = 'housepricedrift'
 pipeline_name = 'housepricepipe'
 model_name = 'housepricemodel'
 ```
@@ -96,7 +96,7 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-<table><tr><th>name</th> <td>housepricepipe</td></tr><tr><th>created</th> <td>2022-09-28 22:02:46.286818+00:00</td></tr><tr><th>last_updated</th> <td>2022-09-28 22:02:46.369535+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>housepricemodel</td></tr></table>
+<table><tr><th>name</th> <td>housepricepipe</td></tr><tr><th>created</th> <td>2022-10-10 18:38:51.033867+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-10 18:38:51.121077+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>housepricemodel</td></tr></table>
 
 We assume the pipeline has been running for a while and there is a period of time that is free of errors that we'd like to use as the _baseline_. Let's note the start and end times. For this example we have 30 days of data from Jan 2022 and will use Jan 1 data as our baseline.
 
@@ -185,25 +185,19 @@ Now let's look at a histogram, kernel density estimate (KDE), and Empirical Cumu
 assay_builder.baseline_histogram()
 ```
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_18_0.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_18_0.png)
 
 ```python
 assay_builder.baseline_kde()
 ```
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_19_0.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_19_0.png)
 
 ```python
 assay_builder.baseline_ecdf()
 ```
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_20_0.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_20_0.png)
 
 ### Interactive Baseline Runs
 We can do an interactive run of just the baseline part to see how the baseline data will be put into bins. This assay uses quintiles so all 5 bins (not counting the outlier bins) have 20% of the predictions. We can see the bin boundaries along the x-axis.
@@ -219,9 +213,7 @@ baseline_run.chart()
     metric = PSI
     weighted = False
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_22_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_22_1.png)
 
 We can also get a dataframe with the bin/edge information.
 
@@ -298,7 +290,7 @@ baseline_run.baseline_bins()
     </tr>
     <tr>
       <th>6</th>
-      <td>179,769,313,486,231,570,814,527,423,731,704,356...</td>
+      <td>inf</td>
       <td>right_outlier</td>
       <td>0.00</td>
       <td>Density</td>
@@ -323,9 +315,7 @@ equal_baseline.chart()
     metric = PSI
     weighted = False
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_26_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_26_1.png)
 
 We now see very different bin edges and sample percentages per bin.
 
@@ -402,7 +392,7 @@ equal_baseline.baseline_bins()
     </tr>
     <tr>
       <th>6</th>
-      <td>179,769,313,486,231,570,814,527,423,731,704,356...</td>
+      <td>inf</td>
       <td>right_outlier</td>
       <td>0.00</td>
       <td>Density</td>
@@ -969,9 +959,7 @@ Basic functionality for creating quick charts is included.
 assay_results.chart_scores()
 ```
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_32_0.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_32_0.png)
 
 We see that the difference scores are low for a while and then jump up to indicate there is an issue. We can examine that particular window to help us decide if that threshold is set correctly or not.
 
@@ -995,9 +983,7 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_34_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_34_1.png)
 
 Other days, however are significantly different.
 
@@ -1017,9 +1003,7 @@ assay_results[12].chart()
     scores = [0.0, 0.06790765360198812, 0.0003893727578237944, 0.0037302373887164895, 0.02434412838052893, 5.798347076369716e-05, 0.00980308228898587]
     index = None
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_36_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_36_1.png)
 
 ```python
 assay_results[13].chart()
@@ -1037,9 +1021,7 @@ assay_results[13].chart()
     scores = [0.0, 0.7203606043304971, 0.8049360069588025, 0.4504317335378006, 0.0820473282443674, 0.9698478211538909, 0.027882664686338928]
     index = None
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_37_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_37_1.png)
 
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
 
@@ -1082,17 +1064,11 @@ We can chart each of the iopaths and do a visual inspection. From the charts we 
 assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', 'sqft_living'])
 ```
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_0.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_41_0.png)
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_1.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_41_1.png)
 
-    
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_2.png)
-    
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_41_2.png)
 
 When we are comfortable with what alert threshold should be for our specific purposes we can create and save an assay that will be automatically run on a daily basis.
 
@@ -1105,32 +1081,6 @@ alert_threshold = 0.1
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end).add_alert_threshold(alert_threshold)
 assay_id = assay_builder.upload()
 ```
-
-    ---------------------------------------------------------------------------
-
-    Exception                                 Traceback (most recent call last)
-
-    <ipython-input-23-d5bede71eb88> in <module>
-          1 alert_threshold = 0.1
-          2 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end).add_alert_threshold(alert_threshold)
-    ----> 3 assay_id = assay_builder.upload()
-    
-
-    /opt/conda/lib/python3.8/site-packages/wallaroo/assay_config.py in upload(self)
-        654 
-        655         if self.client:
-    --> 656             res = self.client.upload_assay(config)  # type: ignore
-        657             return res
-        658         raise RuntimeError(
-
-    /opt/conda/lib/python3.8/site-packages/wallaroo/client.py in upload_assay(self, config)
-       1269 
-       1270         if data is None:
-    -> 1271             raise Exception("Failed to create assay")
-       1272 
-       1273         return data.assay_id
-
-    Exception: Failed to create assay
 
 To retrieve the results after enough time has passed, collect them with the method `get_assay_results_logs` specifying the time to collect and the `assay_id`.  This will take additional inference history so can not be demonstrated here, but the command to collect the data is listed below.
 
@@ -1167,9 +1117,13 @@ assay_results = assay_config.interactive_run()
 print(f"Generated {len(assay_results)} analyses")
 ```
 
+    Generated 59 analyses
+
 ```python
 assay_results.chart_scores()
 ```
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_48_0.png)
 
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week.  The analysis will be generated when the window is complete.
 
@@ -1187,9 +1141,13 @@ assay_results = assay_config.interactive_run()
 print(f"Generated {len(assay_results)} analyses")
 ```
 
+    Generated 4 analyses
+
 ```python
 assay_results.chart_scores()
 ```
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_51_0.png)
 
 ## Advanced Configuration
 
@@ -1207,7 +1165,7 @@ Let's take a look at these in turn.
 First let's look at the default configuration. This is a lot of information but much of it is useful to know where it is available.
 
 We see that the assay is broken up into 4 sections: 
-  
+
 * Top level meta data section
 * Baseline specification
 * Window specification
@@ -1226,6 +1184,46 @@ assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_star
 print(assay_builder.build().to_json())
 ```
 
+    {
+        "name": "Test Assay",
+        "pipeline_id": 4,
+        "pipeline_name": "housepricepipe",
+        "active": true,
+        "status": "created",
+        "iopath": "output 0 0",
+        "baseline": {
+            "Fixed": {
+                "pipeline": "housepricepipe",
+                "model": "housepricemodel",
+                "start_at": "2022-01-01T00:00:00+00:00",
+                "end_at": "2022-01-02T00:00:00+00:00"
+            }
+        },
+        "window": {
+            "pipeline": "housepricepipe",
+            "model": "housepricemodel",
+            "width": "24 hours",
+            "start": null,
+            "interval": null
+        },
+        "summarizer": {
+            "type": "UnivariateContinuous",
+            "bin_mode": "Quantile",
+            "aggregation": "Density",
+            "metric": "PSI",
+            "num_bins": 5,
+            "bin_weights": null,
+            "bin_width": null,
+            "provided_edges": null,
+            "add_outlier_edges": true
+        },
+        "warning_threshold": null,
+        "alert_threshold": 0.25,
+        "run_until": "2022-02-01T00:00:00+00:00",
+        "workspace_id": 4,
+        "model_insights_url": "http://model-insights:5150"
+    }
+
 ## Defaults
 
 We can run the assay interactively and review the first analysis. The method `compare_basic_stats` gives us a dataframe with basic stats for the baseline and window data.
@@ -1237,17 +1235,234 @@ ar = assay_results[0]
 ar.compare_basic_stats()
 ```
 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Baseline</th>
+      <th>Window</th>
+      <th>diff</th>
+      <th>pct_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1,813.00</td>
+      <td>1,812.00</td>
+      <td>-1.00</td>
+      <td>-0.06</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>11.95</td>
+      <td>11.62</td>
+      <td>-0.33</td>
+      <td>-2.72</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>15.08</td>
+      <td>15.11</td>
+      <td>0.03</td>
+      <td>0.17</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>12.95</td>
+      <td>12.95</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>median</th>
+      <td>12.91</td>
+      <td>12.91</td>
+      <td>-0.01</td>
+      <td>-0.06</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.46</td>
+      <td>0.45</td>
+      <td>-0.01</td>
+      <td>-2.75</td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td>2022-01-01T00:00:00Z</td>
+      <td>2022-01-02T00:00:00Z</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td>2022-01-02T00:00:00Z</td>
+      <td>2022-01-03T00:00:00Z</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 The method `compare_bins` gives us a dataframe with the bin information. Such as the number of bins, the right edges, suggested bin/edge names and the values for each bin in the baseline and the window.
 
 ```python
 ar.compare_bins()
 ```
 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b_edges</th>
+      <th>b_edge_names</th>
+      <th>b_aggregated_values</th>
+      <th>b_aggregation</th>
+      <th>w_edges</th>
+      <th>w_edge_names</th>
+      <th>w_aggregated_values</th>
+      <th>w_aggregation</th>
+      <th>diff_in_pcts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.56</td>
+      <td>q_20</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>12.56</td>
+      <td>e_1.26e1</td>
+      <td>0.19</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12.81</td>
+      <td>q_40</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>12.81</td>
+      <td>e_1.28e1</td>
+      <td>0.21</td>
+      <td>Density</td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>13.01</td>
+      <td>q_60</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>13.01</td>
+      <td>e_1.30e1</td>
+      <td>0.18</td>
+      <td>Density</td>
+      <td>-0.02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13.31</td>
+      <td>q_80</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>13.31</td>
+      <td>e_1.33e1</td>
+      <td>0.21</td>
+      <td>Density</td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>15.08</td>
+      <td>q_100</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>15.08</td>
+      <td>e_1.51e1</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 We can also plot the chart to visualize the values of the bins.
 
 ```python
 ar.chart()
 ```
+
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.013551035434377596
+    scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_59_1.png)
 
 ## Binning Mode
 
@@ -1260,6 +1475,140 @@ assay_results = assay_builder.build().interactive_run()
 display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b_edges</th>
+      <th>b_edge_names</th>
+      <th>b_aggregated_values</th>
+      <th>b_aggregation</th>
+      <th>w_edges</th>
+      <th>w_edge_names</th>
+      <th>w_aggregated_values</th>
+      <th>w_aggregation</th>
+      <th>diff_in_pcts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.57</td>
+      <td>p_1.26e1</td>
+      <td>0.21</td>
+      <td>Density</td>
+      <td>12.57</td>
+      <td>e_1.26e1</td>
+      <td>0.20</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13.20</td>
+      <td>p_1.32e1</td>
+      <td>0.54</td>
+      <td>Density</td>
+      <td>13.20</td>
+      <td>e_1.32e1</td>
+      <td>0.53</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>13.83</td>
+      <td>p_1.38e1</td>
+      <td>0.21</td>
+      <td>Density</td>
+      <td>13.83</td>
+      <td>e_1.38e1</td>
+      <td>0.24</td>
+      <td>Density</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>14.45</td>
+      <td>p_1.45e1</td>
+      <td>0.04</td>
+      <td>Density</td>
+      <td>14.45</td>
+      <td>e_1.45e1</td>
+      <td>0.03</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>15.08</td>
+      <td>p_1.51e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>15.08</td>
+      <td>e_1.51e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>-0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+    None
+
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Equal
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.016463316496701866
+    scores = [0.0006959467613300823, 0.00028622745636607417, 0.000136940329536975, 0.0024190313632530313, 0.0028459952590805006, 0.0002760930381493355, 0.00980308228898587]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_61_3.png)
 
 ## User Provided Bin Edges
 
@@ -1274,6 +1623,140 @@ display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b_edges</th>
+      <th>b_edge_names</th>
+      <th>b_aggregated_values</th>
+      <th>b_aggregation</th>
+      <th>w_edges</th>
+      <th>w_edge_names</th>
+      <th>w_aggregated_values</th>
+      <th>w_aggregation</th>
+      <th>diff_in_pcts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11.00</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>11.00</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.00</td>
+      <td>e_1.20e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>12.00</td>
+      <td>e_1.20e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>13.00</td>
+      <td>e_1.30e1</td>
+      <td>0.59</td>
+      <td>Density</td>
+      <td>13.00</td>
+      <td>e_1.30e1</td>
+      <td>0.58</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>14.00</td>
+      <td>e_1.40e1</td>
+      <td>0.39</td>
+      <td>Density</td>
+      <td>14.00</td>
+      <td>e_1.40e1</td>
+      <td>0.40</td>
+      <td>Density</td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>15.00</td>
+      <td>e_1.50e1</td>
+      <td>0.02</td>
+      <td>Density</td>
+      <td>15.00</td>
+      <td>e_1.50e1</td>
+      <td>0.02</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>16.00</td>
+      <td>e_1.60e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>16.00</td>
+      <td>e_1.60e1</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+    None
+
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Provided
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.005831639113611392
+    scores = [0.0, 0.002708901099649454, 0.00015914496208737885, 0.0004215024577886459, 0.002159043392325224, 0.00038304720176068804, 0.0]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_63_3.png)
+
 ## Number of Bins
 
 We could also choose to a different number of bins, let's say 10, which can be evenly spaced or based on the quantiles (deciles).
@@ -1285,6 +1768,203 @@ assay_results = assay_builder.build().interactive_run()
 display(display(assay_results[1].compare_bins()))
 assay_results[1].chart()
 ```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b_edges</th>
+      <th>b_edge_names</th>
+      <th>b_aggregated_values</th>
+      <th>b_aggregation</th>
+      <th>w_edges</th>
+      <th>w_edge_names</th>
+      <th>w_aggregated_values</th>
+      <th>w_aggregation</th>
+      <th>diff_in_pcts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.40</td>
+      <td>q_10</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.40</td>
+      <td>e_1.24e1</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12.56</td>
+      <td>q_20</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.56</td>
+      <td>e_1.26e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12.70</td>
+      <td>q_30</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.70</td>
+      <td>e_1.27e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12.81</td>
+      <td>q_40</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.81</td>
+      <td>e_1.28e1</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12.91</td>
+      <td>q_50</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.91</td>
+      <td>e_1.29e1</td>
+      <td>0.12</td>
+      <td>Density</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>13.01</td>
+      <td>q_60</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.01</td>
+      <td>e_1.30e1</td>
+      <td>0.08</td>
+      <td>Density</td>
+      <td>-0.02</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>13.15</td>
+      <td>q_70</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.15</td>
+      <td>e_1.31e1</td>
+      <td>0.12</td>
+      <td>Density</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>13.31</td>
+      <td>q_80</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.31</td>
+      <td>e_1.33e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>13.56</td>
+      <td>q_90</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.56</td>
+      <td>e_1.36e1</td>
+      <td>0.11</td>
+      <td>Density</td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>15.08</td>
+      <td>q_100</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>15.08</td>
+      <td>e_1.51e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+    None
+
+    baseline mean = 12.954393170120568
+    window mean = 12.94535461693147
+    baseline median = 12.913979530334473
+    window median = 12.903773307800293
+    bin_mode = Quantile
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.021364617672033626
+    scores = [0.0013318933239185415, 0.0001508387888967812, 0.0014077319940240033, 0.00044689056669365687, 0.0001508387888967812, 0.002879132738274895, 0.002579185308688176, 0.002722796821458902, 0.0011510010089298668, 0.0009475972030849906, 0.001710564941068633, 0.005886146188098397]
+    index = None
+
+    /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
+      ax.set_xticklabels(labels=edge_names, rotation=45)
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_65_4.png)
 
 ## Bin Weights
 
@@ -1305,6 +1985,205 @@ display(display(assay_results[1].compare_bins()))
 assay_results[1].chart()
 ```
 
+    Using weights:  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b_edges</th>
+      <th>b_edge_names</th>
+      <th>b_aggregated_values</th>
+      <th>b_aggregation</th>
+      <th>w_edges</th>
+      <th>w_edge_names</th>
+      <th>w_aggregated_values</th>
+      <th>w_aggregation</th>
+      <th>diff_in_pcts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>11.95</td>
+      <td>left_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.40</td>
+      <td>q_10</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.40</td>
+      <td>e_1.24e1</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12.56</td>
+      <td>q_20</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.56</td>
+      <td>e_1.26e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>12.70</td>
+      <td>q_30</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.70</td>
+      <td>e_1.27e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12.81</td>
+      <td>q_40</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.81</td>
+      <td>e_1.28e1</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>12.91</td>
+      <td>q_50</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>12.91</td>
+      <td>e_1.29e1</td>
+      <td>0.12</td>
+      <td>Density</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>13.01</td>
+      <td>q_60</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.01</td>
+      <td>e_1.30e1</td>
+      <td>0.08</td>
+      <td>Density</td>
+      <td>-0.02</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>13.15</td>
+      <td>q_70</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.15</td>
+      <td>e_1.31e1</td>
+      <td>0.12</td>
+      <td>Density</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>13.31</td>
+      <td>q_80</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.31</td>
+      <td>e_1.33e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>13.56</td>
+      <td>q_90</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>13.56</td>
+      <td>e_1.36e1</td>
+      <td>0.11</td>
+      <td>Density</td>
+      <td>0.01</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>15.08</td>
+      <td>q_100</td>
+      <td>0.10</td>
+      <td>Density</td>
+      <td>15.08</td>
+      <td>e_1.51e1</td>
+      <td>0.09</td>
+      <td>Density</td>
+      <td>-0.01</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>NaN</td>
+      <td>right_outlier</td>
+      <td>0.00</td>
+      <td>Density</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+    None
+
+    baseline mean = 12.954393170120568
+    window mean = 12.94535461693147
+    baseline median = 12.913979530334473
+    window median = 12.903773307800293
+    bin_mode = Quantile
+    aggregation = Density
+    metric = PSI
+    weighted = True
+    score = 0.0024995485785548276
+    scores = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000429864218114696, 0.00045379947024315036, 0.00019183350148831114, 0.00015793286718083176, 0.0002850941568447722, 0.0009810243646830661]
+    index = None
+
+    /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
+      ax.set_xticklabels(labels=edge_names, rotation=45)
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_67_5.png)
+
 ## Metrics
 
 The `score` is a distance or dis-similarity measure. The larger it is the less similar the two distributions are. We currently support
@@ -1318,6 +2197,20 @@ assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
 
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.013551035434377596
+    scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_69_1.png)
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 assay_builder.summarizer_builder.add_metric(Metric.SUMDIFF)
@@ -1325,12 +2218,40 @@ assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
 
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Density
+    metric = SumDiff
+    weighted = False
+    score = 0.02626907215365116
+    scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_70_1.png)
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 assay_builder.summarizer_builder.add_metric(Metric.MAXDIFF)
 assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
+
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Density
+    metric = MaxDiff
+    weighted = False
+    score = 0.016445794354971288
+    scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
+    index = 3
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_71_1.png)
 
 ## Aggregation Options
 
@@ -1343,9 +2264,38 @@ assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
 
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Density
+    metric = PSI
+    weighted = False
+    score = 0.013551035434377596
+    scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_73_1.png)
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 assay_builder.summarizer_builder.add_aggregation(Aggregation.CUMULATIVE)
 assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
+
+    baseline mean = 12.954393170120568
+    window mean = 12.952570220492534
+    baseline median = 12.913979530334473
+    window median = 12.905640125274658
+    bin_mode = Quantile
+    aggregation = Cumulative
+    metric = PSI
+    weighted = False
+    score = 0.028587074708172105
+    scores = [0.0033112582781456954, 0.006512019520534207, 0.0018763188110397233, 0.01456947554393151, 0.0017661261748300738, 0.0005518763796908965, 0.0]
+    index = None
+
+![png](images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights_74_1.png)
+

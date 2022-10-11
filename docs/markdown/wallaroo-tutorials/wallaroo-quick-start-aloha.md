@@ -30,9 +30,9 @@ wl = wallaroo.Client()
 ```
 
     Please log into the following URL in a web browser:
-    
+
     	https://yellow-platypus-9801.keycloak.wallaroo.community/auth/realms/master/device?user_code=NACK-RXGV
-    
+
     Login successful!
 
 ## Create the Workspace

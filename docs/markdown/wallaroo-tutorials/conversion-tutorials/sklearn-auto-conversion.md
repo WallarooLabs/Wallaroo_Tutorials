@@ -13,7 +13,7 @@ The three input parameters are:
   * `comment`: Any comments for the model.
   * `number_of_columns`: The number of columns the model was trained for.
   * `input_type`: The ModelConversationInputType, typically `Float` or `Double` depending on the model.
-  
+
 The following tutorial demonstrates how to convert a **sklearn** Linear Model and a **XGBoost** Regression Model, and upload them into a Wallaroo Workspace.  The following is provided for the tutorial:
 
 * `sklearn-linear-model.pickle`: A sklearn linear model.  An example of training the model is provided in the Jupyter Notebook `sklearn-linear-model-example.ipynb`.  It has 25 columns.
