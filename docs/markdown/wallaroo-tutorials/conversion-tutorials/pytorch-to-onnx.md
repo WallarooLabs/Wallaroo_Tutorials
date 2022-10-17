@@ -16,6 +16,7 @@ This tutorial provides the following:
 
 The first step is to import our libraries we will be using.  For this example, the PyTorth `torch` library will be imported into this kernel.
 
+
 ```python
 # the Pytorch libraries
 # Import into this kernel
@@ -34,15 +35,18 @@ import torch.onnx
     Installing collected packages: torch
     Successfully installed torch-1.12.0
 
+
 ## Load the Model
 
 To load a PyTorch model into a variable, the model's `class` has to be defined.  For out example we are using the `BikeShareRegressor` class as defined below.
+
 
 ```python
 class BikeShareRegressor(torch.nn.Module):
     def __init__(self):
         super(BikeShareRegressor, self).__init__()
 
+        
         self.net = nn.Sequential(nn.Linear(input_size, l1),
                                  torch.nn.ReLU(),
                                  torch.nn.Dropout(p=dropout),
@@ -59,6 +63,7 @@ class BikeShareRegressor(torch.nn.Module):
 
 Now we will load the model into the variable `pytorch_tobe_converted`.
 
+
 ```python
 # load the Pytorch model
 model = torch.load("./pytorch_bikesharingmodel.pt")
@@ -67,7 +72,7 @@ model = torch.load("./pytorch_bikesharingmodel.pt")
 ### Convert_ONNX Inputs
 
 Now we will define our method `Convert_ONNX()` which has the following inputs:
-
+    
 * **PyTorchModel**: the PyTorch we are converting.
 * **modelInputs**: the model input or tuple for multiple inputs.
 * **onnxPath**: The location to save the onnx file.
@@ -79,6 +84,9 @@ Now we will define our method `Convert_ONNX()` which has the following inputs:
   `{'modelInput' : { 0 : 'batch_size'}, 'modelOutput' : {0 : 'batch_size'}}`
 * **export_params**:  Whether to store the trained parameter weight inside the model file.  Defaults to `True`.
 * **do_constant_folding**: Sets whether to execute constant folding for optimization.  Defaults to `True`.
+  
+
+
 
 ```python
 #Function to Convert to ONNX 
@@ -106,6 +114,7 @@ def Convert_ONNX():
 
 We'll now set our variables and run our conversion.  For out example, the `input_size` is known to be 58, and the `device` value we'll derive from `torch.cuda`.  We'll also set the ONNX version for exporting to 10.
 
+
 ```python
 pypath = "pytorchbikeshare.onnx"
 
@@ -124,7 +133,9 @@ dummy_input = torch.randn(1, input_size, requires_grad=True).to(device)
 Convert_ONNX()
 ```
 
+     
     Model has been converted to ONNX
+
 
 ## Conclusion
 

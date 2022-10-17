@@ -35,6 +35,8 @@ All models are similar to the ones used for the Wallaroo-101 example included in
 
 The first step is to import the libraries required.
 
+
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -44,6 +46,7 @@ from wallaroo.object import EntityNotFoundError
 
 Connect to your Wallaroo instance and save the connection as the variable `wl`.
 
+
 ```python
 wl = wallaroo.Client()
 ```
@@ -51,6 +54,7 @@ wl = wallaroo.Client()
 ### Set Variables
 
 The following variables are used to create or use existing workspaces, pipelines, and upload the models.  Adjust them based on your Wallaroo instance and organization requirements.
+
 
 ```python
 workspace_name = 'ccfraud-comparison-demo'
@@ -68,6 +72,7 @@ sample_data_file = './smoke_test.json'
 ### Workspace and Pipeline
 
 The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.  Note that workspace and pipeline names are not forced to be unique in a Wallaroo instance, and it is recommended to use a organization standard to ensure that users to not connect to the incorrect workspace or pipeline.
+
 
 ```python
 def get_workspace(name):
@@ -87,6 +92,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -97,11 +103,17 @@ pipeline
 
 ```
 
+
+
+
 <table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-08-04 20:06:55.102203+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-04 20:16:57.680141+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+
+
 
 ### Load the Models
 
 The models will be uploaded into the current workspace based on the variable names set earlier and listed as the `champion`, `model2` and `model3`.
+
 
 ```python
 champion = wl.upload_model(champion_model_name, champion_model_file).configure()
@@ -116,6 +128,7 @@ A shadow deployment is created using the `add_shadow_deploy(champion, challenger
 * `champion`: The model that will be primarily used for inferences run through the pipeline.  Inference results will be returned through the Inference Object's `data` element.
 * `challengers[]`: An array of models that will be used for inferences iteratively.  Inference results will be returned through the Inference Object's `shadow_data` element.
 
+
 ```python
 pipeline.add_shadow_deploy(champion, [model2, model3])
 pipeline.deploy()
@@ -123,11 +136,18 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ............. ok
 
+
+
+
+
 <table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-08-04 20:06:55.102203+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-04 20:27:42.174069+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+
+
 
 ### Run Test Inference
 
 Using the data from `sample_data_file`, a test inference will be made.  As mentioned earlier, the inference results from the `champion` model will be available in the returned InferenceResult Object's `data` element, while inference results from each of the `challenger` models will be in the returned InferenceResult Object's `shadow_data` element.
+
 
 ```python
 response = pipeline.infer_from_file(sample_data_file)
@@ -135,9 +155,14 @@ response = pipeline.infer_from_file(sample_data_file)
 
     Waiting for inference response - this will take up to 45s .... ok
 
+
+
 ```python
 response
 ```
+
+
+
 
     [InferenceResult({'check_failures': [],
       'elapsed': 145402,
@@ -181,13 +206,20 @@ response
                                                  'v': 1}}]},
       'time': 1659644884270})]
 
+
+
 ### View Pipeline Logs
 
 With the inferences complete, we can retrieve the log data from the pipeline with the pipeline `logs` method.
 
+
 ```python
 pipeline.logs()
 ```
+
+
+
+
 
 <table>
     <tr>
@@ -204,6 +236,7 @@ pipeline.logs()
     <td>0</td>
 </tr>
 
+
 <tr style="">
     <td>2022-04-Aug 20:17:09</td>
     <td>[array([[0.00149742]])]</td>
@@ -211,12 +244,14 @@ pipeline.logs()
     <td>0</td>
 </tr>
 
+
 <tr style="">
     <td>2022-04-Aug 20:28:04</td>
     <td>[array([[0.0005067]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
+
 
 <tr style="">
     <td>2022-04-Aug 20:28:04</td>
@@ -225,12 +260,14 @@ pipeline.logs()
     <td>0</td>
 </tr>
 
+
 <tr style="">
     <td>2022-04-Aug 20:12:21</td>
     <td>[array([[0.0005067]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
+
 
 <tr style="">
     <td>2022-04-Aug 20:12:21</td>
@@ -241,14 +278,22 @@ pipeline.logs()
 
 </table>
 
+
+
+
 ### View Shadow Deploy Pipeline Logs
 
 To view the inputs and results for the shadow deployed models, use the pipeline `logs_shadow_deploy()` method.  The results will be grouped by the inputs.
+
 
 ```python
 logs = pipeline.logs_shadow_deploy()
 logs
 ```
+
+
+
+
 
                 <h2>Shadow Deploy Logs</h2>
                 <p>
@@ -389,9 +434,13 @@ logs
                     </tbody>
                 <table>
 
+
+
+
 ### Undeploy the Pipeline
 
 With the tutorial complete, we undeploy the pipeline and return the resources back to the system.
+
 
 ```python
 pipeline.undeploy()
@@ -399,5 +448,10 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ...................................... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-08-04 20:06:55.102203+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-04 20:27:42.174069+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+
 

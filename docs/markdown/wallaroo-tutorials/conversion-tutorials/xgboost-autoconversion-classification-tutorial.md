@@ -36,6 +36,7 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
+
 ```python
 import wallaroo
 
@@ -49,12 +50,14 @@ The following will set the workspace, pipeline, model name, the model file name 
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
 
+
 ```python
 workspace_name = 'xgboost-classification-autoconvert-workspace'
 pipeline_name = 'xgboost-classification-autoconvert-pipeline'
 model_name = 'xgb-class-model'
 model_file_name = 'xgb_class.pickle'
 sample_data = 'xgb_class_eval.json'
+
 
 def get_workspace(name):
     workspace = None
@@ -77,6 +80,7 @@ def get_pipeline(name):
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
+
 ```python
 wl = wallaroo.Client()
 ```
@@ -84,6 +88,7 @@ wl = wallaroo.Client()
 ### Set the Workspace and Pipeline
 
 Set or create the workspace and pipeline based on the names configured earlier.
+
 
 ```python
 workspace = get_workspace(workspace_name)
@@ -94,11 +99,17 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `xgb-class-model`.
+
 
 ```python
 #the number of columns
@@ -117,6 +128,7 @@ model_conversion_type = ModelConversionSource.XGBOOST
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
+
 ```python
 # convert and upload
 model_wl = wl.convert_model(model_file_name, model_conversion_type, model_conversion_args)
@@ -130,17 +142,25 @@ With the model uploaded and converted, we can run a sample inference.
 
 Add the uploaded and converted `model_wl` as a step in the pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
     Waiting for deployment - this will take up to 45s .... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:23.597027+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>xgb-class-model</td></tr></table>
+
+
 
 ### Run the Inference
 
 Use the `test_class_eval.json` as set earlier as our `sample_data` and perform the inference.
+
 
 ```python
 result = pipeline.infer_from_file(sample_data)
@@ -149,6 +169,10 @@ result[0].data()
 
     Waiting for inference response - this will take up to 45s ....... ok
 
+
+
+
+
     [array([0.e+000, 0.e+000, 5.e-324, 0.e+000, 5.e-324]),
      array([[0.99668795, 0.00331205],
             [0.52999395, 0.47000605],
@@ -156,9 +180,12 @@ result[0].data()
             [0.995507  , 0.004493  ],
             [0.19796491, 0.80203509]])]
 
+
+
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
@@ -166,5 +193,10 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s .............................. ok
 
+
+
+
+
 <table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:23.597027+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>xgb-class-model</td></tr></table>
+
 

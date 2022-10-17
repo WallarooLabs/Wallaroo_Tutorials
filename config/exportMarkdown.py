@@ -88,6 +88,11 @@ fileList = [
         "inputFile": "model_conversion/xgboost-autoconversion/xgboost-autoconversion-regression-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
         "outputFile": "xgboost-autoconversion-regression-tutorial.md"
+    },
+    {
+        "inputFile": "simulated_edge/simulated_edge.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials",
+        "outputFile": "wallaroo-simulated_edge.md"
     }
 ]
 
