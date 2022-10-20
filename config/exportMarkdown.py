@@ -93,6 +93,31 @@ fileList = [
         "inputFile": "simulated_edge/simulated_edge.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-simulated_edge.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "00_notebooks_in_prod_Introduction.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "01_notebooks_in_prod_explore_and_train.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "02_notebooks_in_prod_automated_training_process.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "03_notebooks_in_prod_deploy_model.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "04_notebooks_in_prod_regular_batch_inferences.md"
     }
 ]
 
