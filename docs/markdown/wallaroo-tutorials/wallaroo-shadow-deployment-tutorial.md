@@ -67,7 +67,7 @@ sample_data_file = './smoke_test.json'
 
 ### Workspace and Pipeline
 
-The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.  Note that workspace and pipeline names are not forced to be unique in a Wallaroo instance, and it is recommended to use a organization standard to ensure that users to not connect to the incorrect workspace or pipeline.
+The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.
 
 ```python
 def get_workspace(name):
@@ -199,28 +199,24 @@ pipeline.logs()
         <th>Input</th>
         <th>Anomalies</th>
     </tr>
-
 <tr style="">
     <td>2022-19-Oct 17:52:14</td>
     <td>[array([[0.0005067]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
-
 <tr style="">
     <td>2022-19-Oct 17:52:14</td>
     <td>[array([[1.]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
-
 <tr style="">
     <td>2022-19-Oct 17:52:14</td>
     <td>[array([[0.00149742]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
-
 </table>
 
 ### View Logs Per Model
@@ -246,65 +242,60 @@ logs = pipeline.logs_shadow_deploy()
 logs
 ```
 
-                <h2>Shadow Deploy Logs</h2>
-                <p>
-                    <em>Logs from a shadow pipeline, grouped by their input.</em>
-                </p>
-                <table>
-                    <tbody>
+## Shadow Deploy Logs
 
-                    <tr><td colspan='6'>Log Entry 0</td></tr>
-                    <tr><td colspan='6'></td></tr>
-                    <tr>
-			<td>
-				<strong><em>Input</em></strong>
-			</td>
-                        <td colspan='6'>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
-                    </tr>
+*Logs from a shadow pipeline, grouped by their input.*
 
-                    <tr>
-                        <td>Model Type</td>
-                        <td>
-                            <strong>Model Name</strong>
-                        </td>
-                        <td>
-                            <strong>Output</strong>
-                        </td>
-                        <td>
-                            <strong>Timestamp</strong>
-                        </td>
-                        <td>
-                            <strong>Model Version</strong>
-                        </td>
-                        <td>
-                            <strong>Elapsed</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong><em>Primary</em></strong></td>
-                        <td>ccfraud-lstm</td>
-                        <td>[array([[0.00149742]])]</td>
-                        <td>2022-10-19T17:52:14.875000</td>
-                        <td>1f7b2360-0d52-4000-b540-244fb33ad706</td>
-                        <td>226951</td>
-                    </tr>
-
-                    <tr>
-                        <td><strong><em>Challenger</em></strong></td>
-                        <td>ccfraud-rf</td>
-                        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [1.0]}}]</td>
-                        <td colspan=3></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong><em>Challenger</em></strong></td>
-                        <td>ccfraud-xgb</td>
-                        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [0.0005066990852355957]}}]</td>
-                        <td colspan=3></td>
-                    </tr>
-
-                    </tbody>
-                <table>
+<table>
+    <tbody>
+    <tr><td colspan='6'>Log Entry 0</td></tr>
+    <tr><td colspan='6'></td></tr>
+    <tr>
+<td>
+<strong><em>Input</em></strong>
+</td>
+        <td colspan='6'>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
+    </tr>
+    <tr>
+        <td>Model Type</td>
+        <td>
+            <strong>Model Name</strong>
+        </td>
+        <td>
+            <strong>Output</strong>
+        </td>
+        <td>
+            <strong>Timestamp</strong>
+        </td>
+        <td>
+            <strong>Model Version</strong>
+        </td>
+        <td>
+            <strong>Elapsed</strong>
+        </td>
+    </tr>
+    <tr>
+        <td><strong><em>Primary</em></strong></td>
+        <td>ccfraud-lstm</td>
+        <td>[array([[0.00149742]])]</td>
+        <td>2022-10-19T17:52:14.875000</td>
+        <td>1f7b2360-0d52-4000-b540-244fb33ad706</td>
+        <td>226951</td>
+    </tr>
+    <tr>
+        <td><strong><em>Challenger</em></strong></td>
+        <td>ccfraud-rf</td>
+        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [1.0]}}]</td>
+        <td colspan=3></td>
+    </tr>
+    <tr>
+        <td><strong><em>Challenger</em></strong></td>
+        <td>ccfraud-xgb</td>
+        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [0.0005066990852355957]}}]</td>
+        <td colspan=3></td>
+    </tr>
+    </tbody>
+<table>
 
 ### Undeploy the Pipeline
 
@@ -317,4 +308,3 @@ pipeline.undeploy()
     Waiting for undeployment - this will take up to 45s .................................... ok
 
 <table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-10-19 17:52:00.508852+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:52:01.298216+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
-

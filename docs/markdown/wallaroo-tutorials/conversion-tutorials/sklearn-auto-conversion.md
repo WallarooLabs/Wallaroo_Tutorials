@@ -32,7 +32,6 @@ Before starting, the following must be available:
 
 Import the libraries that will be used for the auto-conversion process.
 
-
 ```python
 import pickle
 import json
@@ -49,7 +48,6 @@ The following code is used to either connect to an existing workspace or to crea
 
 Connect to your Wallaroo instance.
 
-
 ```python
 wl = wallaroo.Client()
 ```
@@ -58,12 +56,10 @@ wl = wallaroo.Client()
 
 We'll connect or create the workspace `testautoconversion` and use it for our model testing.
 
-
 ```python
 workspace_name = 'testautoconversion'
 
 ```
-
 
 ```python
 def get_workspace(name):
@@ -76,7 +72,6 @@ def get_workspace(name):
     return workspace
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -87,9 +82,7 @@ wl.get_current_workspace()
 
 
 
-
     {'name': 'testautoconversion', 'id': 12, 'archived': False, 'created_by': '13f4ce0d-cb22-4a5c-b07b-c65e4d730315', 'created_at': '2022-08-02T22:16:30.552476+00:00', 'models': [], 'pipelines': []}
-
 
 
 ### Set the Model Conversion Arguments
@@ -98,7 +91,6 @@ We'll create two different configurations, one for each of our models:
 
 * `sklearn_model_conversion_args`: Used for our sklearn model.
 * `xgboost_model_converstion_args`: Used for our XGBoost model.
-
 
 ```python
 # The number of columns
@@ -125,7 +117,6 @@ xgboost_model_conversion_type = ModelConversionSource.XGBOOST
 
 The `convert_model` method converts the model using the arguments, and uploads it into the current workspace - in this case, `testconversion`.  Once complete, we can run `get_current_workspace` to verify that the models were uploaded.
 
-
 ```python
 # converts and uploads the sklearn model.
 wl.convert_model('sklearn-linear-model.pickle', sklearn_model_conversion_type, sklearn_model_conversion_args)
@@ -136,9 +127,7 @@ wl.convert_model('xgb_reg.pickle', xgboost_model_conversion_type, xgboost_model_
 
 
 
-
     {'name': 'xgb-test-reg', 'version': '9ade0e7a-dc3f-4935-8974-ed8bda12d148', 'file_name': '39c215bb-ae23-4a05-b520-aa0b8d94ba42-converted.onnx', 'last_update_time': datetime.datetime(2022, 8, 3, 14, 26, 58, 413122, tzinfo=tzutc())}
-
 
 
 
@@ -148,7 +137,5 @@ wl.get_current_workspace()
 
 
 
-
     {'name': 'testautoconversion', 'id': 12, 'archived': False, 'created_by': '13f4ce0d-cb22-4a5c-b07b-c65e4d730315', 'created_at': '2022-08-02T22:16:30.552476+00:00', 'models': [{'name': 'lm-test', 'version': '2227f4a5-3139-4bc8-844c-3587546f326a', 'file_name': '2fb7d46d-d92f-4371-872c-5300c52188bb-converted.onnx', 'last_update_time': datetime.datetime(2022, 8, 3, 14, 26, 55, 892457, tzinfo=tzutc())}, {'name': 'xgb-test-reg', 'version': '9ade0e7a-dc3f-4935-8974-ed8bda12d148', 'file_name': '39c215bb-ae23-4a05-b520-aa0b8d94ba42-converted.onnx', 'last_update_time': datetime.datetime(2022, 8, 3, 14, 26, 58, 413122, tzinfo=tzutc())}], 'pipelines': []}
-
 

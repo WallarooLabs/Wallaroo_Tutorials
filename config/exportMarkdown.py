@@ -97,7 +97,7 @@ fileList = [
     {
         "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "00_notebooks_in_prod_Introduction.md"
+        "outputFile": "_index.md"
     },
     {
         "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
