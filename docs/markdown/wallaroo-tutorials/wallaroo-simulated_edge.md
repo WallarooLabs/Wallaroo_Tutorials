@@ -163,7 +163,7 @@ pipeline.status()
        'reason': None}]}
 
 
-## Interferences
+## Inferences
 
 ### Infer 1 row
 

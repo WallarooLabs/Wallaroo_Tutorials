@@ -509,7 +509,7 @@ plt.show()
 ```
 
     
-![png](/images/wallaroo-tutorials/notebook_in_prod/02_notebooks_in_prod_explore_and_train_files/02_notebooks_in_prod_automated_training_process_10_0.png)
+![png](02_notebooks_in_prod_automated_training_process_files/02_notebooks_in_prod_automated_training_process_10_0.png)
     
 
 

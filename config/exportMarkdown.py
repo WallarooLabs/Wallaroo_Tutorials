@@ -118,7 +118,13 @@ fileList = [
         "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
         "outputFile": "04_notebooks_in_prod_regular_batch_inferences.md"
+    },
+    {
+        "inputFile": "abtesting/wallaroo-abtesting-tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials",
+        "outputFile": "wallaroo-abtesting-tutorial.md"
     }
+
 ]
 
 def main():

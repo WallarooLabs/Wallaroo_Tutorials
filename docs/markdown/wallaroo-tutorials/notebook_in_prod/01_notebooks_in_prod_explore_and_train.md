@@ -660,7 +660,7 @@ plt.show()
 ```
 
     
-![png](/images/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train_files/01_notebooks_in_prod_explore_and_train_18_0.png)
+![png](01_notebooks_in_prod_explore_and_train_files/01_notebooks_in_prod_explore_and_train_18_0.png)
     
 
 
@@ -809,7 +809,7 @@ plt.show()
 ```
 
     
-![png](/images/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train_files/01_notebooks_in_prod_explore_and_train_24_0.png)
+![png](01_notebooks_in_prod_explore_and_train_files/01_notebooks_in_prod_explore_and_train_24_0.png)
     
 
 
