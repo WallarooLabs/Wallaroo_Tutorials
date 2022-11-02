@@ -48,9 +48,9 @@ This command will be used to set up a connection to the Wallaroo cluster and all
 wl = wallaroo.Client()
 ```
 
-### Create Workspace and Pipeline
+### Create Workspace
 
-We will create a workspace to manage our pipeline and models.  The following variables will set the name of our sample workspace and pipelines, then create them.
+We will create a workspace to manage our pipeline and models.  The following variables will set the name of our sample workspace then set it as the current workspace for all other commands.
 
 ```python
 workspace_name = 'abtestworkspace'

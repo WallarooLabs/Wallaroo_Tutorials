@@ -123,6 +123,11 @@ fileList = [
         "inputFile": "abtesting/wallaroo-abtesting-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-abtesting-tutorial.md"
+    },
+    {
+        "inputFile": "anomaly_detection/wallaroo-anomaly-detection.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials",
+        "outputFile": "wallaroo-anomaly-detection.md"
     }
 
 ]
