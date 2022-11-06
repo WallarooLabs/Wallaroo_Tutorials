@@ -128,6 +128,11 @@ fileList = [
         "inputFile": "anomaly_detection/wallaroo-anomaly-detection.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-anomaly-detection.md"
+    },
+    {
+        "inputFile": "model_conversion/xgboost-to-onnx/xgboost-to-onnx.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+        "outputFile": "xgboost-to-onnx.md"
     }
 
 ]
