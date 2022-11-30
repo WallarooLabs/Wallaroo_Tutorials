@@ -78,11 +78,9 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-
 ```python
 import wallaroo
 ```
-
 
 ```python
 wl = wallaroo.Client()
@@ -96,22 +94,21 @@ The method we'll introduce below will either **create** a new workspace if it do
 
 The first part is to return to your Wallaroo Dashboard.  In the top navigation panel next to your user name there's a drop down with your workspaces.  In this example it just has "My Workspace".  Select **View Workspaces**.
 
-![Select View Workspaces](../images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
+![Select View Workspaces](/images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
 
 From here, enter the name of our new workspace as `ccfraud-workspace`.  If it already exists, you can skip this step.
 
 * **IMPORTANT NOTE**:  Workspaces do not have forced unique names.  It is highly recommended to use an existing workspace when possible, or establish a naming convention for your workspaces to keep their names unique to remove confusion with teams.
 
-![Create ccfraud-workspace](../images/wallaroo-dashboard-create-workspace-ccfraud.png)
+![Create ccfraud-workspace](/images/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png)
 
 Once complete, you'll be able to select the workspace from the drop down list in your dashboard.
 
-![ccfraud-workspace exists](../images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
+![ccfraud-workspace exists](/images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
 
 Just for the sake of this tutorial, we'll use the SDK below to create our workspace , assign as our **current workspace**, then display all of the workspaces we have at the moment.  We'll also set up for our models and pipelines down the road, so we have one spot to change names to whatever fits your organization's standards best.
 
 When we create our new workspace, we'll save it in the Python variable `workspace` so we can refer to it as needed.
-
 
 ```python
 workspace_name = 'ccfraudworkspace'
@@ -119,7 +116,6 @@ pipeline_name = 'ccfraudpipeline'
 model_name = 'ccfraudmodel'
 model_file_name = './ccfraud.onnx'
 ```
-
 
 ```python
 def get_workspace(name):
@@ -139,21 +135,15 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
 wl.set_current_workspace(workspace)
 ```
 
-
 ```python
 wl.list_workspaces()
 ```
-
-
-
-
 
 <table>
     <tr>
@@ -172,7 +162,6 @@ wl.list_workspaces()
     <td>0</td>
 </tr>
 
-
 <tr >
     <td>ccfraud_workspace</td>
     <td>2022-05-18 18:40:08</td>
@@ -183,31 +172,20 @@ wl.list_workspaces()
 
 </table>
 
-
-
-
 Just to make sure, let's list our current workspace.  If everything is going right, it will show us we're in the `ccfraud-workspace`.
-
 
 ```python
 wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
-
-
-
     {'name': 'ccfraud_workspace', 'id': 2, 'archived': False, 'created_by': 'f7e17ed6-a91f-4c1c-9f89-a9fee1620e80', 'created_at': '2022-05-18T18:40:08.138974+00:00', 'models': [], 'pipelines': []}
-
-
 
 ## Upload a model
 
 Our workspace is created.  Let's upload our credit card fraud model to it.  This is the file name `ccfraud.onnx`, and we'll upload it as `ccfraudmodel`.  The credit card fraud model is trained to detect credit card fraud based on a 0 to 1 model:  The closer to 0 the less likely the transactions indicate fraud, while the closer to 1 the more likely the transactions indicate fraud.
 
-
 Since we're already in our default workspace `ccfraudworkspace`, it'll be uploaded right to there.  Once that's done uploading, we'll list out all of the models currently deployed so we can see it included.
-
 
 ```python
 ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
@@ -215,17 +193,11 @@ ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
 
 We can verify that our model was uploaded by listing the models uploaded to our Wallaroo instance with the `list_models()` command.  Note that since we uploaded this model before, we now have different versions of it we can use for our testing.
 
-
 ```python
 wl.list_models()
 ```
 
-
-
-
     [{'name': 'ccfraud-model', 'version': 'ddfe0049-fda2-4375-b414-9defec70be7d', 'file_name': 'ccfraud.onnx', 'last_update_time': datetime.datetime(2022, 5, 18, 18, 40, 56, 300356, tzinfo=tzutc())}]
-
-
 
 ## Create a Pipeline
 
@@ -233,27 +205,19 @@ With our model uploaded, time to create our pipeline and deploy it so it can acc
 
 * **NOTE**:  Pipeline names must be unique.  If two pipelines are assigned the same name, the new pipeline is created as a new **version** of the pipeline.
 
-
 ```python
 ccfraud_pipeline = wl.build_pipeline(pipeline_name)
 ```
 
 Now our pipeline is set.  Let's add a single **step** to it - in this case, our `ccfraud_model` that we uploaded to our workspace.
 
-
 ```python
 ccfraud_pipeline.add_model_step(ccfraud_model)
 ```
 
-
-
-
 <table><tr><th>name</th> <td>ccfraud-pipeline</td></tr><tr><th>created</th> <td>2022-05-18 18:41:27.897388+00:00</td></tr><tr><th>last_updated</th> <td>2022-05-18 18:41:27.897388+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
 
-
-
 And now we can deploy our pipeline and assign resources to it.  This typically takes about 45 seconds once the command is issued.
-
 
 ```python
 ccfraud_pipeline.deploy()
@@ -261,23 +225,13 @@ ccfraud_pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ...................... ok
 
-
-
-
-
 <table><tr><th>name</th> <td>ccfraud-pipeline</td></tr><tr><th>created</th> <td>2022-05-18 18:41:27.897388+00:00</td></tr><tr><th>last_updated</th> <td>2022-05-18 18:41:43.378443+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-model</td></tr></table>
 
-
-
 We can see our new pipeline with the `status()` command.
-
 
 ```python
 ccfraud_pipeline.status()
 ```
-
-
-
 
     {'status': 'Running',
      'details': None,
@@ -296,19 +250,13 @@ ccfraud_pipeline.status()
        'status': 'Running',
        'reason': None}]}
 
-
-
 ## Running Interfences
 
 With our pipeline deployed, let's run a smoke test to make sure it's working right.  We'll run an inference through our pipeline from the file `smoke_test.json` and see the results.  This should give us a result near 0 - not likely a fraudulent activity.
 
-
 ```python
 ccfraud_pipeline.infer_from_file('./smoke_test.json')
 ```
-
-
-
 
     [InferenceResult({'check_failures': [],
       'elapsed': 275136,
@@ -349,17 +297,11 @@ ccfraud_pipeline.infer_from_file('./smoke_test.json')
       'pipeline_name': 'ccfraud-pipeline',
       'time': 1652899382721})]
 
-
-
 Looks good!  Time to run the real test on some real data.  Run another inference this time from the file `high_fraud.json` and let's see the results.  This should give us an output that indicates a high level of fraud - well over 90%.
-
 
 ```python
 ccfraud_pipeline.infer_from_file('./high_fraud.json')
 ```
-
-
-
 
     [InferenceResult({'check_failures': [],
       'elapsed': 136815,
@@ -398,19 +340,15 @@ ccfraud_pipeline.infer_from_file('./high_fraud.json')
       'pipeline_name': 'ccfraud-pipeline',
       'time': 1652899405132})]
 
-
-
 Now that we've tested our pipeline, let's run it with something larger.  We have two batch files - `cc_data_1k.json` that contains 1,000 credit card records to test for fraud.  The other is `cc_data_10k.json` which has 10,000 credit card records to test.
 
 First let's run a batch result for `cc_data_1k.json` and see the results.  Inferences are returned as the [InferenceResult object](https://docs.wallaroo.ai/wallaroo-sdk/wallaroo-sdk-essentials-guide/#inferenceresult-object).  We'll retrieve the InferenceResult object and store it into a variable.
-
 
 ```python
 output = ccfraud_pipeline.infer_from_file('./cc_data_10k.json')
 ```
 
 Now we can isolate just the output with the `.data()` method, then isolate it down to just the results likely to be fraud.
-
 
 ```python
 sequence = output[0].data()
@@ -420,16 +358,11 @@ print(list(result))
 
     [array([0.99300325]), array([0.99300325]), array([0.99300325]), array([0.99300325]), array([1.]), array([0.98731017]), array([1.]), array([0.99998999]), array([0.91080534]), array([0.98877275]), array([0.95601666]), array([1.]), array([0.99997449]), array([0.98526448]), array([1.]), array([0.9999705]), array([0.99802029]), array([0.99950194]), array([0.9999876]), array([1.])]
 
-
 We can also retrieve the inputs from our InferenceResult object through the `input_data()` method as follows - in this case, just the first record.
-
 
 ```python
 output[0].input_data()["tensor"][0]
 ```
-
-
-
 
     [-1.060329750089797,
      2.354496709462385,
@@ -461,28 +394,19 @@ output[0].input_data()["tensor"][0]
      -0.14662447391576958,
      -1.446321243938815]
 
-
-
 ## Batch Deployment through a Pipeline Deployment URL
 
 This next step requires some manual use.  We're going to have `ccfraud_pipeline` display its deployment url - this allows us to submit data through a HTTP interface and get the results back.
 
 First we'll request the url with the `_deployment._url()` method:
 
-
 ```python
 ccfraud_pipeline._deployment._url()
 ```
 
-
-
-
     'http://engine-lb.ccfraud-pipeline-1:29502/pipelines/ccfraud-pipeline'
 
-
-
 Copy and paste the results above into the curl command, replacing the {YOUR URL HERE} with your deploy url for `ccfraud_pipeline`, and uncomment it.
-
 
 ```python
 #!curl -X POST {YOUR URL HERE } -H "Content-Type:application/json" --data @cc_data_10k.json > curl_response.txt
@@ -492,19 +416,12 @@ Copy and paste the results above into the curl command, replacing the {YOUR URL 
                                      Dload  Upload   Total   Spent    Left  Speed
     100 12.3M  100 5965k  100 6672k  15.6M  17.5M --:--:-- --:--:-- --:--:-- 33.1M
 
-
 With our work in the pipeline done, we'll undeploy it to get back our resources from the Kubernetes cluster.  If we keep the same settings we can redeploy the pipeline with the same configuration in the future.
-
 
 ```python
 ccfraud_pipeline.undeploy()
 ```
 
-
-
-
 <table><tr><th>name</th> <td>ccfraud-pipeline</td></tr><tr><th>created</th> <td>2022-05-18 18:41:27.897388+00:00</td></tr><tr><th>last_updated</th> <td>2022-05-18 18:41:43.378443+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-model</td></tr></table>
-
-
 
 And there we have it!  Feel free to use this as a template for other models, inferences and pipelines that you want to deploy with Wallaroo!

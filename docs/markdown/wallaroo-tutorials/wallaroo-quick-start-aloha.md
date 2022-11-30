@@ -264,7 +264,7 @@ aloha_pipeline.infer_from_file("data-1.json")
 
 ### Batch Inference
 
-Now that our smoke test is successfully, let's really give it some data.  We have two inference files we can use:
+Now that our smoke test is successful, let's really give it some data.  We have two inference files we can use:
 
 * `data-1k.json`:  Contains 1,0000 inferences
 * `data-25k.json`: Contains 25,000 inferences

@@ -133,7 +133,18 @@ fileList = [
         "inputFile": "model_conversion/xgboost-to-onnx/xgboost-to-onnx.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
         "outputFile": "xgboost-to-onnx.md"
+    },
+    {
+        "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-api-tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-api-tutorial"
+    },
+    {
+        "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-setup.md"
     }
+
 
 ]
 
