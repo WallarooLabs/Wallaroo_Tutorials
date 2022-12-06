@@ -35,7 +35,7 @@ The following tutorial shows how to set up an environment and demonstrates how t
     1. Open a browser at the URL detailed in the step above and authenticate using the console password set as described in the as detailed in the [Wallaroo Install Guildes](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/).
     1. From the top menu, select **Config** then verify that **Networking Configuration -> Ingress Mode for Wallaroo interactive services -> Enable external URL inference endpoints** is enabled.
 
-      ![](/images/wallaroo-tutorials/wallaroo-api/enable-external-url-config.png)
+      ![](../images/wallaroo-tutorials/wallaroo-api/enable-external-url-config.png)
  
     1. Save the updated configuration, then deploy it.  Once complete, the external URL inference endpoints will be enabled.
 
@@ -53,9 +53,9 @@ For example, if the Wallaroo Community instance DNS address is `https://magical-
 
 Then select the client, in this case **api-client**, then **Credentials**.
 
-![Wallaroo Keycloak Service](/images/wallaroo-tutorials/wallaroo-api/wallaroo-api-keycloak-service.png)
+![Wallaroo Keycloak Service](../images/wallaroo-tutorials/wallaroo-api/wallaroo-api-keycloak-service.png)
 
-![Wallaroo Components](/images/wallaroo-tutorials/wallaroo-api/wallaroo-api-keycloak-credentials.png)
+![Wallaroo Components](../images/wallaroo-tutorials/wallaroo-api/wallaroo-api-keycloak-credentials.png)
 
 By default, tokens issued for api-client are valid for up to 60 minutes. Refresh tokens are supported.
 

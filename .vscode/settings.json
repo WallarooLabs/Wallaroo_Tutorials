@@ -1,6 +1,11 @@
 {
     "cSpell.words": [
+        "conda",
+        "ipykernel",
+        "Keycloak",
+        "LSTM",
         "modularizes",
-        "quantile"
+        "quantile",
+        "wallaroosdk"
     ]
 }
