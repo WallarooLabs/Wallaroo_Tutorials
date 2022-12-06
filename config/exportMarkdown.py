@@ -143,6 +143,11 @@ fileList = [
         "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
         "outputFile": "wallaroo-model-endpoints-setup.md"
+    },
+    {
+        "inputFile": "sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/sdk-install-guides/",
+        "outputFile": "install-wallaroo-sdk-google-vertex-guide"
     }
 
 
