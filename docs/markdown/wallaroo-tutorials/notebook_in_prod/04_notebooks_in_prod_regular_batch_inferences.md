@@ -2,7 +2,7 @@ For more details on this tutorial's setup and process, see `00_Introduction.ipyn
 
 # Stage 4: Regular Batch Inference
 
-In Stage 3: Deploy the Model in Wallaroo, the the housing model created and tested in Stage 2: Training Process Automation Setup was uploaded to a Wallaroo instance and added to the pipeline `housing-pipe` in the workspace `housepricing`.  This pipeline can be deployed at any point and time and used with new inferences.
+In Stage 3: Deploy the Model in Wallaroo, the housing model created and tested in Stage 2: Training Process Automation Setup was uploaded to a Wallaroo instance and added to the pipeline `housing-pipe` in the workspace `housepricing`.  This pipeline can be deployed at any point and time and used with new inferences.
 
 For the purposes of this demo, let's say that every month we find the newly entered and still-unsold houses and predict their sale price.
 
