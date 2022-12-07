@@ -32,13 +32,13 @@ For our example, we will perform the following:
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
 * Wallaroo SDK from Google Workbench Demonstration (Optional)
   * The following steps are used to demonstrate using the Wallaroo SDK in a Google Vertex Workbench environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/google-vertex-sdk-install).
-  * Create a workspace for our work.
-  * Upload the Aloha model.
-  * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
-  * Run a sample inference through our pipeline by loading a file
-  * Retrieve the external deployment URL.  This sample Wallaroo instance has been configured to create external inference URLs for pipelines.  For more information, see the [External Inference URL Guide](https://docs.wallaroo.aiwallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
-  * Run a sample inference through our pipeline's external URL and store the results in a file.  This assumes that the External Inference URLs have been enabled for the target Wallaroo instance.
-  * Undeploy the pipeline and return resources back to the Wallaroo instance's Kubernetes environment.
+    * Create a workspace for our work.
+    * Upload the Aloha model.
+    * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
+    * Run a sample inference through our pipeline by loading a file
+    * Retrieve the external deployment URL.  This sample Wallaroo instance has been configured to create external inference URLs for pipelines.  For more information, see the [External Inference URL Guide](https://docs.wallaroo.aiwallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
+    * Run a sample inference through our pipeline's external URL and store the results in a file.  This assumes that the External Inference URLs have been enabled for the target Wallaroo instance.
+    * Undeploy the pipeline and return resources back to the Wallaroo instance's Kubernetes environment.
 
 ## Install Wallaroo SDK
 

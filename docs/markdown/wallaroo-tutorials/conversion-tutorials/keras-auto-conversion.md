@@ -117,7 +117,7 @@ model_conversion_type = ModelConversionSource.KERAS
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
-![converted model](/images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
+![converted model](..//images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
 
 ```python
 # converts and uploads model.
