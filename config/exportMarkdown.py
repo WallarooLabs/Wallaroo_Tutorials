@@ -161,7 +161,7 @@ fileList = [
     },
     {
         "inputFile": "mlops_api/Wallaroo-MLOps-Tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/mlops_api/",
+        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-api-guides/",
         "outputFile": "wallaroo-mlops-tutorial-reference.md"
     }
 

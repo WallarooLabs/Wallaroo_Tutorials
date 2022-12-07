@@ -28,6 +28,7 @@ The following demonstrates how to use each command in the Wallaroo MLOps API, an
 
 For the examples, the Python `requests` library will be used to make the REST HTTP(S) connections.  `import uuid` will be used to create workspaces, pipelines, assays and other items uniquely so we don't go clobbering over existing items.
 
+
 ```python
 # Requires requests and requests-toolbelt with either:
 # pip install requests-toolbelt
@@ -59,6 +60,7 @@ Then select the client, in this case **api-client**, then **Credentials**.
 
 By default, tokens issued for api-client are valid for up to 60 minutes. Refresh tokens are supported.
 
+
 ```python
 ## Variables
 
@@ -76,17 +78,24 @@ By default, tokens issued for api-client are valid for up to 60 minutes. Refresh
 
 The following is an output of the `TOKENURL` variable to verify it matches your Wallaroo instance's Keycloak API client credentials URL.
 
+
 ```python
 TOKENURL
 ```
 
+
+
+
     'https://magical-bear-3782.keycloak.wallaroo.community/auth/realms/master/protocol/openid-connect/token'
+
+
 
 ### API Example Methods
 
 The following methods are used to retrieve the MLOPs API Token from the Wallaroo instance's Keycloak service, and submit MLOps API requests through the Wallaroo instance's MLOps API.
 
 MLOps API requests are always `POST`, and are either submitted as `'Content-Type':'application/json'` or as a multipart submission including a file.
+
 
 ```python
 def get_jwt_token(url, client, secret, username, password):
@@ -98,6 +107,7 @@ def get_jwt_token(url, client, secret, username, password):
     }
     response = requests.post(url, auth=auth, data=data, verify=True)
     return response.json()['access_token']
+
 
 # This can either submit a plain POST request ('Content-Type':'application/json'), or with a file.
 
@@ -140,15 +150,22 @@ To retrieve an API token for a specific user with the Client Secret, request the
 
 The following sample uses the variables set above to request the token, then displays it.
 
+
 ```python
 TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 ```
+
 
 ```python
 TOKEN
 ```
 
+
+
+
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJBbV9ESjd5VjJKeVVOQUd6SGFPczdpeENTNlIzX180RGNQZDRVOGQxNkJzIn0.eyJleHAiOjE2Njk2NzQ1MzUsImlhdCI6MTY2OTY3MDkzNSwianRpIjoiODk2MDE0YjctZjJhNS00OTFkLTg5YWItMGVlNWQwNjdlZjE3IiwiaXNzIjoiaHR0cHM6Ly9tYWdpY2FsLWJlYXItMzc4Mi5rZXljbG9hay53YWxsYXJvby5jb21tdW5pdHkvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiNWU5YzlhMmItN2E3Zi00NTRhLWI4ZTctOTFlM2MyZDg2YzlmIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiYXBpLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4OWJkOWQ5MC0zOTg3LTQ4ZmMtYTQwMC1jMzYzOWQ4MGFhYmYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI4OWJkOWQ5MC0zOTg3LTQ4ZmMtYTQwMC1jMzYzOWQ4MGFhYmYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiNWU5YzlhMmItN2E3Zi00NTRhLWI4ZTctOTFlM2MyZDg2YzlmIiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.N4aqBvNcqVv3Iwr3uhGCzXd6C4tpD3D-fSJKfe_fYoXEJPTeLL84sw1Ady9kJLmynj8cWkVAhps0GveDB6mkAyYH7uUOaM-mXhBn7kphM-q4PaDWUwRZ2xIViamTh1IVzFpQbCKu6olrDHHqrTn78mZuSd_OXosIll5vXSLyuqk-Ob8HaBry_n-JVHYBqmnnSJIPNUkwQqiiOXya3Rl90I68vQrsvgt_lF_IUsDBgP8tALofoS5U2k3cAxFVhZ6jVIeZ6w6Vgl93T0xNOIeKd7Nc16_VEJOiWmr_MsHr8---EwIfqgYzgAb3YSidHiY7bR6_9PjcZSofhohVzkrokQ'
+
+
 
 ## Users
 
@@ -162,6 +179,7 @@ Users can be retrieved either by their Keycloak user id, or return all users if 
 
 Example:  The first example will submit an empty set `{}` to return all users, then submit the first user's user id and request only that user's details.
 
+
 ```python
 # Get all users
 
@@ -172,6 +190,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'users': {'5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f': {'access': {'impersonate': True,
         'manageGroupMembership': True,
@@ -215,6 +236,9 @@ response
        'requiredActions': [],
        'username': 'kilvin.mitchell@wallaroo.ai'}}}
 
+
+
+
 ```python
 # Get first user Keycloak id
 firstUserKeycloak = list(response['users'])[0]
@@ -229,6 +253,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'users': {'5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f': {'access': {'view': True,
         'manage': True,
@@ -245,6 +272,8 @@ response
        'requiredActions': [],
        'username': 'john.hansarick@wallaroo.ai'}}}
 
+
+
 ### Invite Users
 
 **IMPORTANT NOTE**:  This command is for Wallaroo Community only.  For more details on user management, see [Wallaroo User Management](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-user-management/).
@@ -256,6 +285,7 @@ Users can be invited through `/users/invite`.  When using Wallaroo Community, th
   * **password** *(OPTIONAL string)*: The assigned password of the new user to invite.  If not provided, the Wallaroo instance will provide the new user a temporary password that must be changed upon initial login.
 
 Example:  In this example, a new user will be invited to the Wallaroo instance and assigned a password.
+
 
 ```python
 # invite users
@@ -278,6 +308,7 @@ Users can be deactivated so they can not login to their Wallaroo instance.  Deac
 
 Example:  In this example, the `newUser` will be deactivated.
 
+
 ```python
 # Deactivate users
 
@@ -288,12 +319,18 @@ data = {
 }
 ```
 
+
 ```python
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {}
+
+
 
 ### Activate User
 
@@ -303,6 +340,7 @@ A deactivated user can be reactivated to allow them access to their Wallaroo ins
   * **email** (*REQUIRED string*):  The email address of the user to activate.
 
 Example:  In this example, the `newUser` will be activated.
+
 
 ```python
 # Activate users
@@ -317,7 +355,12 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {}
+
+
 
 ## Workspaces
 
@@ -329,6 +372,7 @@ List the workspaces for a specific user.
   * **user_id** - (*OPTIONAL string*): The Keycloak ID.
   
 Example:  In this example, the workspaces for the a specific user will be displayed, then workspaces for all users will be displayed.
+
 
 ```python
 # List workspaces by user id
@@ -343,6 +387,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'workspaces': [{'id': 1,
        'name': 'john.hansarick@wallaroo.ai - Default Workspace',
        'created_at': '2022-11-23T16:34:47.914362+00:00',
@@ -364,6 +411,9 @@ response
        'archived': False,
        'models': [2, 3, 5, 4, 6, 7, 8, 9],
        'pipelines': []}]}
+
+
+
 
 ```python
 # List workspaces
@@ -377,6 +427,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'workspaces': [{'id': 1,
        'name': 'john.hansarick@wallaroo.ai - Default Workspace',
        'created_at': '2022-11-23T16:34:47.914362+00:00',
@@ -399,6 +452,8 @@ response
        'models': [2, 3, 5, 4, 6, 7, 8, 9],
        'pipelines': []}]}
 
+
+
 ### Create Workspace
 
 A new workspace will be created in the Wallaroo instance.  Upon creating, the workspace owner will be assigned as the user making the MLOps API request.
@@ -409,6 +464,7 @@ A new workspace will be created in the Wallaroo instance.  Upon creating, the wo
   * **workspace_id** - (*int*):  The ID of the new workspace.
   
 Example:  In this example, a workspace with the name `testapiworkspace-` with a randomly generated UUID will be created, and the newly created workspace's `workspace_id` saved for use in other code examples.  After the request is complete, the [List Workspaces](#list-workspaces) command will be issued to demonstrate the new workspace has been created.
+
 
 ```python
 # Create workspace
@@ -426,7 +482,13 @@ exampleWorkspaceId = response['workspace_id']
 response
 ```
 
+
+
+
     {'workspace_id': 5}
+
+
+
 
 ```python
 # List workspaces
@@ -439,6 +501,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'workspaces': [{'id': 1,
        'name': 'john.hansarick@wallaroo.ai - Default Workspace',
@@ -469,6 +534,8 @@ response
        'models': [],
        'pipelines': []}]}
 
+
+
 ### Add User to Workspace
 
 Existing users of the Wallaroo instance can be added to an existing workspace.
@@ -478,6 +545,7 @@ Existing users of the Wallaroo instance can be added to an existing workspace.
   * **workspace_id** - (*REQUIRED int*): The id of the workspace.
   
 Example:  The following example adds the user created in Invite Users request to the workspace created in the [Create Workspace](#create-workspace) request.
+
 
 ```python
 # Add existing user to existing workspace
@@ -493,7 +561,12 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {}
+
+
 
 ### List Users in a Workspace
 
@@ -506,6 +579,7 @@ Lists the users who are either owners or collaborators of a workspace.
   * **user_type**:  The user's workspace type (owner, co-owner, etc).
   
 Example:  The following example will list all users part of the workspace created in the [Create Workspace](#create-workspace) request.
+
 
 ```python
 # List users in a workspace
@@ -520,10 +594,15 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'users': [{'user_id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
        'user_type': 'OWNER'},
       {'user_id': 'da7c2f4c-822e-49eb-93d7-a4b90af9b4ca',
        'user_type': 'COLLABORATOR'}]}
+
+
 
 ### Remove User from a Workspace
 
@@ -539,6 +618,7 @@ Removes the user from the given workspace.  In this request, either the user's K
   
 Example:  The following example will remove the `newUser` from workspace created in the [Create Workspace](#create-workspace) request.  Then the users for that workspace will be listed to verify `newUser` has been removed.
 
+
 ```python
 # Remove existing user from an existing workspace
 
@@ -553,7 +633,13 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'affected_rows': 1}
+
+
+
 
 ```python
 # List users in a workspace
@@ -568,8 +654,13 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'users': [{'user_id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
        'user_type': 'OWNER'}]}
+
+
 
 ## Models
 
@@ -583,6 +674,7 @@ Uploads a ML Model to a Wallaroo workspace via POST with `Content-Type: multipar
   * **workspace_id** - (*REQUIRED int*): The numerical id of the workspace to upload the model to.
   
 Example:  This example will upload the sample file `ccfraud.onnx` to the workspace created in the [Create Workspace](#create-workspace) step as `apitestmodel`.  The id of the uploaded model will be saved for later examples.
+
 
 ```python
 # upload model - uses multiform data through a Python `request`
@@ -605,14 +697,25 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data, files)
 response
 ```
 
+
+
+
     {'insert_models': {'returning': [{'models': [{'id': 10}]}]}}
+
+
+
 
 ```python
 exampleModelId=response['insert_models']['returning'][0]['models'][0]['id']
 exampleModelId
 ```
 
+
+
+
     10
+
+
 
 ### Stream Upload Model to Workspace
 
@@ -625,6 +728,7 @@ Streams a potentially large ML Model to a Wallaroo workspace via POST with `Cont
   * **workspace_id** - (*REQUIRED int*): The numerical id of the workspace to upload the model to.
   
 Example:  This example will upload the sample file `ccfraud.onnx` to the workspace created in the [Create Workspace](#create-workspace) step as `apitestmodel`.  The id of the uploaded model will be saved for later examples.
+
 
 ```python
 # stream upload model - next test is adding arbitrary chunks to the stream
@@ -648,7 +752,12 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data=None, files=fil
 response
 ```
 
+
+
+
     {'insert_models': {'returning': [{'models': [{'id': 11}]}]}}
+
+
 
 ### List Models in Workspace
 
@@ -658,6 +767,7 @@ Returns a list of models added to a specific workspace.
   * **workspace_id** - (*REQUIRED int*): The workspace id to list.
   
 Example:  Display the models for the workspace used in the Upload Model to Workspace step.  The details of the models will be saved as variables for other examples.
+
 
 ```python
 # List models in a workspace
@@ -672,6 +782,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'models': [{'id': 11,
        'name': 'apitestmodel-08b16b74-837c-4b4b-a6b7-49475ddece98',
        'owner_id': '""',
@@ -682,6 +795,9 @@ response
        'owner_id': '""',
        'created_at': '2022-11-28T21:29:58.270976+00:00',
        'updated_at': '2022-11-28T21:29:58.270976+00:00'}]}
+
+
+
 
 ```python
 #exampleModelSha = response['models'][0]['models']['sha']
@@ -707,6 +823,7 @@ Returns the model details by the specific model id.
   
 Example:  Retrieve the details for the model uploaded in the Upload Model to Workspace step.
 
+
 ```python
 # Get model details by id
 
@@ -720,6 +837,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'id': 11,
      'owner_id': '""',
      'workspace_id': 5,
@@ -727,6 +847,8 @@ response
      'updated_at': '2022-11-28T21:30:05.071826+00:00',
      'created_at': '2022-11-28T21:30:05.071826+00:00',
      'model_config': None}
+
+
 
 ### Get Model Versions
 
@@ -746,7 +868,9 @@ Retrieves all versions of a model based on either the name of the model or the `
     * **file_name** - (*String*): The filename used when uploading the model.
     * **image_path** - (*String*): The image path of the model.
 
+
 Example:  Retrieve the versions for a previously uploaded model.
+
 
 ```python
 # List models in a workspace
@@ -762,6 +886,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     [{'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
       'models_pk_id': 9,
       'model_version': '5fb09950-b69a-4585-a1f0-4992c945b80f',
@@ -770,6 +897,9 @@ response
       'id': 9,
       'file_name': 'streamfile.onnx',
       'image_path': None}]
+
+
+
 
 ```python
 # Stored for future examples
@@ -787,6 +917,7 @@ Returns the model's configuration details.
   
 Example:  Submit the model id for the model uploaded in the Upload Model to Workspace step to retrieve configuration details.
 
+
 ```python
 # Get model config by id
 
@@ -800,7 +931,12 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'model_config': None}
+
+
 
 ### Get Model Details
 
@@ -812,6 +948,7 @@ Returns the model's configuration details.
   * **model_id** - (*REQUIRED int*): The numerical value of the model's id.
   
 Example:  Submit the model id for the model uploaded in the Upload Model to Workspace step to retrieve configuration details.
+
 
 ```python
 # Get model config by id
@@ -825,6 +962,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'id': 11,
      'name': 'apitestmodel-08b16b74-837c-4b4b-a6b7-49475ddece98',
@@ -840,6 +980,8 @@ response
        'file_name': 'streamfile.onnx',
        'image_path': None}]}
 
+
+
 ### Create Pipeline in a Workspace
 
 Creates a new pipeline in the specified workspace.
@@ -850,6 +992,7 @@ Creates a new pipeline in the specified workspace.
   * **definition** - (REQUIRED string): Pipeline definitions, can be `{}` for none.
 
 Example:  Two pipelines are created in the workspace created in the step Create Workspace.  One will be an empty pipeline without any models, the other will be created using the uploaded models in the Upload Model to Workspace step and no configuration details.  The pipeline details will be stored for later examples.
+
 
 ```python
 # Create pipeline in a workspace
@@ -871,9 +1014,15 @@ emptyExamplePipelineVariantVersion=['pipeline_variant_version']
 response
 ```
 
+
+
+
     {'pipeline_pk_id': 3,
      'pipeline_variant_pk_id': 3,
      'pipeline_variant_version': '84730f78-7b89-4420-bdcb-3c5abac0dd10'}
+
+
+
 
 ```python
 # Create pipeline in a workspace with models
@@ -913,9 +1062,14 @@ emptyModelPipelineVariantVersion=['pipeline_variant_version']
 response
 ```
 
+
+
+
     {'pipeline_pk_id': 4,
      'pipeline_variant_pk_id': 4,
      'pipeline_variant_version': '6526328c-5b13-4430-9ba2-ece4971515fc'}
+
+
 
 ### Deploy a Pipeline
 
@@ -937,6 +1091,8 @@ Deploy a an existing pipeline.  Note that for any pipeline that has model steps,
 
 Examples:  Both the empty pipeline and pipeline with model created in the step Create Pipeline in a Workspace will be deployed and their deployment information saved for later examples.
 
+
+
 ```python
 # Deploy empty pipeline
 
@@ -956,7 +1112,13 @@ response
 
 ```
 
+
+
+
     {'id': 2}
+
+
+
 
 ```python
 # Deploy a pipeline with models
@@ -977,12 +1139,18 @@ data = {
     "pipeline_id": exampleModelPipelineId
 }
 
+
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 exampleModelDeploymentId=response['id']
 response
 ```
 
+
+
+
     {'id': 3}
+
+
 
 ### Get Deployment Status
 
@@ -992,6 +1160,7 @@ Returns the deployment status.
   * **name** - (REQUIRED string): The deployment in the format {deployment_name}-{deploymnent-id}.
   
 Example: The deployed empty and model pipelines status will be displayed.
+
 
 ```python
 # Get empty pipeline deployment
@@ -1005,6 +1174,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'status': 'Starting',
      'details': [],
@@ -1023,6 +1195,9 @@ response
        'details': []}],
      'sidekicks': []}
 
+
+
+
 ```python
 # Get model pipeline deployment
 
@@ -1035,6 +1210,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'status': 'Starting',
      'details': [],
@@ -1053,6 +1231,8 @@ response
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Get External Inference URL
 
 The API command `/admin/get_pipeline_external_url` retrieves the external inference URL for a specific pipeline in a workspace.
@@ -1066,6 +1246,7 @@ In this example, a list of the workspaces will be retrieved.  Based on the setup
 The External Inference URL will be stored as a variable for the next step.
 
 Modify these values to match the ones used in the Internal Pipeline Deployment URL Tutorial.
+
 
 ```python
 ## Start with the a lists of the workspaces to verify the ID
@@ -1081,11 +1262,13 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
 ```python
 workspaceList = response['workspaces']
 workspaceId = list(filter(lambda x:x["name"]=="urldemoworkspace",workspaceList))[0]['id']
 workspaceId
 ```
+
 
 ```python
 ## Retrieve the pipeline's External Inference URL
@@ -1107,6 +1290,7 @@ externalUrl
 The inference can now be performed through the External Inference URL.  This URL will accept the same inference data file that is used with the Wallaroo SDK, or with an Internal Inference URL as used in the Internal Pipeline Inference URL Tutorial.
 
 For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request through the data file `data-1.json`.
+
 
 ```python
 ## Inference through external URL
@@ -1140,6 +1324,7 @@ Undeploys a deployed pipeline.
 
 Example:  Both the empty pipeline and pipeline with models deployed in the step Deploy a Pipeline will be undeployed.
 
+
 ```python
 # Undeploy an empty pipeline
 
@@ -1153,6 +1338,7 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
 
 ```python
 # Undeploy pipeline with models
@@ -1182,6 +1368,8 @@ Copies an existing pipeline into a new one in the same workspace.  A new engine 
 
 Example:  The pipeline with models created in the step Create Pipeline in a Workspace will be copied into a new one.
 
+
+
 ```python
 # Copy a pipeline
 
@@ -1199,10 +1387,15 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'pipeline_pk_id': 5,
      'pipeline_variant_pk_id': 5,
      'pipeline_version': None,
      'deployment': None}
+
+
 
 ## List Enablement Features
 
@@ -1214,6 +1407,7 @@ Lists the enablement features for the Wallaroo instance.
   * **features** - (*string*): Enabled features.
   * **name** - (*string*): Name of the Wallaroo instance.
   * **is_auth_enabled** - (*bool*): Whether authentication is enabled.
+
 
 ```python
 # List enablement features
@@ -1227,9 +1421,14 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'features': {'plateau': 'true'},
      'name': 'Wallaroo Dev',
      'is_auth_enabled': True}
+
+
 
 ## Assays
 
@@ -1281,6 +1480,8 @@ Create a new array in a specified pipeline.
   * **model_insights_url** - (*OPTIONAL string*): URL for model insights.
 * **RETURNS**
   * **assay_id** - (*integer*): The id of the new assay.
+
+
 
 ```python
 # Create assay
@@ -1341,7 +1542,12 @@ example_assay_id = response['assay_id']
 response
 ```
 
+
+
+
     {'assay_id': 2}
+
+
 
 ### List Assays
 
@@ -1356,6 +1562,7 @@ Example:  Display a list of all assays in a workspace.  This will assume we have
 
 For this reason, these values are hard coded for now.
 
+
 ```python
 ## First list all of the workspaces and the list of pipelines
 
@@ -1369,6 +1576,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'workspaces': [{'id': 1,
        'name': 'john.hansarick@wallaroo.ai - Default Workspace',
@@ -1399,6 +1609,9 @@ response
        'models': [],
        'pipelines': []}]}
 
+
+
+
 ```python
 # Get assays
 
@@ -1411,6 +1624,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     [{'id': 3,
       'name': 'example assay',
@@ -1503,6 +1719,8 @@ response
        'provided_edges': None,
        'add_outlier_edges': True}}]
 
+
+
 ## Activate or Deactivate Assay
 
 Activates or deactivates an existing assay.
@@ -1515,6 +1733,7 @@ Activates or deactivates an existing assay.
   * **active** - (*bool*): True to activate the assay, False to deactivate it.
 
 Example:  Assay 8 "House Output Assay" will be deactivated then activated.
+
 
 ```python
 # Deactivate assay
@@ -1530,7 +1749,13 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'id': 2, 'active': False}
+
+
+
 
 ```python
 # Activate assay
@@ -1546,7 +1771,12 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+
+
+
     {'id': 2, 'active': True}
+
+
 
 ### Create Interactive Baseline
 
@@ -1596,6 +1826,7 @@ Creates an interactive assay baseline.
   * {} when successful.
 
 Example:  An interactive assay baseline will be set for the assay "Test Assay" on Pipeline 4.
+
 
 ```python
 # Run interactive baseline
@@ -1652,6 +1883,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'assay_id': 3,
      'name': 'example assay',
@@ -1728,6 +1962,8 @@ response
      'summarizer_meta': '{"type":"UnivariateContinuous","bin_mode":"Quantile","aggregation":"Density","metric":"PSI","num_bins":5,"bin_weights":null,"provided_edges":null}',
      'status': 'BaselineRun'}
 
+
+
 ### Get Assay Baseline
 
 Retrieve an assay baseline.
@@ -1744,6 +1980,7 @@ Retrieve an assay baseline.
   
 Example:  3 assay baselines for Workspace 6 and pipeline `houseprice-pipe-yns` will be retrieved.
 
+
 ```python
 # Get Assay Baseline
 
@@ -1758,6 +1995,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     [{'check_failures': [],
       'elapsed': 138,
@@ -1834,6 +2074,8 @@ response
       'pipeline_name': 'housepricepipe',
       'time': 1643673552333}]
 
+
+
 ### Run Assay Interactively
 
 Runs an assay.
@@ -1883,6 +2125,7 @@ Runs an assay.
   
 Example:  An interactive assay will be run for Assay exampleAssayId exampleAssayName.  Depending on the number of assay results and the data window, this may take some time.  This returns *all* of the results for this assay at this time.  The total number of responses will be displayed after.
 
+
 ```python
 # Run interactive assay
 
@@ -1931,6 +2174,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response[0]
 ```
+
+
+
 
     {'assay_id': 3,
      'name': 'example assay',
@@ -2019,11 +2265,15 @@ response[0]
       'provided_edges': None},
      'status': 'Warning'}
 
+
+
+
 ```python
 print(len(response))
 ```
 
     30
+
 
 ### Get Assay Results
 
@@ -2038,7 +2288,8 @@ Retrieve the results for an assay.
 * **Returns**
   * Assay Baseline
   
-Example:  Results for Assay 3 "example assay" will be retrieved for January 2 to January 3.
+Example:  Results for Assay 3 "example assay" will be retrieved for January 2 to January 3.  For the sake of time, only the first record will be displayed.
+
 
 ```python
 # Get Assay Results
@@ -2053,4 +2304,3 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
