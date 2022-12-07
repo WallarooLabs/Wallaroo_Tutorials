@@ -38,6 +38,7 @@ Model Insights has the capability to perform interactive assays so that you can 
 
 To get started we import the libraries we'll need.
 
+
 ```python
 import matplotlib.pyplot as plt
 import pandas as pd 
@@ -50,6 +51,7 @@ from wallaroo.object import EntityNotFoundError
 ### Set Configuration
 
 The following configuration is used to connect to the pipeline used, and display the graphs.  The `pipeline_name` and `model_name` shown here are from the [Model Insights Canned Data Loader](model-insights-load_canned_data.ipynb), so adjust them based on your own needs.
+
 
 ```python
 plt.rcParams["figure.figsize"] = (12,6)
@@ -64,6 +66,7 @@ model_name = 'housepricemodel'
 
 Connect to your Wallaroo instance.
 
+
 ```python
 wl = wallaroo.Client()
 ```
@@ -71,6 +74,7 @@ wl = wallaroo.Client()
 ### Connect to Workspace and Pipeline
 
 Connect to the workspace, pipeline, and model listed above.  This code assumes that there are not multiple pipelines with the same name.
+
 
 ```python
 def get_workspace(name):
@@ -96,9 +100,15 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>housepricepipe</td></tr><tr><th>created</th> <td>2022-10-10 18:38:51.033867+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-10 18:38:51.121077+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>housepricemodel</td></tr></table>
 
+
+
 We assume the pipeline has been running for a while and there is a period of time that is free of errors that we'd like to use as the _baseline_. Let's note the start and end times. For this example we have 30 days of data from Jan 2022 and will use Jan 1 data as our baseline.
+
 
 ```python
 import datetime
@@ -109,6 +119,7 @@ last_day = datetime.datetime.fromisoformat('2022-02-01T00:00:00+00:00')
 
 Let's create an assay using that pipeline and the model in the pipeline. We also specify the baseline start and end.
 
+
 ```python
 assay_name = "example assay"
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
@@ -116,11 +127,29 @@ assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start,
 
 We don't know much about our baseline data yet so let's examine the data and create a couple of visual representations. First let's get some basic stats on the baseline data.
 
+
 ```python
 baseline_run = assay_builder.build().interactive_baseline_run()
 baseline_run.baseline_stats()
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -163,35 +192,48 @@ baseline_run.baseline_stats()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 Now let's look at a histogram, kernel density estimate (KDE), and Empirical Cumulative Distribution (ecdf) charts of the baseline data. These will give us insights into the distributions of the predictions and features that the assay is configured for.
+
 
 ```python
 assay_builder.baseline_histogram()
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png)
     
+
+
 
 ```python
 assay_builder.baseline_kde()
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png)
     
+
+
 
 ```python
 assay_builder.baseline_ecdf()
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png)
     
 
+
 ### Interactive Baseline Runs
 We can do an interactive run of just the baseline part to see how the baseline data will be put into bins. This assay uses quintiles so all 5 bins (not counting the outlier bins) have 20% of the predictions. We can see the bin boundaries along the x-axis.
+
 
 ```python
 baseline_run.chart()
@@ -204,16 +246,37 @@ baseline_run.chart()
     metric = PSI
     weighted = False
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_22_1.png)
     
 
+
 We can also get a dataframe with the bin/edge information.
+
 
 ```python
 baseline_run.baseline_bins()
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -276,8 +339,12 @@ baseline_run.baseline_bins()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 The previous assay used quintiles so all of the bins had the same percentage/count of samples.  To get bins that are divided equally along the range of values we can use `BinMode.EQUAL`.
+
 
 ```python
 equal_bin_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
@@ -293,16 +360,37 @@ equal_baseline.chart()
     metric = PSI
     weighted = False
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_26_1.png)
     
 
+
 We now see very different bin edges and sample percentages per bin.
+
 
 ```python
 equal_baseline.baseline_bins()
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -365,6 +453,9 @@ equal_baseline.baseline_bins()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 ### Interactive Assay Runs
 
@@ -392,6 +483,7 @@ The red dots in the above graph indicate distance scores larger than our thresho
 
 We can also retrieve the above results as a data frame, for further analysis, if desired.
 
+
 ```python
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
 assay_config = assay_builder.add_run_until(last_day).build()
@@ -400,6 +492,23 @@ assay_df = assay_results.to_dataframe()
 assay_df
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -902,22 +1011,29 @@ assay_df
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 Basic functionality for creating quick charts is included.
+
 
 ```python
 assay_results.chart_scores()
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_32_0.png)
     
+
 
 We see that the difference scores are low for a while and then jump up to indicate there is an issue. We can examine that particular window to help us decide if that threshold is set correctly or not.
 
 We can generate a quick chart of the results. This chart shows the 5 quantile bins (quintiles) derived from the baseline data plus one for left outliers and one for right outliers.  We also see that the data from the window falls within the baseline quintiles but in a different proportion and is skewing higher. Whether this is an issue or not is specific to your use case.
 
 First let's examine a day that is only slightly different than the baseline. We see that we do see some values that fall outside of the range from the baseline values, the left and right outliers, and that the bin values are different but similar.
+
 
 ```python
 assay_results[0].chart()
@@ -935,11 +1051,15 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_34_1.png)
     
 
+
 Other days, however are significantly different.
+
 
 ```python
 assay_results[12].chart()
@@ -957,9 +1077,13 @@ assay_results[12].chart()
     scores = [0.0, 0.06790765360198812, 0.0003893727578237944, 0.0037302373887164895, 0.02434412838052893, 5.798347076369716e-05, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_36_1.png)
     
+
+
 
 ```python
 assay_results[13].chart()
@@ -977,13 +1101,17 @@ assay_results[13].chart()
     scores = [0.0, 0.7203606043304971, 0.8049360069588025, 0.4504317335378006, 0.0820473282443674, 0.9698478211538909, 0.027882664686338928]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png)
     
 
+
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
 
 The current assay expects continuous data. Sometimes categorical data is encoded as 1 or 0 in a feature and sometimes in a limited number of values such as 1, 2, 3. If one value has high a percentage the analysis emits a warning so that we know the scores for that feature may not behave as we expect.
+
 
 ```python
 labels = ['bedrooms', 'bathrooms', 'lat', 'long', 'waterfront', 'sqft_living', 'sqft_lot', 'floors', 'view', 'condition', 'grade', 'sqft_above', 'sqft_basement', 'yr_built', 'yr_renovated', 'sqft_living15', 'sqft_lot15']
@@ -1016,29 +1144,38 @@ iadf = assay_results.to_dataframe()
         0    15            340 sqft_living15   0.0132 
         0    16           1347 sqft_lot15      0.0177 
 
+
 We can chart each of the iopaths and do a visual inspection. From the charts we see that if any of the input features had significant differences in the first two days which we can choose to inspect further. Here we choose to show 3 charts just to save space in this notebook.
+
 
 ```python
 assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', 'sqft_living'])
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_0.png)
     
+
+
 
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_1.png)
     
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_2.png)
     
+
 
 When we are comfortable with what alert threshold should be for our specific purposes we can create and save an assay that will be automatically run on a daily basis.
 
 In this example we're create an assay that runs everyday against the baseline and has an alert threshold of 0.5.
 
 Once we upload it it will be saved and scheduled for future data as well as run against past data.
+
 
 ```python
 alert_threshold = 0.1
@@ -1047,6 +1184,7 @@ assay_id = assay_builder.upload()
 ```
 
 To retrieve the results after enough time has passed, collect them with the method `get_assay_results_logs` specifying the time to collect and the `assay_id`.  This will take additional inference history so can not be demonstrated here, but the command to collect the data is listed below.
+
 
 ```python
 assay_results = wl.get_assay_results_logs(baseline_end,datetime.datetime.now(), assay_id=assay_id)
@@ -1069,6 +1207,7 @@ So to recap:
 
 For example to run an analysis every 12 hours on the previous 24 hours of data, you'd set the window width to 24 (the default) and the interval to 12.
 
+
 ```python
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
 assay_builder = assay_builder.add_run_until(last_day)
@@ -1083,15 +1222,20 @@ print(f"Generated {len(assay_results)} analyses")
 
     Generated 59 analyses
 
+
+
 ```python
 assay_results.chart_scores()
 ```
+
 
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_48_0.png)
     
 
+
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week.  The analysis will be generated when the window is complete.
+
 
 ```python
 report_start = datetime.datetime.fromisoformat('2022-01-03T00:00:00+00:00')
@@ -1109,13 +1253,17 @@ print(f"Generated {len(assay_results)} analyses")
 
     Generated 4 analyses
 
+
+
 ```python
 assay_results.chart_scores()
 ```
 
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png)
     
+
 
 ## Advanced Configuration
 
@@ -1146,6 +1294,7 @@ The summarizer section shows us the defaults of Quantile, Density and PSI on 5 b
 The baseline section shows us that it is configured as a fixed baseline with the specified start and end date times.
 
 And the window tells us what model in the pipeline we are analyzing and how often.
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -1192,9 +1341,11 @@ print(assay_builder.build().to_json())
         "model_insights_url": "http://model-insights:5150"
     }
 
+
 ## Defaults
 
 We can run the assay interactively and review the first analysis. The method `compare_basic_stats` gives us a dataframe with basic stats for the baseline and window data.
+
 
 ```python
 assay_results = assay_builder.build().interactive_run()
@@ -1203,6 +1354,23 @@ ar = assay_results[0]
 ar.compare_basic_stats()
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1272,13 +1440,34 @@ ar.compare_basic_stats()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 The method `compare_bins` gives us a dataframe with the bin information. Such as the number of bins, the right edges, suggested bin/edge names and the values for each bin in the baseline and the window.
+
 
 ```python
 ar.compare_bins()
 ```
 
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1381,8 +1570,12 @@ ar.compare_bins()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
 We can also plot the chart to visualize the values of the bins.
+
 
 ```python
 ar.chart()
@@ -1400,13 +1593,17 @@ ar.chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_59_1.png)
     
 
+
 ## Binning Mode
 
 We can change the bin mode algorithm to equal and see that the bins/edges are partitioned at different points and the bins have different values.
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -1416,6 +1613,21 @@ display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
 
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1518,8 +1730,12 @@ assay_results[0].chart()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
     None
+
 
     baseline mean = 12.954393170120568
     window mean = 12.952570220492534
@@ -1533,13 +1749,17 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.00028622745636607417, 0.000136940329536975, 0.0024190313632530313, 0.0028459952590805006, 0.0002760930381493355, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_61_3.png)
     
 
+
 ## User Provided Bin Edges
 
 The values in this dataset run from ~11.6 to ~15.81. And let's say we had a business reason to use specific bin edges.  We can specify them with the BinMode.PROVIDED and specifying a list of floats with the right hand / upper edge of each bin and optionally the lower edge of the smallest bin. If the lowest edge is not specified the threshold for left outliers is taken from the smallest value in the baseline dataset.
+
 
 ```python
 edges = [11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
@@ -1550,6 +1770,21 @@ display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
 
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1652,8 +1887,12 @@ assay_results[0].chart()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
     None
+
 
     baseline mean = 12.954393170120568
     window mean = 12.952570220492534
@@ -1667,13 +1906,17 @@ assay_results[0].chart()
     scores = [0.0, 0.002708901099649454, 0.00015914496208737885, 0.0004215024577886459, 0.002159043392325224, 0.00038304720176068804, 0.0]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_63_3.png)
     
 
+
 ## Number of Bins
 
 We could also choose to a different number of bins, let's say 10, which can be evenly spaced or based on the quantiles (deciles).
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -1683,6 +1926,21 @@ display(display(assay_results[1].compare_bins()))
 assay_results[1].chart()
 ```
 
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1845,8 +2103,12 @@ assay_results[1].chart()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
     None
+
 
     baseline mean = 12.954393170120568
     window mean = 12.94535461693147
@@ -1860,12 +2122,16 @@ assay_results[1].chart()
     scores = [0.0013318933239185415, 0.0001508387888967812, 0.0014077319940240033, 0.00044689056669365687, 0.0001508387888967812, 0.002879132738274895, 0.002579185308688176, 0.002722796821458902, 0.0011510010089298668, 0.0009475972030849906, 0.001710564941068633, 0.005886146188098397]
     index = None
 
+
     /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
       ax.set_xticklabels(labels=edge_names, rotation=45)
+
+
 
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_65_4.png)
     
+
 
 ## Bin Weights
 
@@ -1874,6 +2140,7 @@ Now let's say we only care about differences at the higher end of the range. We 
 If we stick with 10 bins we can provide 10 a vector of 12 weights. One weight each for the original bins plus one at the front for the left outlier bin and one at the end for the right outlier bin.
 
 Note we still show the values for the bins but the scores for the lower 5 and left outlier are 0 and only the right half is counted and reflected in the score.
+
 
 ```python
 weights = [0] * 6
@@ -1888,6 +2155,22 @@ assay_results[1].chart()
 
     Using weights:  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
 
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2050,8 +2333,12 @@ assay_results[1].chart()
     </tr>
   </tbody>
 </table>
+</div>
+
+
 
     None
+
 
     baseline mean = 12.954393170120568
     window mean = 12.94535461693147
@@ -2065,12 +2352,16 @@ assay_results[1].chart()
     scores = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.000429864218114696, 0.00045379947024315036, 0.00019183350148831114, 0.00015793286718083176, 0.0002850941568447722, 0.0009810243646830661]
     index = None
 
+
     /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
       ax.set_xticklabels(labels=edge_names, rotation=45)
+
+
 
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_67_5.png)
     
+
 
 ## Metrics
 
@@ -2078,6 +2369,7 @@ The `score` is a distance or dis-similarity measure. The larger it is the less s
 summing the differences of each individual bin, taking the maximum difference and a modified Population Stability Index (PSI).
 
 The following three charts use each of the metrics. Note how the scores change. The best one will depend on your particular use case.
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2097,9 +2389,13 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_69_1.png)
     
+
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2120,9 +2416,13 @@ assay_results[0].chart()
     scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_1.png)
     
+
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2143,13 +2443,17 @@ assay_results[0].chart()
     scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
     index = 3
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_71_1.png)
     
 
+
 ## Aggregation Options
 
 Also, bin aggregation can be done in histogram `Aggregation.DENSITY` style (the default) where we count the number/percentage of values that fall in each bin or Empirical Cumulative Density Function style `Aggregation.CUMULATIVE` where we keep a cumulative count of the values/percentages that fall in each bin.
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2170,9 +2474,13 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
+
+
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png)
     
+
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2192,6 +2500,8 @@ assay_results[0].chart()
     score = 0.028587074708172105
     scores = [0.0033112582781456954, 0.006512019520534207, 0.0018763188110397233, 0.01456947554393151, 0.0017661261748300738, 0.0005518763796908965, 0.0]
     index = None
+
+
 
     
 ![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png)

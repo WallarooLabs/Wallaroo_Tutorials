@@ -20,10 +20,12 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
+
 
 ```python
 wl = wallaroo.Client()
@@ -35,9 +37,11 @@ wl = wallaroo.Client()
     
     Login successful!
 
+
 ## Create the Workspace
 
 We will create a workspace to work in and call it the "alohaworkspace", then set it as current workspace environment.  We'll also create our pipeline in advance as `alohapipeline`.
+
 
 ```python
 workspace_name = 'alohaworkspace'
@@ -45,6 +49,7 @@ pipeline_name = 'alohapipeline'
 model_name = 'alohamodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -64,6 +69,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -75,15 +81,22 @@ aloha_pipeline
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
 
+
 ```python
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'aloha-workspace', 'id': 6, 'archived': False, 'created_by': '7dbb3754-4c14-4730-8b77-33caeea7a2a0', 'created_at': '2022-03-29T16:14:08.85824+00:00', 'models': [], 'pipelines': []}
+
+
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
+
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -102,6 +115,7 @@ To do this, we'll create our pipeline that can ingest the data, pass the data to
 for p in wl.list_pipelines(): p.undeploy()
 ```
 
+
 ```python
 aloha_pipeline.add_model_step(model)
 aloha_pipeline.deploy()
@@ -109,13 +123,23 @@ aloha_pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ....... ok
 
+
+
+
+
     {'name': 'aloha-test-demo', 'create_time': datetime.datetime(2022, 3, 29, 16, 15, 31, 638290, tzinfo=tzutc()), 'definition': "[{'ModelInference': {'models': [{'name': 'aloha-2', 'version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde', 'sha': 'fd998cd5e4964bbbb4f8d29d245a8ac67df81b62be767afbceb96a03d1a01520'}]}}]"}
 
+
+
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 aloha_pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': None,
@@ -134,6 +158,8 @@ aloha_pipeline.status()
        'status': 'Running',
        'reason': None}]}
 
+
+
 ## Interferences
 
 ### Infer 1 row
@@ -142,9 +168,13 @@ Now that the pipeline is deployed and our Aloha model is in place, we'll perform
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
+
 ```python
 aloha_pipeline.infer_from_file("data-1.json")
 ```
+
+
+
 
     [InferenceResult({'check_failures': [],
       'elapsed': 631348351,
@@ -230,6 +260,8 @@ aloha_pipeline.infer_from_file("data-1.json")
       'pipeline_name': 'aloha-test-demo',
       'time': 1648570552486})]
 
+
+
 ### Batch Inference
 
 Now that our smoke test is successful, let's really give it some data.  We have two inference files we can use:
@@ -241,11 +273,18 @@ We'll pipe the `data-25k.json` file through the `aloha_pipeline` deployment URL,
 
 When running this example, replace the URL from the `_deployment._url()` command into the `curl` command below.
 
+
 ```python
 aloha_pipeline._deployment._url()
 ```
 
+
+
+
     'http://engine-lb.aloha-test-demo-5:29502/pipelines/aloha-test-demo'
+
+
+
 
 ```python
 !curl -X POST http://engine-lb.aloha-test-demo-5:29502/pipelines/aloha-test-demo -H "Content-Type:application/json" --data @data-25k.json > curl_response.txt
@@ -255,13 +294,19 @@ aloha_pipeline._deployment._url()
                                      Dload  Upload   Total   Spent    Left  Speed
     100 12.9M  100 10.1M  100 2886k   539k   149k  0:00:19  0:00:19 --:--:-- 2570k
 
+
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged aloha_pipeline.deploy() will restart the inference engine in the same configuration as before.
+
 
 ```python
 aloha_pipeline.undeploy()
 ```
 
+
+
+
     {'name': 'aloha-test-demo', 'create_time': datetime.datetime(2022, 3, 29, 16, 15, 31, 638290, tzinfo=tzutc()), 'definition': "[{'ModelInference': {'models': [{'name': 'aloha-2', 'version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde', 'sha': 'fd998cd5e4964bbbb4f8d29d245a8ac67df81b62be767afbceb96a03d1a01520'}]}}]"}
+
 
