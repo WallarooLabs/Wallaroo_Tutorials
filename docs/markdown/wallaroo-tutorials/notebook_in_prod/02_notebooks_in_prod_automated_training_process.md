@@ -34,7 +34,6 @@ The following steps are part of this process:
 
 Note that this connection is simulated to demonstrate how data would be retrieved from an existing data store.  For training, we will use the data on all houses sold in this market with the last two years.
 
-
 ```python
 import numpy as np
 import pandas as pd
@@ -57,7 +56,6 @@ from postprocess import postprocess    # our custom postprocessing
 matplotlib.rcParams["figure.figsize"] = (12,6)
 ```
 
-
 ```python
 conn = simdb.simulate_db_connection()
 tablename = simdb.tablename
@@ -72,10 +70,6 @@ housing_data
 ```
 
     select * from house_listings where date > DATE(DATE(), '-24 month') AND sale_price is not NULL
-
-
-
-
 
 <div>
 <style scoped>
@@ -388,19 +382,15 @@ housing_data
 <p>20523 rows × 22 columns</p>
 </div>
 
-
-
 ### Data transformations
 
 To improve relative error performance, we will predict on `log10` of the sale price.
 
 Predict on log10 price to try to improve relative error performance
 
-
 ```python
 housing_data['logprice'] = np.log10(housing_data.list_price)
 ```
-
 
 ```python
 # split data into training and test
@@ -416,7 +406,6 @@ hd_test = housing_data.loc[gp=='test', :].reset_index(drop=True, inplace=False)
 runif = np.random.default_rng(123).uniform(0, 1, hd_train.shape[0])
 xgb_gp = np.where(runif < 0.2, 'val', 'train')
 ```
-
 
 ```python
 # for xgboost
@@ -436,11 +425,9 @@ print(f'val_features: {val_features.shape}, val_labels: {len(val_labels)}')
     train_features: (13129, 18), train_labels: 13129
     val_features: (3300, 18), val_labels: 3300
 
-
 ### Generate and Test the Model
 
 Based on the experimentation and testing performed in **Stage 1: Data Exploration And Model Selection**, XGBoost was selected as the ML model and the variables for training were selected.  The model will be generated and tested against sample data.
-
 
 ```python
 
@@ -463,10 +450,6 @@ xgb_model.fit(
     /opt/conda/lib/python3.9/site-packages/xgboost/sklearn.py:793: UserWarning: `early_stopping_rounds` in `fit` method is deprecated for better compatibility with scikit-learn, use `early_stopping_rounds` in constructor or`set_params` instead.
       warnings.warn(
 
-
-
-
-
 <style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>XGBRegressor(base_score=5.666446833601829, booster=&#x27;gbtree&#x27;, callbacks=None,
              colsample_bylevel=1, colsample_bynode=1, colsample_bytree=1,
              early_stopping_rounds=None, enable_categorical=False,
@@ -487,9 +470,6 @@ xgb_model.fit(
              num_parallel_tree=1, predictor=&#x27;auto&#x27;, random_state=0, reg_alpha=0,
              reg_lambda=1, ...)</pre></div></div></div></div></div>
 
-
-
-
 ```python
 print(xgb_model.best_score)
 print(xgb_model.best_iteration)
@@ -499,8 +479,6 @@ print(xgb_model.best_ntree_limit)
     0.07793614689092423
     99
     100
-
-
 
 ```python
 test_features = np.array(create_features(hd_test.copy()))
@@ -522,12 +500,9 @@ matplotlib.pyplot.title("test")
 plt.show()
 ```
 
-
     
 ![png](02_notebooks_in_prod_automated_training_process_files/02_notebooks_in_prod_automated_training_process_10_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -535,9 +510,6 @@ pframe['se'] = (pframe.pred - pframe.actual)**2
 pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -624,9 +596,6 @@ pframe.describe()
 </table>
 </div>
 
-
-
-
 ```python
 rmse = np.sqrt(np.mean(pframe.se))
 mape = np.mean(pframe.pct_err)
@@ -636,18 +605,15 @@ print(f'rmse = {rmse}, mape = {mape}')
 
     rmse = 128752.54982046234, mape = 12.857674005250548
 
-
 ### Convert the Model to Onnx
 
 This step converts the model to onnx for easy import into Wallaroo.
-
 
 ```python
 # pickle up the model
 # with open('housing_model_xgb.pkl', 'wb') as f:
 #    pickle.dump(xgb_model, f)
 ```
-
 
 ```python
 import onnx
@@ -666,7 +632,6 @@ from onnx.defs import onnx_opset_version
 from onnxconverter_common.onnx_ex import DEFAULT_OPSET_NUMBER
 TARGET_OPSET = min(DEFAULT_OPSET_NUMBER, onnx_opset_version())
 ```
-
 
 ```python
 # Convert the model to onnx

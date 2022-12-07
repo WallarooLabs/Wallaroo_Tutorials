@@ -148,6 +148,11 @@ fileList = [
         "inputFile": "sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-google-vertex-guide.md"
+    },
+    {
+        "inputFile": "sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+        "outputFile": "install-wallaroo-sdk-standard-guide.md"
     }
 
 

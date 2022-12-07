@@ -1,10 +1,10 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/google-vertex-sdk-install).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/standard-install).
 
-## Installing the Wallaroo SDK into Google Vertex Workbench
+## Installing the Wallaroo SDK
 
-Organizations that use Google Vertex for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Google Cloud Platform (GCP), and making a standard connection to a Wallaroo instance through Google Workbench.
+Organizations that develop machine learning models can deploy models to Wallaroo from their local systems to a Wallaroo instance through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK and making a standard connection to a Wallaroo instance.
 
-These instructions are based on the on the [Wallaroo SSO for Google Cloud Platform](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/wallaroo-sso-gcp/) and the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/#connect-to-wallaroo) guides.
+These instructions are based on the on the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/#connect-to-wallaroo) guides.
 
 This tutorial provides the following:
 
@@ -12,7 +12,7 @@ This tutorial provides the following:
 * `aloha-cnn-lstm.zip`: A pre-trained open source model that uses an [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution.
 * `data-1.json`, `data-1k.json`, `data-25k.json`: Data files with 1, 1,000, and 25,000 records for testing.
 
-To use the Wallaroo SDK within Google Workbench, a virtual environment will be used.  This will set the necessary libraries and specific Python version required.
+For this example, a virtual python environment will be used.  This will set the necessary libraries and specific Python version required.
 
 ## Prerequisites
 
@@ -30,8 +30,8 @@ For our example, we will perform the following:
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
   * Install the Wallaroo Python wheel file.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
-* Wallaroo SDK from Google Workbench Demonstration (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in a Google Vertex Workbench environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/google-vertex-sdk-install).
+* Wallaroo SDK from remote JupyterHub Demonstration (Optional)
+  * The following steps are used to demonstrate using the Wallaroo SDK in a external from the Wallaroo instance JupyterHub or Jupyter Notebook environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/standard-install).
   * Create a workspace for our work.
   * Upload the Aloha model.
   * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
@@ -44,11 +44,10 @@ For our example, we will perform the following:
 
 ### Set Up Virtual Python Environment
 
-To set up the virtual environment in Google Workbench for using the Wallaroo SDK with Google Workbench:
+To set up the Python virtual environment for use of the Wallaroo SDK:
 
-1. Upload the Wallaroo SDK Python wheel file `wallaroo-0.35.0-py-non-any.whl` to the Google Workbench Jupyter hub environment.
-1. Start a separate terminal by selecting **File->New->Terminal**.
-1. Create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.
+1. Download the Wallaroo SDK Python wheel file `wallaroo-0.35.0-py-non-any.whl` to the system where the virtual environment will be established.
+1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8 is specified as a requirement for Python libraries used with the Wallaroo SDK.
 
     ```bash
     conda create -n wallaroosdk python=3.8
@@ -60,25 +59,26 @@ To set up the virtual environment in Google Workbench for using the Wallaroo SDK
     conda activate wallaroosdk
     ```
 
-1. Install the `ipykernel` library.  This allows the JupyterHub notebooks to access the Python virtual environment as a kernel.
+1. (Optional) For organizations who want to use the Wallaroo SDk from within Jupyter and similar environments:
+    1. Install the `ipykernel` library.  This allows the JupyterHub notebooks to access the Python virtual environment as a kernel, and it required for the second part of this tutorial.
 
-    ```bash
-    conda install ipykernel
-    ```
+        ```bash
+        conda install ipykernel
+        ```
     
-1. Install the new virtual environment as a python kernel.
+    1. Install the new virtual environment as a python kernel.
 
-    ```bash
-    ipython kernel install --user --name=wallaroosdk
-    ```
+        ```bash
+        ipython kernel install --user --name=wallaroosdk
+        ```
     
 1. Install the Wallaroo SDK from the uploaded wheel file.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install --user ./wallaroo-0.35.0-py3-none-any.whl
+    pip install --user ./libraries/wallaroo-0.35.0-py3-none-any.whl
     ```
 
-Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
+For organizations who will be using the Wallaroo SDK with Jupyter or similar services, the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
 
 ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
 
@@ -126,18 +126,22 @@ wl = wallaroo.Client(api_endpoint="https://magical-bear-3782.api.wallaroo.commun
 
     Please log into the following URL in a web browser:
     
-    	https://magical-bear-3782.keycloak.wallaroo.community/auth/realms/master/device?user_code=TXJW-BKKY
+    	https://magical-bear-3782.keycloak.wallaroo.community/auth/realms/master/device?user_code=GGRF-SRFX
     
     Login successful!
 
+## Wallaroo Remote SDK Examples
+
+The following examples can be used by an organization to test using the Wallaroo SDK from a remote location from their Wallaroo instance.  These examples show how to create workspaces, deploy pipelines, and perform inferences through the SDK and API.
+
 ### Create the Workspace
 
-We will create a workspace to work in and call it the `gcpsdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `gcpsdkpipeline`.
+We will create a workspace to work in and call it the `sdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `sdkpipeline`.
 
 ```python
-workspace_name = 'gcpsdkworkspace'
-pipeline_name = 'gcpsdkpipeline'
-model_name = 'gcpsdkmodel'
+workspace_name = 'sdkworkspace'
+pipeline_name = 'sdkpipeline'
+model_name = 'sdkmodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
 
@@ -168,7 +172,7 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-<table><tr><th>name</th> <td>gcpsdkpipeline</td></tr><tr><th>created</th> <td>2022-12-06 21:35:51.201925+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-06 21:35:51.201925+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>90045b0b-1978-48bb-9f37-05c0c5d8bf22</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6736057c-e9e8-48d4-a657-158d10af1273</td></tr><tr><th>steps</th> <td></td></tr></table>
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
 
@@ -176,7 +180,7 @@ We can verify the workspace is created the current default workspace with the `g
 wl.get_current_workspace()
 ```
 
-    {'name': 'gcpsdkworkspace', 'id': 10, 'archived': False, 'created_by': '0bbf2f62-a4f1-4fe5-aad8-ec1cb7485939', 'created_at': '2022-12-06T21:35:50.34358+00:00', 'models': [], 'pipelines': [{'name': 'gcpsdkpipeline', 'create_time': datetime.datetime(2022, 12, 6, 21, 35, 51, 201925, tzinfo=tzutc()), 'definition': '[]'}]}
+    {'name': 'sdkworkspace', 'id': 12, 'archived': False, 'created_by': '0bbf2f62-a4f1-4fe5-aad8-ec1cb7485939', 'created_at': '2022-12-07T15:18:14.569577+00:00', 'models': [], 'pipelines': [{'name': 'sdkpipeline', 'create_time': datetime.datetime(2022, 12, 7, 15, 18, 15, 704015, tzinfo=tzutc()), 'definition': '[]'}]}
 
 ### Upload the Models
 
@@ -198,13 +202,13 @@ To do this, we'll create our pipeline that can ingest the data, pass the data to
 pipeline.add_model_step(model)
 ```
 
-<table><tr><th>name</th> <td>gcpsdkpipeline</td></tr><tr><th>created</th> <td>2022-12-06 21:35:51.201925+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-06 21:35:51.201925+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>90045b0b-1978-48bb-9f37-05c0c5d8bf22</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6736057c-e9e8-48d4-a657-158d10af1273</td></tr><tr><th>steps</th> <td></td></tr></table>
 
 ```python
 pipeline.deploy()
 ```
 
-<table><tr><th>name</th> <td>gcpsdkpipeline</td></tr><tr><th>created</th> <td>2022-12-06 21:35:51.201925+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-06 21:35:55.428652+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>269179a8-79e4-4c58-b9c3-d05436ad7be3, 90045b0b-1978-48bb-9f37-05c0c5d8bf22</td></tr><tr><th>steps</th> <td>gcpsdkmodel</td></tr></table>
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-07 15:18:20.882795+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>af2526e0-1410-47bf-8475-9a2fa157212d, 6736057c-e9e8-48d4-a657-158d10af1273</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
 We can verify that the pipeline is running and list what models are associated with it.
 
@@ -214,20 +218,20 @@ pipeline.status()
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.1.174',
-       'name': 'engine-7888f44c8b-r2gpr',
+     'engines': [{'ip': '10.244.3.50',
+       'name': 'engine-7766467cdb-jj448',
        'status': 'Running',
        'reason': None,
        'details': ['containers with unready status: [engine]',
         'containers with unready status: [engine]'],
-       'pipeline_statuses': {'pipelines': [{'id': 'gcpsdkpipeline',
+       'pipeline_statuses': {'pipelines': [{'id': 'sdkpipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'gcpsdkmodel',
-          'version': 'c468d323-257b-4717-bbd8-8539a8746496',
+       'model_statuses': {'models': [{'name': 'sdkmodel',
+          'version': 'fd1832a7-723d-4318-a0d7-c677b1956206',
           'sha': '7c89707252ce389980d5348c37885d6d72af4c20cd303422e2de7e66dd7ff184',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.1.173',
-       'name': 'engine-lb-c6485cfd5-kqsn6',
+     'engine_lbs': [{'ip': '10.244.2.6',
+       'name': 'engine-lb-c6485cfd5-h75v5',
        'status': 'Running',
        'reason': None,
        'details': []}],
@@ -282,7 +286,7 @@ external_url = pipeline._deployment._url()
 external_url
 ```
 
-    'https://magical-bear-3782.api.wallaroo.community/v1/api/pipelines/infer/gcpsdkpipeline-13'
+    'https://magical-bear-3782.api.wallaroo.community/v1/api/pipelines/infer/sdkpipeline-14'
 
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 
@@ -294,7 +298,7 @@ token = connection['token']
 token
 ```
 
-    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJyb3dHSmdNdnlCODFyRFBzQURxc3RIM0hIbFdZdmdhMnluUmtGXzllSWhjIn0.eyJleHAiOjE2NzAzNjI2NjMsImlhdCI6MTY3MDM2MjYwMywiYXV0aF90aW1lIjoxNjcwMzYyNTQ1LCJqdGkiOiI5NDk5M2Y2Ni0yMjk2LTRiMTItOTYwMi1iOWEyM2UxY2RhZGIiLCJpc3MiOiJodHRwczovL21hZ2ljYWwtYmVhci0zNzgyLmtleWNsb2FrLndhbGxhcm9vLmNvbW11bml0eS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiIwYmJmMmY2Mi1hNGYxLTRmZTUtYWFkOC1lYzFjYjc0ODU5MzkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImQyYjlkMzFjLWU3ZmMtNDI4OS1hOThjLTI2ZTMwMDBiMzVkMiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1yZWFsbSIsInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImQyYjlkMzFjLWU3ZmMtNDI4OS1hOThjLTI2ZTMwMDBiMzVkMiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiIwYmJmMmY2Mi1hNGYxLTRmZTUtYWFkOC1lYzFjYjc0ODU5MzkiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkiLCJlbWFpbCI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIn0.Gnig3PdpMFGSrQ2J4Tj3Nqbk2UOfBCH4MEw2i6p5pLkQ51F8FM7Dq-VOGoNYAXZn2OXw_bKh0Ae60IqglB0PSFTlksVzb1uSGKOPgcZNkI0fTMK99YW71UctMDk9MYrN09bT2GhGQ7FV-tJNqemYSXB3eMIaTkah6AMUfJIYYvf6J2OqXyNJqc6Hwf0-44FGso_N0WXF6GM-ww72ampVjc10Mad30kYzQX508U9RuZXd3uvOrRQHreOcPPmjso1yDbUx8gqLeov_uq3dg5hUY55v2oVBdtXT60-ZBIQP8uETNetv6529Nm52uwKNT7DdjXk85kbJBK8oV6etyfKRDw'
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJyb3dHSmdNdnlCODFyRFBzQURxc3RIM0hIbFdZdmdhMnluUmtGXzllSWhjIn0.eyJleHAiOjE2NzA0MjY0MDgsImlhdCI6MTY3MDQyNjM0OCwiYXV0aF90aW1lIjoxNjcwNDI2MjkyLCJqdGkiOiJiZDVkYTU0NS03MDMwLTRiZTktODRhOS00MDgyN2JjNjJhNTMiLCJpc3MiOiJodHRwczovL21hZ2ljYWwtYmVhci0zNzgyLmtleWNsb2FrLndhbGxhcm9vLmNvbW11bml0eS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiIwYmJmMmY2Mi1hNGYxLTRmZTUtYWFkOC1lYzFjYjc0ODU5MzkiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6ImU0MTJkMDA0LTYyODMtNDZhNC05NDExLTYzMTFkOGI0ZDczZCIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1yZWFsbSIsInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImU0MTJkMDA0LTYyODMtNDZhNC05NDExLTYzMTFkOGI0ZDczZCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiIwYmJmMmY2Mi1hNGYxLTRmZTUtYWFkOC1lYzFjYjc0ODU5MzkiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkiLCJlbWFpbCI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIn0.gC4yOFYeUURmfFCTh88-TLDlm_ns38__lJUH7jP9SiZJafLAq6p2R5Fj-j-G62D9Ne2qiwwQoniOdLWrc9wkkA8JKMq890p-0Vq89VXsXQd-Ut9QdL7wIXNKMJjDshWNNJpcMRPLbXTnQytVXlNYLTSQPLWnqMtfQYYtq862FNVU7MfazApZGFsP8Z0LlHWyPpepR-q2o-_sBQd2qj35O7swT4lyvTTwVNqDgp8eJL2ZXqWk5vH4hXQjRinctiGj4W6WgS5-O78Gs-VtFVqYwMhY9GfjU9HN8R_IwIRlx3rc3hd9YEjARZzhwdlc-h9DCH3HKSaZQg28Us6-kFHbsQ'
 
 ```python
 !curl -X POST {external_url} -H "Content-Type:application/json" -H "Authorization: Bearer {token}" --data @data-25k.json > curl_response.txt
@@ -302,7 +306,7 @@ token
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100 13.0M  100 10.1M  100 2886k  2322k   642k  0:00:04  0:00:04 --:--:-- 2965k
+    100 13.0M  100 10.1M  100 2886k  1409k   389k  0:00:07  0:00:07 --:--:-- 2478k-  0:00:07  365k
 
 ## Undeploy Pipeline
 
@@ -311,6 +315,8 @@ When finished with our tests, we will undeploy the pipeline so we have the Kuber
 ```python
 pipeline.undeploy()
 ```
+
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-07 15:18:15.704015+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-07 15:18:20.882795+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>af2526e0-1410-47bf-8475-9a2fa157212d, 6736057c-e9e8-48d4-a657-158d10af1273</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
 ```python
 

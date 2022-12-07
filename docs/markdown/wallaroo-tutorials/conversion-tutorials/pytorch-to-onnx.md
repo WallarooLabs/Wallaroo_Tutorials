@@ -16,7 +16,6 @@ This tutorial provides the following:
 
 The first step is to import our libraries we will be using.  For this example, the PyTorth `torch` library will be imported into this kernel.
 
-
 ```python
 # the Pytorch libraries
 # Import into this kernel
@@ -35,11 +34,9 @@ import torch.onnx
     Installing collected packages: torch
     Successfully installed torch-1.12.0
 
-
 ## Load the Model
 
 To load a PyTorch model into a variable, the model's `class` has to be defined.  For out example we are using the `BikeShareRegressor` class as defined below.
-
 
 ```python
 class BikeShareRegressor(torch.nn.Module):
@@ -63,7 +60,6 @@ class BikeShareRegressor(torch.nn.Module):
 
 Now we will load the model into the variable `pytorch_tobe_converted`.
 
-
 ```python
 # load the Pytorch model
 model = torch.load("./pytorch_bikesharingmodel.pt")
@@ -85,8 +81,6 @@ Now we will define our method `Convert_ONNX()` which has the following inputs:
 * **export_params**:  Whether to store the trained parameter weight inside the model file.  Defaults to `True`.
 * **do_constant_folding**: Sets whether to execute constant folding for optimization.  Defaults to `True`.
   
-
-
 
 ```python
 #Function to Convert to ONNX 
@@ -114,7 +108,6 @@ def Convert_ONNX():
 
 We'll now set our variables and run our conversion.  For out example, the `input_size` is known to be 58, and the `device` value we'll derive from `torch.cuda`.  We'll also set the ONNX version for exporting to 10.
 
-
 ```python
 pypath = "pytorchbikeshare.onnx"
 
@@ -135,7 +128,6 @@ Convert_ONNX()
 
      
     Model has been converted to ONNX
-
 
 ## Conclusion
 
