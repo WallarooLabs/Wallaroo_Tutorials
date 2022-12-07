@@ -183,7 +183,7 @@ _ = plt.title('Distribution of predicted home sales price')
 ```
 
     
-![png](wallaroo-anomaly-detection_files/wallaroo-anomaly-detection_17_0.png)
+![png](wallaroo-anomaly-detection-reference_files/wallaroo-anomaly-detection-reference_17_0.png)
     
 
 ### How To Check For Anomalies

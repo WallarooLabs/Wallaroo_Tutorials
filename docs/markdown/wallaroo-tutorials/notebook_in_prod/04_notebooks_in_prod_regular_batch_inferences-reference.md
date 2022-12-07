@@ -127,20 +127,6 @@ result_table.to_sql('results_table', conn, index=False, if_exists='append')
 pd.read_sql_query("select * from results_table limit 5", conn)
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -177,7 +163,6 @@ pd.read_sql_query("select * from results_table limit 5", conn)
     </tr>
   </tbody>
 </table>
-</div>
 
 ```python
 conn.close()

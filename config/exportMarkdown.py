@@ -22,77 +22,77 @@ fileList = [
     {
         "inputFile": "aloha/aloha_demo.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-quick-start-aloha.md"
+        "outputFile": "wallaroo-quick-start-aloha-reference.md"
     },
     {
         "inputFile": "demand_curve/demandcurve_demo.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-quick-start-demandcurve.md"
+        "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
     },
     {
         "inputFile": "imdb/imdb_sample.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-quick-start-imdb.md"
+        "outputFile": "wallaroo-quick-start-imdb-reference.md"
     },
     {
         "inputFile": "model_insights/model-insights.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "wallaroo-model-insights.md"
+        "outputFile": "wallaroo-model-insights-reference.md"
     },
     {
         "inputFile": "shadow_deploy/shadow_deployment_tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-shadow-deployment-tutorial.md"
+        "outputFile": "wallaroo-shadow-deployment-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-        "outputDir": "docs/markdown/wallaroo-101",
-        "outputFile": "_index.md"
+        "outputDir": "docs/markdown/wallaroo-101/",
+        "outputFile": "wallaroo-101-reference.md"
     },
     {
         "inputFile": "model_conversion/autoconversion-tutorial/auto-convert-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "sklearn-auto-conversion.md"
+        "outputFile": "sklearn-auto-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/keras-to-onnx/autoconvert-keras-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "keras-auto-conversion.md"
+        "outputFile": "keras-auto-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/pytorch-to-onnx/pytorch-to-onnx.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "pytorch-to-onnx.md"
+        "outputFile": "pytorch-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/sklearn-classification-to-onnx/convert-sklearn-classification-to-onnx.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "sklearn-logistic-to-onnx.md"
+        "outputFile": "sklearn-logistic-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/sklearn-regression-to-onnx/convert-sklearn-regression-to-onnx.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "sklearn-regression-to-onnx.md"
+        "outputFile": "sklearn-regression-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/statsmodels/convert-statsmodel-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "statsmodel-conversion.md"
+        "outputFile": "statsmodel-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-autoconversion/xgboost-autoconversion-classification-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "xgboost-autoconversion-classification-tutorial.md"
+        "outputFile": "xgboost-autoconversion-classification-tutorial-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-autoconversion/xgboost-autoconversion-regression-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "xgboost-autoconversion-regression-tutorial.md"
+        "outputFile": "xgboost-autoconversion-regression-tutorial-reference.md"
     },
     {
         "inputFile": "simulated_edge/simulated_edge.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-simulated_edge.md"
+        "outputFile": "wallaroo-simulated_edge-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
@@ -102,58 +102,63 @@ fileList = [
     {
         "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "01_notebooks_in_prod_explore_and_train.md"
+        "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "02_notebooks_in_prod_automated_training_process.md"
+        "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "03_notebooks_in_prod_deploy_model.md"
+        "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "04_notebooks_in_prod_regular_batch_inferences.md"
+        "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
     },
     {
         "inputFile": "abtesting/wallaroo-abtesting-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-abtesting-tutorial.md"
+        "outputFile": "wallaroo-abtesting-tutorial-reference.md"
     },
     {
         "inputFile": "anomaly_detection/wallaroo-anomaly-detection.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
-        "outputFile": "wallaroo-anomaly-detection.md"
+        "outputFile": "wallaroo-anomaly-detection-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-to-onnx/xgboost-to-onnx.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
-        "outputFile": "xgboost-to-onnx.md"
+        "outputFile": "xgboost-to-onnx-reference.md"
     },
     {
         "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-api-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-api-tutorial"
+        "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-setup.md"
+        "outputFile": "wallaroo-model-endpoints-setup-reference.md"
     },
     {
         "inputFile": "sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-google-vertex-guide.md"
+        "outputFile": "install-wallaroo-sdk-google-vertex-guide-reference.md"
     },
     {
         "inputFile": "sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-standard-guide.md"
-    }
+        "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-tag-management/wallaroo-tags-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
+        "outputFile": "wallaroo-tags-guide-reference.md"
+    },
 
 
 ]
@@ -161,7 +166,7 @@ fileList = [
 def main():
     for currentFile in fileList:
         convert_cmd = f'jupyter nbconvert --config ./config/exportconfig.py --to markdown --output-dir {currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
-        # print(convert_cmd)
+        #print(convert_cmd)
         os.system(convert_cmd)
 
 if __name__ == '__main__':

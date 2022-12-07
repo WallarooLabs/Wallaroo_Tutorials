@@ -121,20 +121,6 @@ baseline_run = assay_builder.build().interactive_baseline_run()
 baseline_run.baseline_stats()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -177,7 +163,6 @@ baseline_run.baseline_stats()
     </tr>
   </tbody>
 </table>
-</div>
 
 Now let's look at a histogram, kernel density estimate (KDE), and Empirical Cumulative Distribution (ecdf) charts of the baseline data. These will give us insights into the distributions of the predictions and features that the assay is configured for.
 
@@ -186,7 +171,7 @@ assay_builder.baseline_histogram()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_18_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png)
     
 
 ```python
@@ -194,7 +179,7 @@ assay_builder.baseline_kde()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_19_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png)
     
 
 ```python
@@ -202,7 +187,7 @@ assay_builder.baseline_ecdf()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_20_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png)
     
 
 ### Interactive Baseline Runs
@@ -220,7 +205,7 @@ baseline_run.chart()
     weighted = False
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_22_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_22_1.png)
     
 
 We can also get a dataframe with the bin/edge information.
@@ -229,20 +214,6 @@ We can also get a dataframe with the bin/edge information.
 baseline_run.baseline_bins()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -305,7 +276,6 @@ baseline_run.baseline_bins()
     </tr>
   </tbody>
 </table>
-</div>
 
 The previous assay used quintiles so all of the bins had the same percentage/count of samples.  To get bins that are divided equally along the range of values we can use `BinMode.EQUAL`.
 
@@ -324,7 +294,7 @@ equal_baseline.chart()
     weighted = False
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_26_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_26_1.png)
     
 
 We now see very different bin edges and sample percentages per bin.
@@ -333,20 +303,6 @@ We now see very different bin edges and sample percentages per bin.
 equal_baseline.baseline_bins()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -409,7 +365,6 @@ equal_baseline.baseline_bins()
     </tr>
   </tbody>
 </table>
-</div>
 
 ### Interactive Assay Runs
 
@@ -445,20 +400,6 @@ assay_df = assay_results.to_dataframe()
 assay_df
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -961,7 +902,6 @@ assay_df
     </tr>
   </tbody>
 </table>
-</div>
 
 Basic functionality for creating quick charts is included.
 
@@ -970,7 +910,7 @@ assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_32_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_32_0.png)
     
 
 We see that the difference scores are low for a while and then jump up to indicate there is an issue. We can examine that particular window to help us decide if that threshold is set correctly or not.
@@ -996,7 +936,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_34_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_34_1.png)
     
 
 Other days, however are significantly different.
@@ -1018,7 +958,7 @@ assay_results[12].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_36_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_36_1.png)
     
 
 ```python
@@ -1038,7 +978,7 @@ assay_results[13].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_37_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png)
     
 
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
@@ -1083,15 +1023,15 @@ assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', '
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_0.png)
     
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_1.png)
     
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_41_2.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_2.png)
     
 
 When we are comfortable with what alert threshold should be for our specific purposes we can create and save an assay that will be automatically run on a daily basis.
@@ -1148,7 +1088,7 @@ assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_48_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_48_0.png)
     
 
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week.  The analysis will be generated when the window is complete.
@@ -1174,7 +1114,7 @@ assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_51_0.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png)
     
 
 ## Advanced Configuration
@@ -1263,20 +1203,6 @@ ar = assay_results[0]
 ar.compare_basic_stats()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1346,7 +1272,6 @@ ar.compare_basic_stats()
     </tr>
   </tbody>
 </table>
-</div>
 
 The method `compare_bins` gives us a dataframe with the bin information. Such as the number of bins, the right edges, suggested bin/edge names and the values for each bin in the baseline and the window.
 
@@ -1354,20 +1279,6 @@ The method `compare_bins` gives us a dataframe with the bin information. Such as
 ar.compare_bins()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1470,7 +1381,6 @@ ar.compare_bins()
     </tr>
   </tbody>
 </table>
-</div>
 
 We can also plot the chart to visualize the values of the bins.
 
@@ -1491,7 +1401,7 @@ ar.chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_59_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_59_1.png)
     
 
 ## Binning Mode
@@ -1506,20 +1416,6 @@ display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1622,7 +1518,6 @@ assay_results[0].chart()
     </tr>
   </tbody>
 </table>
-</div>
 
     None
 
@@ -1639,7 +1534,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_61_3.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_61_3.png)
     
 
 ## User Provided Bin Edges
@@ -1655,20 +1550,6 @@ display(display(assay_results[0].compare_bins()))
 assay_results[0].chart()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1771,7 +1652,6 @@ assay_results[0].chart()
     </tr>
   </tbody>
 </table>
-</div>
 
     None
 
@@ -1788,7 +1668,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_63_3.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_63_3.png)
     
 
 ## Number of Bins
@@ -1803,20 +1683,6 @@ display(display(assay_results[1].compare_bins()))
 assay_results[1].chart()
 ```
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -1979,7 +1845,6 @@ assay_results[1].chart()
     </tr>
   </tbody>
 </table>
-</div>
 
     None
 
@@ -1999,7 +1864,7 @@ assay_results[1].chart()
       ax.set_xticklabels(labels=edge_names, rotation=45)
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_65_4.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_65_4.png)
     
 
 ## Bin Weights
@@ -2023,20 +1888,6 @@ assay_results[1].chart()
 
     Using weights:  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -2199,7 +2050,6 @@ assay_results[1].chart()
     </tr>
   </tbody>
 </table>
-</div>
 
     None
 
@@ -2219,7 +2069,7 @@ assay_results[1].chart()
       ax.set_xticklabels(labels=edge_names, rotation=45)
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_67_5.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_67_5.png)
     
 
 ## Metrics
@@ -2248,7 +2098,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_69_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_69_1.png)
     
 
 ```python
@@ -2271,7 +2121,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_70_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_1.png)
     
 
 ```python
@@ -2294,7 +2144,7 @@ assay_results[0].chart()
     index = 3
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_71_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_71_1.png)
     
 
 ## Aggregation Options
@@ -2321,7 +2171,7 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_73_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png)
     
 
 ```python
@@ -2344,6 +2194,6 @@ assay_results[0].chart()
     index = None
 
     
-![png](wallaroo-model-insights_files/wallaroo-model-insights_74_1.png)
+![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png)
     
 

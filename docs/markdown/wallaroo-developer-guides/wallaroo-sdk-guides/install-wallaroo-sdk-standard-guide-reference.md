@@ -109,7 +109,15 @@ The `Client` method takes the following parameters:
 * **auth_endpoint** (*String*): The URL to the Wallaroo instance Keycloak service.
 * **auth_type command** (*String*): The authorization type.  In this case, `SSO`.
 
-Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
+Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
+
+![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
+
+Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
+
+![Device Registration](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
+
+The connection is stored in the variable `wl` for use in all other Wallaroo calls.
 
 ```python
 import wallaroo
@@ -123,12 +131,6 @@ wl = wallaroo.Client(api_endpoint="https://magical-bear-3782.api.wallaroo.commun
                     auth_endpoint="https://magical-bear-3782.keycloak.wallaroo.community", 
                     auth_type="sso")
 ```
-
-    Please log into the following URL in a web browser:
-    
-    	https://magical-bear-3782.keycloak.wallaroo.community/auth/realms/master/device?user_code=GGRF-SRFX
-    
-    Login successful!
 
 ## Wallaroo Remote SDK Examples
 
@@ -279,7 +281,7 @@ Now that our smoke test is successful, let's really give it some data.  We have 
 
 We'll pipe the `data-25k.json` file through the `pipeline` deployment URL, and place the results in a file named `response.txt`.  We'll also display the time this takes.  Note that for larger batches of 50,000 inferences or more can be difficult to view in Juypter Hub because of its size.
 
-When retrieving the pipeline inference URL through an external SDK connection, the External Inference URL will be returned.  This URL will function provided that the **Enable external URL inference endpoints** is enabled.  For more information, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai).
+When retrieving the pipeline inference URL through an external SDK connection, the External Inference URL will be returned.  This URL will function provided that the **Enable external URL inference endpoints** is enabled.  For more information, see the [Wallaroo Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
 
 ```python
 external_url = pipeline._deployment._url()
