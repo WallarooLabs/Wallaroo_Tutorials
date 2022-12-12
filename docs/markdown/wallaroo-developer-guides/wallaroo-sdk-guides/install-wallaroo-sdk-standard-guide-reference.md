@@ -50,7 +50,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8 is specified as a requirement for Python libraries used with the Wallaroo SDK.
 
     ```bash
-    conda create -n wallaroosdk python=3.8
+    conda create -n wallaroosdk python=3.9
     ```
 
 1. Activate the new environment.
