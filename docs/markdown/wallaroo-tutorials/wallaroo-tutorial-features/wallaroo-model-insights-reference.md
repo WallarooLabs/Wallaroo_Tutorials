@@ -205,7 +205,7 @@ assay_builder.baseline_histogram()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_18_0.png)
     
 
 
@@ -216,7 +216,7 @@ assay_builder.baseline_kde()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_19_0.png)
     
 
 
@@ -227,7 +227,7 @@ assay_builder.baseline_ecdf()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_20_0.png)
     
 
 
@@ -249,7 +249,7 @@ baseline_run.chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_22_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_22_1.png)
     
 
 
@@ -363,7 +363,7 @@ equal_baseline.chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_26_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_26_1.png)
     
 
 
@@ -1024,7 +1024,7 @@ assay_results.chart_scores()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_32_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_32_0.png)
     
 
 
@@ -1054,7 +1054,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_34_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_34_1.png)
     
 
 
@@ -1080,7 +1080,7 @@ assay_results[12].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_36_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_36_1.png)
     
 
 
@@ -1104,7 +1104,7 @@ assay_results[13].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_37_1.png)
     
 
 
@@ -1154,19 +1154,19 @@ assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', '
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_41_0.png)
     
 
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_41_1.png)
     
 
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_2.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_41_2.png)
     
 
 
@@ -1230,7 +1230,7 @@ assay_results.chart_scores()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_48_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_48_0.png)
     
 
 
@@ -1261,7 +1261,7 @@ assay_results.chart_scores()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_51_0.png)
     
 
 
@@ -1596,7 +1596,7 @@ ar.chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_59_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_59_1.png)
     
 
 
@@ -1752,7 +1752,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_61_3.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_61_3.png)
     
 
 
@@ -1909,7 +1909,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_63_3.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_63_3.png)
     
 
 
@@ -2129,7 +2129,7 @@ assay_results[1].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_65_4.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_65_4.png)
     
 
 
@@ -2359,7 +2359,7 @@ assay_results[1].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_67_5.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_67_5.png)
     
 
 
@@ -2392,7 +2392,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_69_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_69_1.png)
     
 
 
@@ -2419,7 +2419,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_70_1.png)
     
 
 
@@ -2446,7 +2446,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_71_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_71_1.png)
     
 
 
@@ -2477,7 +2477,7 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_73_1.png)
     
 
 
@@ -2504,6 +2504,6 @@ assay_results[0].chart()
 
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights_files/wallaroo-model-insights-reference_74_1.png)
     
 
