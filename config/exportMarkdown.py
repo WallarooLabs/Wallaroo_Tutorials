@@ -163,6 +163,11 @@ fileList = [
         "inputFile": "mlops_api/Wallaroo-MLOps-Tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-api-guides/",
         "outputFile": "wallaroo-mlops-tutorial-reference.md"
+    },
+    {
+        "inputFile": "sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+        "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
     }
 
 

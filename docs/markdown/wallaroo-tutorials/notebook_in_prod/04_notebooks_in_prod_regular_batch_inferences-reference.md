@@ -38,7 +38,6 @@ This process will use the following steps:
 
 Connect to the Wallaroo instance and set the `housepricing` workspace as the current workspace.
 
-
 ```python
 import json
 import pickle
@@ -51,11 +50,9 @@ import simdb # module for the purpose of this demo to simulate pulling data from
 from wallaroo_client import get_workspace
 ```
 
-
 ```python
 wl = wallaroo.Client()
 ```
-
 
 ```python
 new_workspace = get_workspace("housepricing")
@@ -66,7 +63,6 @@ _ = wl.set_current_workspace(new_workspace)
 
 Deploy the `housing-pipe` workspace established in Stage 3: Deploy the Model in Wallaroo (`03_deploy_model.ipynb`).
 
-
 ```python
 pipeline = wl.pipelines_by_name("housing-pipe")[-1]
 pipeline.deploy()
@@ -76,16 +72,12 @@ pipeline.deploy()
 
 
 
-
-
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2022-09-28 20:53:36.296407+00:00</td></tr><tr><th>last_updated</th> <td>2022-09-28 21:19:22.233409+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-
 
 
 ### Read In New House Listings
 
 From the data store, load the previous month's house listing and submit them to the deployed pipeline.
-
 
 ```python
 conn = simdb.simulate_db_connection()
@@ -103,10 +95,7 @@ newbatch.shape
 
 
 
-
-
     (1090, 22)
-
 
 
 
@@ -115,11 +104,9 @@ query = {'query': newbatch.to_json()}
 result = pipeline.infer(query)[0]
 ```
 
-
 ```python
 predicted_prices = result.data()[0]
 ```
-
 
 ```python
 len(predicted_prices)
@@ -127,9 +114,7 @@ len(predicted_prices)
 
 
 
-
     1090
-
 
 
 ### Send Predictions to Results Staging Table
@@ -137,7 +122,6 @@ len(predicted_prices)
 Take the predicted prices based on the inference results so they can be joined into the `house_listings` table.
 
 Once complete, undeploy the pipeline to return the resources back to the Kubernetes environment.
-
 
 ```python
 result_table = pd.DataFrame({
@@ -148,12 +132,10 @@ result_table = pd.DataFrame({
 result_table.to_sql('results_table', conn, index=False, if_exists='append')
 ```
 
-
 ```python
 # Display the top of the table for confirmation
 pd.read_sql_query("select * from results_table limit 5", conn)
 ```
-
 
 
 
@@ -211,7 +193,6 @@ pd.read_sql_query("select * from results_table limit 5", conn)
 
 
 
-
 ```python
 conn.close()
 pipeline.undeploy()
@@ -221,10 +202,7 @@ pipeline.undeploy()
 
 
 
-
-
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2022-09-28 20:53:36.296407+00:00</td></tr><tr><th>last_updated</th> <td>2022-09-28 21:19:22.233409+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-
 
 
 From here, organizations can automate this process.  Other features could be used such as data analysis using Wallaroo assays, or other features such as shadow deployments to test champion and challenger models to find which models provide the best results.

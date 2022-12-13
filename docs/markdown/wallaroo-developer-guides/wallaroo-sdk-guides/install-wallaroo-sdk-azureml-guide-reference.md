@@ -1,10 +1,10 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/google-vertex-sdk-install).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install).
 
-## Installing the Wallaroo SDK into Google Vertex Workbench
+## Installing the Wallaroo SDK into Azure ML Workspace
 
-Organizations that use Google Vertex for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Google Cloud Platform (GCP), and making a standard connection to a Wallaroo instance through Google Workbench.
+Organizations that use Azure ML for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Azure ML, and making a standard connection to a Wallaroo instance through Azure ML Workspace.
 
-These instructions are based on the on the [Wallaroo SSO for Google Cloud Platform](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/wallaroo-sso-gcp/) and the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/#connect-to-wallaroo) guides.
+These instructions are based on the on the [Wallaroo SSO for Microsoft Azure](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/wallaroo-sso-azure/) and the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/#connect-to-wallaroo) guides.
 
 This tutorial provides the following:
 
@@ -12,7 +12,7 @@ This tutorial provides the following:
 * `aloha-cnn-lstm.zip`: A pre-trained open source model that uses an [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution.
 * `data-1.json`, `data-1k.json`, `data-25k.json`: Data files with 1, 1,000, and 25,000 records for testing.
 
-To use the Wallaroo SDK within Google Workbench, a virtual environment will be used.  This will set the necessary libraries and specific Python version required.
+To use the Wallaroo SDK within Azure ML Workspace, a virtual environment will be used.  This will set the necessary libraries and specific Python version required.
 
 ## Prerequisites
 
@@ -20,7 +20,8 @@ The following is required for this tutorial:
 
 * A Wallaroo instance version 2022.4 or later.
 * Python 3.8 or later installed locally
-* [Conda](https://docs.conda.io/en/latest/):  Used for managing python virtual environments.
+* [Conda](https://docs.conda.io/en/latest/):  Used for managing python virtual environments.  This is automatically included in Azure ML Workspace.
+* An Azure ML workspace is created with a compute configured.
 
 ## General Steps
 
@@ -30,8 +31,8 @@ For our example, we will perform the following:
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
   * Install the Wallaroo Python wheel file.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
-* Wallaroo SDK from Google Workbench Demonstration (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in a Google Vertex Workbench environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/google-vertex-sdk-install).
+* Wallaroo SDK from Azure ML Workspace (Optional)
+  * The following steps are used to demonstrate using the Wallaroo SDK in an Azure ML Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install)).
     * Create a workspace for our work.
     * Upload the Aloha model.
     * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
@@ -44,10 +45,13 @@ For our example, we will perform the following:
 
 ### Set Up Virtual Python Environment
 
-To set up the virtual environment in Google Workbench for using the Wallaroo SDK with Google Workbench:
+To set up the virtual environment in Azure ML for using the Wallaroo SDK with Azure ML Workspace:
 
-1. Upload the Wallaroo SDK Python wheel file `wallaroo-0.35.0-py-non-any.whl` to the Google Workbench Jupyter hub environment.
-1. Start a separate terminal by selecting **File->New->Terminal**.
+1. Select **Notebooks**.
+1. Create a new folder where the Jupyter Notebooks for Wallaroo will be installed.
+1. From this repository, upload `sdk-install-guides/azure-ml-sdk-install.zip`, or upload the entire folder `sdk-install-guides/azure-ml-sdk-install`.  This tutorial will assume the .zip file was uploaded.
+1. Select **Open Terminal**.  Navigate to the target directory.
+1. Run `unzip azure-ml-sdk-install.zip` to unzip the directory, then cd into it with `cd azure-ml-sdk-install`.
 1. Create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.
 
     ```bash
@@ -78,14 +82,14 @@ To set up the virtual environment in Google Workbench for using the Wallaroo SDK
     pip install wallaroo==2022.4.0rc1
     ```
 
-Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
+Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.  If a notebook is existing, close it then reopen to select the new Wallaroo SDK environment.
 
-![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
+![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/azureml-sdk-guide/azureml-select-kernel.png)
 
 To use a new Notebook:
 
-1. From the main menu, select **File->New-Notebook**.
-1. From the Kernel selection dropbox, select the new virtual environment - in this case, **wallaroosdk**.
+1. From the left navigation panel, select **+->Notebook**.
+1. From the Kernel selection dropbox on the upper right side, select the new virtual environment - in this case, **wallaroosdk**.
 
 To update an existing Notebook to use the new virtual environment as a kernel:
 
@@ -111,7 +115,7 @@ The `Client` method takes the following parameters:
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
+![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/azureml-sdk-guide/azure-initial-login.png)
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
@@ -143,12 +147,12 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
 
 ### Create the Workspace
 
-We will create a workspace to work in and call it the `gcpsdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `gcpsdkpipeline`.
+We will create a workspace to work in and call it the `azuremlsdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `azuremlsdkpipeline`.
 
 ```python
-workspace_name = 'gcpsdkworkspace'
-pipeline_name = 'gcpsdkpipeline'
-model_name = 'gcpsdkmodel'
+workspace_name = 'azuremlsdkworkspace'
+pipeline_name = 'azuremlsdkpipeline'
+model_name = 'azuremlsdkmodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
 
