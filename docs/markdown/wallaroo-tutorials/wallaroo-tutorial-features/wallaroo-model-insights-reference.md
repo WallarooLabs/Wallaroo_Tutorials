@@ -96,10 +96,7 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
 <table><tr><th>name</th> <td>housepricepipe</td></tr><tr><th>created</th> <td>2022-10-10 18:38:51.033867+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-10 18:38:51.121077+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>housepricemodel</td></tr></table>
-
 
 We assume the pipeline has been running for a while and there is a period of time that is free of errors that we'd like to use as the _baseline_. Let's note the start and end times. For this example we have 30 days of data from Jan 2022 and will use Jan 1 data as our baseline.
 
@@ -123,8 +120,6 @@ We don't know much about our baseline data yet so let's examine the data and cre
 baseline_run = assay_builder.build().interactive_baseline_run()
 baseline_run.baseline_stats()
 ```
-
-
 
 <div>
 <style scoped>
@@ -184,7 +179,6 @@ baseline_run.baseline_stats()
 </table>
 </div>
 
-
 Now let's look at a histogram, kernel density estimate (KDE), and Empirical Cumulative Distribution (ecdf) charts of the baseline data. These will give us insights into the distributions of the predictions and features that the assay is configured for.
 
 ```python
@@ -192,25 +186,23 @@ assay_builder.baseline_histogram()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png)
     
-
 
 ```python
 assay_builder.baseline_kde()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png)
     
-
 
 ```python
 assay_builder.baseline_ecdf()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png)
     
 
 ### Interactive Baseline Runs
@@ -227,9 +219,8 @@ baseline_run.chart()
     metric = PSI
     weighted = False
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_22_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_22_1.png)
     
 
 We can also get a dataframe with the bin/edge information.
@@ -237,8 +228,6 @@ We can also get a dataframe with the bin/edge information.
 ```python
 baseline_run.baseline_bins()
 ```
-
-
 
 <div>
 <style scoped>
@@ -318,7 +307,6 @@ baseline_run.baseline_bins()
 </table>
 </div>
 
-
 The previous assay used quintiles so all of the bins had the same percentage/count of samples.  To get bins that are divided equally along the range of values we can use `BinMode.EQUAL`.
 
 ```python
@@ -335,9 +323,8 @@ equal_baseline.chart()
     metric = PSI
     weighted = False
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_26_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_26_1.png)
     
 
 We now see very different bin edges and sample percentages per bin.
@@ -345,8 +332,6 @@ We now see very different bin edges and sample percentages per bin.
 ```python
 equal_baseline.baseline_bins()
 ```
-
-
 
 <div>
 <style scoped>
@@ -426,7 +411,6 @@ equal_baseline.baseline_bins()
 </table>
 </div>
 
-
 ### Interactive Assay Runs
 
 By default the assay builder creates an assay with some good starting parameters. In particular the assay is configured to run a new analysis for **every 24 hours starting at the end of the baseline period**. Additionally, it sets the **number of bins to 5** to create quintiles, and sets the target `iopath` to `"outputs 0 0"` which means we want to monitor the first column of the first output/prediction.
@@ -460,8 +444,6 @@ assay_results = assay_config.interactive_run()
 assay_df = assay_results.to_dataframe()
 assay_df
 ```
-
-
 
 <div>
 <style scoped>
@@ -981,7 +963,6 @@ assay_df
 </table>
 </div>
 
-
 Basic functionality for creating quick charts is included.
 
 ```python
@@ -989,7 +970,7 @@ assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_32_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_32_0.png)
     
 
 We see that the difference scores are low for a while and then jump up to indicate there is an issue. We can examine that particular window to help us decide if that threshold is set correctly or not.
@@ -1014,9 +995,8 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_34_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_34_1.png)
     
 
 Other days, however are significantly different.
@@ -1037,11 +1017,9 @@ assay_results[12].chart()
     scores = [0.0, 0.06790765360198812, 0.0003893727578237944, 0.0037302373887164895, 0.02434412838052893, 5.798347076369716e-05, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_36_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_36_1.png)
     
-
 
 ```python
 assay_results[13].chart()
@@ -1059,9 +1037,8 @@ assay_results[13].chart()
     scores = [0.0, 0.7203606043304971, 0.8049360069588025, 0.4504317335378006, 0.0820473282443674, 0.9698478211538909, 0.027882664686338928]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png)
     
 
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
@@ -1106,17 +1083,15 @@ assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', '
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_0.png)
     
 
+    
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_1.png)
+    
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_1.png)
-    
-
-
-    
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_2.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_41_2.png)
     
 
 When we are comfortable with what alert threshold should be for our specific purposes we can create and save an assay that will be automatically run on a daily basis.
@@ -1168,13 +1143,12 @@ print(f"Generated {len(assay_results)} analyses")
 
     Generated 59 analyses
 
-
 ```python
 assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_48_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_48_0.png)
     
 
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week.  The analysis will be generated when the window is complete.
@@ -1195,13 +1169,12 @@ print(f"Generated {len(assay_results)} analyses")
 
     Generated 4 analyses
 
-
 ```python
 assay_results.chart_scores()
 ```
 
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png)
     
 
 ## Advanced Configuration
@@ -1290,8 +1263,6 @@ ar = assay_results[0]
 ar.compare_basic_stats()
 ```
 
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1377,14 +1348,11 @@ ar.compare_basic_stats()
 </table>
 </div>
 
-
 The method `compare_bins` gives us a dataframe with the bin information. Such as the number of bins, the right edges, suggested bin/edge names and the values for each bin in the baseline and the window.
 
 ```python
 ar.compare_bins()
 ```
-
-
 
 <div>
 <style scoped>
@@ -1504,7 +1472,6 @@ ar.compare_bins()
 </table>
 </div>
 
-
 We can also plot the chart to visualize the values of the bins.
 
 ```python
@@ -1523,9 +1490,8 @@ ar.chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_59_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_59_1.png)
     
 
 ## Binning Mode
@@ -1658,7 +1624,6 @@ assay_results[0].chart()
 </table>
 </div>
 
-
     None
 
     baseline mean = 12.954393170120568
@@ -1673,9 +1638,8 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.00028622745636607417, 0.000136940329536975, 0.0024190313632530313, 0.0028459952590805006, 0.0002760930381493355, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_61_3.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_61_3.png)
     
 
 ## User Provided Bin Edges
@@ -1809,7 +1773,6 @@ assay_results[0].chart()
 </table>
 </div>
 
-
     None
 
     baseline mean = 12.954393170120568
@@ -1824,9 +1787,8 @@ assay_results[0].chart()
     scores = [0.0, 0.002708901099649454, 0.00015914496208737885, 0.0004215024577886459, 0.002159043392325224, 0.00038304720176068804, 0.0]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_63_3.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_63_3.png)
     
 
 ## Number of Bins
@@ -2019,7 +1981,6 @@ assay_results[1].chart()
 </table>
 </div>
 
-
     None
 
     baseline mean = 12.954393170120568
@@ -2037,9 +1998,8 @@ assay_results[1].chart()
     /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
       ax.set_xticklabels(labels=edge_names, rotation=45)
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_65_4.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_65_4.png)
     
 
 ## Bin Weights
@@ -2062,7 +2022,6 @@ assay_results[1].chart()
 ```
 
     Using weights:  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
-
 
 <div>
 <style scoped>
@@ -2242,7 +2201,6 @@ assay_results[1].chart()
 </table>
 </div>
 
-
     None
 
     baseline mean = 12.954393170120568
@@ -2260,9 +2218,8 @@ assay_results[1].chart()
     /opt/conda/lib/python3.9/site-packages/wallaroo/assay.py:318: UserWarning: FixedFormatter should only be used together with FixedLocator
       ax.set_xticklabels(labels=edge_names, rotation=45)
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_67_5.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_67_5.png)
     
 
 ## Metrics
@@ -2290,11 +2247,9 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_69_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_69_1.png)
     
-
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2315,11 +2270,9 @@ assay_results[0].chart()
     scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_1.png)
     
-
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2340,9 +2293,8 @@ assay_results[0].chart()
     scores = [0.0033112582781456954, 0.009823277798679891, 0.008388338331573902, 0.016445794354971288, 0.012803349369101491, 0.001214249795139094, 0.0005518763796909492]
     index = 3
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_71_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_71_1.png)
     
 
 ## Aggregation Options
@@ -2368,11 +2320,9 @@ assay_results[0].chart()
     scores = [0.0006959467613300823, 0.0004941766212731371, 0.0003452027689633905, 0.0014095463411471284, 0.0007957390027837054, 7.341649894282799e-06, 0.00980308228898587]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png)
     
-
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -2393,8 +2343,7 @@ assay_results[0].chart()
     scores = [0.0033112582781456954, 0.006512019520534207, 0.0018763188110397233, 0.01456947554393151, 0.0017661261748300738, 0.0005518763796908965, 0.0]
     index = None
 
-
     
-![png](wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png)
+![png](/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png)
     
 

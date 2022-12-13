@@ -14,10 +14,12 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
+
 
 ```python
 wl = wallaroo.Client()
@@ -34,10 +36,12 @@ To test this model, we will perform the following:
 
 First we'll create a workspace for our environment, and call it `imdbworkspace`.  We'll also set up our pipeline so it's ready for our models.
 
+
 ```python
 workspace_name = 'imdbworkspace'
 pipeline_name = 'imdbpipeline'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -57,6 +61,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -68,10 +73,13 @@ imdb_pipeline
 
 
 
+
 <table><tr><th>name</th> <td>imdbpipeline</td></tr><tr><th>created</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
 
 
+
 Just to make sure, let's list our current workspace.  If everything is going right, it will show us we're in the `imdb-workspace`.
+
 
 ```python
 wl.get_current_workspace()
@@ -79,13 +87,16 @@ wl.get_current_workspace()
 
 
 
+
     {'name': 'imdbworkspace', 'id': 14, 'archived': False, 'created_by': '0df04cff-3d74-426b-8dc1-5a1a97709bbd', 'created_at': '2022-08-11T18:53:24.903642+00:00', 'models': [], 'pipelines': []}
+
 
 
 Now we'll upload our two models:
 
 * `embedder.onnx`: This will be used to embed the tokenized documents for evaluation.
 * `sentiment_model.onnx`: This will be used to analyze the review and determine if it is a positive or negative review.  The closer to 0, the more likely it is a negative review, while the closer to 1 the more likely it is to be a positive review.
+
 
 ```python
 embedder = wl.upload_model('embedder-o', './embedder.onnx').configure()
@@ -97,6 +108,7 @@ With our models uploaded, now we'll create our pipeline that will contain two st
 * First, it runs the data through the embedder.
 * Second, it applies it to our sentiment model.
 
+
 ```python
 # now make a pipeline
 imdb_pipeline.add_model_step(embedder)
@@ -105,10 +117,13 @@ imdb_pipeline.add_model_step(smodel)
 
 
 
+
 <table><tr><th>name</th> <td>imdbpipeline</td></tr><tr><th>created</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
 
 
+
 Now that we have our pipeline set up with the steps, we can deploy the pipeline.
+
 
 ```python
 imdb_pipeline.deploy()
@@ -118,14 +133,19 @@ imdb_pipeline.deploy()
 
 
 
+
+
 <table><tr><th>name</th> <td>imdbpipeline</td></tr><tr><th>created</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-11 18:53:25.638368+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>embedder-o</td></tr></table>
+
 
 
 We'll check the pipeline status to verify it's deployed and the models are ready.
 
+
 ```python
 imdb_pipeline.status()
 ```
+
 
 
 
@@ -151,7 +171,9 @@ imdb_pipeline.status()
        'reason': None}]}
 
 
+
 To test this out, we'll start with a single piece of information from our data directory.
+
 
 ```python
 results = imdb_pipeline.infer_from_file('./data/singleton.json')
@@ -163,16 +185,21 @@ results[0].data()
 
 
 
+
+
     [array([[0.37142318]])]
 
 
+
 Since that works, let's load up all 50 rows and do a full inference on each of them.  Note that Jupyter Hub has a size limitation, so for production systems the outputs should be piped out to a different output.
+
 
 ```python
 # for the victory lap, infer on all 50 rows
 results = imdb_pipeline.infer_from_file('./data/test_data.json')
 results[0].data()
 ```
+
 
 
 
@@ -228,9 +255,11 @@ results[0].data()
             [7.55301118e-03]])]
 
 
+
 ## Undeploy
 
 With our pipeline's work done, we'll undeploy it and give our Kubernetes environment back its resources.
+
 
 ```python
 imdb_pipeline.undeploy()
@@ -240,7 +269,10 @@ imdb_pipeline.undeploy()
 
 
 
+
+
 <table><tr><th>name</th> <td>imdbpipeline</td></tr><tr><th>created</th> <td>2022-08-11 18:53:25.037247+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-11 18:53:25.638368+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>embedder-o</td></tr></table>
+
 
 
 And there is our example. Please feel free to contact us at Wallaroo for if you have any questions.

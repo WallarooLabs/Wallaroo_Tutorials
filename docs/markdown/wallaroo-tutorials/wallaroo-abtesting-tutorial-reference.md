@@ -33,6 +33,7 @@ All sample data and models are available through the [Wallaroo Quick Start Guide
 
 Here we will import the libraries needed for this notebook.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -44,6 +45,7 @@ import pandas as pd
 
 This command will be used to set up a connection to the Wallaroo cluster and allow creating and use of Wallaroo inference engines.
 
+
 ```python
 wl = wallaroo.Client()
 ```
@@ -52,11 +54,13 @@ wl = wallaroo.Client()
 
 We will create a workspace to manage our pipeline and models.  The following variables will set the name of our sample workspace then set it as the current workspace for all other commands.
 
+
 ```python
 workspace_name = 'abtestworkspace'
 pipeline_name = 'abtestpipeline'
 model_name = 'alohamodel'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -75,7 +79,9 @@ wl.set_current_workspace(workspace)
 
 
 
+
     {'name': 'abtestworkspace', 'id': 3, 'archived': False, 'created_by': '0113a783-0514-4279-b47b-c49b80ae729d', 'created_at': '2022-10-31T15:32:17.705325+00:00', 'models': [], 'pipelines': []}
+
 
 
 ### Set Up the Champion and Challenger Models
@@ -89,6 +95,7 @@ Now we upload the Champion and Challenger models to our workspace.  We will use 
 
 We upload our champion model, labeled as `control`.
 
+
 ```python
 control =  wl.upload_model("aloha-control",   'models/aloha-cnn-lstm.zip').configure('tensorflow')
 ```
@@ -97,6 +104,7 @@ control =  wl.upload_model("aloha-control",   'models/aloha-cnn-lstm.zip').confi
 
 Now we upload the Challenger model, labeled as `challenger`.
 
+
 ```python
 challenger = wl.upload_model("aloha-challenger",   'models/aloha-cnn-lstm-new.zip').configure('tensorflow')
 ```
@@ -104,6 +112,7 @@ challenger = wl.upload_model("aloha-challenger",   'models/aloha-cnn-lstm-new.zi
 ### Define The Pipeline
 
 Here we will configure a pipeline with two models and set the control model with a random split chance of receiving 2/3 of the data.  Because this is a random split, it is possible for one model or the other to receive more inferences than a strict 2:1 ratio, but the more inferences are run, the more likely it is for the proper ratio split.
+
 
 ```python
 pipeline = (wl.build_pipeline("randomsplitpipeline-demo")
@@ -114,14 +123,17 @@ pipeline = (wl.build_pipeline("randomsplitpipeline-demo")
 
 Now we deploy the pipeline so we can run our inference through it.
 
+
 ```python
 experiment_pipeline = pipeline.deploy()
 ```
 
     Waiting for deployment - this will take up to 45s ...... ok
 
+
 # Run a single inference
 Now we have our deployment set up let's run a single inference. In the results we will be able to see the inference results as well as which model the inference went to under model_id.  We'll run the inference request 5 times, with the odds are that the challenger model being run at least once.
+
 
 ```python
 results = []
@@ -147,9 +159,11 @@ for result in results:
     ('aloha-challenger', '87fdfe08-170e-4231-a0b9-543728d6fc57')
     [array([[0.00151959]]), array([[0.98291481]]), array([[0.01209957]]), array([[4.75912966e-05]]), array([[2.02893716e-05]]), array([[0.00031977]]), array([[0.01102928]]), array([[0.99756402]]), array([[0.01034162]]), array([[0.00803896]]), array([[0.01615506]]), array([[0.00623623]]), array([[0.00099858]]), array([[1.79337805e-26]]), array([[1.38899512e-27]])]
 
+
 ### Run Inference Batch
 
 We will submit 1000 rows of test data through the pipeline, then loop through the responses and display which model each inference was performed in.  The results between the control and challenger should be approximately 2:1.
+
 
 ```python
 from data import test_data
@@ -159,6 +173,7 @@ for nth in range(1000):
     
 ```
 
+
 ```python
 l = [r.raw['model_name'] for r in responses]
 df = pd.DataFrame({'model': l})
@@ -167,9 +182,11 @@ df.model.value_counts()
 
 
 
+
     aloha-control       665
     aloha-challenger    335
     Name: model, dtype: int64
+
 
 
 ### Test Challenger
@@ -177,6 +194,7 @@ df.model.value_counts()
 Now we have run a large amount of data we can compare the results.
 
 For this experiment we are looking for a significant change in the fraction of inferences that predicted a probability of the seventh category being high than 0.5 so we can determine whether our challenger model is more "successful" than the champion model at identifying category 7.
+
 
 ```python
 control_count = 0
@@ -201,9 +219,11 @@ print("challenger class 7 prediction rate: " + str(challenger_success/challenger
     control class 7 prediction rate: 0.9819548872180451
     challenger class 7 prediction rate: 0.9671641791044776
 
+
 ### Undeploy Pipeline
 
 With the testing complete, we undeploy the pipeline to return the resources back to the environment.
+
 
 ```python
 experiment_pipeline.undeploy()
@@ -214,7 +234,10 @@ experiment_pipeline.undeploy()
 
 
 
+
+
 <table><tr><th>name</th> <td>randomsplitpipeline-demo</td></tr><tr><th>created</th> <td>2022-10-31 15:32:23.669025+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-31 15:39:55.382130+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>aloha-control</td></tr></table>
+
 
 
 
