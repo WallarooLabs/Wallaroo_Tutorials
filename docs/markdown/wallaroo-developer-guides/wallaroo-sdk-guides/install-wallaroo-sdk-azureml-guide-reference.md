@@ -8,7 +8,6 @@ These instructions are based on the on the [Wallaroo SSO for Microsoft Azure](ht
 
 This tutorial provides the following:
 
-* `libraries/wallaroo-0.35.0-py3-none-any.whl`: Wallaroo Python wheel version 0.35.0.  This file is a placeholder until the Wallaroo public library is available.
 * `aloha-cnn-lstm.zip`: A pre-trained open source model that uses an [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution.
 * `data-1.json`, `data-1k.json`, `data-25k.json`: Data files with 1, 1,000, and 25,000 records for testing.
 
@@ -29,7 +28,7 @@ For our example, we will perform the following:
 
 * Wallaroo SDK Install
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
-  * Install the Wallaroo Python wheel file.
+  * Install the Wallaroo Python SDK.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
 * Wallaroo SDK from Azure ML Workspace (Optional)
   * The following steps are used to demonstrate using the Wallaroo SDK in an Azure ML Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install)).
@@ -76,7 +75,7 @@ To set up the virtual environment in Azure ML for using the Wallaroo SDK with Az
     ipython kernel install --user --name=wallaroosdk
     ```
     
-1. Install the Wallaroo SDK from the uploaded wheel file.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
+1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
     pip install wallaroo==2022.4.0rc3

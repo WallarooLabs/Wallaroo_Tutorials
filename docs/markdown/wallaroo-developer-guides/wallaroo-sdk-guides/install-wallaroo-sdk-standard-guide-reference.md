@@ -27,7 +27,7 @@ For our example, we will perform the following:
 
 * Wallaroo SDK Install
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
-  * Install the Wallaroo Python wheel file.
+  * Install the Wallaroo Python SDK.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
 * Wallaroo SDK from remote JupyterHub Demonstration (Optional)
   * The following steps are used to demonstrate using the Wallaroo SDK in a external from the Wallaroo instance JupyterHub or Jupyter Notebook environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/standard-install).
@@ -70,7 +70,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
         ipython kernel install --user --name=wallaroosdk
         ```
     
-1. Install the Wallaroo SDK from the uploaded wheel file.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
+1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
     pip install wallaroo==2022.4.0rc3
