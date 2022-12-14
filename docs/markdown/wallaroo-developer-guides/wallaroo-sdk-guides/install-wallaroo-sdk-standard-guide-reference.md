@@ -73,7 +73,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 1. Install the Wallaroo SDK from the uploaded wheel file.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo==2022.4.0rc2
+    pip install wallaroo==2022.4.0rc3
     ```
 
 For organizations who will be using the Wallaroo SDK with Jupyter or similar services, the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.

@@ -79,7 +79,7 @@ To set up the virtual environment in Azure ML for using the Wallaroo SDK with Az
 1. Install the Wallaroo SDK from the uploaded wheel file.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo==2022.4.0rc2
+    pip install wallaroo==2022.4.0rc3
     ```
 
 Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.  If a notebook is existing, close it then reopen to select the new Wallaroo SDK environment.
