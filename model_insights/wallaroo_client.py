@@ -12,7 +12,6 @@ def login(username, password):
     #wl.get_current_workspace()
     return wl
 
-
 def create_user(name, password, email):
     x=e2elib.Keycloak("keycloak", "8080", "admin","admin")
     x.get_token()

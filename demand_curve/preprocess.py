@@ -12,7 +12,6 @@ def actual_preprocess(pdata):
     pd['UnitPriceXcust_known'] = pd.UnitPrice * pd.cust_known
     return pd.loc[:, ['UnitPrice', 'cust_known', 'UnitPriceXcust_known']]
 
-
 # If the data is a json string, call this wrapper instead
 # Expected input:
 # a dictionary with fields 'colnames', 'data'

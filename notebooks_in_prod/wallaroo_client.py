@@ -16,4 +16,3 @@ def get_workspace(name, create_if_none=False):
         
     return workspace
 
-

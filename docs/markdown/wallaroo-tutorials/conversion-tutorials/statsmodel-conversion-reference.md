@@ -34,7 +34,6 @@ The following steps will perform the following:
 
 The first step is to import the libraries that we will need.
 
-
 ```python
 import json
 import os
@@ -48,7 +47,6 @@ from wallaroo.object import EntityNotFoundError
 
 Start a connect to the Wallaroo instance and save the connection into the variable `wl`.
 
-
 ```python
 wl = wallaroo.Client()
 ```
@@ -56,7 +54,6 @@ wl = wallaroo.Client()
 ### Set Configurations
 
 The following will set the workspace, model name, and pipeline that will be used for this example.  If the workspace or pipeline already exist, then they will assigned for use in this example.  If they do not exist, they will be created based on the names listed below.
-
 
 ```python
 workspace_name = 'bikedayevalworkspace'
@@ -68,7 +65,6 @@ model_file_name = 'bike_day_model.pkl'
 ## Set the Workspace and Pipeline
 
 This sample code will create or use the existing workspace `bike-day-workspace` as the current workspace.
-
 
 ```python
 def get_workspace(name):
@@ -95,19 +91,13 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
 <table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 19:11:16.553505+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
 
 ### Upload Pickled Package Statsmodel Model
 
 Upload the statsmodel stored into the pickled package `bike_day_model.pkl`.  See the Notebook `train-statsmodel.ipynb` for more details on creating this package.
 
 Note that this package is being specified as a `python` configuration.
-
 
 ```python
 file_name = "bike_day_model.pkl"
@@ -119,18 +109,11 @@ bike_day_model = wl.upload_model(model_name, model_file_name).configure(runtime=
 
 We will now add the uploaded model as a step for the pipeline, then deploy it.
 
-
 ```python
 pipeline.add_model_step(bike_day_model)
 ```
 
-
-
-
 <table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 19:11:16.553505+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
 
 ```python
 pipeline.deploy()
@@ -138,21 +121,11 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ................. ok
 
-
-
-
-
 <table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 20:10:27.589019+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
 
 ```python
 pipeline.status()
 ```
-
-
-
 
     {'status': 'Running',
      'details': None,
@@ -171,22 +144,15 @@ pipeline.status()
        'status': 'Running',
        'reason': None}]}
 
-
-
 ### Run Inference
 
 Perform an inference from the evaluation data JSON file `bike_day_eval.json`.
-
 
 ```python
 pipeline.infer_from_file('bike_day_eval.json')
 ```
 
     Waiting for inference response - this will take up to 45s .. ok
-
-
-
-
 
     [InferenceResult({'check_failures': [],
       'elapsed': 5369777,
@@ -232,12 +198,9 @@ pipeline.infer_from_file('bike_day_eval.json')
       'pipeline_name': 'bike-day-evel-pipeline',
       'time': 1657051854529})]
 
-
-
 ### Undeploy the Pipeline
 
 Undeploy the pipeline and return the resources back to the Wallaroo instance.
-
 
 ```python
 pipeline.undeploy()
@@ -245,14 +208,7 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ................................ ok
 
-
-
-
-
 <table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 20:10:27.589019+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
 
 ```python
 

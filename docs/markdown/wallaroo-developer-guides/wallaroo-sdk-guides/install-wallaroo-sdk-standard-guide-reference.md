@@ -18,7 +18,7 @@ For this example, a virtual python environment will be used.  This will set the 
 The following is required for this tutorial:
 
 * A Wallaroo instance version 2022.4 or later.
-* Python 3.9 or later installed locally
+* Python 3.8.6 or later installed locally
 * [Conda](https://docs.conda.io/en/latest/):  Used for managing python virtual environments.
 
 ## General Steps
@@ -45,10 +45,10 @@ For our example, we will perform the following:
 
 To set up the Python virtual environment for use of the Wallaroo SDK:
 
-1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8 is specified as a requirement for Python libraries used with the Wallaroo SDK.
+1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8.6 and above is specified as a requirement for Python libraries used with the Wallaroo SDK.  The following will install the latest version of Python 3.8, which as of this time is 3.8.15.
 
     ```bash
-    conda create -n wallaroosdk python=3.9
+    conda create -n wallaroosdk python=3.8
     ```
 
 1. Activate the new environment.
@@ -78,7 +78,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 
 For organizations who will be using the Wallaroo SDK with Jupyter or similar services, the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
 
-![](../../images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
+![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
 
 To use a new Notebook:
 
@@ -88,8 +88,7 @@ To use a new Notebook:
 To update an existing Notebook to use the new virtual environment as a kernel:
 
 1. From the main menu, select **Kernel->Change Kernel**.
-
-### 
+1. Select the new kernel.
 
 ## Sample Wallaroo Connection
 
@@ -109,20 +108,24 @@ The `Client` method takes the following parameters:
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-![Wallaroo Login](../../images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
+![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-![Device Registration](../../images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
+![Device Registration](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
-
 
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
 
+```python
+wallaroo.__version__
+```
+
+    '2022.4.0rc3'
 
 ```python
 # SSO login through keycloak
@@ -143,14 +146,12 @@ The following examples can be used by an organization to test using the Wallaroo
 
 We will create a workspace to work in and call it the `sdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `sdkpipeline`.
 
-
 ```python
 workspace_name = 'sdkworkspace'
 pipeline_name = 'sdkpipeline'
 model_name = 'sdkmodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
-
 
 ```python
 def get_workspace(name):
@@ -170,7 +171,6 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -180,31 +180,19 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
-<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-12 23:18:14.377293+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-14 15:48:18.202824+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>751d6910-14c2-47d2-bd33-debf39bb475b, 85cb2cc5-39a2-4e68-b5bf-e3cceb270df2, 862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
-
 
 ```python
 wl.get_current_workspace()
 ```
 
-
-
-
-    {'name': 'sdkworkspace', 'id': 3, 'archived': False, 'created_by': 'f1f32bdf-9bd9-4595-a531-aca5778ceaf0', 'created_at': '2022-12-12T22:53:12.691709+00:00', 'models': [{'name': 'sdkmodel', 'versions': 2, 'owner_id': '""', 'last_update_time': datetime.datetime(2022, 12, 12, 23, 18, 13, 60550, tzinfo=tzutc()), 'created_at': datetime.datetime(2022, 12, 12, 22, 53, 17, 576900, tzinfo=tzutc())}], 'pipelines': [{'name': 'sdkpipeline', 'create_time': datetime.datetime(2022, 12, 12, 22, 53, 13, 761344, tzinfo=tzutc()), 'definition': '[]'}]}
-
-
+    {'name': 'sdkworkspace', 'id': 3, 'archived': False, 'created_by': 'f1f32bdf-9bd9-4595-a531-aca5778ceaf0', 'created_at': '2022-12-12T22:53:12.691709+00:00', 'models': [{'name': 'sdkmodel', 'versions': 5, 'owner_id': '""', 'last_update_time': datetime.datetime(2022, 12, 14, 15, 48, 16, 779883, tzinfo=tzutc()), 'created_at': datetime.datetime(2022, 12, 12, 22, 53, 17, 576900, tzinfo=tzutc())}], 'pipelines': [{'name': 'sdkpipeline', 'create_time': datetime.datetime(2022, 12, 12, 22, 53, 13, 761344, tzinfo=tzutc()), 'definition': '[]'}]}
 
 ### Upload the Models
 
 Now we will upload our model.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
-
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -218,61 +206,43 @@ We will tell the deployment we are using a tensorflow model and give the deploym
 
 To do this, we'll create our pipeline that can ingest the data, pass the data to our Aloha model, and give us a final output.  We'll call our pipeline `externalsdkpipeline`, then deploy it so it's ready to receive data.  The deployment process usually takes about 45 seconds.
 
-
 ```python
 pipeline.add_model_step(model)
 ```
 
-
-
-
-<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-12 23:18:14.377293+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-14 15:48:18.202824+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>751d6910-14c2-47d2-bd33-debf39bb475b, 85cb2cc5-39a2-4e68-b5bf-e3cceb270df2, 862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
 ```python
 pipeline.deploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-13 16:18:31.691352+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-14 15:54:43.308811+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ef60d525-e959-4b4f-acb8-e7f1c9540668, 751d6910-14c2-47d2-bd33-debf39bb475b, 85cb2cc5-39a2-4e68-b5bf-e3cceb270df2, 862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
 We can verify that the pipeline is running and list what models are associated with it.
-
 
 ```python
 pipeline.status()
 ```
 
-
-
-
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.5.6',
-       'name': 'engine-7c4d76dfdd-mcwkx',
+     'engines': [{'ip': '10.244.5.8',
+       'name': 'engine-67bb596df5-7qcrs',
        'status': 'Running',
        'reason': None,
        'details': [],
        'pipeline_statuses': {'pipelines': [{'id': 'sdkpipeline',
           'status': 'Running'}]},
        'model_statuses': {'models': [{'name': 'sdkmodel',
-          'version': '672955b0-bb23-49b2-83b7-bd80cf99bb85',
+          'version': '7f8d1a2e-4308-4a6d-961c-a14623c5e2bf',
           'sha': '7c89707252ce389980d5348c37885d6d72af4c20cd303422e2de7e66dd7ff184',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.6.6',
-       'name': 'engine-lb-c6485cfd5-whvnr',
+     'engine_lbs': [{'ip': '10.244.2.8',
+       'name': 'engine-lb-c6485cfd5-wbxfc',
        'status': 'Running',
        'reason': None,
        'details': []}],
      'sidekicks': []}
-
-
 
 ## Interferences
 
@@ -282,9 +252,8 @@ Now that the pipeline is deployed and our Aloha model is in place, we'll perform
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
-
 ```python
-## to test out the external SDK
+## Demonstrate via straight infer
 
 import json
 
@@ -293,109 +262,135 @@ file = open('./data-1.json')
 data = json.load(file)
 
 result = pipeline.infer(data)
+print(result)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    JSONDecodeError                           Traceback (most recent call last)
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/site-packages/wallaroo/deployment.py in infer(self, tensor, timeout, dataset, exclude, dataset_separator)
-        604             try:
-    --> 605                 data = res.json()
-        606             except (json.JSONDecodeError, ValueError) as err:
-
-
-    ~/.local/lib/python3.9/site-packages/requests/models.py in json(self, **kwargs)
-        899                     pass
-    --> 900         return complexjson.loads(self.text, **kwargs)
-        901 
-
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/json/__init__.py in loads(s, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook, **kw)
-        345             parse_constant is None and object_pairs_hook is None and not kw):
-    --> 346         return _default_decoder.decode(s)
-        347     if cls is None:
-
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/json/decoder.py in decode(self, s, _w)
-        336         """
-    --> 337         obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-        338         end = _w(s, end).end()
-
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/json/decoder.py in raw_decode(self, s, idx)
-        354         except StopIteration as err:
-    --> 355             raise JSONDecodeError("Expecting value", s, err.value) from None
-        356         return obj, end
-
-
-    JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-
-    
-    The above exception was the direct cause of the following exception:
-
-
-    RuntimeError                              Traceback (most recent call last)
-
-    /var/folders/jf/_cj0q9d51s365wksymljdz4h0000gn/T/ipykernel_5439/296631341.py in <module>
-          7 data = json.load(file)
-          8 
-    ----> 9 result = pipeline.infer(data)
-    
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/site-packages/wallaroo/pipeline.py in _inner(self, *args, **kwargs)
-         46 def update_timestamp(f):
-         47     def _inner(self, *args, **kwargs):
-    ---> 48         results = f(self, *args, **kwargs)
-         49         if isinstance(results, list):
-         50             self._last_infer_time = max(r.timestamp() for r in results)
-
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/site-packages/wallaroo/pipeline.py in infer(self, tensor, timeout, dataset, exclude, dataset_separator)
-        453         deployment = self._deployment_for_pipeline()
-        454         if deployment:
-    --> 455             return deployment.infer(
-        456                 tensor, timeout, dataset, exclude, dataset_separator
-        457             )
-
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk/lib/python3.9/site-packages/wallaroo/deployment.py in infer(self, tensor, timeout, dataset, exclude, dataset_separator)
-        605                 data = res.json()
-        606             except (json.JSONDecodeError, ValueError) as err:
-    --> 607                 raise RuntimeError(f"Inference unable to complete.") from err
-        608             return [InferenceResult(self._gql_client, d) for d in data]
-        609 
-
-
-    RuntimeError: Inference unable to complete.
-
-
+    [InferenceResult({'check_failures': [],
+     'elapsed': 228355973,
+     'model_name': 'sdkmodel',
+     'model_version': '7f8d1a2e-4308-4a6d-961c-a14623c5e2bf',
+     'original_data': {'text_input': [[0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       28,
+                                       16,
+                                       32,
+                                       23,
+                                       29,
+                                       32,
+                                       30,
+                                       19,
+                                       26,
+                                       17]]},
+     'outputs': [{'Float': {'data': [0.0015195857267826796],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.9829148054122925],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.012099565006792545],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [4.759129660669714e-05],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [2.0289371605031192e-05],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.0003197726036887616],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.011029282584786415],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.9975640177726746],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.010341615416109562],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.008038961328566074],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.0161550622433424],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.006236232817173004],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [0.0009985751239582896],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [1.7933780470763777e-26],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}},
+                 {'Float': {'data': [1.3889951203666574e-27],
+                            'dim': [1, 1],
+                            'dtype': 'Float',
+                            'v': 1}}],
+     'pipeline_name': 'sdkpipeline',
+     'shadow_data': {},
+     'time': 1671033309872})]
 
 ```python
+# Demonstrate from infer_from_file
 result = pipeline.infer_from_file("./data-1.json")
-
 ```
-
-
-```python
-pipeline._deployment._url()
-```
-
-
-
-
-    'https://magical-bear-3782.api.wallaroo.community/v1/api/pipelines/infer/sdkpipeline-3'
-
-
-
 
 ```python
 result[0].data()
 ```
-
-
-
 
     [array([[0.00151959]]),
      array([[0.98291481]]),
@@ -413,8 +408,6 @@ result[0].data()
      array([[1.79337805e-26]]),
      array([[1.38899512e-27]])]
 
-
-
 ### Batch Inference
 
 Now that our smoke test is successful, let's really give it some data.  We have two inference files we can use:
@@ -426,23 +419,16 @@ We'll pipe the `data-25k.json` file through the `pipeline` deployment URL, and p
 
 When retrieving the pipeline inference URL through an external SDK connection, the External Inference URL will be returned.  This URL will function provided that the **Enable external URL inference endpoints** is enabled.  For more information, see the [Wallaroo Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
 
-
 ```python
 external_url = pipeline._deployment._url()
 external_url
 ```
 
-
-
-
     'https://magical-bear-3782.api.wallaroo.community/v1/api/pipelines/infer/sdkpipeline-3'
-
-
 
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 
 For this example, the API connection details will be retrieved, then used to submit an inference request through the external inference URL retrieved earlier.
-
 
 ```python
 connection =wl.mlops().__dict__
@@ -450,13 +436,7 @@ token = connection['token']
 token
 ```
 
-
-
-
-    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnTHBSY1B6QkhjQ1k1RTFHTVZoTlQtelI0VDY2YUM0QWh2eXVORmpVOTBjIn0.eyJleHAiOjE2NzA4ODcxNDcsImlhdCI6MTY3MDg4NzA4NywiYXV0aF90aW1lIjoxNjcwODgzMzI2LCJqdGkiOiJhMTlkYTg4NS01MGRhLTQyMWUtYjM3Yi1lYmYyZDczNmU2NzQiLCJpc3MiOiJodHRwczovL21hZ2ljYWwtYmVhci0zNzgyLmtleWNsb2FrLndhbGxhcm9vLmNvbW11bml0eS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiJmMWYzMmJkZi05YmQ5LTQ1OTUtYTUzMS1hY2E1Nzc4Y2VhZjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6Ijk1YWE5ZDk5LTlhMDQtNGUzYS04OGVkLWU1NjgzMmMwNjY1ZCIsImFjciI6IjAiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJ2aWV3LXJlYWxtIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6Ijk1YWE5ZDk5LTlhMDQtNGUzYS04OGVkLWU1NjgzMmMwNjY1ZCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiJmMWYzMmJkZi05YmQ5LTQ1OTUtYTUzMS1hY2E1Nzc4Y2VhZjAiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkiLCJlbWFpbCI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIn0.FZABqqF_HjYpd_tfbtxdsZjpEomSHZV9EiolGlL47eCCA1_iO2NBgp1vZG6wqSOw2RIFIkZdnFRpqrdmYzMJKdWYcWlLyr6P_o8V-8MbxqPdeqv35sPxW2s_mzcm83h4g0oIKEu_OTOwZcSpiJFDCCr5CHAjtthhjNiR0ml3OwNorbT-iaXKSoL_-NBWNnvN9IdTHxnozXzmQqaAVx4pzlcYyIGubWkzQrDtrx0I-9EODAjO4phZv2d0fMSLnf-d3RrwSSHqshyAMyQ2Z4hRJxfgbgI9HvemkV9HwJSZRkecDkubaw8a42nhLCvMP4pfy5_mnN13525fbHr9pOHuoA'
-
-
-
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJnTHBSY1B6QkhjQ1k1RTFHTVZoTlQtelI0VDY2YUM0QWh2eXVORmpVOTBjIn0.eyJleHAiOjE2NzEwMzMzMzUsImlhdCI6MTY3MTAzMzI3NSwiYXV0aF90aW1lIjoxNjcxMDMyODgyLCJqdGkiOiJiNDk3YmM3Yy1kMTc5LTRhYWQtODdmZC0yZGJiYTBlZDI4ZDYiLCJpc3MiOiJodHRwczovL21hZ2ljYWwtYmVhci0zNzgyLmtleWNsb2FrLndhbGxhcm9vLmNvbW11bml0eS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiJmMWYzMmJkZi05YmQ5LTQ1OTUtYTUzMS1hY2E1Nzc4Y2VhZjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjYzYzNiZjYwLTNmNjMtNDBjNC05NmI1LWNiYTk4ZjZhOGNmNyIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJ2aWV3LXJlYWxtIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjYzYzNiZjYwLTNmNjMtNDBjNC05NmI1LWNiYTk4ZjZhOGNmNyIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiJmMWYzMmJkZi05YmQ5LTQ1OTUtYTUzMS1hY2E1Nzc4Y2VhZjAiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkiLCJlbWFpbCI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIn0.EEt9UK1jxvO1DYg_hiy1ne4s9iK8mJtqbVfE7MPQfMRYhzXqDU4gFpP3Nwzlo0iW9fSLDiCxPg303Rz-l4it3oPFu5SaS1S8pQpqvtMAJqy8V_CNPp5H5ggQFYm4Z50aAPdPzOOOkVQOZUhupRsEeUERvK1-eFqtG1bb-IUV6DpQO_XaRVcQbIVubFi48C0_im5Tb3i4WFCNA_1pRrEBKFbZLWgzSCu8fglBQ27mODqfmRQVbTeXLjxsQX5O8meErSfibEGmsJKQytGCJ3NYdnXfal3YhWEqp6A4dG0tkoRW1eD-aKBpsHf9nKKzxcSsjeXDQF6iQAONCGmC40oqHQ'
 
 ```python
 !curl -X POST {external_url} -H "Content-Type:application/json" -H "Authorization: Bearer {token}" --data @data-25k.json > curl_response.txt
@@ -464,26 +444,15 @@ token
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100 13.0M  100 10.1M  100 2886k  1655k   458k  0:00:06  0:00:06 --:--:-- 2536k
-
+    100 13.0M  100 10.1M  100 2886k  1375k   380k  0:00:07  0:00:07 --:--:-- 3084k
 
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged pipeline.deploy() will restart the inference engine in the same configuration as before.
 
-
 ```python
 pipeline.undeploy()
 ```
 
+<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-14 15:54:43.308811+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ef60d525-e959-4b4f-acb8-e7f1c9540668, 751d6910-14c2-47d2-bd33-debf39bb475b, 85cb2cc5-39a2-4e68-b5bf-e3cceb270df2, 862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
 
-
-
-<table><tr><th>name</th> <td>sdkpipeline</td></tr><tr><th>created</th> <td>2022-12-12 22:53:13.761344+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-13 16:18:31.691352+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>862b5c66-98a6-4dee-9c92-4c82d7ce49a6, 7a373546-27b8-4541-bc96-33a30e14200c, 929a93db-1478-400a-8e21-0ecfd8090faf, 682dc9af-c3b7-401d-a2bd-d8511dfa3bcc</td></tr><tr><th>steps</th> <td>sdkmodel</td></tr></table>
-
-
-
-
-```python
-
-```

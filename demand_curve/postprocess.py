@@ -12,7 +12,6 @@ def actual_postprocess(predictions):
     
     return numpy.where(predictions < 0, 0, predictions)
 
-
 # Expected input:
 # A Dictionary with fields 'outputs',
 # which contains a list with an element that is a dictionary

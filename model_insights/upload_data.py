@@ -9,10 +9,8 @@ import random
 
 import requests
 
-
 def rfc3339(d: datetime.datetime, verbose=False) -> str:
     return d.astimezone(tz=datetime.timezone.utc).isoformat()
-
 
 def upload_data(
     logs,
@@ -58,7 +56,6 @@ def upload_data(
     print(f"\nFinal: {i} {ts}")
 
     return logs
-
 
 if __name__ == "__main__":
     uploaded_logs = upload_data()

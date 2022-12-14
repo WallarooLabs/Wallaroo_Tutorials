@@ -17,8 +17,6 @@ def simulate_db_connection(datafile =_datafile, tablename=tablename):
     df.to_sql(tablename, conn, index=False)
     return conn
 
-
-
 '''
 Shift the dates to end today.
 Create list_price and sale_price columns

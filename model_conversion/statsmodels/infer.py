@@ -1,7 +1,6 @@
 import json
 import pandas as pd
 
-
 def wallaroo_json(data):
     obj = json.loads(data)
     evaluation_frame = pd.DataFrame.from_dict(obj)

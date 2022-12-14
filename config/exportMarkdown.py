@@ -170,7 +170,6 @@ fileList = [
         "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
     }
 
-
 ]
 
 def main():

@@ -9,8 +9,6 @@ Convert log10 price back to price, and round to the nearest integer value.
 def postprocess(log10price):
     return np.rint(np.power(10, log10price))
 
-
-
 '''
 This is the function that Wallaroo expects to call, to invoke the procedure above.
 It expects input of the form (as a json string):
@@ -31,7 +29,6 @@ returns output of the form :
 output_dict = {
      'tensor': pandasframe.to_numpy().tolist()
 }
-
 
 '''
 def wallaroo_json(data):
