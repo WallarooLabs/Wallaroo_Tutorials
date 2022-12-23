@@ -47,9 +47,9 @@ Wallaroo comes pre-installed with a confidential OpenID Connect client.  The def
 
 As it is a confidential client, api-client requires its secret to be supplied when requesting a token. Administrators may obtain their API client credentials from Keycloak from the Keycloak Service URL as listed above and the prefix `/auth/admin/master/console/#/realms/master/clients`.
 
-For example, if the Wallaroo Community instance DNS address is `https://magical-rhino-5555.wallaroo.community`, then the direct path to the Keycloak API client credentials would be:
+For example, if the Wallaroo Community instance DNS address is `https://magical-rhino-5555.example.wallaroo.ai`, then the direct path to the Keycloak API client credentials would be:
 
-`https://magical-rhino-5555.keycloak.wallaroo.community/auth/admin/master/console/#/realms/master/clients`
+`https://magical-rhino-5555.keycloak.example.wallaroo.ai/auth/admin/master/console/#/realms/master/clients`
 
 Then select the client, in this case **api-client**, then **Credentials**.
 
@@ -112,12 +112,12 @@ All Wallaroo API endpoints follow the format:
 Where `$COMMAND` is the specific endpoint.  For example, for the command to list of workspaces in the Wallaroo instance would use the above format based on these settings:
 
 * `$URLPREFIX`: `smooth-moose-1617`
-* `$URLSUFFIX`: `wallaroo.community`
+* `$URLSUFFIX`: `example.wallaroo.ai`
 * `$COMMAND`: `/workspaces/list`
 
 This would create the following API endpoint:
 
-* `https://smooth-moose-1617.api.wallaroo.community/v1/api/workspaces/list`
+* `https://smooth-moose-1617.api.example.wallaroo.ai/v1/api/workspaces/list`
 
 The following methods are used to connect to the Wallaroo API, and the external URL inference endpoints.
 
@@ -215,7 +215,7 @@ externalUrl = response['url']
 externalUrl
 ```
 
-    'https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/urldemopipeline-5'
+    'https://YOUR PREFIX.api.example.wallaroo.ai/v1/api/pipelines/infer/urldemopipeline-5'
 
 ### Perform Inference Through External URL
 

@@ -94,7 +94,7 @@ The method we'll introduce below will either **create** a new workspace if it do
 
 The first part is to return to your Wallaroo Dashboard.  In the top navigation panel next to your user name there's a drop down with your workspaces.  In this example it just has "My Workspace".  Select **View Workspaces**.
 
-![Select View Workspaces](/images//wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
+![Select View Workspaces](/images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
 
 From here, enter the name of our new workspace as `ccfraud-workspace`.  If it already exists, you can skip this step.
 

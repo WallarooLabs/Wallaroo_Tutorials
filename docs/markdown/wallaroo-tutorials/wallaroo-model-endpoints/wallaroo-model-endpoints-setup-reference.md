@@ -298,7 +298,7 @@ pipeline.undeploy()
 
     Please log into the following URL in a web browser:
     
-    	https://sparkly-apple-3026.keycloak.wallaroo.community/auth/realms/master/device?user_code=VUSN-BRDZ
+    	https://YOUR PREFIX.keycloak.example.wallaroo.ai/auth/realms/master/device?user_code=VUSN-BRDZ
     
     Login successful!
     Waiting for undeployment - this will take up to 45s .................................... ok

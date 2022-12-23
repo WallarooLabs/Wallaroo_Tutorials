@@ -63,7 +63,7 @@ wl = wallaroo.Client()
 
     Please log into the following URL in a web browser:
     
-    	https://sparkly-apple-3026.keycloak.wallaroo.community/auth/realms/master/device?user_code=XRAD-UUUM
+    	https://YOUR PREFIX.keycloak.example.wallaroo.ai/auth/realms/master/device?user_code=XRAD-UUUM
     
     Login successful!
 

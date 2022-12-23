@@ -47,7 +47,7 @@ wl = wallaroo.Client()
 
     Please log into the following URL in a web browser:
     
-    	https://beautiful-couch-3504.keycloak.wallaroo.community/auth/realms/master/device?user_code=OEHR-BULW
+    	https://YOUR PREFIX.keycloak.example.wallaroo.ai/auth/realms/master/device?user_code=OEHR-BULW
     
     Login successful!
 
