@@ -78,7 +78,7 @@ To set up the virtual environment in Azure ML for using the Wallaroo SDK with Az
 1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo==2022.4.0rc3
+    pip install wallaroo
     ```
 
 Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.  If a notebook is existing, close it then reopen to select the new Wallaroo SDK environment.
@@ -289,7 +289,7 @@ external_url = pipeline._deployment._url()
 external_url
 ```
 
-    'https://magical-bear-3782.api.wallaroo.community/v1/api/pipelines/infer/gcpsdkpipeline-13'
+    'https://YOUR PREFIX.api.example.wallaroo.ai/v1/api/pipelines/infer/gcpsdkpipeline-13'
 
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 

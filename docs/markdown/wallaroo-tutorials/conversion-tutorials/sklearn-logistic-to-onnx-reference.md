@@ -41,7 +41,7 @@ TARGET_OPSET = min(DEFAULT_OPSET_NUMBER, onnx_opset_version())
 TARGET_OPSET
 ```
 
-    13
+    15
 
 With the `TARGET_OPSET` determined, we can convert our sklearn logistic model to onnx.
 
