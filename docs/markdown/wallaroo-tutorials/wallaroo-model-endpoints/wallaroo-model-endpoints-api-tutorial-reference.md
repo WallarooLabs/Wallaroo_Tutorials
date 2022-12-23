@@ -68,6 +68,7 @@ Set the following variables from the list below:
 * `USERNAME`: The Wallaroo user username, typically your email address.
 * `PASSWORD`: The Wallaroo user password.
 
+
 ```python
 import requests
 from requests.auth import HTTPBasicAuth
@@ -82,6 +83,7 @@ SECRET="YOUR-API-CREDENTIALS-HERE"
 CLIENT="api-client"
 USERNAME="WALLAROO-USERNAME-HERE"
 PASSWORD="WALLAROO-PASSWORD-HERE"
+
 
 # Derived variables
 TOKENURL=f'https://{URLPREFIX}.keycloak.{URLSUFFIX}/auth/realms/master/protocol/openid-connect/token'
@@ -103,6 +105,7 @@ print(TOKEN)
 
     eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJibVMxOWtsa2NLZlFyMzUxTlVPeVlKSzdJNzhkQ3Rza0lYTENOOWx2SUpJIn0.eyJleHAiOjE2Njk4MjUzNjMsImlhdCI6MTY2OTgyMTc2MywianRpIjoiZTdmZmVlY2EtNTNiOC00Yjk1LTk5MDEtYzA4ODUwZGEyYjMyIiwiaXNzIjoiaHR0cHM6Ly9zcGFya2x5LWFwcGxlLTMwMjYua2V5Y2xvYWsud2FsbGFyb28uY29tbXVuaXR5L2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6Ijc0YTQxMDlhLTk3OTgtNGQ3Yy05OGJlLTYyZDkzODBjOTYwNiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiNDgxMWZkOGQtMjgzNy00MWE4LWEyNjctNjA3NGQ1YTU3ZTg3IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJjcmVhdGUtcmVhbG0iLCJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im1hc3Rlci1yZWFsbSI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJtYW5hZ2UtaWRlbnRpdHktcHJvdmlkZXJzIiwiaW1wZXJzb25hdGlvbiIsImNyZWF0ZS1jbGllbnQiLCJtYW5hZ2UtdXNlcnMiLCJxdWVyeS1yZWFsbXMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiNDgxMWZkOGQtMjgzNy00MWE4LWEyNjctNjA3NGQ1YTU3ZTg3IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6Ijc0YTQxMDlhLTk3OTgtNGQ3Yy05OGJlLTYyZDkzODBjOTYwNiIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbInVzZXIiXSwieC1oYXN1cmEtdXNlci1ncm91cHMiOiJ7fSJ9LCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSIsImVtYWlsIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkifQ.Hg-ChAQijlKcHzTGkBWC9xf8EYnt8Vsc7qN_DGptMd-GYk_cGS5T0CN8k1XetN8RrFiTE_bWNmnDx5eqEHafa0P4eA_hu-omgwhjkC0VgacayxdgmvFMBgVlWVb5xR8KQBVWc_OeDACvVFRUzrl21tYNy3IW3KWo084bhKDWUJRRvAN5pmwPeN3ese9tia7ZfFbKnEliVCBT74fLmsiJICxpd8tM2Vk9NE7mpMrMsNQI3YgsYJjpntvAiTir6VIYhPAzccrvtJWozuYdPVmrqfkf5ILEzeS1Y81A3W6NsLGeND38twC5LHOLxd4m3op1hzb-RKDgXhvF9uMVjrHuOA
 
+
 ### API Request Methods
 
 All Wallaroo API endpoints follow the format:
@@ -120,6 +123,7 @@ This would create the following API endpoint:
 * `https://smooth-moose-1617.api.example.wallaroo.ai/v1/api/workspaces/list`
 
 The following methods are used to connect to the Wallaroo API, and the external URL inference endpoints.
+
 
 ```python
 # This can either submit a plain POST request ('Content-Type':'application/json'), or with a file.
@@ -156,6 +160,7 @@ The External Inference URL will be stored as a variable for the next step.
 
 Modify these values to match the ones used in the Internal Pipeline Deployment URL Tutorial.
 
+
 ```python
 ## Start with the a lists of the workspaces to verify the ID
 
@@ -169,6 +174,9 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
+
+
+
 
     {'workspaces': [{'id': 5,
        'name': 'john.hansarick@wallaroo.ai - Default Workspace',
@@ -192,13 +200,22 @@ response
        'models': [4],
        'pipelines': [8]}]}
 
+
+
+
 ```python
 workspaceList = response['workspaces']
 workspaceId = list(filter(lambda x:x["name"]=="urldemoworkspace",workspaceList))[0]['id']
 workspaceId
 ```
 
+
+
+
     16
+
+
+
 
 ```python
 ## Retrieve the pipeline's External Inference URL
@@ -215,13 +232,19 @@ externalUrl = response['url']
 externalUrl
 ```
 
+
+
+
     'https://YOUR PREFIX.api.example.wallaroo.ai/v1/api/pipelines/infer/urldemopipeline-5'
+
+
 
 ### Perform Inference Through External URL
 
 The inference can now be performed through the External Inference URL.  This URL will accept the same inference data file that is used with the Wallaroo SDK, or with an Internal Inference URL as used in the Internal Pipeline Inference URL Tutorial.
 
 For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request through the data file `data-1.json`.
+
 
 ```python
 ## Inference through external URL
@@ -244,6 +267,7 @@ print(printResponse[0:300])
 ```
 
     [{"model_name": "urldemomodel", "model_version": "47299047-a3e0-4637-9b87-cc243f4552f3", "pipeline_name": "urldemopipeline", "outputs": [{"Float": {"v": 1, "dim": [1000, 1], "data": [0.001519581419415772, 2.8375030524330214e-05, 3.0770573289373715e-07, 8.822828535468008e-13, 5.48706066183513e-06, 8.
+
 
 Wallaroo supports the ability to perform inferences through the SDK and through the API for each deployed pipeline.  For more information on how to use Wallaroo, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai) for full details.
 

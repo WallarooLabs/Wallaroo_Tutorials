@@ -20,24 +20,42 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+
+```python
+from platform import python_version
+
+print(python_version())
+```
+
+    3.8.11
+
+
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
 
-```python
-wl = wallaroo.Client()
-```
 
-    Please log into the following URL in a web browser:
-    
-    	https://YOUR PREFIX.keycloak.example.wallaroo.ai/auth/realms/master/device?user_code=NACK-RXGV
-    
-    Login successful!
+```python
+# Client connection from local Wallaroo instance
+
+# wl = wallaroo.Client()
+
+# SSO login through keycloak
+
+wallarooPrefix = "YOUR PREFIX"
+wallarooSuffix = "YOUR SUFFIX"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
+```
 
 ## Create the Workspace
 
 We will create a workspace to work in and call it the "alohaworkspace", then set it as current workspace environment.  We'll also create our pipeline in advance as `alohapipeline`.
+
 
 ```python
 workspace_name = 'alohaworkspace'
@@ -45,6 +63,7 @@ pipeline_name = 'alohapipeline'
 model_name = 'alohamodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -64,6 +83,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -73,17 +93,31 @@ aloha_pipeline = get_pipeline(pipeline_name)
 aloha_pipeline
 ```
 
+
+
+
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5cdaa977-856c-4a7a-a14e-dae7228fb5d6</td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
+
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
+
 
 ```python
 wl.get_current_workspace()
 ```
 
-    {'name': 'aloha-workspace', 'id': 6, 'archived': False, 'created_by': '7dbb3754-4c14-4730-8b77-33caeea7a2a0', 'created_at': '2022-03-29T16:14:08.85824+00:00', 'models': [], 'pipelines': []}
+
+
+
+    {'name': 'alohaworkspace', 'id': 28, 'archived': False, 'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103', 'created_at': '2022-12-16T21:00:01.614796+00:00', 'models': [], 'pipelines': [{'name': 'alohapipeline', 'create_time': datetime.datetime(2022, 12, 16, 21, 0, 2, 528654, tzinfo=tzutc()), 'definition': '[]'}]}
+
+
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
+
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -102,37 +136,61 @@ To do this, we'll create our pipeline that can ingest the data, pass the data to
 for p in wl.list_pipelines(): p.undeploy()
 ```
 
+
 ```python
 aloha_pipeline.add_model_step(model)
+```
+
+
+
+
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5cdaa977-856c-4a7a-a14e-dae7228fb5d6</td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
+
+
+```python
 aloha_pipeline.deploy()
 ```
 
-    Waiting for deployment - this will take up to 45s ....... ok
 
-    {'name': 'aloha-test-demo', 'create_time': datetime.datetime(2022, 3, 29, 16, 15, 31, 638290, tzinfo=tzutc()), 'definition': "[{'ModelInference': {'models': [{'name': 'aloha-2', 'version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde', 'sha': 'fd998cd5e4964bbbb4f8d29d245a8ac67df81b62be767afbceb96a03d1a01520'}]}}]"}
+
+
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-16 21:00:11.796841+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f282c205-afe3-4a77-baf5-b379fe8a60d7, 5cdaa977-856c-4a7a-a14e-dae7228fb5d6</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
+
+
 
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 aloha_pipeline.status()
 ```
 
+
+
+
     {'status': 'Running',
-     'details': None,
-     'engines': [{'ip': '10.12.1.236',
-       'name': 'engine-864d86d898-k26hv',
+     'details': [],
+     'engines': [{'ip': '10.4.2.6',
+       'name': 'engine-7465877489-gf4g9',
        'status': 'Running',
        'reason': None,
-       'pipeline_statuses': {'pipelines': [{'id': 'aloha-test-demo',
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'alohapipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'aloha-2',
-          'version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde',
-          'sha': 'fd998cd5e4964bbbb4f8d29d245a8ac67df81b62be767afbceb96a03d1a01520',
+       'model_statuses': {'models': [{'name': 'alohamodel',
+          'version': '45224236-61f8-4628-a6c6-f96954863c89',
+          'sha': '7c89707252ce389980d5348c37885d6d72af4c20cd303422e2de7e66dd7ff184',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.12.1.235',
-       'name': 'engine-lb-85846c64f8-dcj4f',
+     'engine_lbs': [{'ip': '10.4.0.22',
+       'name': 'engine-lb-7d6f4bfdd-qwdtx',
        'status': 'Running',
-       'reason': None}]}
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
+
+
 
 ## Interferences
 
@@ -142,14 +200,18 @@ Now that the pipeline is deployed and our Aloha model is in place, we'll perform
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
+
 ```python
-aloha_pipeline.infer_from_file("data-1.json")
+aloha_pipeline.infer_from_file("./data-1.json")
 ```
 
+
+
+
     [InferenceResult({'check_failures': [],
-      'elapsed': 631348351,
-      'model_name': 'aloha-2',
-      'model_version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde',
+      'elapsed': 275299859,
+      'model_name': 'alohamodel',
+      'model_version': '45224236-61f8-4628-a6c6-f96954863c89',
       'original_data': {'text_input': [[0,
                                         0,
                                         0,
@@ -200,35 +262,71 @@ aloha_pipeline.infer_from_file("data-1.json")
                                         19,
                                         26,
                                         17]]},
-      'outputs': [{'Float': {'data': [0.001519620418548584], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.9829147458076477], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.012099534273147583], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [4.7593468480044976e-05],
+      'outputs': [{'Float': {'data': [0.0015195842133834958],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}},
-                  {'Float': {'data': [2.0289742678869516e-05],
+                  {'Float': {'data': [0.9829147458076477],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}},
-                  {'Float': {'data': [0.0003197789192199707],
+                  {'Float': {'data': [0.012099552899599075],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}},
-                  {'Float': {'data': [0.011029303073883057], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.9975639581680298], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.010341644287109375], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.008038878440856934], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.016155093908309937], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.006236225366592407], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.0009985864162445068],
+                  {'Float': {'data': [4.7591205657226965e-05],
                              'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [2.0289331587264314e-05],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.00031977228354662657],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.011029261164367199],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.9975640177726746],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.010341613553464413],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.008038961328566074],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.016155045479536057],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.0062362332828342915],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
+                             'v': 1}},
+                  {'Float': {'data': [0.0009985746582970023],
+                             'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}},
                   {'Float': {'data': [1.7933435344117743e-26],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}},
                   {'Float': {'data': [1.388984431455466e-27],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}}],
-      'pipeline_name': 'aloha-test-demo',
-      'time': 1648570552486})]
+      'pipeline_name': 'alohapipeline',
+      'shadow_data': {},
+      'time': 1671224441072})]
+
+
 
 ### Batch Inference
 
@@ -241,27 +339,53 @@ We'll pipe the `data-25k.json` file through the `aloha_pipeline` deployment URL,
 
 When running this example, replace the URL from the `_deployment._url()` command into the `curl` command below.
 
+
 ```python
-aloha_pipeline._deployment._url()
+inference_url = aloha_pipeline._deployment._url()
 ```
 
-    'http://engine-lb.aloha-test-demo-5:29502/pipelines/aloha-test-demo'
 
 ```python
-!curl -X POST http://engine-lb.aloha-test-demo-5:29502/pipelines/aloha-test-demo -H "Content-Type:application/json" --data @data-25k.json > curl_response.txt
+connection =wl.mlops().__dict__
+token = connection['token']
+token
+
+```
+
+
+
+
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWalFITFhMMThub3BXNWVHM2hMOVJ5MDZ1SFVWMko1dHREUkVxSGtBT2VzIn0.eyJleHAiOjE2NzEyMjQ0NjAsImlhdCI6MTY3MTIyNDQwMCwiYXV0aF90aW1lIjoxNjcxMjIyMjM1LCJqdGkiOiJjMTZjZjU5ZS02ZDEzLTQ0OTMtYTc2NC0zZTY4ZjNiOWQ1ODciLCJpc3MiOiJodHRwczovL3NxdWlzaHktd2FsbGFyb28tNjE4Ny5rZXljbG9hay53YWxsYXJvby5kZXYvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkODQ2NjQxZi00ZTExLTQ1YWItYThmZS01ZjI3ZGI2NzAyMjciLCJhY3IiOiIwIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkODQ2NjQxZi00ZTExLTQ1YWItYThmZS01ZjI3ZGI2NzAyMjciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.iToD4PosX9PWgyxr3Z_z3vyyI1sR-DinTBOwBGqxs_lV5LURRV6VlhnjkxZIfVzSABeWuvP7oCRKEwzOxk-IBP1GtDbBLB55fb8Mw4rlurUCD_KZ-940prnrnLDY29Vg2yRSZ2xZxO8Z6wRck6yu0NcoTJtF_VJlwtYzztKTh80RE_Sr9Ddy6PVaq8ElrT8h0OwAKh3dB9kiH5yh2RWHl3_VAubGBP4Ne2BEw5ZBPmj9gPjQ82BkA9lqaUlt5EeEMBgwEx39TWh3GjGBFmxzobdEiiBuhAZyUqIB9ffQEGrMs8Tz_r2EzdZATeUmkJ57l7zAysYnTJvvEHzVEs38AA'
+
+
+
+
+```python
+!curl -X POST {inference_url} -H "Content-Type:application/json" -H "Authorization: Bearer {token}" -H "Content-Type:application/json" --data @data-25k.json > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100 12.9M  100 10.1M  100 2886k   539k   149k  0:00:19  0:00:19 --:--:-- 2570k
+      4 2886k    0     0    4  128k      0   709k  0:00:04 --:--:--  0:00:04  715k
+
 
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged aloha_pipeline.deploy() will restart the inference engine in the same configuration as before.
 
+
 ```python
 aloha_pipeline.undeploy()
 ```
 
-    {'name': 'aloha-test-demo', 'create_time': datetime.datetime(2022, 3, 29, 16, 15, 31, 638290, tzinfo=tzutc()), 'definition': "[{'ModelInference': {'models': [{'name': 'aloha-2', 'version': '496e6860-a658-4d35-8b55-0f8cc6ad6fde', 'sha': 'fd998cd5e4964bbbb4f8d29d245a8ac67df81b62be767afbceb96a03d1a01520'}]}}]"}
 
+
+
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2022-12-16 21:00:02.528654+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-16 21:00:11.796841+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f282c205-afe3-4a77-baf5-b379fe8a60d7, 5cdaa977-856c-4a7a-a14e-dae7228fb5d6</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
+
+
+
+
+```python
+
+```

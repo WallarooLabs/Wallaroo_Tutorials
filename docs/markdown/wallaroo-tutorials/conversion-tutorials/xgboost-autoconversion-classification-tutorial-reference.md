@@ -14,7 +14,12 @@ This tutorial provides the following:
 * `xgb_class.pickle`: A pretrained `XGBoost` Classification model with 25 columns.
 * `xgb_class_eval.json`: Test data to perform a sample inference.
 
-## Conversion Steps
+## Prerequisites
+
+Wallaroo supports the following model versions:
+
+* XGBoost:  Version 1.6.0
+* SKLearn: 1.1.2
 
 ## Conversion Steps
 
@@ -36,11 +41,29 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
+
 ```python
 import wallaroo
 
 from wallaroo.ModelConversion import ConvertXGBoostArgs, ModelConversionSource, ModelConversionInputType
 from wallaroo.object import EntityNotFoundError
+```
+
+### Connect to Wallaroo
+
+Connect to your Wallaroo instance and store the connection into the variable `wl`.
+
+
+```python
+# SSO login through keycloak
+
+wallarooPrefix = "YOUR PREFIX"
+wallarooSuffix = "YOUR SUFFIX"
+
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                auth_type="sso")
 ```
 
 ### Configuration and Methods
@@ -49,12 +72,14 @@ The following will set the workspace, pipeline, model name, the model file name 
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
 
+
 ```python
 workspace_name = 'xgboost-classification-autoconvert-workspace'
 pipeline_name = 'xgboost-classification-autoconvert-pipeline'
 model_name = 'xgb-class-model'
 model_file_name = 'xgb_class.pickle'
 sample_data = 'xgb_class_eval.json'
+
 
 def get_workspace(name):
     workspace = None
@@ -73,17 +98,10 @@ def get_pipeline(name):
     return pipeline
 ```
 
-### Connect to Wallaroo
-
-Connect to your Wallaroo instance and store the connection into the variable `wl`.
-
-```python
-wl = wallaroo.Client()
-```
-
 ### Set the Workspace and Pipeline
 
 Set or create the workspace and pipeline based on the names configured earlier.
+
 
 ```python
 workspace = get_workspace(workspace_name)
@@ -94,11 +112,17 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-<table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
+
+<table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-12-20 21:52:59.188616+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 21:52:59.188616+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9d486507-314d-4e67-9be4-9a9347c5b7a7</td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `xgb-class-model`.
+
 
 ```python
 #the number of columns
@@ -117,6 +141,7 @@ model_conversion_type = ModelConversionSource.XGBOOST
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
+
 ```python
 # convert and upload
 model_wl = wl.convert_model(model_file_name, model_conversion_type, model_conversion_args)
@@ -130,41 +155,50 @@ With the model uploaded and converted, we can run a sample inference.
 
 Add the uploaded and converted `model_wl` as a step in the pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
-    Waiting for deployment - this will take up to 45s .... ok
 
-<table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:23.597027+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>xgb-class-model</td></tr></table>
+
+
+<table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-12-20 21:52:59.188616+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 22:05:08.884498+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>13409cae-2fbb-4ea8-9f4b-d546642a3a3e, 9d486507-314d-4e67-9be4-9a9347c5b7a7</td></tr><tr><th>steps</th> <td>xgb-class-model</td></tr></table>
+
+
 
 ### Run the Inference
 
 Use the `test_class_eval.json` as set earlier as our `sample_data` and perform the inference.
+
 
 ```python
 result = pipeline.infer_from_file(sample_data)
 result[0].data()
 ```
 
-    Waiting for inference response - this will take up to 45s ....... ok
 
-    [array([0.e+000, 0.e+000, 5.e-324, 0.e+000, 5.e-324]),
-     array([[0.99668795, 0.00331205],
-            [0.52999395, 0.47000605],
-            [0.14704436, 0.85295564],
-            [0.995507  , 0.004493  ],
-            [0.19796491, 0.80203509]])]
+
+
+    [array([0, 1, 0, 0, 1]),
+     array([[9.96794522e-01, 3.20547819e-03],
+            [1.12486482e-02, 9.88751352e-01],
+            [9.56235230e-01, 4.37647700e-02],
+            [9.99902725e-01, 9.72747803e-05],
+            [4.28396463e-03, 9.95716035e-01]])]
+
+
 
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
 
+
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s .............................. ok
 
-<table><tr><th>name</th> <td>xgboost-classification-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-08-03 15:35:20.889178+00:00</td></tr><tr><th>last_updated</th> <td>2022-08-03 15:35:23.597027+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>xgb-class-model</td></tr></table>
+```python
 
+```

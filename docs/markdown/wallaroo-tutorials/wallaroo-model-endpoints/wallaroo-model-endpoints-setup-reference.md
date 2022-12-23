@@ -28,13 +28,26 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
 
+
 ```python
-wl = wallaroo.Client()
+# Client connection from local Wallaroo instance
+
+# wl = wallaroo.Client()
+
+# SSO login through keycloak
+
+wallarooPrefix = "YOUR PREFIX"
+wallarooSuffix = "YOUR SUFFIX"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ## Create the Workspace
@@ -45,12 +58,14 @@ The model to be uploaded and used for inference will be labeled as `urldemomodel
 
 Once complete, the workspace will be created or, if already existing, set to the current workspace to host the pipelines and models.
 
+
 ```python
 workspace_name = 'urldemoworkspace'
 pipeline_name = 'urldemopipeline'
 model_name = 'urldemomodel'
 model_file_name = './aloha-cnn-lstm.zip'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -70,6 +85,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -79,19 +95,31 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2022-11-30 15:19:57.505044+00:00</td></tr><tr><th>last_updated</th> <td>2022-11-30 15:19:57.505044+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3575355c-452e-4668-bd48-46821307cf65</td></tr><tr><th>steps</th> <td></td></tr></table>
 
+
+
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
+
 
 ```python
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'urldemoworkspace', 'id': 16, 'archived': False, 'created_by': '74a4109a-9798-4d7c-98be-62d9380c9606', 'created_at': '2022-11-30T15:19:57.293347+00:00', 'models': [], 'pipelines': [{'name': 'urldemopipeline', 'create_time': datetime.datetime(2022, 11, 30, 15, 19, 57, 505044, tzinfo=tzutc()), 'definition': '[]'}]}
+
+
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
+
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -102,6 +130,7 @@ Now that we have a model that we want to use we will create a deployment for it.
 
 We will tell the deployment we are using a tensorflow model and give the deployment name and the configuration we want for the deployment.
 
+
 ```python
 pipeline.add_model_step(model)
 pipeline.deploy()
@@ -109,13 +138,23 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ........ ok
 
+
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2022-11-30 15:19:57.505044+00:00</td></tr><tr><th>last_updated</th> <td>2022-11-30 15:19:58.319115+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2f1169ba-e325-4b01-aeda-663ad34305aa, 3575355c-452e-4668-bd48-46821307cf65</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
 
+
+
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -137,6 +176,8 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ## Interferences
 
 ### Infer 1 row
@@ -145,9 +186,13 @@ Now that the pipeline is deployed and our Aloha model is in place, we'll perform
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
+
 ```python
 pipeline.infer_from_file("data-1.json")
 ```
+
+
+
 
     [InferenceResult({'check_failures': [],
       'elapsed': 290668215,
@@ -267,16 +312,25 @@ pipeline.infer_from_file("data-1.json")
       'shadow_data': {},
       'time': 1669821622803})]
 
+
+
 ### Batch Inference
 
 Now that our smoke test is successful, we will retrieve the Internal Deployment URL and perform an inference by submitting our data through a `curl` command as detailed below.
+
 
 ```python
 internal_url = pipeline._deployment._url()
 internal_url
 ```
 
+
+
+
     'http://engine-lb.urldemopipeline-5:29502/pipelines/urldemopipeline'
+
+
+
 
 ```python
 !curl -X POST {internal_url} -H "Content-Type:application/json" --data @data-1.json > curl_response.txt
@@ -286,11 +340,13 @@ internal_url
                                      Dload  Upload   Total   Spent    Left  Speed
     100  1392  100  1264  100   128  35111   3555 --:--:-- --:--:-- --:--:-- 38666
 
+
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.
 
 **IMPORTANT NOTE**:  For the External Pipeline Deployment URL Tutorial, this pipeline will have to be deployed to make the External Deployment URL available.
+
 
 ```python
 pipeline.undeploy()
@@ -303,7 +359,14 @@ pipeline.undeploy()
     Login successful!
     Waiting for undeployment - this will take up to 45s .................................... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2022-11-30 15:19:57.505044+00:00</td></tr><tr><th>last_updated</th> <td>2022-11-30 15:19:58.319115+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2f1169ba-e325-4b01-aeda-663ad34305aa, 3575355c-452e-4668-bd48-46821307cf65</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
+
+
+
 
 ```python
 

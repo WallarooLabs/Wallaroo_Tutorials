@@ -35,6 +35,8 @@ All models are similar to the ones used for the Wallaroo-101 example included in
 
 The first step is to import the libraries required.
 
+
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -44,13 +46,26 @@ from wallaroo.object import EntityNotFoundError
 
 Connect to your Wallaroo instance and save the connection as the variable `wl`.
 
+
 ```python
-wl = wallaroo.Client()
+# Login through local Wallaroo instance
+
+# wl = wallaroo.Client()
+
+# SSO login through keycloak
+
+wallarooPrefix = "YOUR PREFIX"
+wallarooSuffix = "YOUR SUFFIX"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ### Set Variables
 
 The following variables are used to create or use existing workspaces, pipelines, and upload the models.  Adjust them based on your Wallaroo instance and organization requirements.
+
 
 ```python
 workspace_name = 'ccfraud-comparison-demo'
@@ -68,6 +83,7 @@ sample_data_file = './smoke_test.json'
 ### Workspace and Pipeline
 
 The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.
+
 
 ```python
 def get_workspace(name):
@@ -87,6 +103,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -97,11 +114,17 @@ pipeline
 
 ```
 
-<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-10-19 17:52:00.508852+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:52:00.508852+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
+
+<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ec69f1b4-9037-42ca-8589-a392448edaf6</td></tr><tr><th>steps</th> <td></td></tr></table>
+
+
 
 ### Load the Models
 
 The models will be uploaded into the current workspace based on the variable names set earlier and listed as the `champion`, `model2` and `model3`.
+
 
 ```python
 champion = wl.upload_model(champion_model_name, champion_model_file).configure()
@@ -116,33 +139,40 @@ A shadow deployment is created using the `add_shadow_deploy(champion, challenger
 * `champion`: The model that will be primarily used for inferences run through the pipeline.  Inference results will be returned through the Inference Object's `data` element.
 * `challengers[]`: An array of models that will be used for inferences iteratively.  Inference results will be returned through the Inference Object's `shadow_data` element.
 
+
 ```python
 pipeline.add_shadow_deploy(champion, [model2, model3])
 pipeline.deploy()
 ```
 
-    Waiting for deployment - this will take up to 45s ..... ok
 
-<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-10-19 17:52:00.508852+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:52:01.298216+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+
+
+<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:37:41.754322+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1cd86d74-f74c-4291-bca5-8007ffb8fbc7, ec69f1b4-9037-42ca-8589-a392448edaf6</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+
+
 
 ### Run Test Inference
 
 Using the data from `sample_data_file`, a test inference will be made.  As mentioned earlier, the inference results from the `champion` model will be available in the returned InferenceResult Object's `data` element, while inference results from each of the `challenger` models will be in the returned InferenceResult Object's `shadow_data` element.
 
+
 ```python
 response = pipeline.infer_from_file(sample_data_file)
 ```
 
-    Waiting for inference response - this will take up to 45s ........ ok
 
 ```python
 response
 ```
 
+
+
+
     [InferenceResult({'check_failures': [],
-      'elapsed': 226951,
+      'elapsed': 129602,
       'model_name': 'ccfraud-lstm',
-      'model_version': '1f7b2360-0d52-4000-b540-244fb33ad706',
+      'model_version': 'ae952bf4-486b-48cc-a9a5-ed225fd43c60',
       'original_data': {'tensor': [[1.0678324729342086,
                                     0.21778102664937624,
                                     -1.7115145261843976,
@@ -174,6 +204,7 @@ response
                                     -1.454961775612449]]},
       'outputs': [{'Float': {'data': [0.001497417688369751],
                              'dim': [1, 1],
+                             'dtype': 'Float',
                              'v': 1}}],
       'pipeline_name': 'cc-shadow',
       'shadow_data': {'ccfraud-rf': [{'Float': {'data': [1.0],
@@ -182,15 +213,22 @@ response
                       'ccfraud-xgb': [{'Float': {'data': [0.0005066990852355957],
                                                  'dim': [1, 1],
                                                  'v': 1}}]},
-      'time': 1666201934875})]
+      'time': 1671118700064})]
+
+
 
 ### View Pipeline Logs
 
 With the inferences complete, we can retrieve the log data from the pipeline with the pipeline `logs` method.  Note that for **each** inference request, the logs return **one entry per model**.  For this example, for one inference request three log entries will be created.
 
+
 ```python
 pipeline.logs()
 ```
+
+
+
+
 
 <table>
     <tr>
@@ -201,21 +239,23 @@ pipeline.logs()
     </tr>
 
 <tr style="">
-    <td>2022-19-Oct 17:52:14</td>
+    <td>2022-15-Dec 08:38:20</td>
     <td>[array([[0.0005067]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
 
+
 <tr style="">
-    <td>2022-19-Oct 17:52:14</td>
+    <td>2022-15-Dec 08:38:20</td>
     <td>[array([[1.]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
 </tr>
 
+
 <tr style="">
-    <td>2022-19-Oct 17:52:14</td>
+    <td>2022-15-Dec 08:38:20</td>
     <td>[array([[0.00149742]])]</td>
     <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
     <td>0</td>
@@ -223,9 +263,13 @@ pipeline.logs()
 
 </table>
 
+
+
+
 ### View Logs Per Model
 
 Another way of displaying the logs would be to specify my model.  The following code will display the log data based based on the model name and the inference output for that specific model.
+
 
 ```python
 logs = pipeline.logs()
@@ -233,18 +277,28 @@ logs = pipeline.logs()
 [(log.model_name, log.output) for log in logs]
 ```
 
+
+
+
     [('ccfraud-xgb', [array([[0.0005067]])]),
      ('ccfraud-rf', [array([[1.]])]),
      ('ccfraud-lstm', [array([[0.00149742]])])]
+
+
 
 ### View Shadow Deploy Pipeline Logs
 
 To view the inputs and results for the shadow deployed models, use the pipeline `logs_shadow_deploy()` method.  The results will be grouped by the inputs.
 
+
 ```python
 logs = pipeline.logs_shadow_deploy()
 logs
 ```
+
+
+
+
 
                 <h2>Shadow Deploy Logs</h2>
                 <p>
@@ -284,9 +338,9 @@ logs
                         <td><strong><em>Primary</em></strong></td>
                         <td>ccfraud-lstm</td>
                         <td>[array([[0.00149742]])]</td>
-                        <td>2022-10-19T17:52:14.875000</td>
-                        <td>1f7b2360-0d52-4000-b540-244fb33ad706</td>
-                        <td>226951</td>
+                        <td>2022-12-15T08:38:20.064000</td>
+                        <td>ae952bf4-486b-48cc-a9a5-ed225fd43c60</td>
+                        <td>129602</td>
                     </tr>
 
                     <tr>
@@ -306,15 +360,19 @@ logs
                     </tbody>
                 <table>
 
+
+
+
 ### Undeploy the Pipeline
 
 With the tutorial complete, we undeploy the pipeline and return the resources back to the system.
+
 
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s .................................... ok
 
-<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-10-19 17:52:00.508852+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:52:01.298216+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+```python
 
+```
