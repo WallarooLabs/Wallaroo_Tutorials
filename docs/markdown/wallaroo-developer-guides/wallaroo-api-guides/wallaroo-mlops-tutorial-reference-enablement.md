@@ -1,4 +1,8 @@
-## Enablement
+## Enablement Management
+
+Enablement Management allows users to see what Wallaroo features have been activated.
+
+* [List Enablement Features](#list-enablement-features)
 
 ### List Enablement Features
 

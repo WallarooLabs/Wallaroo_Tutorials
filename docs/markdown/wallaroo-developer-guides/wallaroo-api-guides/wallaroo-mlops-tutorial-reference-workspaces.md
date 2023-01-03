@@ -1,5 +1,13 @@
 ## Workspaces
 
+Workspaces can be created and managed through the Wallaroo MLOps API.
+
+* [List Workspaces](#list-workspaces)
+* [Create Workspace](#create-workspace)
+* [Add User to Workspace](#add-user-to-workspace)
+* [List Users in a Workspace](#list-users-in-a-workspace)
+* [Remove User from a Workspace](#remove-user-from-a-workspace)
+
 ### List Workspaces
 
 List the workspaces for a specific user.

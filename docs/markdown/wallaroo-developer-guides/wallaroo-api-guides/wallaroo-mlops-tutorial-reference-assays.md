@@ -2,6 +2,14 @@
 
 **IMPORTANT NOTE**: These assays were run in a Wallaroo environment with canned historical data.  See the [Wallaroo Assay Tutorial](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_insights) for details on setting up this environment.  This historical data is **required** for these examples.
 
+* [Create Assay](#create-assay)
+* [List Assays](#list-assays)
+* [Activate or Deactivate Assay](#activate-or-deactivate-assay)
+* [Create Interactive Baseline](#create-interactive-baseline)
+* [Get Assay Baseline](#get-assay-baseline)
+* [Run Assay Interactively](#run-assay-interactively)
+* [Get Assay Results](#get-assay-results)
+
 ### Create Assay
 
 Create a new array in a specified pipeline.

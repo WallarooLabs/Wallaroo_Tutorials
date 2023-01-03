@@ -1,5 +1,12 @@
 ## Users
 
+Users can be created, activated, and deactivated through the Wallaroo MLOps API.
+
+* [Get Users](#get-users)
+* [Invite Users](#invite-users)
+* [Deactivate User](#deactivate-user)
+* [Activate User](#activate-user)
+
 ### Get Users
 
 Users can be retrieved either by their Keycloak user id, or return all users if an empty set `{}` is submitted.
