@@ -28,7 +28,7 @@ The following steps are part of this process:
 * [Retrieve Training Data](#retrieve-training-data): Connect to the data store and retrieve the training data.
 * [Data Transformations](#data-transformations): Evaluate the data and train the model.
 * [Generate and Test the Model](#generate-and-test-the-model): Create the model and verify it against the sample test data.
-* [Pickle The Model](#pickle-the-model): Prepare the model to be uploaded to Wallaroo.
+* [Convert the Model to Onnx](#convert-the-model-to-onnx): Prepare the model to be uploaded to Wallaroo.
 
 ### Retrieve Training Data
 
