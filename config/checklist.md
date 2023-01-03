@@ -1,7 +1,7 @@
 # Checklist
 
 [ ] Remove spaces - regex `\n\n\n` with `\n\n`
-[ ] Image paths - Remove all `(..` - check multiple times, and then `(images` with `(/images`.
+[ ] Image paths - Remove all `(./images` - replace with `(/images`.
 [ ] Replace `docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference.md` `(wallaroo-model-insights-reference_files` with `(/images/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files`.
 [ ] Remove:
 ```
@@ -30,11 +30,12 @@
 
 [ ] Verify images are replaced into /images where needed.
 [ ] Notebooks in prod:  Look for `/opt/conda/lib` and `<style>` to remove them.
-[ ] Notebooks in prod:  Replace `(01_notebooks_in_prod_explore_and_train-reference_files/` with `(/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files`
-[ ] Notebooks in prod: Replace `(02_notebooks_in_prod_automated_training_process-reference_files/` with `(/images/wallaroo-tutorials/notebooks_in_prod/02_notebooks_in_prod_automated_training_process-reference_files`
+[ ] Notebooks in prod:  Replace `(01_notebooks_in_prod_explore_and_train-reference_files` with `(/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files`
+[ ] Notebooks in prod: Replace `(02_notebooks_in_prod_automated_training_process-reference_files` with `(/images/wallaroo-tutorials/notebooks_in_prod/02_notebooks_in_prod_automated_training_process-reference_files`
 [ ] Replace:
 ```
 
 ### 
 
 ```
+[ ] Replace: (wallaroo-anomaly-detection-reference_files with (images/wallaroo-tutorials/wallaroo-anomaly-detection_files

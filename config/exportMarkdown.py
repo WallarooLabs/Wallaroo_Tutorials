@@ -20,27 +20,27 @@ c.NbConvertApp.export_format = "markdown"
 
 fileList = [
     {
-        "inputFile": "aloha/aloha_demo.ipynb",
+        "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-quick-start-aloha-reference.md"
     },
     {
-        "inputFile": "demand_curve/demandcurve_demo.ipynb",
+        "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
     },
     {
-        "inputFile": "imdb/imdb_sample.ipynb",
+        "inputFile": "wallaroo-model-cookbooks/imdb/imdb_sample.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-quick-start-imdb-reference.md"
     },
     {
-        "inputFile": "model_insights/model-insights.ipynb",
+        "inputFile": "wallaroo-features/model_insights/model-insights.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
         "outputFile": "wallaroo-model-insights-reference.md"
     },
     {
-        "inputFile": "shadow_deploy/shadow_deployment_tutorial.ipynb",
+        "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-shadow-deployment-tutorial-reference.md"
     },
@@ -90,7 +90,7 @@ fileList = [
         "outputFile": "xgboost-autoconversion-regression-tutorial-reference.md"
     },
     {
-        "inputFile": "simulated_edge/simulated_edge.ipynb",
+        "inputFile": "wallaroo-features/simulated_edge/simulated_edge.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-simulated_edge-reference.md"
     },
@@ -120,12 +120,12 @@ fileList = [
         "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
     },
     {
-        "inputFile": "abtesting/wallaroo-abtesting-tutorial.ipynb",
+        "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-abtesting-tutorial-reference.md"
     },
     {
-        "inputFile": "anomaly_detection/wallaroo-anomaly-detection.ipynb",
+        "inputFile": "wallaroo-testing-tutorials/anomaly_detection/wallaroo-anomaly-detection.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-anomaly-detection-reference.md"
     },
@@ -135,37 +135,37 @@ fileList = [
         "outputFile": "xgboost-to-onnx-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-api-tutorial.ipynb",
+        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
         "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
+        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
         "outputFile": "wallaroo-model-endpoints-setup-reference.md"
     },
     {
-        "inputFile": "sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
+        "inputFile": "development/sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-google-vertex-guide-reference.md"
     },
     {
-        "inputFile": "sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+        "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     },
     {
-        "inputFile": "wallaroo-tag-management/wallaroo-tags-guide.ipynb",
+        "inputFile": "wallaroo-features/wallaroo-tag-management/wallaroo-tags-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
         "outputFile": "wallaroo-tags-guide-reference.md"
     },
     {
-        "inputFile": "mlops_api/Wallaroo-MLOps-Tutorial.ipynb",
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-api-guides/",
         "outputFile": "wallaroo-mlops-tutorial-reference.md"
     },
     {
-        "inputFile": "sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
+        "inputFile": "development/sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
     }
