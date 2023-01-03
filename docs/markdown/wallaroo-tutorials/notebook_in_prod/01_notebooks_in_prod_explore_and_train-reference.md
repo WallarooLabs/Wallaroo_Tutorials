@@ -29,7 +29,6 @@ The following steps are part of this process:
 
 First we'll import the libraries we'll be using to evaluate the data and test different models.
 
-
 ```python
 import numpy as np
 import pandas as pd
@@ -52,7 +51,6 @@ matplotlib.rcParams["figure.figsize"] = (12,6)
 
 For training, we will use the data on all houses sold in this market with the last two years.  As a reminder, this data pulled from a simulated database as an example of how to pull from an existing data store.
 
-
 ```python
 conn = simdb.simulate_db_connection()
 tablename = simdb.tablename
@@ -68,25 +66,7 @@ housing_data
 
     select * from house_listings where date > DATE(DATE(), '-24 month') AND sale_price is not NULL
 
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -382,15 +362,11 @@ housing_data
 </table>
 <p>20523 rows × 22 columns</p>
 
-
-
-
 ### Data transformations
 
 To improve relative error performance, we will predict on `log10` of the sale price.
 
 Predict on log10 price to try to improve relative error performance
-
 
 ```python
 housing_data['logprice'] = np.log10(housing_data.sale_price)
@@ -401,7 +377,6 @@ From the data, we will create the following features to evaluate:
 * `house_age`: How old the house is.
 * `renovated`: Whether the house has been renovated or not.
 * `yrs_since_reno`: If the house has been renovated, how long has it been.
-
 
 ```python
 import datetime
@@ -414,27 +389,9 @@ housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_da
 
 housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_since_reno']]
 
-
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -538,11 +495,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
 </table>
 <p>20523 rows × 5 columns</p>
 
-
-
-
 Now we pick variables and split training data into training and holdout (test).
-
 
 ```python
 vars = ['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'waterfront', 'view',
@@ -556,13 +509,11 @@ gp = np.where(runif < 0.2, 'test', 'training')
 hd_train = housing_data.loc[gp=='training', :].reset_index(drop=True, inplace=False)
 hd_test = housing_data.loc[gp=='test', :].reset_index(drop=True, inplace=False)
 
-
 # split the training into training and val for xgboost
 runif = np.random.default_rng(123).uniform(0, 1, hd_train.shape[0])
 xgb_gp = np.where(runif < 0.2, 'val', 'train')
 
 ```
-
 
 ```python
 # for xgboost, further split into train and val
@@ -578,7 +529,6 @@ val_labels = np.array(hd_train.loc[xgb_gp=='val', outcome])
 
 Since we are fitting a model to predict `log10` price, we need to convert predictions back into price units. We also want to round to the nearest dollar.
 
-
 ```python
 def postprocess(log10price):
     return np.rint(np.power(10, log10price))
@@ -593,7 +543,6 @@ One could also hyperparameter tune at this stage; for brevity, we'll omit that i
 #### XGBoost
 
 First we will test out using a XGBoost model.
-
 
 ```python
 
@@ -623,11 +572,9 @@ print(xgb_model.best_ntree_limit)
     99
     100
 
-
 #### XGBoost Evaluate on holdout
 
 With the sample model created, we will test it against the holdout data.  Note that we are calling the `postprocess` function on the data.
-
 
 ```python
 test_features = np.array(hd_test.loc[:, vars])
@@ -649,12 +596,9 @@ matplotlib.pyplot.title("test")
 plt.show()
 ```
 
-
     
-![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png)
+![png](/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files_18_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -663,24 +607,7 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -750,10 +677,6 @@ pframe.describe()
   </tbody>
 </table>
 
-
-
-
-
 ```python
 rmse = np.sqrt(np.mean(pframe.se))
 mape = np.mean(pframe.pct_err)
@@ -763,11 +686,9 @@ print(f'rmse = {rmse}, mape = {mape}')
 
     rmse = 128752.54982046234, mape = 12.857674005250548
 
-
 #### Random Forest
 
 The next model to test is Random Forest.
-
 
 ```python
 model_rf = sklearn.ensemble.RandomForestRegressor(n_estimators=100, max_depth=5, n_jobs=2, max_samples=0.8)
@@ -781,7 +702,6 @@ model_rf.fit(train_features, train_labels)
 #### Random Forest Evaluate on holdout
 
 With the Random Forest sample model created, now we can test it against the holdout data.
-
 
 ```python
 pframe = pd.DataFrame({
@@ -800,12 +720,9 @@ matplotlib.pyplot.title("random forest")
 plt.show()
 ```
 
-
     
-![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png)
+![png](/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files_24_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -814,24 +731,7 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -901,10 +801,6 @@ pframe.describe()
   </tbody>
 </table>
 
-
-
-
-
 ```python
 rmse = np.sqrt(np.mean(pframe.se))
 mape = np.mean(pframe.pct_err)
@@ -913,7 +809,6 @@ print(f'rmse = {rmse}, mape = {mape}')
 ```
 
     rmse = 196444.67813511938, mape = 18.102359731513623
-
 
 ### Final Decision
 
