@@ -44,7 +44,6 @@ The process of uploading the model to Wallaroo follows these steps:
 
 First we import the required libraries to connect to the Wallaroo instance, then connect to the Wallaroo instance.
 
-
 ```python
 import json
 import pickle
@@ -57,7 +56,6 @@ from wallaroo.ModelConversion import ConvertXGBoostArgs, ModelConversionSource, 
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
-
 
 ```python
 # Login through local Wallaroo instance
@@ -80,8 +78,6 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
     
     Login successful!
 
-
-
 ```python
 def get_workspace(name):
     workspace = None
@@ -100,7 +96,6 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace_name = 'housepricing2'
 model_name = "housepricemodel"
@@ -110,19 +105,12 @@ pipeline_name = "housing-pipe"
 
 The workspace `housepricing` will either be created or, if already existing, used and set to the current workspace.
 
-
 ```python
 new_workspace = get_workspace(workspace_name)
 new_workspace
 ```
 
-
-
-
     {'name': 'housepricing2', 'id': 50, 'archived': False, 'created_by': '6e87ec2b-ad7f-4b0f-b426-5100c26944ba', 'created_at': '2022-10-18T19:41:52.672007+00:00', 'models': [{'name': 'housepricemodel', 'version': 'b66c8053-e28b-4f19-94ff-82f718e12681', 'file_name': 'housing_model_xgb.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2022, 10, 18, 20, 30, 13, 695855, tzinfo=tzutc())}, {'name': 'preprocess', 'version': '09fda370-b5d6-42ef-93cf-429d3d116df3', 'file_name': 'preprocess.py', 'image_path': None, 'last_update_time': datetime.datetime(2022, 10, 18, 20, 30, 17, 364846, tzinfo=tzutc())}, {'name': 'postprocess', 'version': 'ac030fe2-4e86-4cdc-917e-4b5ad7b72838', 'file_name': 'postprocess.py', 'image_path': None, 'last_update_time': datetime.datetime(2022, 10, 18, 20, 30, 17, 766274, tzinfo=tzutc())}], 'pipelines': [{'name': 'housing-pipe', 'create_time': datetime.datetime(2022, 10, 18, 20, 30, 19, 448654, tzinfo=tzutc()), 'definition': '[]'}]}
-
-
-
 
 ```python
 _ = wl.set_current_workspace(new_workspace)
@@ -132,7 +120,6 @@ _ = wl.set_current_workspace(new_workspace)
 
 With the connection set and workspace prepared, upload the model created in `02_automated_training_process.ipynb` into the current workspace.
 
-
 ```python
 hpmodel = wl.upload_model(model_name, model_file).configure()
 ```
@@ -141,12 +128,10 @@ hpmodel = wl.upload_model(model_name, model_file).configure()
 
 Upload the `preprocess.py` and `postprocess.py` modules as models to be added to the pipeline.
 
-
 ```python
 # load the preprocess module
 module_pre = wl.upload_model("preprocess", "./preprocess.py").configure('python')
 ```
-
 
 ```python
 # load the postprocess module
@@ -156,7 +141,6 @@ module_post = wl.upload_model("postprocess", "./postprocess.py").configure('pyth
 ### Create and Deploy the Pipeline
 
 Create the pipeline with the preprocess module, housing model, and postprocess module as pipeline steps, then deploy the newpipeline.
-
 
 ```python
 pipeline = (wl.build_pipeline(pipeline_name)
@@ -170,18 +154,11 @@ pipeline
 
     Waiting for deployment - this will take up to 45s ......... ok
 
-
-
-
-
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2022-10-18 20:30:19.448654+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:24:17.505573+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-
-
 
 ### Test the Pipeline
 
 We will use a single query from the simulated `housing_price` table and infer.  When successful, we will undeploy the pipeline to restore the resources back to the Kubernetes environment.
-
 
 ```python
 conn = simdb.simulate_db_connection()
@@ -199,25 +176,7 @@ singleton
 
     select * from house_listings limit 1
 
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -273,10 +232,6 @@ singleton
 </table>
 <p>1 rows × 22 columns</p>
 
-
-
-
-
 ```python
 result = pipeline.infer({'query': singleton.to_json()})
 # just display the output
@@ -285,16 +240,9 @@ result[0].data()
 
     Waiting for inference response - this will take up to 45s .. ok
 
-
-
-
-
     [array([224852.])]
 
-
-
 When finished, we undeploy the pipeline to return the resources back to the environment.
-
 
 ```python
 pipeline.undeploy()
@@ -302,12 +250,6 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ........................................... ok
 
-
-
-
-
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2022-10-18 20:30:19.448654+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-19 17:24:17.505573+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-
-
 
 With this stage complete, we can proceed to Stage 4: Regular Batch Inference.
