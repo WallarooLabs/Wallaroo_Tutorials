@@ -38,13 +38,9 @@
 ### 
 
 ```
-<<<<<<< HEAD
 
 Check notebooks in prod - something still fishy there.
 
 anomaly detection - error there.  
 
 Make sure the assays demo is fully run.
-=======
-[ ] Replace: (wallaroo-anomaly-detection-reference_files with (images/wallaroo-tutorials/wallaroo-anomaly-detection_files
->>>>>>> 83d918d06da7a53c72f050d56d7a440ec4557ea2
