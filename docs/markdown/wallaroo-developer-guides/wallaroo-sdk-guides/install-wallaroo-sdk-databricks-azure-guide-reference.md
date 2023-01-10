@@ -1,8 +1,8 @@
 This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/development/sdk-install-guides/databricks-azure-sdk-install).
 
-## Installing the Wallaroo SDK into Databricks Azure Workspace
+## Installing the Wallaroo SDK into Azure Databricks Workspace
 
-Organizations that use Databricks Azure for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Databricks Azure, and making a standard connection to a Wallaroo instance through Databricks Azure Workspace.
+Organizations that use Azure Databricks for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Azure Databricks, and making a standard connection to a Wallaroo instance through Azure Databricks Workspace.
 
 These instructions are based on the on the [Wallaroo SSO for Microsoft Azure](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/wallaroo-sso-azure/) and the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/) guides.
 
@@ -25,10 +25,10 @@ The following is required for this tutorial:
 For our example, we will perform the following:
 
 * Wallaroo SDK Install
-  * Install the Wallaroo SDK into the Databricks Azure cluster.
+  * Install the Wallaroo SDK into the Azure Databricks cluster.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
-* Wallaroo SDK Demonstration from Databricks Azure Workspace (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in an Databricks Azure Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/databricks-azure-sdk-install).
+* Wallaroo SDK Demonstration from Azure Databricks Workspace (Optional)
+  * The following steps are used to demonstrate using the Wallaroo SDK in an Azure Databricks Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/databricks-azure-sdk-install).
     * Create a workspace for our work.
     * Upload the CCFraud model.
     * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
@@ -39,9 +39,9 @@ For our example, we will perform the following:
 
 ### Add Wallaroo SDK to Cluster
 
-To install the Wallaroo SDK in a Databricks Azure environment:
+To install the Wallaroo SDK in a Azure Databricks environment:
 
-1. From the Databricks Azure dashboard, select **Computer**, then the cluster to use.
+1. From the Azure Databricks dashboard, select **Computer**, then the cluster to use.
 1. Select **Libraries**.
 1. Select **Install new**.
 1. Select **PyPI**.  In the **Package** field, enter the current version of the [Wallaroo SDK](https://pypi.org/project/wallaroo/).  It is recommended to specify the version, which as of this writing is `wallaroo==2022.4.0`.
