@@ -168,6 +168,11 @@ fileList = [
         "inputFile": "development/sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
+    },
+    {
+        "inputFile": "development/sdk-install-guides/aws-sagemaker-install/install-wallaroo-aws-sagemaker-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+        "outputFile": "install-wallaroo-sdk-aws-sagemaker-guide-reference.md"
     }
 
 ]

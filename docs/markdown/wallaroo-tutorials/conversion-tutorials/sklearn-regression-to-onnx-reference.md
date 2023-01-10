@@ -18,6 +18,7 @@ This tutorial provides the following:
 
 The first step is to import our libraries we will be using.
 
+
 ```python
 # Used to load the sk-learn model
 import pickle
@@ -33,6 +34,8 @@ Next let's define our `model_to_onnx` method for converting a sk-learn model to 
 * `model`:  The sk-learn model we're converting.
 * `cols`: The number of inputs the model expects
 * `input_type`: Determines how to manage float values, which can either be `DoubleTensorType` or `FloatTensorType`.
+
+
 
 ```python
 # convert model to ONNX
@@ -54,6 +57,7 @@ def model_to_onnx(model, cols, *, input_type='Double'):
 
 With our method defined, now it's time to convert.  Let's load our sk-learn model and save it into the variable `sklearn_model`.
 
+
 ```python
 # pickle the model, so I can try the Wallaroo converter on it
 
@@ -62,11 +66,13 @@ sklearn_model = pickle.load(open('./demand_curve.pickle', 'rb'))
 
 Now we'll convert our `sklearn-model` into the variable `onnx_model` using our `model_to_onnx` method.  Recall that our `sklearn-model` has 3 columns.
 
+
 ```python
 onnx_model_converted = model_to_onnx(sklearn_model, 3)
 ```
 
 Now we can save our model to a `onnx` file.
+
 
 ```python
 onnx.save_model(onnx_model_converted, "demand_curve.onnx")
