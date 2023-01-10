@@ -29,6 +29,7 @@ The following steps are part of this process:
 
 First we'll import the libraries we'll be using to evaluate the data and test different models.
 
+
 ```python
 import numpy as np
 import pandas as pd
@@ -51,6 +52,7 @@ matplotlib.rcParams["figure.figsize"] = (12,6)
 
 For training, we will use the data on all houses sold in this market with the last two years.  As a reminder, this data pulled from a simulated database as an example of how to pull from an existing data store.
 
+
 ```python
 conn = simdb.simulate_db_connection()
 tablename = simdb.tablename
@@ -66,7 +68,25 @@ housing_data
 
     select * from house_listings where date > DATE(DATE(), '-24 month') AND sale_price is not NULL
 
-<table>
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -362,11 +382,15 @@ housing_data
 </table>
 <p>20523 rows × 22 columns</p>
 
+
+
+
 ### Data transformations
 
 To improve relative error performance, we will predict on `log10` of the sale price.
 
 Predict on log10 price to try to improve relative error performance
+
 
 ```python
 housing_data['logprice'] = np.log10(housing_data.sale_price)
@@ -377,6 +401,7 @@ From the data, we will create the following features to evaluate:
 * `house_age`: How old the house is.
 * `renovated`: Whether the house has been renovated or not.
 * `yrs_since_reno`: If the house has been renovated, how long has it been.
+
 
 ```python
 import datetime
@@ -389,9 +414,27 @@ housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_da
 
 housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_since_reno']]
 
+
 ```
 
-<table>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -495,7 +538,11 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
 </table>
 <p>20523 rows × 5 columns</p>
 
+
+
+
 Now we pick variables and split training data into training and holdout (test).
+
 
 ```python
 vars = ['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'waterfront', 'view',
@@ -509,11 +556,13 @@ gp = np.where(runif < 0.2, 'test', 'training')
 hd_train = housing_data.loc[gp=='training', :].reset_index(drop=True, inplace=False)
 hd_test = housing_data.loc[gp=='test', :].reset_index(drop=True, inplace=False)
 
+
 # split the training into training and val for xgboost
 runif = np.random.default_rng(123).uniform(0, 1, hd_train.shape[0])
 xgb_gp = np.where(runif < 0.2, 'val', 'train')
 
 ```
+
 
 ```python
 # for xgboost, further split into train and val
@@ -529,6 +578,7 @@ val_labels = np.array(hd_train.loc[xgb_gp=='val', outcome])
 
 Since we are fitting a model to predict `log10` price, we need to convert predictions back into price units. We also want to round to the nearest dollar.
 
+
 ```python
 def postprocess(log10price):
     return np.rint(np.power(10, log10price))
@@ -543,6 +593,7 @@ One could also hyperparameter tune at this stage; for brevity, we'll omit that i
 #### XGBoost
 
 First we will test out using a XGBoost model.
+
 
 ```python
 
@@ -562,6 +613,7 @@ xgb_model.fit(
 
 ```
 
+
 ```python
 print(xgb_model.best_score)
 print(xgb_model.best_iteration)
@@ -572,9 +624,11 @@ print(xgb_model.best_ntree_limit)
     99
     100
 
+
 #### XGBoost Evaluate on holdout
 
 With the sample model created, we will test it against the holdout data.  Note that we are calling the `postprocess` function on the data.
+
 
 ```python
 test_features = np.array(hd_test.loc[:, vars])
@@ -596,9 +650,12 @@ matplotlib.pyplot.title("test")
 plt.show()
 ```
 
+
     
-![png](/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files_18_0.png)
+![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png)
     
+
+
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -607,7 +664,24 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-<table>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -677,6 +751,10 @@ pframe.describe()
   </tbody>
 </table>
 
+
+
+
+
 ```python
 rmse = np.sqrt(np.mean(pframe.se))
 mape = np.mean(pframe.pct_err)
@@ -686,9 +764,11 @@ print(f'rmse = {rmse}, mape = {mape}')
 
     rmse = 128752.54982046234, mape = 12.857674005250548
 
+
 #### Random Forest
 
 The next model to test is Random Forest.
+
 
 ```python
 model_rf = sklearn.ensemble.RandomForestRegressor(n_estimators=100, max_depth=5, n_jobs=2, max_samples=0.8)
@@ -699,9 +779,17 @@ train_labels = np.array(hd_train.loc[:, outcome])
 model_rf.fit(train_features, train_labels)
 ```
 
+
+
+
+<style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestRegressor</label><div class="sk-toggleable__content"><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre>
+
+
+
 #### Random Forest Evaluate on holdout
 
 With the Random Forest sample model created, now we can test it against the holdout data.
+
 
 ```python
 pframe = pd.DataFrame({
@@ -720,9 +808,12 @@ matplotlib.pyplot.title("random forest")
 plt.show()
 ```
 
+
     
-![png](/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files_24_0.png)
+![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png)
     
+
+
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -731,7 +822,24 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-<table>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -801,6 +909,10 @@ pframe.describe()
   </tbody>
 </table>
 
+
+
+
+
 ```python
 rmse = np.sqrt(np.mean(pframe.se))
 mape = np.mean(pframe.pct_err)
@@ -809,6 +921,7 @@ print(f'rmse = {rmse}, mape = {mape}')
 ```
 
     rmse = 196444.67813511938, mape = 18.102359731513623
+
 
 ### Final Decision
 

@@ -38,6 +38,7 @@ Model Insights has the capability to perform interactive assays so that you can 
 
 To get started we import the libraries we'll need.
 
+
 ```python
 import matplotlib.pyplot as plt
 import pandas as pd 
@@ -50,6 +51,7 @@ from wallaroo.object import EntityNotFoundError
 ### Set Configuration
 
 The following configuration is used to connect to the pipeline used, and display the graphs.  The `pipeline_name` and `model_name` shown here are from the [Model Insights Canned Data Loader](model-insights-load_canned_data.ipynb), so adjust them based on your own needs.
+
 
 ```python
 plt.rcParams["figure.figsize"] = (12,6)
@@ -65,6 +67,7 @@ assay_name = "example assay jch"
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance.
+
 
 ```python
 # Login through local Wallaroo instance
@@ -84,6 +87,7 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
 ### Connect to Workspace and Pipeline
 
 Connect to the workspace, pipeline, and model listed above.  This code assumes that there are not multiple pipelines with the same name.
+
 
 ```python
 def get_workspace(name):
@@ -111,6 +115,7 @@ pipeline
 
 We assume the pipeline has been running for a while and there is a period of time that is free of errors that we'd like to use as the _baseline_. Let's note the start and end times. For this example we have 30 days of data from Jan 2022 and will use Jan 1 data as our baseline.
 
+
 ```python
 import datetime
 baseline_start = datetime.datetime.fromisoformat('2022-01-01T00:00:00+00:00')
@@ -120,12 +125,14 @@ last_day = datetime.datetime.fromisoformat('2022-02-01T00:00:00+00:00')
 
 Let's create an assay using that pipeline and the model in the pipeline. We also specify the baseline start and end.
 
+
 ```python
 
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
 ```
 
 We don't know much about our baseline data yet so let's examine the data and create a couple of visual representations. First let's get some basic stats on the baseline data.
+
 
 ```python
 baseline_run = assay_builder.build().interactive_baseline_run()
@@ -134,13 +141,16 @@ baseline_run.baseline_stats()
 
 Now let's look at a histogram, kernel density estimate (KDE), and Empirical Cumulative Distribution (ecdf) charts of the baseline data. These will give us insights into the distributions of the predictions and features that the assay is configured for.
 
+
 ```python
 assay_builder.baseline_histogram()
 ```
 
+
 ```python
 assay_builder.baseline_kde()
 ```
+
 
 ```python
 assay_builder.baseline_ecdf()
@@ -149,17 +159,20 @@ assay_builder.baseline_ecdf()
 ### Interactive Baseline Runs
 We can do an interactive run of just the baseline part to see how the baseline data will be put into bins. This assay uses quintiles so all 5 bins (not counting the outlier bins) have 20% of the predictions. We can see the bin boundaries along the x-axis.
 
+
 ```python
 baseline_run.chart()
 ```
 
 We can also get a dataframe with the bin/edge information.
 
+
 ```python
 baseline_run.baseline_bins()
 ```
 
 The previous assay used quintiles so all of the bins had the same percentage/count of samples.  To get bins that are divided equally along the range of values we can use `BinMode.EQUAL`.
+
 
 ```python
 equal_bin_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
@@ -169,6 +182,7 @@ equal_baseline.chart()
 ```
 
 We now see very different bin edges and sample percentages per bin.
+
 
 ```python
 equal_baseline.baseline_bins()
@@ -200,6 +214,7 @@ The red dots in the above graph indicate distance scores larger than our thresho
 
 We can also retrieve the above results as a data frame, for further analysis, if desired.
 
+
 ```python
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
 assay_config = assay_builder.add_run_until(last_day).build()
@@ -209,6 +224,7 @@ assay_df
 ```
 
 Basic functionality for creating quick charts is included.
+
 
 ```python
 assay_results.chart_scores()
@@ -220,15 +236,18 @@ We can generate a quick chart of the results. This chart shows the 5 quantile bi
 
 First let's examine a day that is only slightly different than the baseline. We see that we do see some values that fall outside of the range from the baseline values, the left and right outliers, and that the bin values are different but similar.
 
+
 ```python
 assay_results[0].chart()
 ```
 
 Other days, however are significantly different.
 
+
 ```python
 assay_results[12].chart()
 ```
+
 
 ```python
 assay_results[13].chart()
@@ -237,6 +256,7 @@ assay_results[13].chart()
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
 
 The current assay expects continuous data. Sometimes categorical data is encoded as 1 or 0 in a feature and sometimes in a limited number of values such as 1, 2, 3. If one value has high a percentage the analysis emits a warning so that we know the scores for that feature may not behave as we expect.
+
 
 ```python
 labels = ['bedrooms', 'bathrooms', 'lat', 'long', 'waterfront', 'sqft_living', 'sqft_lot', 'floors', 'view', 'condition', 'grade', 'sqft_above', 'sqft_basement', 'yr_built', 'yr_renovated', 'sqft_living15', 'sqft_lot15']
@@ -252,6 +272,7 @@ iadf = assay_results.to_dataframe()
 
 We can chart each of the iopaths and do a visual inspection. From the charts we see that if any of the input features had significant differences in the first two days which we can choose to inspect further. Here we choose to show 3 charts just to save space in this notebook.
 
+
 ```python
 assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', 'sqft_living'])
 ```
@@ -262,6 +283,7 @@ In this example we're create an assay that runs everyday against the baseline an
 
 Once we upload it it will be saved and scheduled for future data as well as run against past data.
 
+
 ```python
 alert_threshold = 0.1
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end).add_alert_threshold(alert_threshold)
@@ -269,6 +291,7 @@ assay_id = assay_builder.upload()
 ```
 
 To retrieve the results after enough time has passed, collect them with the method `get_assay_results_logs` specifying the time to collect and the `assay_id`.  This will take additional inference history so can not be demonstrated here, but the command to collect the data is listed below.
+
 
 ```python
 assay_results = wl.get_assay_results_logs(baseline_end,datetime.datetime.now(), assay_id=assay_id)
@@ -291,6 +314,7 @@ So to recap:
 
 For example to run an analysis every 12 hours on the previous 24 hours of data, you'd set the window width to 24 (the default) and the interval to 12.
 
+
 ```python
 assay_builder = wl.build_assay(assay_name, pipeline, model_name, baseline_start, baseline_end)
 assay_builder = assay_builder.add_run_until(last_day)
@@ -303,11 +327,13 @@ assay_results = assay_config.interactive_run()
 print(f"Generated {len(assay_results)} analyses")
 ```
 
+
 ```python
 assay_results.chart_scores()
 ```
 
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week.  The analysis will be generated when the window is complete.
+
 
 ```python
 report_start = datetime.datetime.fromisoformat('2022-01-03T00:00:00+00:00')
@@ -322,6 +348,7 @@ assay_config = assay_builder.build()
 assay_results = assay_config.interactive_run()
 print(f"Generated {len(assay_results)} analyses")
 ```
+
 
 ```python
 assay_results.chart_scores()
@@ -357,6 +384,7 @@ The baseline section shows us that it is configured as a fixed baseline with the
 
 And the window tells us what model in the pipeline we are analyzing and how often.
 
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 print(assay_builder.build().to_json())
@@ -365,6 +393,7 @@ print(assay_builder.build().to_json())
 ## Defaults
 
 We can run the assay interactively and review the first analysis. The method `compare_basic_stats` gives us a dataframe with basic stats for the baseline and window data.
+
 
 ```python
 assay_results = assay_builder.build().interactive_run()
@@ -375,11 +404,13 @@ ar.compare_basic_stats()
 
 The method `compare_bins` gives us a dataframe with the bin information. Such as the number of bins, the right edges, suggested bin/edge names and the values for each bin in the baseline and the window.
 
+
 ```python
 ar.compare_bins()
 ```
 
 We can also plot the chart to visualize the values of the bins.
+
 
 ```python
 ar.chart()
@@ -388,6 +419,7 @@ ar.chart()
 ## Binning Mode
 
 We can change the bin mode algorithm to equal and see that the bins/edges are partitioned at different points and the bins have different values.
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -401,6 +433,7 @@ assay_results[0].chart()
 
 The values in this dataset run from ~11.6 to ~15.81. And let's say we had a business reason to use specific bin edges.  We can specify them with the BinMode.PROVIDED and specifying a list of floats with the right hand / upper edge of each bin and optionally the lower edge of the smallest bin. If the lowest edge is not specified the threshold for left outliers is taken from the smallest value in the baseline dataset.
 
+
 ```python
 edges = [11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -413,6 +446,7 @@ assay_results[0].chart()
 ## Number of Bins
 
 We could also choose to a different number of bins, let's say 10, which can be evenly spaced or based on the quantiles (deciles).
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -429,6 +463,7 @@ Now let's say we only care about differences at the higher end of the range. We 
 If we stick with 10 bins we can provide 10 a vector of 12 weights. One weight each for the original bins plus one at the front for the left outlier bin and one at the end for the right outlier bin.
 
 Note we still show the values for the bins but the scores for the lower 5 and left outlier are 0 and only the right half is counted and reflected in the score.
+
 
 ```python
 weights = [0] * 6
@@ -448,11 +483,13 @@ summing the differences of each individual bin, taking the maximum difference an
 
 The following three charts use each of the metrics. Note how the scores change. The best one will depend on your particular use case.
 
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -460,6 +497,7 @@ assay_builder.summarizer_builder.add_metric(Metric.SUMDIFF)
 assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
@@ -472,12 +510,14 @@ assay_results[0].chart()
 
 Also, bin aggregation can be done in histogram `Aggregation.DENSITY` style (the default) where we count the number/percentage of values that fall in each bin or Empirical Cumulative Density Function style `Aggregation.CUMULATIVE` where we keep a cumulative count of the values/percentages that fall in each bin.
 
+
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
 assay_builder.summarizer_builder.add_aggregation(Aggregation.DENSITY)
 assay_results = assay_builder.build().interactive_run()
 assay_results[0].chart()
 ```
+
 
 ```python
 assay_builder = wl.build_assay("Test Assay", pipeline, model_name, baseline_start, baseline_end).add_run_until(last_day)
