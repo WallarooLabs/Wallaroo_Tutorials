@@ -6,7 +6,7 @@ As of this time, Wallaroo only supports MLFlow 1.3.0 containerized models.  For 
 
 This tutorial assumes that you have a Wallaroo instance, and have either your own containerized model or use the one from the reference and are running this Notebook from the Wallaroo Jupyter Hub service.
 
-## Prerequisites
+## MLFlow Data Formats
 
 When using containerized MLFLow models with Wallaroo, the inputs and outputs must be named.  For example, the following output:
 
@@ -26,7 +26,6 @@ A short sample code for wrapping data may be:
 output_df = pd.DataFrame(prediction, columns=["prediction"])
 return output_df
 ```
-
 
 ### MLFlow Models and Wallaroo
 
