@@ -178,7 +178,13 @@ fileList = [
         "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials",
+        "outputFile": "wallaroo-mlflow-tutorial-reference.md"
     }
+
 
 ]
 

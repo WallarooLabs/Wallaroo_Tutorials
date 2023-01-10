@@ -1,4 +1,4 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/6959cbbd72d842bc450b8f6dd2fced7be3036163/development/sdk-install-guides/aws-sagemaker-install).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/main/development/sdk-install-guides/aws-sagemaker-install/).
 
 ## Installing the Wallaroo SDK in AWS Sagemaker
 
