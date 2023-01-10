@@ -13,7 +13,7 @@ This notebook closely parallels the [Aloha tutorial](https://docs.wallaroo.ai/wa
 
 This example uses the open source [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution. This could be deployed on a network router to detect suspicious domains in real-time. Of course, it is important to monitor the behavior of the model across all of the deployments so we can see if the detect rate starts to drift over time.
 
-Note that this example is not intended for production use and is meant of an example of running Wallaroo in a restrained environment.  The environment is based on the [Wallaroo AWS EC2 Setup guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/wallaroo-community-install-guides/wallaroo-setup-environment-community/wallaroo-aws-vm-community-setup/).
+Note that this example is not intended for production use and is meant of an example of running Wallaroo in a restrained environment.  The environment is based on the [Wallaroo AWS EC2 Setup guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/YOUR SUFFIX-install-guides/wallaroo-setup-environment-community/wallaroo-aws-vm-community-setup/).
 
 Full details on how to configure a deployment through the SDK, see the [Wallaroo SDK guides](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).
 

@@ -16,7 +16,7 @@ The following examples will show how to submit queries to the Wallaroo MLOps API
 The following references are available for more information about Wallaroo and the Wallaroo MLOps API:
 
 * [Wallaroo Documentation Site](https://docs.wallaroo.ai):  The Wallaroo Documentation Site
-* Wallaroo MLOps API Documentation from a Wallaroo instance:  A Swagger UI based documentation is available from your Wallaroo instance at `https://{Wallaroo Prefix}.api.{Wallaroo Suffix}/v1/api/docs`.  For example, if the Wallaroo Instance is Wallaroo Community with the prefix `{lovely-rhino-5555}`, then the Wallaroo MLOps API Documentation would be available at `https://lovely-rhino-5555.api.example.wallaroo.ai/v1/api/docs`.  For another example, a Wallaroo Enterprise users who do not use a prefix and has the suffix `wallaroo.example.wallaroo.ai`, the the Wallaroo MLOps API Documentation would be available at `https://api.wallaroo.example.wallaroo.ai/v1/api/docs`.  For more information, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai).
+* Wallaroo MLOps API Documentation from a Wallaroo instance:  A Swagger UI based documentation is available from your Wallaroo instance at `https://{Wallaroo Prefix}.api.{Wallaroo Suffix}/v1/api/docs`.  For example, if the Wallaroo Instance is YOUR SUFFIX with the prefix `{lovely-rhino-5555}`, then the Wallaroo MLOps API Documentation would be available at `https://lovely-rhino-5555.api.example.wallaroo.ai/v1/api/docs`.  For another example, a Wallaroo Enterprise users who do not use a prefix and has the suffix `wallaroo.example.wallaroo.ai`, the the Wallaroo MLOps API Documentation would be available at `https://api.wallaroo.example.wallaroo.ai/v1/api/docs`.  For more information, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai).
 
 **IMPORTANT NOTE**:  The Wallaroo MLOps API is provided as an early access features.  Future iterations may adjust the methods and returns to provide a better user experience.  Please refer to this guide for updates.
 
@@ -48,7 +48,7 @@ Wallaroo comes pre-installed with a confidential OpenID Connect client.  The def
 
 As it is a confidential client, api-client requires its secret to be supplied when requesting a token. Administrators may obtain their API client credentials from Keycloak from the Keycloak Service URL as listed above and the prefix `/auth/admin/master/console/#/realms/master/clients`.
 
-For example, if the Wallaroo Community instance DNS address is `https://magical-rhino-5555.example.wallaroo.ai`, then the direct path to the Keycloak API client credentials would be:
+For example, if the YOUR SUFFIX instance DNS address is `https://magical-rhino-5555.example.wallaroo.ai`, then the direct path to the Keycloak API client credentials would be:
 
 `https://magical-rhino-5555.keycloak.example.wallaroo.ai/auth/admin/master/console/#/realms/master/clients`
 
@@ -291,9 +291,9 @@ response
 
 ### Invite Users
 
-**IMPORTANT NOTE**:  This command is for Wallaroo Community only.  For more details on user management, see [Wallaroo User Management](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-user-management/).
+**IMPORTANT NOTE**:  This command is for YOUR SUFFIX only.  For more details on user management, see [Wallaroo User Management](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-user-management/).
 
-Users can be invited through `/users/invite`.  When using Wallaroo Community, this will send an invitation email to the email address listed.  Note that the user must not already be a member of the Wallaroo instance, and email addresses must be unique.  If the email address is already in use for another user, the request will generate an error.
+Users can be invited through `/users/invite`.  When using YOUR SUFFIX, this will send an invitation email to the email address listed.  Note that the user must not already be a member of the Wallaroo instance, and email addresses must be unique.  If the email address is already in use for another user, the request will generate an error.
 
 * **Parameters**
   * **email** *(REQUIRED string): The email address of the new user to invite.

@@ -47,7 +47,7 @@ Wallaroo comes pre-installed with a confidential OpenID Connect client.  The def
 
 As it is a confidential client, api-client requires its secret to be supplied when requesting a token. Administrators may obtain their API client credentials from Keycloak from the Keycloak Service URL as listed above and the prefix `/auth/admin/master/console/#/realms/master/clients`.
 
-For example, if the Wallaroo Community instance DNS address is `https://magical-rhino-5555.example.wallaroo.ai`, then the direct path to the Keycloak API client credentials would be:
+For example, if the YOUR SUFFIX instance DNS address is `https://magical-rhino-5555.example.wallaroo.ai`, then the direct path to the Keycloak API client credentials would be:
 
 `https://magical-rhino-5555.keycloak.example.wallaroo.ai/auth/admin/master/console/#/realms/master/clients`
 
