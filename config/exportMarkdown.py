@@ -173,6 +173,11 @@ fileList = [
         "inputFile": "development/sdk-install-guides/aws-sagemaker-install/install-wallaroo-aws-sagemaker-guide.ipynb",
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-aws-sagemaker-guide-reference.md"
+    },
+    {
+        "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
+        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+        "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
     }
 
 ]
