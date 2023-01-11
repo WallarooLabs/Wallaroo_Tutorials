@@ -28,7 +28,7 @@ For our example, we will perform the following:
   * Install the Wallaroo SDK into the Azure Databricks cluster.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
 * Wallaroo SDK Demonstration from Azure Databricks Workspace (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in an Azure Databricks Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/databricks-azure-sdk-install).
+  * The following steps are used to demonstrate using the Wallaroo SDK in an Azure Databricks Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/databricks-azure-sdk-install).
     * Create a workspace for our work.
     * Upload the CCFraud model.
     * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
