@@ -39,7 +39,7 @@ Wallaroo registers the models from container registries.  Organizations will eit
 For this example, we will be using the MLFlow containers that was registered in a GitHub container registry service in MLFLow Creation Tutorial Part 03: Container Registration.  The address of those containers are:
 
 * postprocess: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-postprocess-example .  Used for format data after the statsmodel inferences.
-* stasmodel: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-statsmodels-example . The statsmodel generated in MLFLow Creation Tutorial Part 01: Model Creation.
+* statsmodel: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-statsmodels-example . The statsmodel generated in MLFLow Creation Tutorial Part 01: Model Creation.
 
 ### Prerequisites
 
