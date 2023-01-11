@@ -11,7 +11,10 @@ These instructions are based on the on the [Connect to Wallaroo](https://docs.wa
 This tutorial provides the following:
 
 * `aloha-cnn-lstm.zip`: A pre-trained open source model that uses an [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution.
-* `data-1.json`, `data-1k.json`, `data-25k.json`: Data files with 1, 1,000, and 25,000 records for testing.
+* Test Data Files:
+  * `data-1.json`: 1 record
+  * `data-1k.json`: 1,000 records
+  * `data-25k.json`: 25,000 records
 
 For this example, a virtual python environment will be used.  This will set the necessary libraries and specific Python version required.
 
@@ -30,17 +33,16 @@ For our example, we will perform the following:
 
 * Install Wallaroo SDK
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
-  * Install the Wallaroo Python.
-  * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
-* Wallaroo SDK from remote JupyterHub Demonstration (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in a external from the Wallaroo instance JupyterHub or Jupyter Notebook environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/standard-install).
-    * Create a workspace for our work.
-    * Upload the Aloha model.
-    * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
-    * Run a sample inference through our pipeline by loading a file
-    * Retrieve the external deployment URL.  This sample Wallaroo instance has been configured to create external inference URLs for pipelines.  For more information, see the [External Inference URL Guide](https://docs.wallaroo.aiwallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
-    * Run a sample inference through our pipeline's external URL and store the results in a file.  This assumes that the External Inference URLs have been enabled for the target Wallaroo instance.
-    * Undeploy the pipeline and return resources back to the Wallaroo instance's Kubernetes environment.
+  * Install the Wallaroo SDK.
+* Wallaroo SDK from remote JupyterHub Demonstration (Optional):  The following steps are an optional exercise to demonstrate using the Wallaroo SDK from a remote connection.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/standard-install).
+  * Connect to a remote Wallaroo instance.
+  * Create a workspace for our work.
+  * Upload the Aloha model.
+  * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
+  * Run a sample inference through our pipeline by loading a file
+  * Retrieve the external deployment URL.  This sample Wallaroo instance has been configured to create external inference URLs for pipelines.  For more information, see the [External Inference URL Guide](https://docs.wallaroo.aiwallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
+  * Run a sample inference through our pipeline's external URL and store the results in a file.  This assumes that the External Inference URLs have been enabled for the target Wallaroo instance.
+  * Undeploy the pipeline and return resources back to the Wallaroo instance's Kubernetes environment.
 
 ## Install Wallaroo SDK
 
