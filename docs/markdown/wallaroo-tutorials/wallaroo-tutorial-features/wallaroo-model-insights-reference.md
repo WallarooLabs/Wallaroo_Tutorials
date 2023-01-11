@@ -32,7 +32,7 @@ The rest of this tutorial shows how to create assays to monitor your pipelines.
 
 Model Insights has the capability to perform interactive assays so that you can explore the data from a pipeline and learn how the data is behaving. With this information and the knowledge of your particular business use case you can then choose appropriate thresholds for persistent automatic assays as desired.
 
-**NOTE:** Model insights operates over time and is difficult to demo in a notebook without pre-canned data. **We assume you have an active pipeline that has been running and making predictions over time and show you the code you may use to analyze your pipeline.**  If this historical data is not available, the Model Insights Canned Data Loader included with this tutorial as `model-insights-load_canned_data.ipynb` is made to establish a sample workspace, pipeline and model into your Wallaroo instance with canned historical data that can be used for this tutorial.
+**NOTE:** Model insights operates over time and is difficult to demo in a notebook without pre-canned data. **We assume you have an active pipeline that has been running and making predictions over time and show you the code you may use to analyze your pipeline.**
 
 ### Load Libraries
 
