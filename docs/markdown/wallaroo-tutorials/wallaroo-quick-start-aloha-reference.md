@@ -335,10 +335,11 @@ Now that our smoke test is successful, let's really give it some data.  We have 
 * `data-1k.json`:  Contains 1,0000 inferences
 * `data-25k.json`: Contains 25,000 inferences
 
-We'll pipe the `data-25k.json` file through the `aloha_pipeline` deployment URL, and place the results in a file named `response.txt`.  We'll also display the time this takes.  Note that for larger batches of 50,000 inferences or more can be difficult to view in Juypter Hub because of its size.
+We'll pipe the `data-25k.json` file through the `aloha_pipeline` deployment URL, and place the results in a file named `response.txt`.  We'll also display the time this takes.  Note that for larger batches of 50,000 inferences or more can be difficult to view in Jupyter Hub because of its size.
 
 When running this example, replace the URL from the `_deployment._url()` command into the `curl` command below.
 
+* **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
 
 ```python
 inference_url = aloha_pipeline._deployment._url()
@@ -351,9 +352,6 @@ token = connection['token']
 token
 
 ```
-
-
-
 
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWalFITFhMMThub3BXNWVHM2hMOVJ5MDZ1SFVWMko1dHREUkVxSGtBT2VzIn0.eyJleHAiOjE2NzEyMjQ0NjAsImlhdCI6MTY3MTIyNDQwMCwiYXV0aF90aW1lIjoxNjcxMjIyMjM1LCJqdGkiOiJjMTZjZjU5ZS02ZDEzLTQ0OTMtYTc2NC0zZTY4ZjNiOWQ1ODciLCJpc3MiOiJodHRwczovL3NxdWlzaHktd2FsbGFyb28tNjE4Ny5rZXljbG9hay53YWxsYXJvby5kZXYvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJkODQ2NjQxZi00ZTExLTQ1YWItYThmZS01ZjI3ZGI2NzAyMjciLCJhY3IiOiIwIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkODQ2NjQxZi00ZTExLTQ1YWItYThmZS01ZjI3ZGI2NzAyMjciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.iToD4PosX9PWgyxr3Z_z3vyyI1sR-DinTBOwBGqxs_lV5LURRV6VlhnjkxZIfVzSABeWuvP7oCRKEwzOxk-IBP1GtDbBLB55fb8Mw4rlurUCD_KZ-940prnrnLDY29Vg2yRSZ2xZxO8Z6wRck6yu0NcoTJtF_VJlwtYzztKTh80RE_Sr9Ddy6PVaq8ElrT8h0OwAKh3dB9kiH5yh2RWHl3_VAubGBP4Ne2BEw5ZBPmj9gPjQ82BkA9lqaUlt5EeEMBgwEx39TWh3GjGBFmxzobdEiiBuhAZyUqIB9ffQEGrMs8Tz_r2EzdZATeUmkJ57l7zAysYnTJvvEHzVEs38AA'
 
