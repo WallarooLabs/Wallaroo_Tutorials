@@ -53,7 +53,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 1. From AWS Sagemaker, select the **Notebook instances**.
 1. For the list of notebook instances, select **Open JupyterLab** for the notebook instance to be used.
 1. From the **Launcher**, select **Terminal**.
-1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8.6 and above is specified as a requirement for Python libraries used with the Wallaroo SDK.  The following will install the latest version of Python 3.9.
+1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8.6 and above is specified as a requirement for Python libraries used with the Wallaroo SDK.  The following will install the latest version of Python 3.8.
 
     ```bash
     conda create -n wallaroosdk python=3.8
