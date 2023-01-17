@@ -8,6 +8,8 @@ The easiest way to run these tutorials is through the following:
 1. Download this repository by either cloning the repo or downloading the .ZIP file from the release list.
 1. Copy this repo into your Jupyter Hub service.  The easiest way is to upload a .ZIP file of this repository, then use the command line tools to unzip it.
 
+A free community edition of Wallaroo is available from the [Wallaroo Community Portal](https://portal.wallaroo.community/).
+
 From there each directory contains a self-contained guide to help you understand how to use Wallaroo to deploy pipelines of models and manage the inputs and the outputs.
 
 ## LFS Support
