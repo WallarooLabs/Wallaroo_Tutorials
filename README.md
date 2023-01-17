@@ -9,3 +9,7 @@ The easiest way to run these tutorials is through the following:
 1. Copy this repo into your Jupyter Hub service.  The easiest way is to upload a .ZIP file of this repository, then use the command line tools to unzip it.
 
 From there each directory contains a self-contained guide to help you understand how to use Wallaroo to deploy pipelines of models and manage the inputs and the outputs.
+
+## LFS Support
+
+The Computer Vision tutorials involved large models.  Verify that [Git Large File Storage (LFS)](https://git-lfs.com) is installed before attempting that tutorial.
