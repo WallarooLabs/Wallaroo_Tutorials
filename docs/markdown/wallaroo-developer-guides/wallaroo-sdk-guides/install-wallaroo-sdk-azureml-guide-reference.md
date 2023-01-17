@@ -33,7 +33,7 @@ For our example, we will perform the following:
   * Set up a Python virtual environment through `conda` with the libraries that enable the virtual environment for use in a Jupyter Hub environment.
   * Install the Wallaroo SDK.
 * Wallaroo SDK from remote JupyterHub Demonstration (Optional):  The following steps are an optional exercise to demonstrate using the Wallaroo SDK from a remote connection.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install)).
-  * Connect to a remote Wallaroo instance.
+  * Connect to a remote Wallaroo instance.  
   * Create a workspace for our work.
   * Upload the Aloha model.
   * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
@@ -149,12 +149,14 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
 
 We will create a workspace to work in and call it the `azuremlsdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `azuremlsdkpipeline`.
 
+* **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
+
 
 ```python
 workspace_name = 'azuremlsdkworkspace'
 pipeline_name = 'azuremlsdkpipeline'
 model_name = 'azuremlsdkmodel'
-model_file_name = './aloha-cnn-lstm.zip'
+model_file_name = './alohacnnlstm.zip'
 ```
 
 

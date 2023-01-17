@@ -81,6 +81,7 @@ This is accomplished using the `wallaroo.Client()` command, which provides a URL
 
 ```python
 import wallaroo
+from wallaroo.object import EntityNotFoundError
 ```
 
 
@@ -649,6 +650,7 @@ First we'll request the url with the `_deployment._url()` method.
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
 
+
 ```python
 deploy_url = ccfraud_pipeline._deployment._url()
 ```
@@ -668,7 +670,7 @@ Copy and paste the results above into the curl command, replacing the {YOUR URL 
 
 
 ```python
-!curl -X POST {deploy_url} -H "Content-Type:application/json" -H "Authorization: Bearer {token}" -H "Content-Type:application/json" --data @cc_data_10k.json > curl_response.txt
+!curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:application/json" --data @cc_data_10k.json > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current

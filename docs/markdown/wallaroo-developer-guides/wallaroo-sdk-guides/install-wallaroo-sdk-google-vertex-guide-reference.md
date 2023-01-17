@@ -143,12 +143,14 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
 
 We will create a workspace to work in and call it the `gcpsdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `gcpsdkpipeline`.
 
+* **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
+
 
 ```python
 workspace_name = 'gcpsdkworkspace'
 pipeline_name = 'gcpsdkpipeline'
 model_name = 'gcpsdkmodel'
-model_file_name = './aloha-cnn-lstm.zip'
+model_file_name = './alohacnnlstm.zip'
 ```
 
 

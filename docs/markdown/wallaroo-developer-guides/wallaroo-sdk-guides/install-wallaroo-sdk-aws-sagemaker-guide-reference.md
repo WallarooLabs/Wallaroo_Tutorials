@@ -176,12 +176,14 @@ The following examples can be used by an organization to test using the Wallaroo
 
 We will create a workspace to work in and call it the `sdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `sdkpipeline`.
 
+* **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
+
 
 ```python
 workspace_name = 'sdkquickworkspace'
 pipeline_name = 'sdkquickpipeline'
 model_name = 'sdkquickmodel'
-model_file_name = './aloha-cnn-lstm.zip'
+model_file_name = './alohacnnlstm.zip'
 ```
 
 

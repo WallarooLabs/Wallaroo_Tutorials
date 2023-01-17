@@ -1,3 +1,5 @@
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-model-cookbooks/mlflow-tutorial).
+
 ## MLFlow Inference with Wallaroo Tutorial 
 
 Wallaroo users can register their trained [MLFlow ML Models](https://www.mlflow.org/docs/latest/models.html) from a containerized model container registry into their Wallaroo instance and perform inferences with it through a Wallaroo pipeline.
@@ -6,9 +8,11 @@ As of this time, Wallaroo only supports MLFlow 1.3.0 containerized models.  For 
 
 This tutorial assumes that you have a Wallaroo instance, and have either your own containerized model or use the one from the reference and are running this Notebook from the Wallaroo Jupyter Hub service.
 
+See the [Wallaroo Private Containerized Model Container Registry Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-private-model-registry/) for details on how to configure a Wallaroo instance with a private model registry.
+
 ## MLFlow Data Formats
 
-When using containerized MLFLow models with Wallaroo, the inputs and outputs must be named.  For example, the following output:
+When using containerized MLFlow models with Wallaroo, the inputs and outputs must be named.  For example, the following output:
 
 ```json
 [-12.045839810372835]
@@ -29,97 +33,28 @@ return output_df
 
 ### MLFlow Models and Wallaroo
 
-MLFlow models are composed of two parts:  the model, and the flavors.  When submitting a MLFlow model to Wallaroo, both aspects must be part of the ML Model included in the container.  For full information about MLFlow model structure, see the [MLFLow Documentation](https://www.mlflow.org/docs/latest/index.html).
+MLFlow models are composed of two parts:  the model, and the flavors.  When submitting a MLFlow model to Wallaroo, both aspects must be part of the ML Model included in the container.  For full information about MLFlow model structure, see the [MLFlow Documentation](https://www.mlflow.org/docs/latest/index.html).
 
 Wallaroo registers the models from container registries.  Organizations will either have to make their containers available in a public or through a private Containerized Model Container Registry service.  For examples on setting up a private container registry service, see the [Docker Documentation "Deploy a registry server"](https://docs.docker.com/registry/deploying/).  For more details on setting up a container registry in a cloud environment, see the related documentation for your preferred cloud provider:
   * [Google Cloud Platform Container Registry](https://cloud.google.com/container-registry)
   * [Amazon Web Services Elastic Container Registry](https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html)
   *  [Microsoft Azure Container Registry](https://azure.microsoft.com/en-us/free/container-registry/)
 
-For this example, we will be using the MLFlow containers that was registered in a GitHub container registry service in MLFLow Creation Tutorial Part 03: Container Registration.  The address of those containers are:
+For this example, we will be using the MLFlow containers that was registered in a GitHub container registry service in MLFlow Creation Tutorial Part 03: Container Registration.  The address of those containers are:
 
 * postprocess: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-postprocess-example .  Used for format data after the statsmodel inferences.
-* statsmodel: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-statsmodels-example . The statsmodel generated in MLFLow Creation Tutorial Part 01: Model Creation.
+* statsmodel: ghcr.io/johnhansarickwallaroo/mlflowtests/mlflow-statsmodels-example . The statsmodel generated in MLFlow Creation Tutorial Part 01: Model Creation.
 
 ### Prerequisites
 
 Before uploading and running an inference with a MLFlow model in Wallaroo the following will be required:
 
-* **MLFlow Input Schema**:  The input schema with the fields and data types for each MLFLow model type uploaded to Wallaroo.  In the examples below, the data types are imported using the `pyarrow` library.
+* **MLFlow Input Schema**:  The input schema with the fields and data types for each MLFlow model type uploaded to Wallaroo.  In the examples below, the data types are imported using the `pyarrow` library.
 * A Wallaroo instance version 2022.4 or later.
 
 **IMPORTANT NOTE**:  Wallaroo supports MLFlow 1.3.0.  Please ensure the MLFlow models used in Wallaroo meet this specification.
 
-## Private Containerized Model Container Registry Steps
-
-The following steps are used to register a Private Containerized Model Container Registry in a Wallaroo instance.  For organizations that only intend to use a public model registry (such as DockerHub or the GitHub example below), these steps can be skipped.
-
-### Prerequisites
-
-Before starting, the following must be available:
-
-* A private model registry that is accessible from the Wallaroo instance.
-* `kubectl` and either `kots` or `helm` depending on the install method, and a connection to the Kubernetes cluster where the Wallaroo instance was installed.
-* The username, password, and email (OPTIONAL) address of the model registry user used to authenticate to the private model registry.
-  * If using a service such as GitHub, then the token used in "MLFLow Creation Tutorial Part 03: Container Registration" can be used.
-
-### Configure Via Kots
-
-If Wallaroo was installed via `kots`, use the following procedure to add the private model registry information.
-
-1. Launch the Wallaroo Administrative Dashboard through a terminal linked to the Kubernetes cluster.  Replace the namespace with the one used in your installation.
-    
-    ```bash
-    kubectl kots admin-console --namespace wallaroo
-    ```
-1. Launch the dashboard, by default at http://localhost:8800.
-1. From the admin dashboard, select **Config -> Private Model Container Registry**.
-1. Enable **Provide private container registry credentials for model images**.
-1. Provide the following:
-    1. **Registry URL**: The URL of the Containerized Model Container Registry.  Typically in the format `host:port`.  In this example, the registry for GitHub is used.  **NOTE**:  When setting the URL for the Containerized Model Container Registry, only the actual service address is needed.  For example:  with the full URL of the model as `ghcr.io/wallaroolabs/wallaroo_tutorials/mlflow-statsmodels-example:2022.4`, the URL would be `ghcr.io/wallaroolabs`.
-    1. **email**: The email address of the user authenticating to the  registry service.
-    1. **username**:  The username of the user authentication to the  registry service.
-    1. **password**:  The password of the user authentication to the  registry service.  In the GitHub example from "MLFLow Creation Tutorial Part 03: Container Registration", this would be the token.
-    
-        ![](./images/wallaroo-configuration/wallaroo-private-model-registry/kots-private-registry.png)
-     
-1. Scroll down and select **Save config**.
-1. Deploy the new version.
-
-Once complete, the Wallaroo instance will be able to authenticate to the Containerized Model Container Registry and retrieve the images as defined in the example "MLFlow Inference with Wallaroo Tutorial".
-
-### Configure via Helm
-
-1. During either the installation process or updates, set the following in the `local-values.yaml` file:
-    1. `privateModelRegistry`:
-      1. `enabled`: true
-      1. `secretName`: `model-registry-secret`
-      1. `registry`: The URL of the private registry.
-      1. `email`: The email address of the user authenticating to the registry service.
-      1. `username`:  The username of the user authentication to the registry service.
-      1. `password`:  The password of the user authentication to the registry service.  In the GitHub example from "MLFLow Creation Tutorial Part 03: Container Registration", this would be the token.
-      
-        For example:
-
-        ```yml
-
-        # Other settings - DNS entries, etc.
-
-        # The private registry settings
-        privateModelRegistry:
-          enabled: true
-          secretName: model-registry-secret
-          registry: "YOUR REGISTRY URL:YOUR REGISTRY PORT"
-          email: "YOUR EMAIL ADDRESS"
-          username: "YOUR USERNAME"
-          password: "Your Password here"
-        ```
-
-1. Install or update the Wallaroo instance via Helm as per the [Wallaroo Helm Install instructions](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/wallaroo-enterprise-install-guides/wallaroo-enterprise-install/wallaroo-enterprise-install-helm/wallaroo-helm-install-standard/).
-
-Once complete, the Wallaroo instance will be able to authenticate to the registry service and retrieve the images as defined in the example "MLFlow Inference with Wallaroo Tutorial".
-
-## MLFLow Inference Steps
+## MLFlow Inference Steps
 
 To register a containerized MLFlow ML Model into Wallaroo, use the following general step:
 

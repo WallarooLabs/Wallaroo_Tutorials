@@ -47,7 +47,7 @@ For our example, we will perform the following:
 
 To set up the Python virtual environment for use of the Wallaroo SDK:
 
-1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8.6 and above is specified as a requirement for Python libraries used with the Wallaroo SDK.  The following will install the latest version of Python 3.9.
+1. From a terminal shell, create the Python virtual environment with `conda`.  Replace `wallaroosdk` with the name of the virtual environment as required by your organization.  Note that Python 3.8.6 and above is specified as a requirement for Python libraries used with the Wallaroo SDK.  The following will install the latest version of Python 3.8.
 
     ```bash
     conda create -n wallaroosdk python=3.8
@@ -159,12 +159,14 @@ The following examples can be used by an organization to test using the Wallaroo
 
 We will create a workspace to work in and call it the `sdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `sdkpipeline`.
 
+* **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
+
 
 ```python
 workspace_name = 'sdkquickworkspace'
 pipeline_name = 'sdkquickpipeline'
 model_name = 'sdkquickmodel'
-model_file_name = './aloha-cnn-lstm.zip'
+model_file_name = './alohacnnlstm.zip'
 ```
 
 

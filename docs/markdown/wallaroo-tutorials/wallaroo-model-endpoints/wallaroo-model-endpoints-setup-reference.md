@@ -318,6 +318,8 @@ pipeline.infer_from_file("data-1.json")
 
 Now that our smoke test is successful, we will retrieve the Internal Deployment URL and perform an inference by submitting our data through a `curl` command as detailed below.
 
+* **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
+
 
 ```python
 internal_url = pipeline._deployment._url()
