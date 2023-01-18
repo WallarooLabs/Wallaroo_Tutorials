@@ -183,9 +183,12 @@ fileList = [
         "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
         "outputFile": "wallaroo-mlflow-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-features/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "wallaroo-hot-swap-models-reference.md"
     }
-
-
 ]
 
 def main():

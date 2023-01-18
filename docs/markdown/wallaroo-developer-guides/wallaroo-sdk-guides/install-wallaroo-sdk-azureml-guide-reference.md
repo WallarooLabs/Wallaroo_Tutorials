@@ -99,8 +99,6 @@ To update an existing Notebook to use the new virtual environment as a kernel:
 1. Select the new kernel.
 
 
-### 
-
 ## Sample Wallaroo Connection
 
 With the Wallaroo Python SDK installed, remote commands and inferences can be performed through the following steps.
@@ -109,13 +107,15 @@ With the Wallaroo Python SDK installed, remote commands and inferences can be pe
 
 The first step is to connect to Wallaroo through the Wallaroo client.
 
-This is accomplished using the `wallaroo.Client(api_endpoint, auth_endpoint, auth_type command)` command that connects to the Wallaroo instance services.  For more information on the DNS names of Wallaroo services, see the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+This is accomplished using the `wallaroo.Client(api_endpoint, auth_endpoint, auth_type command)` command that connects to the Wallaroo instance services.
 
 The `Client` method takes the following parameters:
 
 * **api_endpoint** (*String*): The URL to the Wallaroo instance API service.
 * **auth_endpoint** (*String*): The URL to the Wallaroo instance Keycloak service.
 * **auth_type command** (*String*): The authorization type.  In this case, `SSO`.
+
+The URLs are based on the Wallaroo Prefix and Wallaroo Suffix for the Wallaroo instance.  For more information, see the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).  In the example below, replace "YOUR PREFIX" and "YOUR SUFFIX" with the Wallaroo Prefix and Suffix, respectively.
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 

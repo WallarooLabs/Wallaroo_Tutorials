@@ -1,8 +1,8 @@
 This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/development/sdk-install-guides/databricks-azure-sdk-install).
 
-## Installing the Wallaroo SDK into Databricks Azure Workspace
+## Installing the Wallaroo SDK into  Workspace
 
-Organizations that use Databricks Azure for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Databricks Azure, and making a standard connection to a Wallaroo instance through Databricks Azure Workspace.
+Organizations that use Azure Databricks for model training and development can deploy models to Wallaroo through the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/).  The following guide is created to assist users with installing the Wallaroo SDK, setting up authentication through Azure Databricks, and making a standard connection to a Wallaroo instance through Azure Databricks Workspace.
 
 These instructions are based on the on the [Wallaroo SSO for Microsoft Azure](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/wallaroo-sso-azure/) and the [Connect to Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/) guides.
 
@@ -11,7 +11,7 @@ This tutorial provides the following:
 * `aloha-cnn-lstm.zip`: A pre-trained open source model that uses an [Aloha CNN LSTM model](https://www.researchgate.net/publication/348920204_Using_Auxiliary_Inputs_in_Deep_Learning_Models_for_Detecting_DGA-based_Domain_Names) for classifying Domain names as being either legitimate or being used for nefarious purposes such as malware distribution.
 * `data-1.json`, `data-1k.json`, `data-25k.json`: Data files with 1, 1,000, and 25,000 records for testing.
 
-To use the Wallaroo SDK within Databricks Azure Workspace, a virtual environment will be used.  This will set the necessary libraries and specific Python version required.
+To use the Wallaroo SDK within Azure Databricks Workspace, a virtual environment will be used.  This will set the necessary libraries and specific Python version required.
 
 ## Prerequisites
 
@@ -25,11 +25,11 @@ The following is required for this tutorial:
 For our example, we will perform the following:
 
 * Wallaroo SDK Install
-  * Install the Wallaroo SDK into the Databricks Azure cluster.
+  * Install the Wallaroo SDK into the Azure Databricks cluster.
   * Install the Wallaroo Python SDK.
   * Connect to a remote Wallaroo instance.  This instance is configured to use the standard Keycloak service.
-* Wallaroo SDK from Databricks Azure Workspace (Optional)
-  * The following steps are used to demonstrate using the Wallaroo SDK in an Databricks Azure Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository]([Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install)).
+* Wallaroo SDK from Azure Databricks Workspace (Optional)
+  * The following steps are used to demonstrate using the Wallaroo SDK in an Azure Databricks Workspace environment.  The entire tutorial can be found on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/sdk-install-guides/azure-ml-sdk-install).
     * Create a workspace for our work.
     * Upload the CCFraud model.
     * Create a pipeline that can ingest our submitted data, submit it to the model, and export the results
@@ -40,9 +40,9 @@ For our example, we will perform the following:
 
 ### Add Wallaroo SDK to Cluster
 
-To install the Wallaroo SDK in a Databricks Azure environment:
+To install the Wallaroo SDK in a Azure Databricks environment:
 
-1. From the Databricks Azure dashboard, select **Computer**, then the cluster to use.
+1. From the Azure Databricks dashboard, select **Computer**, then the cluster to use.
 1. Select **Libraries**.
 1. Select **Install new**.
 1. Select **PyPI**.  In the **Package** field, enter the current version of the [Wallaroo SDK](https://pypi.org/project/wallaroo/).  It is recommended to specify the version, which as of this writing is `wallaroo==2022.4.0`.
@@ -70,7 +70,7 @@ With the Wallaroo Python SDK installed, remote commands and inferences can be pe
 
 The first step is to connect to Wallaroo through the Wallaroo client.
 
-This is accomplished using the `wallaroo.Client(api_endpoint, auth_endpoint, auth_type command)` command that connects to the Wallaroo instance services.  For more information on the DNS names of Wallaroo services, see the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+This is accomplished using the `wallaroo.Client(api_endpoint, auth_endpoint, auth_type command)` command that connects to the Wallaroo instance services.
 
 The `Client` method takes the following parameters:
 
@@ -78,13 +78,17 @@ The `Client` method takes the following parameters:
 * **auth_endpoint** (*String*): The URL to the Wallaroo instance Keycloak service.
 * **auth_type command** (*String*): The authorization type.  In this case, `SSO`.
 
-Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
+The URLs are based on the Wallaroo Prefix and Wallaroo Suffix for the Wallaroo instance.  For more information, see the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).  In the example below, replace "YOUR PREFIX" and "YOUR SUFFIX" with the Wallaroo Prefix and Suffix, respectively.  In the example below, replace "YOUR PREFIX" and "YOUR SUFFIX" with the Wallaroo Prefix and Suffix, respectively.
 
-![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png)
+Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.
+
+Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
+
+![Wallaroo Login](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png)
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-![Device Registration](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
+![Device Registration](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
 
@@ -111,6 +115,8 @@ wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix
 We will create a workspace to work in and call it the `databricksazuresdkworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `azuremlsdkpipeline`.
 
 * **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
+
+In the example below, replace `/dbfs/FileStore/YOUR PATH/alohacnnlstm.zip` with the full `dbfs` path to the uploaded `alohacnnlstm.zip` file.
 
 
 ```python
@@ -172,7 +178,6 @@ Now we will upload our model.
 
 
 ```python
-#model = wl.upload_model(model_name, model_file_name).configure()
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
 ```
 
@@ -235,6 +240,8 @@ pipeline.status()
 
 Now that the pipeline is deployed and our CCfraud model is in place, we'll perform a smoke test to verify the pipeline is up and running properly.  We'll use the `infer_from_file` command to load a single transaction and determine if it is flagged for fraud.  If it returns correctly, a small valud should be returned indicating a low likelihood that the transaction was fraudulent.
 
+In the example below, replace `/dbfs/FileStore/YOUR PATH/data_1.json` with the full DBFS path to the uploaded sample data file.
+
 
 ```python
 result = pipeline.infer_from_file("/dbfs/FileStore/YOUR PATH/data_1.json")
@@ -267,6 +274,8 @@ result[0].data()
 ### Batch Inference
 
 Now that our smoke test is successful, let's really give it some data.  We'll use the `cc_data_1k.json` file that contains 1,000 inferences to be performed.
+
+In the example below, replace `/dbfs/FileStore/YOUR PATH/data_1k.json` with the full DBFS path to the uploaded sample data file.
 
 
 ```python
