@@ -15,7 +15,7 @@ This tutorial provides the following:
 * `smoke_test.json`: A data file used to verify that the model will return a low possibility of credit card fraud.
 * `high_fraud.json`: A data file used to verify that the model will return a high possibility of credit card fraud.
 * Sample inference data files: Data files used for inference examples with the following number of records:
-  * 'cc_data_5.json`: 5 records.
+  * `cc_data_5.json`: 5 records.
   * `cc_data_1k.json`: 1,000 records.
   * `cc_data_10k.json`: 10,000 records.
   * `cc_data_40k.json`: Over 40,000 records.

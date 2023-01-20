@@ -188,6 +188,26 @@ fileList = [
         "inputFile": "wallaroo-features/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
         "outputFile": "wallaroo-hot-swap-models-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/computer-vision/00_computer_vision_tutorial_intro.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+        "outputFile": "00-computer-vision-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/computer-vision/01_computer_vision_tutorial_mobilenet.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+        "outputFile": "01_computer_vision_tutorial_mobilenet-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/computer-vision/02_computer_vision_tutorial_resnet50.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+        "outputFile": "02_computer_vision_tutorial_resnet50-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/computer-vision/03_computer_vision_tutorial_shadow_deploy.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+        "outputFile": "03_computer_vision_tutorial_shadow_deploy-reference.md"
     }
 ]
 

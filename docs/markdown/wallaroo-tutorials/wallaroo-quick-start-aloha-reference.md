@@ -274,7 +274,7 @@ aloha_pipeline.infer_from_file("./data-1.json")
 
 Now that our smoke test is successful, let's really give it some data.  We have two inference files we can use:
 
-* `data-1k.json`:  Contains 1,0000 inferences
+* `data-1k.json`:  Contains 10,000 inferences
 * `data-25k.json`: Contains 25,000 inferences
 
 We'll pipe the `data-25k.json` file through the `aloha_pipeline` deployment URL, and place the results in a file named `response.txt`.  We'll also display the time this takes.  Note that for larger batches of 50,000 inferences or more can be difficult to view in Jupyter Hub because of its size.
