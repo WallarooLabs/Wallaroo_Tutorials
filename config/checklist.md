@@ -26,7 +26,7 @@
     <table>
 
     Remove:
-    </div>
+    
 
 [ ] Verify images are replaced into /images where needed.
 [ ] Notebooks in prod:  Look for `/opt/conda/lib` and `<style>` to remove them.
