@@ -360,7 +360,7 @@ df
   </tbody>
 </table>
 <p>100 rows × 6 columns</p>
-</div>
+
 
 
 

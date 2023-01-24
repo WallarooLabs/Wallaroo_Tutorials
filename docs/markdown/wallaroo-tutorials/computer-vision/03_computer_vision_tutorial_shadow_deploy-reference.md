@@ -690,7 +690,7 @@ df
     </tr>
   </tbody>
 </table>
-</div>
+
 
 
 
@@ -872,7 +872,7 @@ challengerDf
   </tbody>
 </table>
 <p>86 rows × 6 columns</p>
-</div>
+
 
 
 
