@@ -35,8 +35,8 @@ jsonFileList = [
     },
     {
         "inputFile": "wallaroo-model-cookbooks/aloha/data_1k.json",
-        "dataframeOutputFile": "wallaroo-model-cookbooks/aloha/data_1k.json",
-        "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data_1k.json"
+        "dataframeOutputFile": "wallaroo-model-cookbooks/aloha/data_1k.df.json",
+        "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data_1k.arrow"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/aloha/data_25k.json",
@@ -55,7 +55,7 @@ jsonFileList = [
     },
     {
         "inputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.json",
-        "dataframeOutputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.json",
+        "dataframeOutputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.df.json",
         "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.arrow"
     }
     
@@ -64,7 +64,7 @@ jsonFileList = [
 def ConvertJSONtoDataframe(inputFile, outputDataFrameFile):
     # read the file and convert it to a dataframe
     data = pd.read_json(inputFile, orient="records")
-    resultJson = pd.DataFrame.to_json(data, indent=4)
+    resultJson = pd.DataFrame.to_json(data, indent=4, orient="records")
     with open(outputDataFrameFile, "w") as outfile:
         outfile.write(resultJson)
     # return the dataframe as the result
