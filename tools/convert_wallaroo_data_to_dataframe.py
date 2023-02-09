@@ -54,9 +54,24 @@ jsonFileList = [
         "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/test_data.arrow"
     },
     {
-        "inputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.json",
-        "dataframeOutputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.df.json",
-        "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/tokenized50K.arrow"
+        "inputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.json",
+        "dataframeOutputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.df.json",
+        "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.arrow"
+    },
+    {
+        "inputFile": "wallaroo-testing-tutorials/abtesting/data/data-1.json",
+        "dataframeOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-1.df.json",
+        "arrowOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-1.arrow"
+    },
+    {
+        "inputFile": "wallaroo-testing-tutorials/abtesting/data/data-1k.json",
+        "dataframeOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-1k.df.json",
+        "arrowOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-1k.arrow"
+    },
+    {
+        "inputFile": "wallaroo-testing-tutorials/abtesting/data/data-25k.json",
+        "dataframeOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-25k.df.json",
+        "arrowOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-25k.arrow"
     }
     
 ]
@@ -89,6 +104,7 @@ def ConvertJSONtoArrow(inputDataFrame, outputArrowFile):
     schema = pa.schema(fields)
 
     final_table = pa.Table.from_pandas(inputDataFrame, schema=schema)
+    print(final_table)
 
     # save the final_table as an arrow binary file
 
