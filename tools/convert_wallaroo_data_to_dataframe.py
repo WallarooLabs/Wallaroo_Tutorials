@@ -73,26 +73,26 @@ jsonFileList = [
     #     "dataframeOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-25k.df.json",
     #     "arrowOutputFile": "wallaroo-testing-tutorials/abtesting/data/data-25k.arrow"
     # }
-    {
-        "inputFile": "wallaroo-101/data/cc_data_1k.json",
-        "dataframeOutputFile": "wallaroo-101/data/cc_data_1k.df.json",
-        "arrowOutputFile": "wallaroo-101/data/cc_data_1k.arrow"
-    },
-    {
-        "inputFile": "wallaroo-101/data/high_fraud.json",
-        "dataframeOutputFile": "wallaroo-101/data/high_fraud.df.json",
-        "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
-    },
+    # {
+    #     "inputFile": "wallaroo-101/data/cc_data_1k.json",
+    #     "dataframeOutputFile": "wallaroo-101/data/cc_data_1k.df.json",
+    #     "arrowOutputFile": "wallaroo-101/data/cc_data_1k.arrow"
+    # },
+    # {
+    #     "inputFile": "wallaroo-101/data/high_fraud.json",
+    #     "dataframeOutputFile": "wallaroo-101/data/high_fraud.df.json",
+    #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
+    # },
     {
         "inputFile": "wallaroo-101/data/smoke_test.json",
         "dataframeOutputFile": "wallaroo-101/data/smoke_test.df.json",
         "arrowOutputFile": "wallaroo-101/data/smoke_test.arrow"
     },
-    {
-        "inputFile": "wallaroo-101/data/cc_data_10k.json",
-        "dataframeOutputFile": "wallaroo-101/data/cc_data_10k.df.json",
-        "arrowOutputFile": "wallaroo-101/data/cc_data_10k.arrow"
-    }
+    # {
+    #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
+    #     "dataframeOutputFile": "wallaroo-101/data/cc_data_10k.df.json",
+    #     "arrowOutputFile": "wallaroo-101/data/cc_data_10k.arrow"
+    # }
    
 ]
 
@@ -116,7 +116,7 @@ def ConvertJSONtoArrow(inputFile, outputArrowFile):
         if pa.types.is_fixed_size_list(data_table[i].type):
             fields.append(pa.field(i, data_table[i].type))
         else:
-            print(data_table[i])
+            #print(data_table[i])
             inner_size = len(data_table[i][0])
             tensor_type = {"shape": [inner_size]}
             tensor_meta_type = {"tensor_type": json.dumps(tensor_type)}
@@ -124,7 +124,8 @@ def ConvertJSONtoArrow(inputFile, outputArrowFile):
             fields.append(pa.field(i, tensor_arrow_type, metadata=tensor_meta_type))
         
     schema = pa.schema(fields)
-    final_table = pa.Table.from_pandas(data, schema=schema)
+    final_table = pa.Table.from_pandas(data, schema=schema).cast(target_schema=schema)
+    #print(final_table.schema)
     arrow_file_name = outputArrowFile
     with pa.OSFile(arrow_file_name, 'wb') as sink:
         with pa.ipc.new_file(sink, final_table.schema) as arrow_ipc:
@@ -136,9 +137,12 @@ def main():
     # convert all of the JSON files to dataframe and arrow
     for currentFile in jsonFileList:
         newDataFrame = ConvertJSONtoDataframe(currentFile["inputFile"], currentFile["dataframeOutputFile"])
-        print(newDataFrame)
+        #print(newDataFrame)
         newArrow = ConvertJSONtoArrow(currentFile["inputFile"], currentFile["arrowOutputFile"])
+        print("table:")
         print(newArrow)
+        print("Schema:")
+        print(newArrow.schema)
     
 
 
