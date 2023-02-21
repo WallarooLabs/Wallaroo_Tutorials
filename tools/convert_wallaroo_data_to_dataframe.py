@@ -84,9 +84,9 @@ jsonFileList = [
     #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
     # },
     {
-        "inputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.json",
-        "dataframeOutputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.df.json",
-        "arrowOutputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.arrow"
+        "inputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.json",
+        "dataframeOutputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.df.json",
+        "arrowOutputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.arrow"
     },
     # {
     #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
@@ -99,6 +99,7 @@ jsonFileList = [
 def ConvertJSONtoDataframe(inputFile, outputDataFrameFile):
     # read the file and convert it to a dataframe
     data = pd.read_json(inputFile, orient="records")
+    # data = pd.read_json(inputFile)
     resultJson = pd.DataFrame.to_json(data, indent=4, orient="records")
     with open(outputDataFrameFile, "w") as outfile:
         outfile.write(resultJson)
