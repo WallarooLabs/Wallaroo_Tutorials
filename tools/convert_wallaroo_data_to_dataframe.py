@@ -84,9 +84,9 @@ jsonFileList = [
     #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
     # },
     {
-        "inputFile": "wallaroo-101/data/smoke_test.json",
-        "dataframeOutputFile": "wallaroo-101/data/smoke_test.df.json",
-        "arrowOutputFile": "wallaroo-101/data/smoke_test.arrow"
+        "inputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.json",
+        "dataframeOutputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.df.json",
+        "arrowOutputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.arrow"
     },
     # {
     #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
@@ -138,11 +138,11 @@ def main():
     for currentFile in jsonFileList:
         newDataFrame = ConvertJSONtoDataframe(currentFile["inputFile"], currentFile["dataframeOutputFile"])
         #print(newDataFrame)
-        newArrow = ConvertJSONtoArrow(currentFile["inputFile"], currentFile["arrowOutputFile"])
-        print("table:")
-        print(newArrow)
-        print("Schema:")
-        print(newArrow.schema)
+        # newArrow = ConvertJSONtoArrow(currentFile["inputFile"], currentFile["arrowOutputFile"])
+        # print("table:")
+        # print(newArrow)
+        # print("Schema:")
+        # print(newArrow.schema)
     
 
 
