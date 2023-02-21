@@ -84,9 +84,9 @@ jsonFileList = [
     #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
     # },
     {
-        "inputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.json",
-        "dataframeOutputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.df.json",
-        "arrowOutputFile": "model_conversion/keras-to-onnx/simple_sentiment_testdata.arrow"
+        "inputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.json",
+        "dataframeOutputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.df.json",
+        "arrowOutputFile": "wallaroo-testing-tutorials/shadow_deploy/smoke_test.arrow"
     },
     # {
     #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
