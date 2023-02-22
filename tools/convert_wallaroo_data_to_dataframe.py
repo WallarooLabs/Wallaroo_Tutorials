@@ -84,9 +84,9 @@ jsonFileList = [
     #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
     # },
     {
-        "inputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.json",
-        "dataframeOutputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.df.json",
-        "arrowOutputFile": "model_conversion/sklearn-classification-to-onnx/isolet_test_data.arrow"
+        "inputFile": "model_conversion/statsmodels/bike_day_eval.json",
+        "dataframeOutputFile": "model_conversion/statsmodels/bike_day_eval.df.json",
+        "arrowOutputFile": "model_conversion/statsmodels/bike_day_eval.arrow"
     },
     # {
     #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
@@ -105,6 +105,8 @@ def ConvertJSONtoDataframe(inputFile, outputDataFrameFile):
         outfile.write(resultJson)
     # return the dataframe as the result
     return data
+
+
 
 # input is a dataframe
 def ConvertJSONtoArrow(inputFile, outputArrowFile):
