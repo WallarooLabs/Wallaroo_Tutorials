@@ -84,9 +84,14 @@ jsonFileList = [
     #     "arrowOutputFile": "wallaroo-101/data/high_fraud.arrow"
     # },
     {
-        "inputFile": "model_conversion/statsmodels/bike_day_eval.json",
-        "dataframeOutputFile": "model_conversion/statsmodels/bike_day_eval.df.json",
-        "arrowOutputFile": "model_conversion/statsmodels/bike_day_eval.arrow"
+        "inputFile": "model_conversion/xgboost-autoconversion/xgb_regression_eval.json",
+        "dataframeOutputFile": "model_conversion/xgboost-autoconversion/xgb_regression_eval.df.json",
+        "arrowOutputFile": "model_conversion/xgboost-autoconversion/xgb_regression_eval.arrow"
+    },
+    {
+        "inputFile": "model_conversion/xgboost-autoconversion/xgb_class_eval.json",
+        "dataframeOutputFile": "model_conversion/xgboost-autoconversion/xgb_class_eval.df.json",
+        "arrowOutputFile": "model_conversion/xgboost-autoconversion/xgb_class_eval.arrow"
     },
     # {
     #     "inputFile": "wallaroo-101/data/cc_data_10k.json",
