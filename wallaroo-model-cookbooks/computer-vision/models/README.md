@@ -1,3 +1,11 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7bd9f42c9ea146d9bbf00afc297f3f0f2aae9342dabdfce8feea4e932a0a6cc6
-size 781
+### Models for Wallaroo Computer Vision Tutorials
+
+In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.  These are downloaded via the following procedure:
+
+1. Go to https://github.com/WallarooLabs/Wallaroo_Tutorials/releases.
+1. Select the most recent release.
+1. Download the file `computer_vision.zip`.
+
+This contains the entire tutorial, plus the model files.  The most current version of this link is there:
+
+https://github.com/WallarooLabs/Wallaroo_Tutorials/releases/download/1.27-2022.4-cv4/computer_vision.zip

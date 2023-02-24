@@ -1,1 +1,0 @@
-wallaroo-model-cookbooks/computer-vision/models/** filter=lfs diff=lfs merge=lfs -text
