@@ -20,7 +20,7 @@ To use the Wallaroo SDK within Google Workbench, a virtual environment will be u
 
 The following is required for this tutorial:
 
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 * Python 3.8.6 or later installed locally
 * [Conda](https://docs.conda.io/en/latest/):  Used for managing python virtual environments.
 

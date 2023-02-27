@@ -17,7 +17,7 @@ To use the Wallaroo SDK within Azure Databricks Workspace, a virtual environment
 
 The following is required for this tutorial:
 
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 * An Azure Databricks workspace with a cluster
 
 ## General Steps

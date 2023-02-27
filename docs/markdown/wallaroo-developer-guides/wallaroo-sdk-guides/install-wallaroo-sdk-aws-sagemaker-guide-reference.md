@@ -22,7 +22,7 @@ For this example, a virtual python environment will be used.  This will set the 
 
 The following is required for this tutorial:
 
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 * A AWS Sagemaker domain with a Notebook Instance.  
 
 * Python 3.8.6 or later installed locally.

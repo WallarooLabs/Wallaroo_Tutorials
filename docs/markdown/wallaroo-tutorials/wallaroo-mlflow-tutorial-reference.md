@@ -50,7 +50,7 @@ For this example, we will be using the MLFlow containers that was registered in 
 Before uploading and running an inference with a MLFlow model in Wallaroo the following will be required:
 
 * **MLFlow Input Schema**:  The input schema with the fields and data types for each MLFlow model type uploaded to Wallaroo.  In the examples below, the data types are imported using the `pyarrow` library.
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 
 **IMPORTANT NOTE**:  Wallaroo supports MLFlow 1.3.0.  Please ensure the MLFlow models used in Wallaroo meet this specification.
 
