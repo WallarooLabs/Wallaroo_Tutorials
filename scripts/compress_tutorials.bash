@@ -28,6 +28,7 @@ tutorials=(
     ["statsmodels"]="model_conversion/statsmodels"
     ["xgboost-autoconversion"]="model_conversion/xgboost-autoconversion"
     ["notebooks_in_prod"]="notebooks_in_prod"
+    ["anomaly_detection"]="wallaroo-testing-tutorials/anomaly_detection"
     )
 
 currentDirectory=$PWD
