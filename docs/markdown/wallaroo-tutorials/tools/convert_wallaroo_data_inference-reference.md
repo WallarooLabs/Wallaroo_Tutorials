@@ -1,14 +1,18 @@
-The following guide on using inference data inputs from Wallaroo proprietary JSON to either Pandas DataFrame or Apache Arrow downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/tools/convert_wallaroo_data_to_pandas_arrow).
+The following guide on using inference data inputs from Wallaroo proprietary JSON to either Pandas DataFrame or Apache Arrow downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/quickstartguide_samples/blob/20230207_arrow_versions/tools/convert_wallaroo_data_to_pandas_arrow).
 
 ## Introduction
 
 The following guide is to help users transition from using Wallaroo Proprietary JSON to [Pandas DataFrame](https://pandas.pydata.org/docs/reference/frame.html) and [Apache Arrow](https://arrow.apache.org/).  The latter two formats allow data scientists to work natively with DataFrames, and when ready convert those into Arrow table files which provides greater file size efficiency and overall speed.
 
+Using Pandas DataFrames for inference inputs requires typecasting into the Wallaroo inference engine.  For models that are sensitive to data types, Arrow is the preferred format.
+
 This guide will demonstrate the following:
 
-* Converting from Wallaroo Proprietary JSON to Pandas DataFrame used for inferences in the Wallaroo Engine.
-* Converting from Pandas DataFrame to Apache Arrow used for inferences in the Wallaroo Engine.
-* Converting from a flattened Apache Arrow format to multi-dimensional Pandas DataFrame.
+* [Convert Wallaroo Proprietary JSON to Pandas DataFrame](#convert-wallaroo-proprietary-json-to-pandas-dataframe): Converting from Wallaroo Proprietary JSON to Pandas DataFrame used for inferences in the Wallaroo Engine.
+* [Convert Wallaroo JSON File to Pandas DataFrame](#convert-wallaroo-json-file-to-pandas-dataframe): Converting from Wallaroo JSON files or DataFrame JSON files to Pandas DataFrame for Wallaroo Engine inferences.
+* [Convert Pandas DataFrame to Arrow Table](#convert-pandas-dataframe-to-arrow-table): Converting from Pandas DataFrame to Apache Arrow used for inferences in the Wallaroo Engine.
+* [Read Arrow File to DataFrame](#read-arrow-file-to-dataframe): How to convert from an Arrow binary file to an Apache Arrow object or DataFrame object.
+* [Convert Flattened Arrow Table to Multi-Dimensional Pandas DataFrame](#convert-flattened-arrow-table-to-multi-dimensional-pandas-dataframe): How to convert from a one dimensional arrow table to a Multi-Dimensional Pandas DataFrame.
 
 ### Prerequisites
 
@@ -37,19 +41,16 @@ pd.set_option('display.max_colwidth', None)
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR PREFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR PREFIX"
 
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
 ```
 
 ```python
@@ -165,8 +166,10 @@ The Wallaroo proprietary JSON file will now be converted into Pandas DataFrame.
 ```python
 high_fraud_dataframe =  pd.DataFrame.from_records(high_fraud_data)
 display(high_fraud_dataframe)
+
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -192,6 +195,7 @@ result = pipeline.infer(high_fraud_dataframe)
 display(result)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -261,6 +265,7 @@ high_fraud_from_dataframe_json =  pd.DataFrame.from_records(high_fraud_dataframe
 display(high_fraud_from_dataframe_json)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -282,6 +287,7 @@ results = pipeline.infer(high_fraud_from_dataframe_json)
 display(results)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -313,6 +319,7 @@ high_fraud_data_from_file =  pd.read_json(high_fraud_filename, orient="records")
 display(high_fraud_data_from_file)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -336,6 +343,7 @@ result =  pipeline.infer(high_fraud_data_from_file)
 display(result)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -363,6 +371,7 @@ result = pipeline.infer_from_file(high_fraud_filename)
 display(result)
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -470,7 +479,7 @@ display(result)
 
 ## Read Arrow File to DataFrame
 
-The data can go the opposite direction - reading from an Arrow file, and turning the data into either an Arrow table with the Arrow `read_all` method, or just the data into a DataFrame with the Arrow `read_pandas` method.
+The data can go the opposite direction - reading from an Arrow binary file, and turning the data into either an Arrow table with the Arrow `read_all` method, or just the data into a DataFrame with the Arrow `read_pandas` method.
 
 ```python
 with pa.ipc.open_file(arrow_file_name) as source:
@@ -486,6 +495,7 @@ with pa.ipc.open_file(arrow_file_name) as source:
     ----
     tensor: [[[1.0678325,18.155556,-1.6589551,5.211179,2.345247,...,8.484355,14.64541,26.852377,2.7165291,3.0611956]]]
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -510,6 +520,7 @@ result = pipeline.infer_from_file(arrow_file_name)
 display(result.to_pandas())
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
@@ -533,9 +544,11 @@ display(result.to_pandas())
 
 ## Convert Flattened Arrow Table to Multi-Dimensional Pandas DataFrame
 
-Currently, arrow doesn't give us a multi-dimensional result back nor does it provide the shape of the returned data. If you happen to know the shape of the data returned from the model, you could use it to reshape the flattened table to desired multi-dimensional pandas dataframe.
+Some ML models use multi-dimensional DataFrames.  Currently Wallaroo supports and outputs flattened tables for inferences.
 
-Here is a sample infer result data in arrow Table format.
+For situations where the original data was in a multi-dimensional DataFrame, the following procedure will convert the flattened Arrow table back into a desired multi-dimensional pandas DataFrame.
+
+Here is a sample infer result data in Arrow Table format.
 
 ```python
 time_array = pa.array([datetime.datetime(2023, 2 , 22, 22, 14)])
@@ -618,6 +631,7 @@ output_2d_df = pd.DataFrame(output_tensor.tolist())
 output_2d_df
 ```
 
+{{< table "table table-striped" >}}
 <table>
   <thead>
     <tr style="text-align: right;">
