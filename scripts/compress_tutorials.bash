@@ -19,7 +19,7 @@ tutorials=(
     ["aloha"]="wallaroo-model-cookbooks/aloha"
     ["demand_curve"]="wallaroo-model-cookbooks/demand_curve"
     ["imdb"]="wallaroo-model-cookbooks/imdb"
-    ["abtesting"]="wallaroo-testing-tutorials/abtesting",
+    ["abtesting"]="wallaroo-testing-tutorials/abtesting"
     ["autoconversion-tutorial"]="model_conversion/autoconversion-tutorial"
     ["keras-to-onnx"]="model_conversion/keras-to-onnx"
     ["pytorch-to-onnx"]="model_conversion/pytorch-to-onnx"
@@ -29,6 +29,7 @@ tutorials=(
     ["xgboost-autoconversion"]="model_conversion/xgboost-autoconversion"
     ["notebooks_in_prod"]="notebooks_in_prod"
     ["anomaly_detection"]="wallaroo-testing-tutorials/anomaly_detection"
+    ["shadow_deploy"]="wallaroo-testing-tutorials/shadow_deploy"
     )
 
 currentDirectory=$PWD
