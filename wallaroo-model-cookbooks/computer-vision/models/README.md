@@ -1,6 +1,6 @@
 ### Models for Wallaroo Computer Vision Tutorials
 
-In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.  Use either [Git Large File Storage (LFS)](https://git-lfs.com) or the [Computer Vision direct download](https://github.com/WallarooLabs/Wallaroo_Tutorials/releases/download/1.27-2022.4-cv4/computer-vision.zip)
+In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.  These can be downloaded from: [Computer Vision direct download](https://github.com/WallarooLabs/Wallaroo_Tutorials/releases/download/1.28-2023.1.0/computer_vision.zip)
 
 # Directory contents
 
