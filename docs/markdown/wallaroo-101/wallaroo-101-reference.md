@@ -78,27 +78,61 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
 
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
+import json
+
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
 ```
 
+```python
+wallaroo.__version__
+```
+
+    '2023.1.0rc1'
 
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR PREFIX"
 
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
 ```
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for DataFrame and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
+```
+
+    True
 
 ## Create a New Workspace
 
@@ -108,30 +142,35 @@ The method we'll introduce below will either **create** a new workspace if it do
 
 The first part is to return to your Wallaroo Dashboard.  In the top navigation panel next to your user name there's a drop down with your workspaces.  In this example it just has "My Workspace".  Select **View Workspaces**.
 
-![Select View Workspaces](./images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
+![Select View Workspaces](/images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
 
 From here, enter the name of our new workspace as `ccfraud-workspace`.  If it already exists, you can skip this step.
 
 * **IMPORTANT NOTE**:  Workspaces do not have forced unique names.  It is highly recommended to use an existing workspace when possible, or establish a naming convention for your workspaces to keep their names unique to remove confusion with teams.
 
-![Create ccfraud-workspace](./images/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png)
+![Create ccfraud-workspace](/images/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png)
 
 Once complete, you'll be able to select the workspace from the drop down list in your dashboard.
 
-![ccfraud-workspace exists](./images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
+![ccfraud-workspace exists](/images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
 
 Just for the sake of this tutorial, we'll use the SDK below to create our workspace , assign as our **current workspace**, then display all of the workspaces we have at the moment.  We'll also set up for our models and pipelines down the road, so we have one spot to change names to whatever fits your organization's standards best.
 
+To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
+
 When we create our new workspace, we'll save it in the Python variable `workspace` so we can refer to it as needed.
 
-
 ```python
-workspace_name = 'ccfraudworkspace'
-pipeline_name = 'ccfraudpipeline'
-model_name = 'ccfraudmodel'
+import string
+import random
+
+# make a random 4 character prefix
+prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+workspace_name = f'{prefix}ccfraudworkspace'
+pipeline_name = f'{prefix}ccfraudpipeline'
+model_name = f'{prefix}ccfraudmodel'
 model_file_name = './ccfraud.onnx'
 ```
-
 
 ```python
 def get_workspace(name):
@@ -151,28 +190,17 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
 wl.set_current_workspace(workspace)
 ```
 
-
-
-
-    {'name': 'ccfraudworkspace', 'id': 17, 'archived': False, 'created_by': 'f1f32bdf-9bd9-4595-a531-aca5778ceaf0', 'created_at': '2022-12-15T15:40:13.340199+00:00', 'models': [], 'pipelines': []}
-
-
-
+    {'name': 'uupfccfraudworkspace', 'id': 114, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-01T21:59:42.738409+00:00', 'models': [], 'pipelines': []}
 
 ```python
 wl.list_workspaces()
 ```
-
-
-
-
 
 <table>
     <tr>
@@ -185,183 +213,245 @@ wl.list_workspaces()
 
 <tr >
     <td>john.hansarick@wallaroo.ai - Default Workspace</td>
-    <td>2022-12-12 22:13:38</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>0</td>
-    <td>0</td>
-</tr>
-
-
-<tr >
-    <td>alohaworkspace</td>
-    <td>2022-12-12 22:48:05</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>sdkworkspace</td>
-    <td>2022-12-12 22:53:12</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>housepricedrift</td>
-    <td>2022-12-13 16:32:11</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>alohaworkspace-regression</td>
-    <td>2022-12-14 20:03:18</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>abtestworkspace</td>
-    <td>2022-12-14 21:04:26</td>
+    <td>2023-02-17 20:36:12</td>
     <td>['john.hansarick@wallaroo.ai']</td>
     <td>2</td>
     <td>1</td>
 </tr>
-
-
-<tr >
-    <td>anomalyexample</td>
-    <td>2022-12-14 22:03:34</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>demandcurveworkspace</td>
-    <td>2022-12-14 22:06:43</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>3</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>imdbworkspace</td>
-    <td>2022-12-14 22:09:41</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>2</td>
-    <td>1</td>
-</tr>
-
 
 <tr >
     <td>testautoconversion</td>
-    <td>2022-12-14 22:12:36</td>
+    <td>2023-02-21 17:02:22</td>
     <td>['john.hansarick@wallaroo.ai']</td>
-    <td>1</td>
+    <td>2</td>
     <td>0</td>
 </tr>
 
-
 <tr >
-    <td>keras-autoconvert-workspace</td>
-    <td>2022-12-14 22:20:58</td>
+    <td>kerasautoconvertworkspace</td>
+    <td>2023-02-21 18:09:28</td>
     <td>['john.hansarick@wallaroo.ai']</td>
     <td>1</td>
     <td>1</td>
 </tr>
 
-
 <tr >
-    <td>bikedayevalworkspace</td>
-    <td>2022-12-14 22:29:09</td>
+    <td>externalkerasautoconvertworkspace</td>
+    <td>2023-02-21 18:16:14</td>
     <td>['john.hansarick@wallaroo.ai']</td>
     <td>1</td>
     <td>1</td>
 </tr>
 
-
 <tr >
-    <td>xgboost-classification-autoconvert-workspace</td>
-    <td>2022-12-15 15:24:08</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>0</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>xgboost-regression-autoconvert-workspace</td>
-    <td>2022-12-15 15:26:33</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>0</td>
-    <td>1</td>
-</tr>
-
-
-<tr >
-    <td>housepricing2</td>
-    <td>2022-12-15 15:36:34</td>
-    <td>['john.hansarick@wallaroo.ai']</td>
-    <td>0</td>
-    <td>0</td>
-</tr>
-
-
-<tr >
-    <td>ccfraud-comparison-demo</td>
-    <td>2022-12-15 15:37:35</td>
+    <td>ccfraudcomparisondemo</td>
+    <td>2023-02-21 18:31:10</td>
     <td>['john.hansarick@wallaroo.ai']</td>
     <td>3</td>
     <td>1</td>
 </tr>
 
+<tr >
+    <td>isolettest</td>
+    <td>2023-02-21 21:24:33</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
 
 <tr >
-    <td>ccfraudworkspace</td>
-    <td>2022-12-15 15:40:13</td>
+    <td>bikedayevalworkspace</td>
+    <td>2023-02-22 16:42:58</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>xgboost-classification-autoconvert-workspace</td>
+    <td>2023-02-22 17:28:52</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>xgboost-regression-autoconvert-workspace</td>
+    <td>2023-02-22 17:36:30</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>housepricing</td>
+    <td>2023-02-22 18:28:40</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>sdkquickworkspace</td>
+    <td>2023-02-22 21:25:41</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>jchdemandcurveworkspace</td>
+    <td>2023-02-22 22:23:21</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>jchdemandcurveworkspace2</td>
+    <td>2023-02-22 22:33:41</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>demandcurveworkspace</td>
+    <td>2023-02-23 15:14:32</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>yqecccfraudworkspace</td>
+    <td>2023-02-23 16:00:59</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>mobilenetworkspace2</td>
+    <td>2023-02-23 18:03:12</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>mobilenetworkspacetest</td>
+    <td>2023-02-23 18:12:45</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>mlflowstatsmodelworkspace</td>
+    <td>2023-02-23 23:14:12</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>2</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>statsmodelworkspace</td>
+    <td>2023-02-24 17:17:13</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>2</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>wjtxedgeworkspaceexample</td>
+    <td>2023-02-27 17:46:51</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>xtwjccfraudworkspace</td>
+    <td>2023-02-28 19:14:51</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>ccfraudcomparisondemo2a</td>
+    <td>2023-02-28 20:01:40</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>ccfraudcomparisondemo3</td>
+    <td>2023-02-28 20:07:27</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>ccfraudcomparisondemo4</td>
+    <td>2023-02-28 20:21:21</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>ccfraudcomparisondemo5</td>
+    <td>2023-02-28 20:23:24</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>ccfraudcomparisondemo6</td>
+    <td>2023-02-28 20:25:57</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>3</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>anomalyexampletest</td>
+    <td>2023-02-28 20:37:58</td>
+    <td>['john.hansarick@wallaroo.ai']</td>
+    <td>1</td>
+    <td>1</td>
+</tr>
+
+<tr >
+    <td>uupfccfraudworkspace</td>
+    <td>2023-03-01 21:59:42</td>
     <td>['john.hansarick@wallaroo.ai']</td>
     <td>0</td>
     <td>0</td>
 </tr>
 
 </table>
+{{</table>}}
 
-
-
-
-Just to make sure, let's list our current workspace.  If everything is going right, it will show us we're in the `ccfraud-workspace`.
-
+Just to make sure, let's list our current workspace.  If everything is going right, it will show us we're in the `ccfraud-workspace` with the appropriate prefix.
 
 ```python
 wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
-
-
-
-    {'name': 'ccfraudworkspace', 'id': 17, 'archived': False, 'created_by': 'f1f32bdf-9bd9-4595-a531-aca5778ceaf0', 'created_at': '2022-12-15T15:40:13.340199+00:00', 'models': [], 'pipelines': []}
-
-
+    {'name': 'uupfccfraudworkspace', 'id': 114, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-01T21:59:42.738409+00:00', 'models': [], 'pipelines': []}
 
 ## Upload a model
 
 Our workspace is created.  Let's upload our credit card fraud model to it.  This is the file name `ccfraud.onnx`, and we'll upload it as `ccfraudmodel`.  The credit card fraud model is trained to detect credit card fraud based on a 0 to 1 model:  The closer to 0 the less likely the transactions indicate fraud, while the closer to 1 the more likely the transactions indicate fraud.
 
-
 Since we're already in our default workspace `ccfraudworkspace`, it'll be uploaded right to there.  Once that's done uploading, we'll list out all of the models currently deployed so we can see it included.
-
 
 ```python
 ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
@@ -369,14 +459,9 @@ ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
 
 We can verify that our model was uploaded by listing the models uploaded to our Wallaroo instance with the `list_models()` command.  Note that since we uploaded this model before, we now have different versions of it we can use for our testing.
 
-
 ```python
 wl.list_models()
 ```
-
-
-
-
 
 <table>
   <tr>
@@ -388,17 +473,15 @@ wl.list_models()
   </tr>
 
   <tr>
-    <td>ccfraudmodel</td>
+    <td>uupfccfraudmodel</td>
     <td>1</td>
     <td>""</td>
-    <td>2022-12-15 15:40:51.058061+00:00</td>
-    <td>2022-12-15 15:40:51.058061+00:00</td>
+    <td>2023-03-01 22:00:36.294590+00:00</td>
+    <td>2023-03-01 22:00:36.294590+00:00</td>
   </tr>
 
 </table>
-
-
-
+{{</table>}}
 
 ## Create a Pipeline
 
@@ -406,241 +489,212 @@ With our model uploaded, time to create our pipeline and deploy it so it can acc
 
 * **NOTE**:  Pipeline names must be unique.  If two pipelines are assigned the same name, the new pipeline is created as a new **version** of the pipeline.
 
-
 ```python
-ccfraud_pipeline = wl.build_pipeline(pipeline_name)
+ccfraud_pipeline = get_pipeline(pipeline_name)
 ```
 
 Now our pipeline is set.  Let's add a single **step** to it - in this case, our `ccfraud_model` that we uploaded to our workspace.
-
 
 ```python
 ccfraud_pipeline.add_model_step(ccfraud_model)
 ```
 
+<table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
-
-
-<table><tr><th>name</th> <td>ccfraudpipeline</td></tr><tr><th>created</th> <td>2022-12-15 15:40:52.827438+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:40:52.827438+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c6ca1538-4a87-48e7-9187-c4d80d1b2a9c</td></tr><tr><th>steps</th> <td></td></tr></table>
-
-
+```python
+for d in wl.list_deployments(): d.undeploy()
+```
 
 And now we can deploy our pipeline and assign resources to it.  This typically takes about 45 seconds once the command is issued.
-
 
 ```python
 ccfraud_pipeline.deploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>ccfraudpipeline</td></tr><tr><th>created</th> <td>2022-12-15 15:40:52.827438+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:40:54.457218+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a923f5e0-23d5-49eb-8908-db85406387f1, c6ca1538-4a87-48e7-9187-c4d80d1b2a9c</td></tr><tr><th>steps</th> <td>ccfraudmodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:04:51.394606+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6b63ccf6-870a-4299-8213-ec3b4538ce0d, 70349464-78ca-4699-ae31-1b6322e44232, b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td>uupfccfraudmodel</td></tr></table>
+{{</table>}}
 
 We can see our new pipeline with the `status()` command.
-
 
 ```python
 ccfraud_pipeline.status()
 ```
 
-
-
-
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.2.37',
-       'name': 'engine-57f588684c-hx2w2',
+     'engines': [{'ip': '10.48.1.9',
+       'name': 'engine-774f566bcb-czqzn',
        'status': 'Running',
        'reason': None,
        'details': [],
-       'pipeline_statuses': {'pipelines': [{'id': 'ccfraudpipeline',
+       'pipeline_statuses': {'pipelines': [{'id': 'uupfccfraudpipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'ccfraudmodel',
-          'version': 'f0bf324c-3640-40b6-9db6-cd669c55000f',
+       'model_statuses': {'models': [{'name': 'uupfccfraudmodel',
+          'version': '8e68f30d-3fbe-44f6-8468-4d3e54c93e36',
           'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.2.36',
-       'name': 'engine-lb-c6485cfd5-6w9zg',
+     'engine_lbs': [{'ip': '10.48.1.10',
+       'name': 'engine-lb-86bc6bd77b-bl7s9',
        'status': 'Running',
        'reason': None,
        'details': []}],
      'sidekicks': []}
 
-
-
 ## Running Interfences
 
 With our pipeline deployed, let's run a smoke test to make sure it's working right.  We'll run an inference through our pipeline from the file `smoke_test.json` and see the results.  This should give us a result near 0 - not likely a fraudulent activity.
 
-
 ```python
-ccfraud_pipeline.infer_from_file('./smoke_test.json')
+if arrowEnabled is True:
+    result = ccfraud_pipeline.infer_from_file('./data/smoke_test.df.json')
+else:
+    result = ccfraud_pipeline.infer_from_file('./data/smoke_test.json')
+display(result)
 ```
 
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 143102,
-      'model_name': 'ccfraudmodel',
-      'model_version': 'f0bf324c-3640-40b6-9db6-cd669c55000f',
-      'original_data': {'tensor': [[1.0678324729342086,
-                                    0.21778102664937624,
-                                    -1.7115145261843976,
-                                    0.6822857209662413,
-                                    1.0138553066742804,
-                                    -0.43350000129006655,
-                                    0.7395859436561657,
-                                    -0.28828395953577357,
-                                    -0.44726268795990787,
-                                    0.5146124987725894,
-                                    0.3791316964287545,
-                                    0.5190619748123175,
-                                    -0.4904593221655364,
-                                    1.1656456468728569,
-                                    -0.9776307444180006,
-                                    -0.6322198962519854,
-                                    -0.6891477694494687,
-                                    0.17833178574255615,
-                                    0.1397992467197424,
-                                    -0.35542206494183326,
-                                    0.4394217876939808,
-                                    1.4588397511627804,
-                                    -0.3886829614721505,
-                                    0.4353492889350186,
-                                    1.7420053483337177,
-                                    -0.4434654615252943,
-                                    -0.15157478906219238,
-                                    -0.26684517248765616,
-                                    -1.454961775612449]]},
-      'outputs': [{'Float': {'data': [0.001497417688369751],
-                             'dim': [1, 1],
-                             'dtype': 'Float',
-                             'v': 1}}],
-      'pipeline_name': 'ccfraudpipeline',
-      'shadow_data': {},
-      'time': 1671118939781})]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-01 22:05:19.842</td>
+      <td>[1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]</td>
+      <td>[0.0014974177]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 Looks good!  Time to run the real test on some real data.  Run another inference this time from the file `high_fraud.json` and let's see the results.  This should give us an output that indicates a high level of fraud - well over 90%.
 
-
 ```python
-ccfraud_pipeline.infer_from_file('./high_fraud.json')
+if arrowEnabled is True:
+    result = ccfraud_pipeline.infer_from_file('./data/high_fraud.df.json')
+else:
+    result = ccfraud_pipeline.infer_from_file('./data/high_fraud.json')
+display(result)
 ```
 
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 186303,
-      'model_name': 'ccfraudmodel',
-      'model_version': 'f0bf324c-3640-40b6-9db6-cd669c55000f',
-      'original_data': {'tensor': [[1.0678324729342086,
-                                    18.155556397512136,
-                                    -1.658955105843852,
-                                    5.2111788045436445,
-                                    2.345247064454334,
-                                    10.467083577773014,
-                                    5.0925820522419745,
-                                    12.82951536371218,
-                                    4.953677046849403,
-                                    2.3934736228338225,
-                                    23.912131817957253,
-                                    1.7599568310350209,
-                                    0.8561037518143335,
-                                    1.1656456468728569,
-                                    0.5395988813934498,
-                                    0.7784221343010385,
-                                    6.75806107274245,
-                                    3.927411847659908,
-                                    12.462178276650056,
-                                    12.307538216518656,
-                                    13.787951906620115,
-                                    1.4588397511627804,
-                                    3.681834686805714,
-                                    1.753914366037974,
-                                    8.484355003656184,
-                                    14.6454097666836,
-                                    26.852377436250144,
-                                    2.716529237720336,
-                                    3.061195706890285]]},
-      'outputs': [{'Float': {'data': [0.9811990261077881],
-                             'dim': [1, 1],
-                             'dtype': 'Float',
-                             'v': 1}}],
-      'pipeline_name': 'ccfraudpipeline',
-      'shadow_data': {},
-      'time': 1671118941160})]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-01 22:05:20.986</td>
+      <td>[1.0678324729, 18.1555563975, -1.6589551058, 5.2111788045, 2.3452470645, 10.4670835778, 5.0925820522, 12.8295153637, 4.9536770468, 2.3934736228, 23.912131818, 1.759956831, 0.8561037518, 1.1656456469, 0.5395988814, 0.7784221343, 6.7580610727, 3.9274118477, 12.4621782767, 12.3075382165, 13.7879519066, 1.4588397512, 3.6818346868, 1.753914366, 8.4843550037, 14.6454097667, 26.8523774363, 2.7165292377, 3.0611957069]</td>
+      <td>[0.981199]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 Now that we've tested our pipeline, let's run it with something larger.  We have two batch files - `cc_data_1k.json` that contains 1,000 credit card records to test for fraud.  The other is `cc_data_10k.json` which has 10,000 credit card records to test.
 
-First let's run a batch result for `cc_data_1k.json` and see the results.  Inferences are returned as the [InferenceResult object](https://docs.wallaroo.ai/wallaroo-sdk/wallaroo-sdk-essentials-guide/#inferenceresult-object).  We'll retrieve the InferenceResult object and store it into a variable.
+First let's run a batch result for `cc_data_1k.json` and see the results.  
 
+For Arrow enabled instances of Wallaroo, inference results are returned as a [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html) object.
 
-```python
-output = ccfraud_pipeline.infer_from_file('./cc_data_10k.json')
-```
+For non-Arrow enabled instances of Wallaroo, inferences are returned as the [InferenceResult object](https://docs.wallaroo.ai/wallaroo-sdk/wallaroo-sdk-essentials-guide/#inferenceresult-object).
 
-Now we can isolate just the output with the `.data()` method, then isolate it down to just the results likely to be fraud.
-
+With the inference result we'll output just the cases likely to be fraud.  For Arrow enabled Wallaroo instances, we'll parse the dataframe returned as the inference result.  For non-Arrow Wallaroo instances, we'll use the Inference Result object's `data()` method.
 
 ```python
-sequence = output[0].data()
-result = filter(lambda x: x > 0.75, sequence[0])
-print(list(result))
+outputs = None
+if arrowEnabled is True:
+    outputs = ccfraud_pipeline.infer_from_file('./data/cc_data_10k.df.json')
+    filter = [elt[0] > 0.75 for elt in outputs['out.dense_1']]
+    result = outputs.loc[filter, ['in.tensor','out.dense_1']]
+    display(result['out.dense_1'])
+else:
+    outputs = ccfraud_pipeline.infer_from_file('./data/cc_data_10k.json')
+    sequence = outputs[0].data()
+    result = filter(lambda x: x > 0.75, sequence[0])
+    display(sequence[0])
 ```
 
-    [array([0.99300325]), array([0.99300325]), array([0.99300325]), array([0.99300325]), array([1.]), array([0.98731017]), array([1.]), array([0.99998999]), array([0.91080534]), array([0.98877275]), array([0.95601666]), array([1.]), array([0.99997449]), array([0.98526448]), array([1.]), array([0.9999705]), array([0.99802029]), array([0.99950194]), array([0.9999876]), array([1.])]
+    0        [0.99300325]
+    1        [0.99300325]
+    2        [0.99300325]
+    3        [0.99300325]
+    161             [1.0]
+    941       [0.9873102]
+    1445            [1.0]
+    2092        [0.99999]
+    2220     [0.91080534]
+    4135     [0.98877275]
+    4236     [0.95601666]
+    5658            [1.0]
+    6768      [0.9999745]
+    6780      [0.9852645]
+    7133            [1.0]
+    7566      [0.9999705]
+    7911      [0.9980203]
+    8921     [0.99950194]
+    9244      [0.9999876]
+    10176           [1.0]
+    Name: out.dense_1, dtype: object
 
-
-We can also retrieve the inputs from our InferenceResult object through the `input_data()` method as follows - in this case, just the first record.
-
+We can view the inputs either through the `in.tensor` column from our DataFrame for Arrow enabled environments, or with the InferenceResult object through the `input_data()` for non-Arrow enabled environments.  We'll display just the first row in either case.
 
 ```python
-output[0].input_data()["tensor"][0]
+if arrowEnabled is True:
+    display(result['in.tensor'][0])
+else:
+    display(outputs[0].input_data()["tensor"][0])
 ```
 
-
-
-
-    [-1.060329750089797,
-     2.354496709462385,
-     -3.563878832646437,
-     5.138734892618555,
-     -1.23084570186641,
-     -0.7687824607744093,
-     -3.588122810891446,
-     1.888083766259287,
-     -3.2789674273886593,
-     -3.956325455353324,
-     4.099343911805088,
-     -5.653917639476211,
-     -0.8775733373342495,
-     -9.131571191990632,
-     -0.6093537872620682,
-     -3.748027677256424,
-     -5.030912501659983,
-     -0.8748149525506821,
-     1.9870535692026476,
-     0.7005485718467245,
-     0.9204422758154284,
-     -0.10414918089758483,
-     0.3229564351284999,
-     -0.7418141656910608,
-     0.03841201586730117,
-     1.099343914614657,
-     1.2603409755785089,
-     -0.14662447391576958,
-     -1.446321243938815]
-
-
+    [-1.0603297501,
+     2.3544967095,
+     -3.5638788326,
+     5.1387348926,
+     -1.2308457019,
+     -0.7687824608,
+     -3.5881228109,
+     1.8880837663,
+     -3.2789674274,
+     -3.9563254554,
+     4.0993439118,
+     -5.6539176395,
+     -0.8775733373,
+     -9.131571192,
+     -0.6093537873,
+     -3.7480276773,
+     -5.0309125017,
+     -0.8748149526,
+     1.9870535692,
+     0.7005485718,
+     0.9204422758,
+     -0.1041491809,
+     0.3229564351,
+     -0.7418141657,
+     0.0384120159,
+     1.0993439146,
+     1.2603409756,
+     -0.1466244739,
+     -1.4463212439]
 
 ## Batch Deployment through a Pipeline Deployment URL
 
@@ -650,15 +704,16 @@ First we'll request the url with the `_deployment._url()` method.
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
 
-
 ```python
 deploy_url = ccfraud_pipeline._deployment._url()
+print(deploy_url)
 ```
+
+    https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/uupfccfraudpipeline-166
 
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 
 For this example, the API connection details will be retrieved, then used to submit an inference request through the external inference URL retrieved earlier.
-
 
 ```python
 connection =wl.mlops().__dict__
@@ -666,30 +721,34 @@ token = connection['token']
 token
 ```
 
-Copy and paste the results above into the curl command, replacing the {YOUR URL HERE} with your deploy url for `ccfraud_pipeline`, and uncomment it.
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjTGZaYmhVQWl0a210Z0VLV0l1NnczTWlXYmUzWjc3cHdqVjJ2QWM2WUdZIn0.eyJleHAiOjE2Nzc3MDg0MTksImlhdCI6MTY3NzcwODM1OSwiYXV0aF90aW1lIjoxNjc3NzA3NDIzLCJqdGkiOiJhZWY2YTFjYy02NDgxLTRkODEtYjg2Yi0yMGU1ZTY4MTcwZTAiLCJpc3MiOiJodHRwczovL3NwYXJrbHktYXBwbGUtMzAyNi5rZXljbG9hay53YWxsYXJvby5jb21tdW5pdHkvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIyYWIzZDY0ZC01NmJiLTQ1MDgtOGU4ZS1lNmExMzJlZDEwYWYiLCJhY3IiOiIwIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiIyYWIzZDY0ZC01NmJiLTQ1MDgtOGU4ZS1lNmExMzJlZDEwYWYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.gTzaCHqmV_LsYIROOr2bxu3s9eDAhyz1ZVjGhXm21iWAe-1YMHgMUoC0zHtZKRt3fGaPswkj3LpC9RC2KaiYFc94KXSbyVKVq9--M5CVYQ2xqXrIY02fOsogMuqGtRusHQISRvx6dLYjJJdw6B_DwQL8vTC0C82VeBdWz-mIpi_gqQ2T2UKlNB-kBnjtY5BtlzBugF4_DKi5o3ePBoZZzT4EuionnDDJEF-L-5Pg5ioWXYyH7ianb-FcTLJqESAhgs9PlCWhtwGnJQVJmv5BdREkGvtRmDWzlbVYKX4tl_Giag_zO0U58fqD9AdiMFTndiryn1zxKyf1hxoS-3fXxQ'
 
+The `deploy_url` variable will be used to access the pipeline inference URL, and the `token` variable used to authenticate for this batch inference process.
 
 ```python
-!curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:application/json" --data @cc_data_10k.json > curl_response.txt
+if arrowEnabled is True:
+    dataFile="./data/cc_data_10k.df.json"
+    contentType="application/json; format=pandas-records"
+else:
+    dataFile="./data/cc_data_10k.json"
+    contentType="application/json"
+```
+
+```python
+!curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-      0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: deploy_url
-
+    100 13.7M  100 6325k  100 7743k  2560k  3133k  0:00:02  0:00:02 --:--:-- 5702k
 
 With our work in the pipeline done, we'll undeploy it to get back our resources from the Kubernetes cluster.  If we keep the same settings we can redeploy the pipeline with the same configuration in the future.
-
 
 ```python
 ccfraud_pipeline.undeploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>ccfraudpipeline</td></tr><tr><th>created</th> <td>2022-12-15 15:40:52.827438+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:40:54.457218+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a923f5e0-23d5-49eb-8908-db85406387f1, c6ca1538-4a87-48e7-9187-c4d80d1b2a9c</td></tr><tr><th>steps</th> <td>ccfraudmodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:04:51.394606+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6b63ccf6-870a-4299-8213-ec3b4538ce0d, 70349464-78ca-4699-ae31-1b6322e44232, b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td>uupfccfraudmodel</td></tr></table>
+{{</table>}}
 
 And there we have it!  Feel free to use this as a template for other models, inferences and pipelines that you want to deploy with Wallaroo!

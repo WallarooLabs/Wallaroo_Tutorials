@@ -19,7 +19,6 @@ This tutorial provides the following:
 
 The first step is to import our libraries we will be using.
 
-
 ```python
 # Used to load the sk-learn model
 import pickle
@@ -31,32 +30,17 @@ from skl2onnx.common.data_types import DoubleTensorType
 from skl2onnx import convert_sklearn
 ```
 
-Now we can determine the correct ONNX Target Opset for our libraries.
-
-
+We set the ONNX version for exporting to 15.
 
 ```python
-# figure out the correct opset
-
-from onnx.defs import onnx_opset_version
-from onnxconverter_common.onnx_ex import DEFAULT_OPSET_NUMBER
-TARGET_OPSET = min(DEFAULT_OPSET_NUMBER, onnx_opset_version())
-TARGET_OPSET
+TARGET_OPSET=15
 ```
-
-
-
-
-    15
-
-
 
 With the `TARGET_OPSET` determined, we can convert our sklearn logistic model to onnx.
 
 * **IMPORTANT NOTE**:  Note that for the conversion process, `zipmap` is **disabled**.
 
 Load the model that we will be converting:
-
 
 ```python
 # convert model to ONNX
@@ -69,7 +53,6 @@ with open("./isolet_logistic_model_numclass.pickle", "rb") as f:
 
 We already know the number of columns, so we'll set that variable in the next step.
 
-
 ```python
 # Set the number of columns
 
@@ -77,7 +60,6 @@ ncols = 617
 ```
 
 Next up is to set the options.  As a reminder **zipmap must be disabled**.
-
 
 ```python
 ## Set the options
@@ -88,7 +70,6 @@ options = {id(logistic_model): {'zipmap': False}} # here we turn off the zipmap
 
 With everything ready, we can now convert the sk-learn Logistics model to ONNX, and store it in the variable `onnx_model_converted`.
 
-
 ```python
 ## Run the conversion
 
@@ -97,7 +78,6 @@ onnx_model_converted = convert_sklearn(logistic_model, initial_types=initial_typ
 ```
 
 Now we can save our model to a `onnx` file.  Once complete, we can run it through the `Logistic Version of the Isolet Model Test in Wallaroo` available at the [Wallaroo Tutorials repository]https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_conversion/sklearn-classification-to-onnx) to verify it.
-
 
 ```python
 # Export the model to a file

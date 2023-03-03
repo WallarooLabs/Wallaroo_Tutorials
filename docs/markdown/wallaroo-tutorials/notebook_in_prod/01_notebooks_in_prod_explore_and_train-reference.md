@@ -29,7 +29,6 @@ The following steps are part of this process:
 
 First we'll import the libraries we'll be using to evaluate the data and test different models.
 
-
 ```python
 import numpy as np
 import pandas as pd
@@ -52,7 +51,6 @@ matplotlib.rcParams["figure.figsize"] = (12,6)
 
 For training, we will use the data on all houses sold in this market with the last two years.  As a reminder, this data pulled from a simulated database as an example of how to pull from an existing data store.
 
-
 ```python
 conn = simdb.simulate_db_connection()
 tablename = simdb.tablename
@@ -68,24 +66,7 @@ housing_data
 
     select * from house_listings where date > DATE(DATE(), '-24 month') AND sale_price is not NULL
 
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -117,7 +98,7 @@ housing_data
     <tr>
       <th>0</th>
       <td>7129300520</td>
-      <td>2022-03-06</td>
+      <td>2022-07-11</td>
       <td>221900.0</td>
       <td>3</td>
       <td>1.00</td>
@@ -141,7 +122,7 @@ housing_data
     <tr>
       <th>1</th>
       <td>6414100192</td>
-      <td>2022-05-02</td>
+      <td>2022-09-06</td>
       <td>538000.0</td>
       <td>3</td>
       <td>2.25</td>
@@ -165,7 +146,7 @@ housing_data
     <tr>
       <th>2</th>
       <td>5631500400</td>
-      <td>2022-07-19</td>
+      <td>2022-11-23</td>
       <td>180000.0</td>
       <td>2</td>
       <td>1.00</td>
@@ -189,7 +170,7 @@ housing_data
     <tr>
       <th>3</th>
       <td>2487200875</td>
-      <td>2022-05-02</td>
+      <td>2022-09-06</td>
       <td>604000.0</td>
       <td>4</td>
       <td>3.00</td>
@@ -213,7 +194,7 @@ housing_data
     <tr>
       <th>4</th>
       <td>1954400510</td>
-      <td>2022-07-12</td>
+      <td>2022-11-16</td>
       <td>510000.0</td>
       <td>3</td>
       <td>2.00</td>
@@ -261,7 +242,7 @@ housing_data
     <tr>
       <th>20518</th>
       <td>263000018</td>
-      <td>2021-10-12</td>
+      <td>2022-02-16</td>
       <td>360000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -285,7 +266,7 @@ housing_data
     <tr>
       <th>20519</th>
       <td>6600060120</td>
-      <td>2022-07-17</td>
+      <td>2022-11-21</td>
       <td>400000.0</td>
       <td>4</td>
       <td>2.50</td>
@@ -309,7 +290,7 @@ housing_data
     <tr>
       <th>20520</th>
       <td>1523300141</td>
-      <td>2021-11-14</td>
+      <td>2022-03-21</td>
       <td>402101.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -333,7 +314,7 @@ housing_data
     <tr>
       <th>20521</th>
       <td>291310100</td>
-      <td>2022-06-09</td>
+      <td>2022-10-14</td>
       <td>400000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -357,7 +338,7 @@ housing_data
     <tr>
       <th>20522</th>
       <td>1523300157</td>
-      <td>2022-03-08</td>
+      <td>2022-07-13</td>
       <td>325000.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -380,9 +361,8 @@ housing_data
     </tr>
   </tbody>
 </table>
+{{</table>}}
 <p>20523 rows × 22 columns</p>
-
-
 
 
 ### Data transformations
@@ -390,7 +370,6 @@ housing_data
 To improve relative error performance, we will predict on `log10` of the sale price.
 
 Predict on log10 price to try to improve relative error performance
-
 
 ```python
 housing_data['logprice'] = np.log10(housing_data.sale_price)
@@ -401,7 +380,6 @@ From the data, we will create the following features to evaluate:
 * `house_age`: How old the house is.
 * `renovated`: Whether the house has been renovated or not.
 * `yrs_since_reno`: If the house has been renovated, how long has it been.
-
 
 ```python
 import datetime
@@ -414,26 +392,9 @@ housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_da
 
 housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_since_reno']]
 
-
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -450,7 +411,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>0</th>
       <td>1955</td>
       <td>0</td>
-      <td>67</td>
+      <td>68</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -458,7 +419,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>1</th>
       <td>1951</td>
       <td>1991</td>
-      <td>71</td>
+      <td>72</td>
       <td>1</td>
       <td>40</td>
     </tr>
@@ -466,7 +427,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>2</th>
       <td>1933</td>
       <td>0</td>
-      <td>89</td>
+      <td>90</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -474,7 +435,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>3</th>
       <td>1965</td>
       <td>0</td>
-      <td>57</td>
+      <td>58</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -482,7 +443,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>4</th>
       <td>1987</td>
       <td>0</td>
-      <td>35</td>
+      <td>36</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -498,7 +459,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>20518</th>
       <td>2009</td>
       <td>0</td>
-      <td>13</td>
+      <td>14</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -506,7 +467,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>20519</th>
       <td>2014</td>
       <td>0</td>
-      <td>8</td>
+      <td>9</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -514,7 +475,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>20520</th>
       <td>2009</td>
       <td>0</td>
-      <td>13</td>
+      <td>14</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -522,7 +483,7 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>20521</th>
       <td>2004</td>
       <td>0</td>
-      <td>18</td>
+      <td>19</td>
       <td>0</td>
       <td>0</td>
     </tr>
@@ -530,19 +491,17 @@ housing_data.loc[:, ['yr_built', 'yr_renovated', 'house_age', 'renovated', 'yrs_
       <th>20522</th>
       <td>2008</td>
       <td>0</td>
-      <td>14</td>
+      <td>15</td>
       <td>0</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
+{{</table>}}
 <p>20523 rows × 5 columns</p>
 
 
-
-
 Now we pick variables and split training data into training and holdout (test).
-
 
 ```python
 vars = ['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors', 'waterfront', 'view',
@@ -556,13 +515,11 @@ gp = np.where(runif < 0.2, 'test', 'training')
 hd_train = housing_data.loc[gp=='training', :].reset_index(drop=True, inplace=False)
 hd_test = housing_data.loc[gp=='test', :].reset_index(drop=True, inplace=False)
 
-
 # split the training into training and val for xgboost
 runif = np.random.default_rng(123).uniform(0, 1, hd_train.shape[0])
 xgb_gp = np.where(runif < 0.2, 'val', 'train')
 
 ```
-
 
 ```python
 # for xgboost, further split into train and val
@@ -578,7 +535,6 @@ val_labels = np.array(hd_train.loc[xgb_gp=='val', outcome])
 
 Since we are fitting a model to predict `log10` price, we need to convert predictions back into price units. We also want to round to the nearest dollar.
 
-
 ```python
 def postprocess(log10price):
     return np.rint(np.power(10, log10price))
@@ -593,7 +549,6 @@ One could also hyperparameter tune at this stage; for brevity, we'll omit that i
 #### XGBoost
 
 First we will test out using a XGBoost model.
-
 
 ```python
 
@@ -613,7 +568,6 @@ xgb_model.fit(
 
 ```
 
-
 ```python
 print(xgb_model.best_score)
 print(xgb_model.best_iteration)
@@ -624,11 +578,9 @@ print(xgb_model.best_ntree_limit)
     99
     100
 
-
 #### XGBoost Evaluate on holdout
 
 With the sample model created, we will test it against the holdout data.  Note that we are calling the `postprocess` function on the data.
-
 
 ```python
 test_features = np.array(hd_test.loc[:, vars])
@@ -650,12 +602,9 @@ matplotlib.pyplot.title("test")
 plt.show()
 ```
 
-
     
-![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png)
+![png](/images/wallaroo-tutorials/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -664,23 +613,7 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -750,9 +683,7 @@ pframe.describe()
     </tr>
   </tbody>
 </table>
-
-
-
+{{</table>}}
 
 
 ```python
@@ -764,11 +695,9 @@ print(f'rmse = {rmse}, mape = {mape}')
 
     rmse = 128752.54982046234, mape = 12.857674005250548
 
-
 #### Random Forest
 
 The next model to test is Random Forest.
-
 
 ```python
 model_rf = sklearn.ensemble.RandomForestRegressor(n_estimators=100, max_depth=5, n_jobs=2, max_samples=0.8)
@@ -779,17 +708,9 @@ train_labels = np.array(hd_train.loc[:, outcome])
 model_rf.fit(train_features, train_labels)
 ```
 
-
-
-
-<style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestRegressor</label><div class="sk-toggleable__content"><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre>
-
-
-
 #### Random Forest Evaluate on holdout
 
 With the Random Forest sample model created, now we can test it against the holdout data.
-
 
 ```python
 pframe = pd.DataFrame({
@@ -808,12 +729,9 @@ matplotlib.pyplot.title("random forest")
 plt.show()
 ```
 
-
     
-![png](01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png)
+![png](/images/wallaroo-tutorials/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -822,23 +740,7 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -859,58 +761,56 @@ pframe.describe()
     </tr>
     <tr>
       <th>mean</th>
-      <td>5.195770e+05</td>
+      <td>5.196958e+05</td>
       <td>5.396937e+05</td>
-      <td>3.859051e+10</td>
-      <td>18.102360</td>
+      <td>3.881397e+10</td>
+      <td>18.206029</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>2.803551e+05</td>
+      <td>2.801499e+05</td>
       <td>3.761666e+05</td>
-      <td>4.080385e+11</td>
-      <td>17.602594</td>
+      <td>4.100412e+11</td>
+      <td>17.623817</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>2.041320e+05</td>
+      <td>2.039910e+05</td>
       <td>8.200000e+04</td>
-      <td>1.960000e+02</td>
-      <td>0.005426</td>
+      <td>7.290000e+02</td>
+      <td>0.006353</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>3.315125e+05</td>
+      <td>3.295885e+05</td>
       <td>3.200000e+05</td>
-      <td>6.582175e+08</td>
-      <td>6.020459</td>
+      <td>6.780296e+08</td>
+      <td>6.115427</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>4.638960e+05</td>
+      <td>4.644340e+05</td>
       <td>4.500000e+05</td>
-      <td>3.325252e+09</td>
-      <td>13.214037</td>
+      <td>3.304756e+09</td>
+      <td>13.227328</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>5.864730e+05</td>
+      <td>5.911275e+05</td>
       <td>6.355250e+05</td>
-      <td>1.328194e+10</td>
-      <td>24.651880</td>
+      <td>1.380760e+10</td>
+      <td>24.721135</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>2.874049e+06</td>
+      <td>2.854540e+06</td>
       <td>7.700000e+06</td>
-      <td>2.328980e+13</td>
-      <td>186.080000</td>
+      <td>2.347848e+13</td>
+      <td>175.680235</td>
     </tr>
   </tbody>
 </table>
-
-
-
+{{</table>}}
 
 
 ```python
@@ -920,8 +820,7 @@ mape = np.mean(pframe.pct_err)
 print(f'rmse = {rmse}, mape = {mape}')
 ```
 
-    rmse = 196444.67813511938, mape = 18.102359731513623
-
+    rmse = 197012.60307486894, mape = 18.206029369592454
 
 ### Final Decision
 

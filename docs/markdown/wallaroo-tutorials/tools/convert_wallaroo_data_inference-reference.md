@@ -90,6 +90,7 @@ pipeline.add_model_step(model).deploy()
 ```
 
 <table><tr><th>name</th> <td>inferencedataexamplespipeline</td></tr><tr><th>created</th> <td>2023-02-28 17:42:19.166319+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-28 17:42:19.871068+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0ae102ab-082b-4991-9eb2-f43b44d29ed7, 5a90c841-63c6-45c0-b6e6-042e5d213146</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
+{{</table>}}
 
 ### Enable Arrow SDK Support
 
@@ -169,8 +170,8 @@ display(high_fraud_dataframe)
 
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -184,6 +185,8 @@ display(high_fraud_dataframe)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ### DataFrame for Inferences
 
@@ -195,8 +198,8 @@ result = pipeline.infer(high_fraud_dataframe)
 display(result)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -216,6 +219,8 @@ display(result)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ### Pandas JSON to Pandas DataFrame
 
@@ -265,8 +270,8 @@ high_fraud_from_dataframe_json =  pd.DataFrame.from_records(high_fraud_dataframe
 display(high_fraud_from_dataframe_json)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -280,6 +285,8 @@ display(high_fraud_from_dataframe_json)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ```python
 # Use this dataframe to infer
@@ -287,8 +294,8 @@ results = pipeline.infer(high_fraud_from_dataframe_json)
 display(results)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -308,6 +315,8 @@ display(results)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ## Convert Wallaroo JSON File to Pandas DataFrame
 
@@ -319,8 +328,8 @@ high_fraud_data_from_file =  pd.read_json(high_fraud_filename, orient="records")
 display(high_fraud_data_from_file)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -334,6 +343,8 @@ display(high_fraud_data_from_file)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 The data can be used in an inference either with the `infer` method on the DataFrame object, or directly from the file.  Note that in either case, the returned object is a DataFrame.
 
@@ -343,8 +354,8 @@ result =  pipeline.infer(high_fraud_data_from_file)
 display(result)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -364,6 +375,8 @@ display(result)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ```python
 # Infer from file - it is read as a Pandas DataFrame object from the DataFrame JSON
@@ -371,8 +384,8 @@ result = pipeline.infer_from_file(high_fraud_filename)
 display(result)
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -392,6 +405,8 @@ display(result)
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ## Convert Pandas DataFrame to Arrow Table
 
@@ -495,8 +510,8 @@ with pa.ipc.open_file(arrow_file_name) as source:
     ----
     tensor: [[[1.0678325,18.155556,-1.6589551,5.211179,2.345247,...,8.484355,14.64541,26.852377,2.7165291,3.0611956]]]
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -510,6 +525,8 @@ with pa.ipc.open_file(arrow_file_name) as source:
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ### Convert Arrow Infer to DataFrame
 
@@ -520,8 +537,8 @@ result = pipeline.infer_from_file(arrow_file_name)
 display(result.to_pandas())
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -541,6 +558,8 @@ display(result.to_pandas())
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ## Convert Flattened Arrow Table to Multi-Dimensional Pandas DataFrame
 
@@ -631,8 +650,8 @@ output_2d_df = pd.DataFrame(output_tensor.tolist())
 output_2d_df
 ```
 
-{{< table "table table-striped" >}}
-<table>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -648,6 +667,8 @@ output_2d_df
     </tr>
   </tbody>
 </table>
+{{</table>}}
+
 
 ## Undeploy Pipeline
 
@@ -658,4 +679,5 @@ pipeline.undeploy()
 ```
 
 <table><tr><th>name</th> <td>inferencedataexamplespipeline</td></tr><tr><th>created</th> <td>2023-02-28 17:42:19.166319+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-28 17:42:19.871068+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0ae102ab-082b-4991-9eb2-f43b44d29ed7, 5a90c841-63c6-45c0-b6e6-042e5d213146</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
+{{</table>}}
 

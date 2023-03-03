@@ -26,41 +26,59 @@ This demonstration assumes that a Wallaroo instance has been installed.
 
 The first step is to import the libraries needed for this notebook.
 
-
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import os
 import json
+
+from IPython.display import display
+
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
 ```
 
 ### Connect to Wallaroo Instance
 
 The following command will create a connection to the Wallaroo instance and store it in the variable `wl`.
 
-
 ```python
 # Client connection from local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "sparkly-apple-3026"
+# wallarooSuffix = "wallaroo.community"
 
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
 ```
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
+```
+
+    True
 
 ### Create Workspace
 
 We will create a workspace to manage our pipeline and models.  The following variables will set the name of our sample workspace then set it as the current workspace.
 
-
 ```python
-workspace_name = 'anomalyexample'
+workspace_name = 'anomalytesting'
 
 def get_workspace(name):
     workspace = None
@@ -76,17 +94,11 @@ workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 ```
 
-
-
-
-    {'name': 'anomalyexample', 'id': 2, 'archived': False, 'created_by': '2438350f-e9ac-409d-9b64-10110cba4646', 'created_at': '2022-11-02T19:19:23.639545+00:00', 'models': [], 'pipelines': []}
-
-
+    {'name': 'anomalyexamples', 'id': 139, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-03T19:11:35.338843+00:00', 'models': [{'name': 'anomaly-housing-model', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 3, 3, 19, 11, 35, 799799, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 3, 3, 19, 11, 35, 799799, tzinfo=tzutc())}], 'pipelines': [{'name': 'anomalyhousingpipeline', 'create_time': datetime.datetime(2023, 3, 3, 19, 11, 35, 879127, tzinfo=tzutc()), 'definition': '[]'}]}
 
 ## Upload The Model
 
 The housing model will be uploaded for use in our pipeline.
-
 
 ```python
 housing_model = wl.upload_model("anomaly-housing-model", "./models/housing.zip").configure("tensorflow")
@@ -98,18 +110,21 @@ The pipeline `anomaly-housing-pipeline` will be created and the `anomaly-housing
 
 Once complete, the pipeline will be deployed and ready for inferences.
 
-
-
 ```python
-p = wl.build_pipeline('anomaly-housing-pipeline')
+p = wl.build_pipeline('anomalyhousing')
 p = p.add_model_step(housing_model)
-p = p.add_validation('price too high', housing_model.outputs[0][0] < 100.0)
-pipeline = p.deploy()
 
 ```
 
-    Waiting for deployment - this will take up to 45s ....................... ok
+```python
+p = p.add_validation('price too high', housing_model.outputs[0][0] < 100.0)
+```
 
+```python
+pipeline = p.deploy()
+```
+
+    Waiting for deployment - this will take up to 45s ................ ok
 
 ### Testing
 
@@ -119,85 +134,94 @@ The first, labeled `response_normal`, will not trigger an anomaly detection.  Th
 
 Note that multiple validations can be created to allow for multiple anomalies detected.
 
-
 ```python
-test_input = {"dense_16_input":[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145,  0.03550877, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]}
+if arrowEnabled is True:
+    test_input = pd.DataFrame.from_records({"dense_16_input":{"0":[0.02675675,0.0,0.02677953,0.0,0.0010046,0.00951931,0.14795322,0.0027145,0.03550877,0.98536841,0.02988655,0.04031725,0.04298041]}})
+else:
+    test_input = {"dense_16_input":[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145,  0.03550877, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]}
+
 response_normal = pipeline.infer(test_input)
-print("\n")
-print(response_normal)
+display(response_normal)
 ```
 
-    
-    
-    [InferenceResult({'check_failures': [],
-     'elapsed': 12112240,
-     'model_name': 'anomaly-housing-model',
-     'model_version': 'a3b1c29f-c827-4aad-817d-485de464d59b',
-     'original_data': {'dense_16_input': [[0.02675675,
-                                           0.0,
-                                           0.02677953,
-                                           0.0,
-                                           0.0010046,
-                                           0.00951931,
-                                           0.14795322,
-                                           0.0027145,
-                                           0.03550877,
-                                           0.98536841,
-                                           0.02988655,
-                                           0.04031725,
-                                           0.04298041]]},
-     'outputs': [{'Float': {'data': [10.349835395812988], 'dim': [1, 1], 'v': 1}}],
-     'pipeline_name': 'anomaly-housing-pipeline',
-     'shadow_data': {},
-     'time': 1667416849684})]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.dense_16_input</th>
+      <th>out.dense_19</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-03 19:19:44.569</td>
+      <td>[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145, 0.03550877, 0.98536841, 0.02988655, 0.04031725, 0.04298041]</td>
+      <td>[10.349835]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ```python
-test_input = {"dense_16_input":[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145,  2, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]}
+if arrowEnabled is True:
+    test_input = pd.DataFrame.from_records({"dense_16_input":{"0":[0.02675675,0.0,0.02677953,0.0,0.0010046,0.00951931,0.14795322,0.0027145,2,0.98536841,0.02988655,0.04031725,0.04298041]}})
+else:
+    test_input = {"dense_16_input":[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145, 2, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]}
+
 response_trigger = pipeline.infer(test_input)
-print("\n")
-print(response_trigger)
+display(response_trigger)
 ```
 
-    
-    
-    [InferenceResult({'check_failures': [{'False': {'expr': 'anomaly-housing-model.outputs[0][0] < '
-                                           '100'}}],
-     'elapsed': 12196540,
-     'model_name': 'anomaly-housing-model',
-     'model_version': 'a3b1c29f-c827-4aad-817d-485de464d59b',
-     'original_data': {'dense_16_input': [[0.02675675,
-                                           0.0,
-                                           0.02677953,
-                                           0.0,
-                                           0.0010046,
-                                           0.00951931,
-                                           0.14795322,
-                                           0.0027145,
-                                           2,
-                                           0.98536841,
-                                           0.02988655,
-                                           0.04031725,
-                                           0.04298041]]},
-     'outputs': [{'Float': {'data': [350.46990966796875], 'dim': [1, 1], 'v': 1}}],
-     'pipeline_name': 'anomaly-housing-pipeline',
-     'shadow_data': {},
-     'time': 1667416852255})]
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.dense_16_input</th>
+      <th>out.dense_19</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-03 19:19:44.657</td>
+      <td>[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145, 2.0, 0.98536841, 0.02988655, 0.04031725, 0.04298041]</td>
+      <td>[350.4699]</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ### Multiple Tests
 
 With the initial tests run, we can run the inferences against a larger set of data and identify anomalies that appear versus the expected results.  These will be displayed into a graph so we can see where the anomalies occur.  In this case with the house that came in at $350 million - outside of our validation range.
 
+Note:  Because this is splitting one batch inference into 400 separate inferences for this example, it may take longer to run.
 
 ```python
-from data import test_data_anomaly
-responses_anomaly =[]
-for nth in range(400):
-    responses_anomaly.extend(pipeline.infer(test_data_anomaly.data[nth]))
+if arrowEnabled is True:
+    test_data = pd.read_json('./data/test_data_anomaly_df.json', orient="records")
+    responses_anomaly = pd.DataFrame()
+    # For the first 400 rows, submit that row as a separate DataFrame
+    # Add the results to the responses_anomaly dataframe
+    for index, row in test_data.head(400).iterrows():
+        responses_anomaly = responses_anomaly.append(pipeline.infer(row.to_frame('dense_16_input').reset_index()))
+else:
+    responses_anomaly =[]
+    from data import test_data_anomaly
+    for nth in range(400):
+        responses_anomaly.extend(pipeline.infer(test_data_anomaly.data[nth]))
 ```
-
 
 ```python
 import pandas as pd
@@ -205,20 +229,20 @@ import matplotlib.pyplot as plt
 %matplotlib inline
 ```
 
-
 ```python
-houseprices = [r.raw['outputs'][0]['Float']['data'][0] for  r in responses_anomaly]
-hdf = pd.DataFrame({'sell_price': houseprices})
-hdf.hist(column='sell_price', bins=50, grid=False, figsize=(12,8))
+if arrowEnabled is True:
+    houseprices = pd.DataFrame({'sell_price': responses_anomaly['out.dense_19'].apply(lambda x: x[0])})
+else:
+    houseprices = pd.DataFrame({'sell_price': [r.raw['outputs'][0]['Float']['data'][0] for  r in responses_anomaly]})
+
+houseprices.hist(column='sell_price', bins=50, grid=False, figsize=(12,8))
 plt.axvline(x=100, color='gray', ls='--')
 _ = plt.title('Distribution of predicted home sales price')
 ```
 
-
     
-![png](wallaroo-anomaly-detection-reference_files/wallaroo-anomaly-detection-reference_17_0.png)
+![png](wallaroo-anomaly-detection-reference_files/wallaroo-anomaly-detection-reference_20_0.png)
     
-
 
 ### How To Check For Anomalies
 
@@ -231,58 +255,34 @@ There are two primary methods for detecting anomalies with Wallaroo:
 
 Anomalies can be displayed through the pipeline `logs()` method.  The parameter `valid=False` will show any validations that were flagged as `False` - in this case, houses that were above 100 million in value.
 
-
 ```python
-pipeline.logs(valid=False)
+logs = pipeline.logs(valid=False)
+display(logs)
 ```
 
-
-
-
-
-<table>
-    <tr>
-        <th>Timestamp</th>
-        <th>Output</th>
-        <th>Input</th>
-        <th>Anomalies</th>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
     </tr>
-
-<tr style="color: red;">
-    <td>2022-02-Nov 19:20:52</td>
-    <td>[array([[350.46990967]])]</td>
-    <td>[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145, 2, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]</td>
-    <td>1</td>
-</tr>
-
-
-<tr style="color: red;">
-    <td>2022-02-Nov 19:20:57</td>
-    <td>[array([[350.46990967]])]</td>
-    <td>[[0.02675675, 0.0, 0.02677953, 0.0, 0.0010046, 0.00951931, 0.14795322, 0.0027145, 2, 0.98536841, 0.02988655, 0.04031725, 0.04298041]]</td>
-    <td>1</td>
-</tr>
-
+  </thead>
+  <tbody>
+  </tbody>
 </table>
-
-
+{{</table>}}
 
 
 ### Undeploy The Pipeline
 
 With the example complete, we undeploy the pipeline to return the resources back to the Wallaroo instance.
 
-
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s ................................... ok
+    Waiting for undeployment - this will take up to 45s ..................................... ok
 
-
-
-
-
-<table><tr><th>name</th> <td>anomaly-housing-pipeline</td></tr><tr><th>created</th> <td>2022-11-02 19:19:23.977381+00:00</td></tr><tr><th>last_updated</th> <td>2022-11-02 19:19:24.039879+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>anomaly-housing-model</td></tr></table>
-
+<table><tr><th>name</th> <td>anomalyhousingpipeline</td></tr><tr><th>created</th> <td>2023-03-03 19:11:35.879127+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:19:27.462171+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>649283cf-6a4c-45b5-a6a7-a7c7dada5d84, 58c17376-838f-4121-91c4-4ff6dcb85728, f05819e7-8019-4f5c-ae07-6f74c02450d0, 09f7b6e3-009f-4e0f-b93a-9225975c8fbd</td></tr><tr><th>steps</th> <td>anomaly-housing-model</td></tr></table>
+{{</table>}}
 

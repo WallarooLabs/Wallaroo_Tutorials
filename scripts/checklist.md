@@ -39,3 +39,9 @@ Check notebooks in prod - something still fishy there.
 anomaly detection - error there.  
 
 Make sure the assays demo is fully run.
+
+
+</table> with:
+
+</table>
+{{</table>}}

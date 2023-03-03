@@ -36,47 +36,74 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
 
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
-```
+import pandas as pd
+import json
+from IPython.display import display
 
+# used to display dataframe information without truncating
+pd.set_option('display.max_colwidth', None)
+```
 
 ```python
 # Client connection from local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR SUFFIX"
 
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
 ```
 
-    Please log into the following URL in a web browser:
-    
-    	https://YOUR PREFIX.keycloak.example.wallaroo.ai/auth/realms/master/device?user_code=OEHR-BULW
-    
-    Login successful!
+### Arrow Support
 
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
+```
+
+    True
 
 ## Useful variables
 
 The following variables and methods are used to create a workspace, the pipeline in the example workspace and upload models into it.
 
+To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
 
 ```python
-pipeline_name = 'edgepipelineexample'
-workspace_name = 'edgeworkspaceexample'
-model_name = 'alohamodel'
-model_file_name = './aloha-cnn-lstm.zip'
-```
+import string
+import random
 
+# make a random 4 character prefix
+prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+
+pipeline_name = f'{prefix}edgepipelineexample'
+workspace_name = f'{prefix}edgeworkspaceexample'
+model_name = f'{prefix}alohamodel'
+model_file_name = './alohacnnlstm.zip'
+```
 
 ```python
 def get_workspace(name):
@@ -100,7 +127,6 @@ def get_pipeline(name):
 
 Create the workspace and set it as our default workspace.  If a workspace by the same name already exists, then that workspace will be used.
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -108,17 +134,11 @@ wl.set_current_workspace(workspace)
 workspace
 ```
 
-
-
-
-    {'name': 'edgeworkspaceexample', 'id': 2, 'archived': False, 'created_by': 'ac217b38-6f50-46fd-9c04-f790ffc5cb0e', 'created_at': '2022-10-13T17:10:35.150766+00:00', 'models': [], 'pipelines': []}
-
-
+    {'name': 'wjtxedgeworkspaceexample', 'id': 86, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-02-27T17:46:51.007989+00:00', 'models': [], 'pipelines': []}
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
-
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -126,7 +146,6 @@ model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
 
 # Define the resource budget
 The DeploymentConfig object specifies the resources to allocate for a model pipeline. In this case, we're going to set a very small budget, one that is too small for this model and then expand it based on testing. To start with, we'll use 1 CPU and 150 MB of RAM.
-
 
 ```python
 deployment_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(1).memory("150Mi").build()
@@ -145,51 +164,40 @@ To do this, we'll create our pipeline that can ingest the data, pass the data to
 for p in wl.list_pipelines(): p.undeploy()
 ```
 
-
 ```python
-pipeline = wl.build_pipeline(pipeline_name)
+pipeline = get_pipeline(pipeline_name)
 pipeline.add_model_step(model)
 pipeline.deploy(deployment_config=deployment_config)
 ```
 
-    Waiting for deployment - this will take up to 45s ........................... ok
-
-
-
-
-
-<table><tr><th>name</th> <td>edgepipelineexample</td></tr><tr><th>created</th> <td>2022-10-13 17:10:54.680327+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-13 17:10:54.745255+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:46:54.419854+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
+{{</table>}}
 
 We can verify that the pipeline is running and list what models are associated with it.
-
 
 ```python
 pipeline.status()
 ```
 
-
-
-
     {'status': 'Running',
-     'details': None,
-     'engines': [{'ip': '10.32.0.54',
-       'name': 'engine-644f699c7f-nmllg',
+     'details': [],
+     'engines': [{'ip': '10.48.0.146',
+       'name': 'engine-77958c5d4-5zj9x',
        'status': 'Running',
        'reason': None,
-       'pipeline_statuses': {'pipelines': [{'id': 'edgepipelineexample',
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'wjtxedgepipelineexample',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'alohamodel',
-          'version': '6b56bd8c-563a-4be8-8175-efb771dace44',
-          'sha': '7c89707252ce389980d5348c37885d6d72af4c20cd303422e2de7e66dd7ff184',
+       'model_statuses': {'models': [{'name': 'wjtxalohamodel',
+          'version': 'f1e3cbc4-b58a-4c3c-95fb-8e46803115b6',
+          'sha': 'd71d9ffc61aaac58c2b1ed70a2db13d1416fb9d3f5b891e5e4e2e97180fe22f8',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.32.0.55',
-       'name': 'engine-lb-67c854cc86-spddl',
+     'engine_lbs': [{'ip': '10.48.0.148',
+       'name': 'engine-lb-74b4969486-227j2',
        'status': 'Running',
-       'reason': None}]}
-
-
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ## Inferences
 
@@ -199,125 +207,93 @@ Now that the pipeline is deployed and our model is in place, we'll perform a smo
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
-
 ```python
-pipeline.infer_from_file("data-1.json")
+if arrowEnabled is True:
+    result = pipeline.infer_from_file('./data/data_1.df.json')
+else:
+    result = pipeline.infer_from_file("./data/data_1.json")
+display(result)
 ```
 
-    Waiting for inference response - this will take up to 45s ......... ok
-
-
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 348896807,
-      'model_name': 'alohamodel',
-      'model_version': '6b56bd8c-563a-4be8-8175-efb771dace44',
-      'original_data': {'text_input': [[0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                        28,
-                                        16,
-                                        32,
-                                        23,
-                                        29,
-                                        32,
-                                        30,
-                                        19,
-                                        26,
-                                        17]]},
-      'outputs': [{'Float': {'data': [0.001519531011581421], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.9829148054122925], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.012099534273147583], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [4.7593468480044976e-05],
-                             'dim': [1, 1],
-                             'v': 1}},
-                  {'Float': {'data': [2.0289722669986077e-05],
-                             'dim': [1, 1],
-                             'v': 1}},
-                  {'Float': {'data': [0.000319749116897583], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.011029303073883057], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.9975640773773193], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.010341644287109375], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.008038878440856934], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.01615503430366516], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.006236225366592407], 'dim': [1, 1], 'v': 1}},
-                  {'Float': {'data': [0.0009985864162445068],
-                             'dim': [1, 1],
-                             'v': 1}},
-                  {'Float': {'data': [1.7933435344117743e-26],
-                             'dim': [1, 1],
-                             'v': 1}},
-                  {'Float': {'data': [1.3889950240701602e-27],
-                             'dim': [1, 1],
-                             'v': 1}}],
-      'pipeline_name': 'edgepipelineexample',
-      'shadow_data': {},
-      'time': 1665681096577})]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.text_input</th>
+      <th>out.qakbot</th>
+      <th>out.banjori</th>
+      <th>out.dircrypt</th>
+      <th>out.corebot</th>
+      <th>out.suppobox</th>
+      <th>out.cryptolocker</th>
+      <th>out.simda</th>
+      <th>out.ramnit</th>
+      <th>out.main</th>
+      <th>out.matsnu</th>
+      <th>out.kraken</th>
+      <th>out.ramdo</th>
+      <th>out.gozi</th>
+      <th>out.locky</th>
+      <th>out.pykspa</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-02-27 17:47:15.407</td>
+      <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 16, 32, 23, 29, 32, 30, 19, 26, 17]</td>
+      <td>[0.016155045]</td>
+      <td>[0.0015195842]</td>
+      <td>[4.7591206e-05]</td>
+      <td>[0.98291475]</td>
+      <td>[1.3889844e-27]</td>
+      <td>[0.012099553]</td>
+      <td>[1.7933435e-26]</td>
+      <td>[0.0009985747]</td>
+      <td>[0.997564]</td>
+      <td>[0.010341614]</td>
+      <td>[0.00031977228]</td>
+      <td>[0.0062362333]</td>
+      <td>[2.0289332e-05]</td>
+      <td>[0.011029261]</td>
+      <td>[0.008038961]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
 
-
 ```python
-pipeline._deployment._url()
+inference_url = pipeline._deployment._url()
+print(inference_url)
+connection =wl.mlops().__dict__
+token = connection['token']
 ```
 
-
-
-
-    'http://engine-lb.edgepipelineexample-1:29502/pipelines/edgepipelineexample'
-
-
-
+    https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/wjtxedgepipelineexample-106
 
 ```python
-!curl -X POST http://engine-lb.edgepipelineexample-1:29502/pipelines/edgepipelineexample -H "Content-Type:application/json" --data @data-1k.json > curl_response.txt
+if arrowEnabled is True:
+    dataFile="./data/data_1k.df.json"
+    contentType="application/json; format=pandas-records"
+else:
+    dataFile="./data/data_1k.json"
+    contentType="application/json"
+```
+
+```python
+!curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100  111k  100    95  100  111k    250   293k --:--:-- --:--:-- --:--:--  293k
-
+    100  735k  100    95  100  735k     52   408k  0:00:01  0:00:01 --:--:--  409k
 
 # Redeploy with a little larger budget 
 If you look in the file curl_response.txt, you will see that the inference failed:
@@ -329,38 +305,25 @@ this model, we need to add more memory. Let's do that now.
 The following DeploymentConfig is the same as the original, but increases the memory from 150MB to 300MB. This sort
 of budget would be available on some network routers.
 
-
 ```python
 pipeline.undeploy()
 deployment_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(1).memory("300Mi").build()
-pipeline = wl.build_pipeline(pipeline_name)
-pipeline.add_model_step(model)
 pipeline.deploy(deployment_config=deployment_config)
 ```
 
-     ok
-    Waiting for deployment - this will take up to 45s ..... ok
-
-
-
-
-
-<table><tr><th>name</th> <td>edgepipelineexample</td></tr><tr><th>created</th> <td>2022-10-13 17:10:54.680327+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-13 17:13:53.075759+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
-
-
+<table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:47:57.057785+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2ebda792-0d70-459b-b1cf-0348abcd6a06, e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
+{{</table>}}
 
 # Re-run inference
 Running the same curl command again should now produce a curl_response.txt file containing the expected results.
 
-
 ```python
-!curl -X POST http://engine-lb.edgepipelineexample-1:29502/pipelines/edgepipelineexample -H "Content-Type:application/json" --data @data-1k.json > curl_response.txt
+!curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100  524k  100  413k  100  111k   176k  48857  0:00:02  0:00:02 --:--:--  224k
-
+    100 1402k  100  666k  100  735k   172k   190k  0:00:03  0:00:03 --:--:--  362k
 
 It is important to note that increasing the memory was necessary to run a batch of 1,000 inferences at once. If this is not a design
 use case for your system, running with the smaller memory budget may be acceptable. Wallaroo allows you to easily test difference
@@ -371,22 +334,11 @@ while not over-provisioning scarce resources.
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged aloha_pipeline.deploy() will restart the inference engine in the same configuration as before.
 
-
 ```python
 pipeline.undeploy()
-```
-
-    Waiting for undeployment - this will take up to 45s .. ok
-
-
-
-
-
-<table><tr><th>name</th> <td>edgepipelineexample</td></tr><tr><th>created</th> <td>2022-10-13 17:10:54.680327+00:00</td></tr><tr><th>last_updated</th> <td>2022-10-13 17:13:53.075759+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
-
-
-
-
-```python
 
 ```
+
+<table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:47:57.057785+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2ebda792-0d70-459b-b1cf-0348abcd6a06, e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
+{{</table>}}
+

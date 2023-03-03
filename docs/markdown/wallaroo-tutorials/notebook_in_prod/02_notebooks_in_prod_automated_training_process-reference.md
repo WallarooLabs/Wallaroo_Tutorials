@@ -34,7 +34,6 @@ The following steps are part of this process:
 
 Note that this connection is simulated to demonstrate how data would be retrieved from an existing data store.  For training, we will use the data on all houses sold in this market with the last two years.
 
-
 ```python
 import numpy as np
 import pandas as pd
@@ -57,7 +56,6 @@ from postprocess import postprocess    # our custom postprocessing
 matplotlib.rcParams["figure.figsize"] = (12,6)
 ```
 
-
 ```python
 conn = simdb.simulate_db_connection()
 tablename = simdb.tablename
@@ -73,24 +71,7 @@ housing_data
 
     select * from house_listings where date > DATE(DATE(), '-24 month') AND sale_price is not NULL
 
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -122,7 +103,7 @@ housing_data
     <tr>
       <th>0</th>
       <td>7129300520</td>
-      <td>2022-03-07</td>
+      <td>2022-07-11</td>
       <td>221900.0</td>
       <td>3</td>
       <td>1.00</td>
@@ -146,7 +127,7 @@ housing_data
     <tr>
       <th>1</th>
       <td>6414100192</td>
-      <td>2022-05-03</td>
+      <td>2022-09-06</td>
       <td>538000.0</td>
       <td>3</td>
       <td>2.25</td>
@@ -170,7 +151,7 @@ housing_data
     <tr>
       <th>2</th>
       <td>5631500400</td>
-      <td>2022-07-20</td>
+      <td>2022-11-23</td>
       <td>180000.0</td>
       <td>2</td>
       <td>1.00</td>
@@ -194,7 +175,7 @@ housing_data
     <tr>
       <th>3</th>
       <td>2487200875</td>
-      <td>2022-05-03</td>
+      <td>2022-09-06</td>
       <td>604000.0</td>
       <td>4</td>
       <td>3.00</td>
@@ -218,7 +199,7 @@ housing_data
     <tr>
       <th>4</th>
       <td>1954400510</td>
-      <td>2022-07-13</td>
+      <td>2022-11-16</td>
       <td>510000.0</td>
       <td>3</td>
       <td>2.00</td>
@@ -266,7 +247,7 @@ housing_data
     <tr>
       <th>20518</th>
       <td>263000018</td>
-      <td>2021-10-13</td>
+      <td>2022-02-16</td>
       <td>360000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -290,7 +271,7 @@ housing_data
     <tr>
       <th>20519</th>
       <td>6600060120</td>
-      <td>2022-07-18</td>
+      <td>2022-11-21</td>
       <td>400000.0</td>
       <td>4</td>
       <td>2.50</td>
@@ -314,7 +295,7 @@ housing_data
     <tr>
       <th>20520</th>
       <td>1523300141</td>
-      <td>2021-11-15</td>
+      <td>2022-03-21</td>
       <td>402101.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -338,7 +319,7 @@ housing_data
     <tr>
       <th>20521</th>
       <td>291310100</td>
-      <td>2022-06-10</td>
+      <td>2022-10-14</td>
       <td>400000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -362,7 +343,7 @@ housing_data
     <tr>
       <th>20522</th>
       <td>1523300157</td>
-      <td>2022-03-09</td>
+      <td>2022-07-13</td>
       <td>325000.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -385,9 +366,8 @@ housing_data
     </tr>
   </tbody>
 </table>
+{{</table>}}
 <p>20523 rows × 22 columns</p>
-
-
 
 
 ### Data transformations
@@ -396,11 +376,9 @@ To improve relative error performance, we will predict on `log10` of the sale pr
 
 Predict on log10 price to try to improve relative error performance
 
-
 ```python
 housing_data['logprice'] = np.log10(housing_data.list_price)
 ```
-
 
 ```python
 # split data into training and test
@@ -416,7 +394,6 @@ hd_test = housing_data.loc[gp=='test', :].reset_index(drop=True, inplace=False)
 runif = np.random.default_rng(123).uniform(0, 1, hd_train.shape[0])
 xgb_gp = np.where(runif < 0.2, 'val', 'train')
 ```
-
 
 ```python
 # for xgboost
@@ -436,11 +413,9 @@ print(f'val_features: {val_features.shape}, val_labels: {len(val_labels)}')
     train_features: (13129, 18), train_labels: 13129
     val_features: (3300, 18), val_labels: 3300
 
-
 ### Generate and Test the Model
 
 Based on the experimentation and testing performed in **Stage 1: Data Exploration And Model Selection**, XGBoost was selected as the ML model and the variables for training were selected.  The model will be generated and tested against sample data.
-
 
 ```python
 
@@ -460,7 +435,6 @@ xgb_model.fit(
 
 ```
 
-
 ```python
 print(xgb_model.best_score)
 print(xgb_model.best_iteration)
@@ -470,8 +444,6 @@ print(xgb_model.best_ntree_limit)
     0.07793614689092423
     99
     100
-
-
 
 ```python
 test_features = np.array(create_features(hd_test.copy()))
@@ -493,12 +465,9 @@ matplotlib.pyplot.title("test")
 plt.show()
 ```
 
-
     
-![png](02_notebooks_in_prod_automated_training_process-reference_files/02_notebooks_in_prod_automated_training_process-reference_10_0.png)
+![png](/images/wallaroo-tutorials/notebooks_in_prod/02_notebooks_in_prod_automated_training_process-reference_files/02_notebooks_in_prod_automated_training_process-reference_10_0.png)
     
-
-
 
 ```python
 pframe['se'] = (pframe.pred - pframe.actual)**2
@@ -507,23 +476,7 @@ pframe['pct_err'] = 100*np.abs(pframe.pred - pframe.actual)/pframe.actual
 pframe.describe()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
+{{<table "table table-bordered">}}
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -593,9 +546,7 @@ pframe.describe()
     </tr>
   </tbody>
 </table>
-
-
-
+{{</table>}}
 
 
 ```python
@@ -607,18 +558,15 @@ print(f'rmse = {rmse}, mape = {mape}')
 
     rmse = 128752.54982046234, mape = 12.857674005250548
 
-
 ### Convert the Model to Onnx
 
 This step converts the model to onnx for easy import into Wallaroo.
-
 
 ```python
 # pickle up the model
 # with open('housing_model_xgb.pkl', 'wb') as f:
 #    pickle.dump(xgb_model, f)
 ```
-
 
 ```python
 import onnx
@@ -637,7 +585,6 @@ from onnx.defs import onnx_opset_version
 from onnxconverter_common.onnx_ex import DEFAULT_OPSET_NUMBER
 TARGET_OPSET = min(DEFAULT_OPSET_NUMBER, onnx_opset_version())
 ```
-
 
 ```python
 # Convert the model to onnx
