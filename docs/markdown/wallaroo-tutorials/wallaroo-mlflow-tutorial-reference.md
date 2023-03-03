@@ -4,7 +4,7 @@ This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorial
 
 Wallaroo users can register their trained [MLFlow ML Models](https://www.mlflow.org/docs/latest/models.html) from a containerized model container registry into their Wallaroo instance and perform inferences with it through a Wallaroo pipeline.
 
-As of this time, Wallaroo only supports MLFlow 1.3.0 containerized models.  For information on how to containerize an MLFlow model, see the [MLFlow Documentation](https://mlflow.org/docs/latest/projects.html).
+As of this time, Wallaroo only supports **MLFlow 1.3.0** containerized models.  For information on how to containerize an MLFlow model, see the [MLFlow Documentation](https://mlflow.org/docs/latest/projects.html).
 
 This tutorial assumes that you have a Wallaroo instance, and have either your own containerized model or use the one from the reference and are running this Notebook from the Wallaroo Jupyter Hub service.
 
@@ -50,7 +50,7 @@ For this example, we will be using the MLFlow containers that was registered in 
 Before uploading and running an inference with a MLFlow model in Wallaroo the following will be required:
 
 * **MLFlow Input Schema**:  The input schema with the fields and data types for each MLFlow model type uploaded to Wallaroo.  In the examples below, the data types are imported using the `pyarrow` library.
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 
 **IMPORTANT NOTE**:  Wallaroo supports MLFlow 1.3.0.  Please ensure the MLFlow models used in Wallaroo meet this specification.
 
@@ -69,10 +69,11 @@ To register a containerized MLFlow ML Model into Wallaroo, use the following gen
 
 We start by importing the libraries we will need to connect to Wallaroo and use our MLFlow models. This includes the `wallaroo` libraries, `pyarrow` for data types, and the `json` library for handling JSON data.
 
-
 ```python
 import uuid
 import json
+
+import numpy as np
 
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -86,19 +87,42 @@ Connect to Wallaroo and store the connection in the variable `wl`.
 
 The folowing methods are used to create the workspace and pipeline for this tutorial.  A workspace is created and set as the current workspace that will contain the registered models and pipelines.
 
-
 ```python
+# Login through local service
+
+# wl = wallaroo.Client()
+
 # SSO login through keycloak
 
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
-
 
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                 auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
                 auth_type="sso")
 ```
 
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for DataFrame and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
+```
+
+    True
 
 ```python
 def get_workspace(name):
@@ -118,15 +142,13 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
-prefix = 'statsmodels-test'
-workspace_name= "statsmodelworkspace"
-pipeline_name = "statsmodelpipeline"
+prefix = 'mlflow'
+workspace_name= f"{prefix}statsmodelworkspace"
+pipeline_name = f"{prefix}statsmodelpipeline"
 
 mlflowworkspace = get_workspace(workspace_name)
 wl.set_current_workspace(mlflowworkspace)
-
 
 pipeline = get_pipeline(pipeline_name)
 ```
@@ -134,7 +156,6 @@ pipeline = get_pipeline(pipeline_name)
 ### Set MLFlow Input Schemas
 
 Set the MLFlow input schemas through the `pyarrow` library.  In the examples below, the input schemas for both the MLFlow model `statsmodels-test` and the `statsmodels-test-postprocess` model.
-
 
 ```python
 sm_input_schema = pa.schema([
@@ -153,17 +174,16 @@ pp_input_schema = pa.schema([
 
 Use the `register_model_image` method to register the Docker container containing the MLFlow models.
 
-
 ```python
 statsmodelUrl = "ghcr.io/wallaroolabs/wallaroo_tutorials/mlflow-statsmodels-example:2022.4"
 postprocessUrl = "ghcr.io/wallaroolabs/wallaroo_tutorials/mlflow-postprocess-example:2022.4"
 
 sm_model = wl.register_model_image(
-    name=f"{prefix}-statmodels",
+    name=f"{prefix}statmodels",
     image=f"{statsmodelUrl}"
 ).configure("mlflow", input_schema=sm_input_schema, output_schema=pp_input_schema)
 pp_model = wl.register_model_image(
-    name=f"{prefix}-postprocess",
+    name=f"{prefix}postprocess",
     image=f"{postprocessUrl}"
 ).configure("mlflow", input_schema=pp_input_schema, output_schema=pp_input_schema)
 ```
@@ -172,143 +192,122 @@ pp_model = wl.register_model_image(
 
 With the models registered, we can add the MLFlow models as steps in the pipeline.  Once ready, we will deploy the pipeline so it is available for submitting data for running inferences.
 
-
 ```python
 pipeline.add_model_step(sm_model)
 pipeline.add_model_step(pp_model)
 ```
 
-
-
-
-<table><tr><th>name</th> <td>statsmodelpipeline</td></tr><tr><th>created</th> <td>2023-01-09 19:11:40.149983+00:00</td></tr><tr><th>last_updated</th> <td>2023-01-09 20:08:04.722635+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>facae641-8eef-421c-b8e7-71a34959e1b6, 950bd9a6-130d-491f-9328-8e627e9b95f0, ba1e7414-a383-4679-90e2-681102bad9df, 3edbdab3-f7d2-427b-9d27-78c6815931a8, 164955dd-e9af-4128-8e04-10be1c26eda3, c92cdeb9-f54a-4ae4-b990-13d00ceca3a5, d8bd9a57-5f05-46b0-be43-4fc15c137f08, 406c6969-c3f4-4dc6-bb26-b77bd25d3d6b, 7838cb49-4c51-446a-a48e-5eeb37299b9e</td></tr><tr><th>steps</th> <td>statsmodels-test-statmodels</td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
 ```python
 pipeline.deploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>statsmodelpipeline</td></tr><tr><th>created</th> <td>2023-01-09 19:11:40.149983+00:00</td></tr><tr><th>last_updated</th> <td>2023-01-09 20:11:55.754558+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>50bf648c-082b-4a13-a4a6-162884d14802, facae641-8eef-421c-b8e7-71a34959e1b6, 950bd9a6-130d-491f-9328-8e627e9b95f0, ba1e7414-a383-4679-90e2-681102bad9df, 3edbdab3-f7d2-427b-9d27-78c6815931a8, 164955dd-e9af-4128-8e04-10be1c26eda3, c92cdeb9-f54a-4ae4-b990-13d00ceca3a5, d8bd9a57-5f05-46b0-be43-4fc15c137f08, 406c6969-c3f4-4dc6-bb26-b77bd25d3d6b, 7838cb49-4c51-446a-a48e-5eeb37299b9e</td></tr><tr><th>steps</th> <td>statsmodels-test-statmodels</td></tr></table>
-
-
-
-### Run Inference
-
-Once the pipeline is running, we can submit our data to the pipeline and return our results.  Once finished, we will undeploy the pipeline to return the resources back to the cluster.
-
+<table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:48.462230+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>79d6eba9-5eb6-4d70-9676-dc2db997a7ea, 7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td>mlflowstatmodels</td></tr></table>
+{{</table>}}
 
 ```python
 pipeline.status()
 ```
 
-
-
-
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.2.90',
-       'name': 'engine-7bfd4c684f-k7lr4',
+     'engines': [{'ip': '10.244.15.72',
+       'name': 'engine-6cf5554547-rvswq',
        'status': 'Running',
        'reason': None,
        'details': [],
-       'pipeline_statuses': {'pipelines': [{'id': 'statsmodelpipeline',
+       'pipeline_statuses': {'pipelines': [{'id': 'mlflowstatsmodelpipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'statsmodels-test-postprocess',
-          'version': 'cb654179-e9ee-4ec9-972f-0fc625c13e32',
-          'sha': '3dd892e3bba894455bc6c7031b4dc9ce79e70330c65a1de2689dca00cdec59df',
-          'status': 'Running'},
-         {'name': 'statsmodels-test-statmodels',
-          'version': '01d5b5a1-39f5-4097-a023-9bd8da5e01dd',
+       'model_statuses': {'models': [{'name': 'mlflowstatmodels',
+          'version': 'aa17282c-0d17-4a95-bc0a-741ffdbd35c8',
           'sha': '6029a5ba3dd2f7aee588bc285ed97bb7cabb302c190c9b9337f0985614f1ed93',
+          'status': 'Running'},
+         {'name': 'mlflowpostprocess',
+          'version': 'c2f63298-db6f-43c4-91f7-f2f22d9aced0',
+          'sha': '3dd892e3bba894455bc6c7031b4dc9ce79e70330c65a1de2689dca00cdec59df',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.0.45',
-       'name': 'engine-lb-55dcdff64c-5nn69',
+     'engine_lbs': [{'ip': '10.244.16.252',
+       'name': 'engine-lb-ddd995646-mlh2q',
        'status': 'Running',
        'reason': None,
        'details': []}],
-     'sidekicks': [{'ip': '10.244.2.89',
-       'name': 'engine-sidekick-statsmodels-test-postprocess-27-778b6bbcb6jhkcr',
+     'sidekicks': [{'ip': '10.244.16.251',
+       'name': 'engine-sidekick-mlflowstatmodels-6-65d85f97fd-kcs4h',
        'status': 'Running',
        'reason': None,
        'details': [],
        'statuses': '\n'},
-      {'ip': '10.244.0.46',
-       'name': 'engine-sidekick-statsmodels-test-statmodels-26-74d565568-8ttbd',
+      {'ip': '10.244.15.71',
+       'name': 'engine-sidekick-mlflowpostprocess-7-649797d44b-gwhjl',
        'status': 'Running',
        'reason': None,
        'details': [],
        'statuses': '\n'}]}
 
+### Run Inference
 
-
+Once the pipeline is running, we can submit our data to the pipeline and return our results.  Once finished, we will undeploy the pipeline to return the resources back to the cluster.
 
 ```python
 results = pipeline.infer_from_file('./resources/bike_day_eval_engine.json')
 results
 ```
 
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 300,
-      'model_name': 'statsmodels-test-postprocess',
-      'model_version': 'cb654179-e9ee-4ec9-972f-0fc625c13e32',
-      'original_data': {'holiday': [0, 0, 0, 0, 0, 0, 0],
-                        'temp': [0.317391,
-                                 0.365217,
-                                 0.415,
-                                 0.54,
-                                 0.4725,
-                                 0.3325,
-                                 0.430435],
-                        'windspeed': [0.184309,
-                                      0.203117,
-                                      0.209579,
-                                      0.231017,
-                                      0.368167,
-                                      0.207721,
-                                      0.288783],
-                        'workingday': [1, 1, 1, 1, 0, 0, 1]},
-      'outputs': [{'Float': {'data': [-0.7701932787895203,
-                                      -0.15543800592422485,
-                                      0.36521396040916443,
-                                      1.739493727684021,
-                                      -0.07358897477388382,
-                                      -1.6944431066513062,
-                                      0.5889557003974915],
-                             'dim': [7, 1],
-                             'dtype': 'Float',
-                             'v': 1}}],
-      'pipeline_name': 'statsmodelpipeline',
-      'shadow_data': {},
-      'time': 1673295133657})]
-
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model_name</th>
+      <th>model_version</th>
+      <th>pipeline_name</th>
+      <th>outputs</th>
+      <th>elapsed</th>
+      <th>time</th>
+      <th>original_data</th>
+      <th>check_failures</th>
+      <th>shadow_data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>mlflowpostprocess</td>
+      <td>c2f63298-db6f-43c4-91f7-f2f22d9aced0</td>
+      <td>mlflowstatsmodelpipeline</td>
+      <td>[{'Float': {'v': 1, 'dim': [7, 1], 'data': [0....</td>
+      <td>200</td>
+      <td>2023-03-02 18:21:26.057</td>
+      <td>None</td>
+      <td>0</td>
+      <td>{}</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ```python
-assert results[0].data()[0].shape == (7, 1)
+if arrowEnabled is True:
+    display(results.loc[0,'outputs'][0]['Float']['data'])
+else:
+    display(results[0].data()[0])
 ```
 
+    [0.2819833755493164,
+     0.6588467955589294,
+     0.5723681449890137,
+     0.6198734641075134,
+     -1.2178009748458862,
+     -1.8491559028625488,
+     0.9338850378990173]
 
 ```python
 pipeline.undeploy()
 ```
 
+<table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:48.462230+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>79d6eba9-5eb6-4d70-9676-dc2db997a7ea, 7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td>mlflowstatmodels</td></tr></table>
+{{</table>}}
 
-
-
-<table><tr><th>name</th> <td>statsmodelpipeline</td></tr><tr><th>created</th> <td>2023-01-09 19:11:40.149983+00:00</td></tr><tr><th>last_updated</th> <td>2023-01-09 20:11:55.754558+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>50bf648c-082b-4a13-a4a6-162884d14802, facae641-8eef-421c-b8e7-71a34959e1b6, 950bd9a6-130d-491f-9328-8e627e9b95f0, ba1e7414-a383-4679-90e2-681102bad9df, 3edbdab3-f7d2-427b-9d27-78c6815931a8, 164955dd-e9af-4128-8e04-10be1c26eda3, c92cdeb9-f54a-4ae4-b990-13d00ceca3a5, d8bd9a57-5f05-46b0-be43-4fc15c137f08, 406c6969-c3f4-4dc6-bb26-b77bd25d3d6b, 7838cb49-4c51-446a-a48e-5eeb37299b9e</td></tr><tr><th>steps</th> <td>statsmodels-test-statmodels</td></tr></table>
-
-
-
-
-```python
-
-```

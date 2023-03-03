@@ -35,55 +35,75 @@ All models are similar to the ones used for the Wallaroo-101 example included in
 
 The first step is to import the libraries required.
 
-
-
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
+
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
 ```
 
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance and save the connection as the variable `wl`.
 
-
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR SUFFIX"
 
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
+```
+
+    <wallaroo.client.Client at 0x7f876c227250>
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
 ```
 
 ### Set Variables
 
 The following variables are used to create or use existing workspaces, pipelines, and upload the models.  Adjust them based on your Wallaroo instance and organization requirements.
 
-
 ```python
-workspace_name = 'ccfraud-comparison-demo'
-pipeline_name = 'cc-shadow'
-pipeline_name_multi = 'cc-shadow-multi'
+workspace_name = 'ccfraudcomparisondemo'
+pipeline_name = 'ccshadow'
 champion_model_name = 'ccfraud-lstm'
 champion_model_file = 'models/keras_ccfraud.onnx'
 shadow_model_01_name = 'ccfraud-xgb'
 shadow_model_01_file = 'models/xgboost_ccfraud.onnx'
 shadow_model_02_name = 'ccfraud-rf'
 shadow_model_02_file = 'models/modelA.onnx'
-sample_data_file = './smoke_test.json'
 ```
 
 ### Workspace and Pipeline
 
 The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.
-
 
 ```python
 def get_workspace(name):
@@ -103,7 +123,6 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -114,17 +133,12 @@ pipeline
 
 ```
 
-
-
-
-<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ec69f1b4-9037-42ca-8589-a392448edaf6</td></tr><tr><th>steps</th> <td></td></tr></table>
-
-
+<table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
 ### Load the Models
 
 The models will be uploaded into the current workspace based on the variable names set earlier and listed as the `champion`, `model2` and `model3`.
-
 
 ```python
 champion = wl.upload_model(champion_model_name, champion_model_file).configure()
@@ -139,240 +153,157 @@ A shadow deployment is created using the `add_shadow_deploy(champion, challenger
 * `champion`: The model that will be primarily used for inferences run through the pipeline.  Inference results will be returned through the Inference Object's `data` element.
 * `challengers[]`: An array of models that will be used for inferences iteratively.  Inference results will be returned through the Inference Object's `shadow_data` element.
 
-
 ```python
 pipeline.add_shadow_deploy(champion, [model2, model3])
 pipeline.deploy()
 ```
 
+    Waiting for deployment - this will take up to 45s .............. ok
 
-
-
-<table><tr><th>name</th> <td>cc-shadow</td></tr><tr><th>created</th> <td>2022-12-15 15:37:36.915303+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-15 15:37:41.754322+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1cd86d74-f74c-4291-bca5-8007ffb8fbc7, ec69f1b4-9037-42ca-8589-a392448edaf6</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
-
-
+<table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:45.086221+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c97f777b-72f2-4a94-b2ea-a21bb33c032f, 32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+{{</table>}}
 
 ### Run Test Inference
 
+Using the data from `sample_data_file`, a test inference will be made.
+
+For Arrow enabled Wallaroo instances the model outputs are listed by column.  The output data is set by the term `out`, followed by the name of the model.  For the default model, this is `out.dense_1`, while the shadow deployed models are in the format `out_{model name}.variable`, where `{model name}` is the name of the shadow deployed model.
+
+For Arrow disabled environments, the output is from the Wallaroo InferenceResult object.### Run Test Inference
+
 Using the data from `sample_data_file`, a test inference will be made.  As mentioned earlier, the inference results from the `champion` model will be available in the returned InferenceResult Object's `data` element, while inference results from each of the `challenger` models will be in the returned InferenceResult Object's `shadow_data` element.
 
-
 ```python
-response = pipeline.infer_from_file(sample_data_file)
+if arrowEnabled is True:
+    sample_data_file = './smoke_test.df.json'
+    response = pipeline.infer_from_file(sample_data_file)
+else:
+    sample_data_file = './smoke_test.json'
+    response = pipeline.infer_from_file(sample_data_file)
+display(response)
 ```
 
-
-```python
-response
-```
-
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 129602,
-      'model_name': 'ccfraud-lstm',
-      'model_version': 'ae952bf4-486b-48cc-a9a5-ed225fd43c60',
-      'original_data': {'tensor': [[1.0678324729342086,
-                                    0.21778102664937624,
-                                    -1.7115145261843976,
-                                    0.6822857209662413,
-                                    1.0138553066742804,
-                                    -0.43350000129006655,
-                                    0.7395859436561657,
-                                    -0.28828395953577357,
-                                    -0.44726268795990787,
-                                    0.5146124987725894,
-                                    0.3791316964287545,
-                                    0.5190619748123175,
-                                    -0.4904593221655364,
-                                    1.1656456468728569,
-                                    -0.9776307444180006,
-                                    -0.6322198962519854,
-                                    -0.6891477694494687,
-                                    0.17833178574255615,
-                                    0.1397992467197424,
-                                    -0.35542206494183326,
-                                    0.4394217876939808,
-                                    1.4588397511627804,
-                                    -0.3886829614721505,
-                                    0.4353492889350186,
-                                    1.7420053483337177,
-                                    -0.4434654615252943,
-                                    -0.15157478906219238,
-                                    -0.26684517248765616,
-                                    -1.454961775612449]]},
-      'outputs': [{'Float': {'data': [0.001497417688369751],
-                             'dim': [1, 1],
-                             'dtype': 'Float',
-                             'v': 1}}],
-      'pipeline_name': 'cc-shadow',
-      'shadow_data': {'ccfraud-rf': [{'Float': {'data': [1.0],
-                                                'dim': [1, 1],
-                                                'v': 1}}],
-                      'ccfraud-xgb': [{'Float': {'data': [0.0005066990852355957],
-                                                 'dim': [1, 1],
-                                                 'v': 1}}]},
-      'time': 1671118700064})]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+      <th>out_ccfraud-rf.variable</th>
+      <th>out_ccfraud-xgb.variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-03 19:21:00.069</td>
+      <td>[1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]</td>
+      <td>[0.0014974177]</td>
+      <td>0</td>
+      <td>[1.0]</td>
+      <td>[0.0005066991]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ### View Pipeline Logs
 
 With the inferences complete, we can retrieve the log data from the pipeline with the pipeline `logs` method.  Note that for **each** inference request, the logs return **one entry per model**.  For this example, for one inference request three log entries will be created.
 
-
 ```python
 pipeline.logs()
 ```
 
-
-
-
-
-<table>
-    <tr>
-        <th>Timestamp</th>
-        <th>Output</th>
-        <th>Input</th>
-        <th>Anomalies</th>
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+      <th>out_ccfraud-rf.variable</th>
+      <th>out_ccfraud-xgb.variable</th>
     </tr>
-
-<tr style="">
-    <td>2022-15-Dec 08:38:20</td>
-    <td>[array([[0.0005067]])]</td>
-    <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
-    <td>0</td>
-</tr>
-
-
-<tr style="">
-    <td>2022-15-Dec 08:38:20</td>
-    <td>[array([[1.]])]</td>
-    <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
-    <td>0</td>
-</tr>
-
-
-<tr style="">
-    <td>2022-15-Dec 08:38:20</td>
-    <td>[array([[0.00149742]])]</td>
-    <td>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
-    <td>0</td>
-</tr>
-
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-03 19:21:00.069</td>
+      <td>[1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]</td>
+      <td>[0.0014974177]</td>
+      <td>0</td>
+      <td>[1.0]</td>
+      <td>[0.0005066991]</td>
+    </tr>
+  </tbody>
 </table>
-
-
+{{</table>}}
 
 
 ### View Logs Per Model
 
-Another way of displaying the logs would be to specify my model.  The following code will display the log data based based on the model name and the inference output for that specific model.
+Another way of displaying the logs would be to specify the model.
 
+For Arrow enabled Wallaroo instances the model outputs are listed by column.  The output data is set by the term `out`, followed by the name of the model.  For the default model, this is `out.dense_1`, while the shadow deployed models are in the format `out_{model name}.variable`, where `{model name}` is the name of the shadow deployed model.
+
+For arrow disabled Wallaroo instances, to view the inputs and results for the shadow deployed models, use the pipeline `logs_shadow_deploy()` method.  The results will be grouped by the inputs.
 
 ```python
 logs = pipeline.logs()
-
-[(log.model_name, log.output) for log in logs]
+if arrowEnabled is True:
+    display(logs)
+else:
+    logs = pipeline.logs()
+    display([(log.model_name, log.output) for log in logs])
+    shadow_logs = pipeline.logs_shadow_deploy()
+    display(shadow_logs)
 ```
 
-
-
-
-    [('ccfraud-xgb', [array([[0.0005067]])]),
-     ('ccfraud-rf', [array([[1.]])]),
-     ('ccfraud-lstm', [array([[0.00149742]])])]
-
-
-
-### View Shadow Deploy Pipeline Logs
-
-To view the inputs and results for the shadow deployed models, use the pipeline `logs_shadow_deploy()` method.  The results will be grouped by the inputs.
-
-
-```python
-logs = pipeline.logs_shadow_deploy()
-logs
-```
-
-
-
-
-
-                <h2>Shadow Deploy Logs</h2>
-                <p>
-                    <em>Logs from a shadow pipeline, grouped by their input.</em>
-                </p>
-                <table>
-                    <tbody>
-
-                    <tr><td colspan='6'>Log Entry 0</td></tr>
-                    <tr><td colspan='6'></td></tr>
-                    <tr>
-			<td>
-				<strong><em>Input</em></strong>
-			</td>
-                        <td colspan='6'>[[1.0678324729342086, 0.21778102664937624, -1.7115145261843976, 0.6822857209662413, 1.0138553066742804, -0.43350000129006655, 0.7395859436561657, -0.28828395953577357, -0.44726268795990787, 0.5146124987725894, 0.3791316964287545, 0.5190619748123175, -0.4904593221655364, 1.1656456468728569, -0.9776307444180006, -0.6322198962519854, -0.6891477694494687, 0.17833178574255615, 0.1397992467197424, -0.35542206494183326, 0.4394217876939808, 1.4588397511627804, -0.3886829614721505, 0.4353492889350186, 1.7420053483337177, -0.4434654615252943, -0.15157478906219238, -0.26684517248765616, -1.454961775612449]]</td>
-                    </tr>
-
-                    <tr>
-                        <td>Model Type</td>
-                        <td>
-                            <strong>Model Name</strong>
-                        </td>
-                        <td>
-                            <strong>Output</strong>
-                        </td>
-                        <td>
-                            <strong>Timestamp</strong>
-                        </td>
-                        <td>
-                            <strong>Model Version</strong>
-                        </td>
-                        <td>
-                            <strong>Elapsed</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong><em>Primary</em></strong></td>
-                        <td>ccfraud-lstm</td>
-                        <td>[array([[0.00149742]])]</td>
-                        <td>2022-12-15T08:38:20.064000</td>
-                        <td>ae952bf4-486b-48cc-a9a5-ed225fd43c60</td>
-                        <td>129602</td>
-                    </tr>
-
-                    <tr>
-                        <td><strong><em>Challenger</em></strong></td>
-                        <td>ccfraud-rf</td>
-                        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [1.0]}}]</td>
-                        <td colspan=3></td>
-                    </tr>
-
-                    <tr>
-                        <td><strong><em>Challenger</em></strong></td>
-                        <td>ccfraud-xgb</td>
-                        <td>[{'Float': {'v': 1, 'dim': [1, 1], 'data': [0.0005066990852355957]}}]</td>
-                        <td colspan=3></td>
-                    </tr>
-
-                    </tbody>
-                <table>
-
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+      <th>out_ccfraud-rf.variable</th>
+      <th>out_ccfraud-xgb.variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-03 19:21:00.069</td>
+      <td>[1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]</td>
+      <td>[0.0014974177]</td>
+      <td>0</td>
+      <td>[1.0]</td>
+      <td>[0.0005066991]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ### Undeploy the Pipeline
 
 With the tutorial complete, we undeploy the pipeline and return the resources back to the system.
 
-
 ```python
 pipeline.undeploy()
 ```
 
+    Waiting for undeployment - this will take up to 45s .................................... ok
 
-```python
+<table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:45.086221+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c97f777b-72f2-4a94-b2ea-a21bb33c032f, 32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
+{{</table>}}
 
-```

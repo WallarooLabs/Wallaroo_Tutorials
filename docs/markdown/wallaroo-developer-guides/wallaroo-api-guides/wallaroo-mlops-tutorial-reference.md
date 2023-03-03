@@ -26,8 +26,7 @@ The following demonstrates how to use each command in the Wallaroo MLOps API, an
 
 ### Import Libraries
 
-For the examples, the Python `requests` library will be used to make the REST HTTP(S) connections.  `import uuid` will be used to create workspaces, pipelines, assays and other items uniquely so we don't go clobbering over existing items.
-
+For the examples, the Python `requests` library will be used to make the REST HTTP(S) connections.
 
 ```python
 # Requires requests and requests-toolbelt with either:
@@ -35,9 +34,8 @@ For the examples, the Python `requests` library will be used to make the REST HT
 # conda install -c conda-forge requests-toolbelt
 
 import requests
+import json
 from requests.auth import HTTPBasicAuth
-
-import uuid
 ```
 
 ## Retrieve Credentials
@@ -54,9 +52,9 @@ For example, if the YOUR SUFFIX instance DNS address is `https://magical-rhino-5
 
 Then select the client, in this case **api-client**, then **Credentials**.
 
-![Wallaroo Keycloak Service](./images/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-service.png)
+![Wallaroo Keycloak Service](/images/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-service.png)
 
-![Wallaroo Components](./images/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-credentials.png)
+![Wallaroo Components](/images/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-credentials.png)
 
 By default, tokens issued for api-client are valid for up to 60 minutes. Refresh tokens are supported.
 
@@ -75,16 +73,15 @@ print(TOKEN)
 
 The following variables are used for the example and should be modified to fit your organization.
 
-
 ```python
 ## Variables
 
-URLPREFIX='YOUR PREFIX'
-URLSUFFIX='YOUR SUFFIX'
+URLPREFIX='YOURPREFIX'
+URLSUFFIX='YOURSUFFIX'
 SECRET="YOUR SECRET"
 TOKENURL=f'https://{URLPREFIX}.keycloak.{URLSUFFIX}/auth/realms/master/protocol/openid-connect/token'
 CLIENT="api-client"
-USERNAME="YOUR USERNAME"
+USERNAME="YOUR EMAIL"
 PASSWORD="YOUR PASSWORD"
 APIURL=f"https://{URLPREFIX}.api.{URLSUFFIX}/v1/api"
 newUser="NEW USER EMAIL"
@@ -93,24 +90,15 @@ newPassword="NEW USER PASSWORD"
 
 The following is an output of the `TOKENURL` variable to verify it matches your Wallaroo instance's Keycloak API client credentials URL.
 
-
 ```python
 TOKENURL
 ```
-
-
-
-
-    'https://YOUR PREFIX.keycloak.YOUR SUFFIX/auth/realms/master/protocol/openid-connect/token'
-
-
 
 ### API Example Methods
 
 The following methods are used to retrieve the MLOPs API Token from the Wallaroo instance's Keycloak service, and submit MLOps API requests through the Wallaroo instance's MLOps API.
 
 MLOps API requests are always `POST`, and are either submitted as `'Content-Type':'application/json'` or as a multipart submission including a file.
-
 
 ```python
 def get_jwt_token(url, client, secret, username, password):
@@ -122,7 +110,6 @@ def get_jwt_token(url, client, secret, username, password):
     }
     response = requests.post(url, auth=auth, data=data, verify=True)
     return response.json()['access_token']
-
 
 # This can either submit a plain POST request ('Content-Type':'application/json'), or with a file.
 
@@ -165,22 +152,15 @@ To retrieve an API token for a specific user with the Client Secret, request the
 
 The following sample uses the variables set above to request the token, then displays it.
 
-
 ```python
 TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 ```
-
 
 ```python
 TOKEN
 ```
 
-
-
-
-    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWalFITFhMMThub3BXNWVHM2hMOVJ5MDZ1SFVWMko1dHREUkVxSGtBT2VzIn0.eyJleHAiOjE2NzE1NjY2MzYsImlhdCI6MTY3MTU2MzAzNiwianRpIjoiNTdjZTkzMmYtYjZmYS00MGFkLThhNzMtMWMyMzE4OTAwNWJjIiwiaXNzIjoiaHR0cHM6Ly9zcXVpc2h5LXdhbGxhcm9vLTYxODcua2V5Y2xvYWsud2FsbGFyb28uZGV2L2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6IjAxYTc5N2Y5LTEzNTctNDUwNi1hNGQyLThhYjljNDY4MTEwMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiZDZlYzdkODUtNWExMC00ZDJjLWE3NTUtYjI4YzI1NjJlNDYyIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJjcmVhdGUtcmVhbG0iLCJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im1hc3Rlci1yZWFsbSI6eyJyb2xlcyI6WyJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsInZpZXctcmVhbG0iLCJtYW5hZ2UtaWRlbnRpdHktcHJvdmlkZXJzIiwiaW1wZXJzb25hdGlvbiIsImNyZWF0ZS1jbGllbnQiLCJtYW5hZ2UtdXNlcnMiLCJxdWVyeS1yZWFsbXMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiZDZlYzdkODUtNWExMC00ZDJjLWE3NTUtYjI4YzI1NjJlNDYyIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjAxYTc5N2Y5LTEzNTctNDUwNi1hNGQyLThhYjljNDY4MTEwMyIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbInVzZXIiXSwieC1oYXN1cmEtdXNlci1ncm91cHMiOiJ7fSJ9LCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSIsImVtYWlsIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkifQ.Au0X-XRMaWQVMVBnVt19rFt6xqtImkWrA5Cbc0hFSG4msLRJPjq8OtulxcxKU_SbXP3hNGAkHCPG1-nnh3l45IQlhhBqdBQViyHnggnRVt_B-MVKMauvV1oCtFVLKFDkY11EVr1GCdFOeFLmY99imccQr7J99yF82bNmp3XUrDHHy7BOJ2Dn2NJJC3yJCoyo3wLwPwF2yD0O3Hpj5e5_zVLHABPO97eybX3CZUanoVL8nTrumgfBHCG1I6RzX4PhRTxp-nbTf9ArX33qeMoZrPPYrn9ZryCgbiSjdlnacCmAnwVGpgXbwCU2sxEGvn4bGhWqFMkXm1aZ_bNNadRxBw'
-
-
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJKaDZyX3BKUGhheVhSSlc0U1F3ckc0QUEwUmkyMHNBMTNxYmNhTVJ1d1hrIn0.eyJleHAiOjE2Nzc3ODk4MzEsImlhdCI6MTY3Nzc4NjIzMSwianRpIjoiMjg1MTU1NmItZjhkNC00OWZkLWJjMjEtOGFlNDI2OTJiM2FiIiwiaXNzIjoiaHR0cHM6Ly9kb2MtdGVzdC5rZXljbG9hay53YWxsYXJvb2NvbW11bml0eS5uaW5qYS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiJjYTdkNzA0My04ZTk0LTQyZDUtOWYzYS04ZjU1YzJlNDI4MTQiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhcGktY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjFiNTEyOTZiLTMwNjAtNGUwYy1hZDMwLTNhYjczYmNiMDYzNyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMWI1MTI5NmItMzA2MC00ZTBjLWFkMzAtM2FiNzNiY2IwNjM3IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiJjYTdkNzA0My04ZTk0LTQyZDUtOWYzYS04ZjU1YzJlNDI4MTQiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwibmFtZSI6IkpvaG4gSGFuc2FyaWNrIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5odW1tZWxAd2FsbGFyb28uYWkiLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiSGFuc2FyaWNrIiwiZW1haWwiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSJ9.Qxhsu1lbhWpVZyUjKLqsr47j-ybjVB28jEXPcyb8m4NlzYDSfWHH2Wc7i1RMLV4IUe4td8ujPQJjkan2zatoHhSNqWYwEziwgFwIcP-uYqDcBhIIkNIu3Shw8f9FxAt3UtEc0twTXNED4ak2cfTs9nNwF2v_ZRcKMsrWObAfm2Iuly2tKuu6TlK_3Nbi6DTip4rXTO5AavIhjqKZn7ofuJ-NhOBh9s9gZPIZpWQ-klk-zeM7mzzulD8THBTCITvEpmMSJf9qI24-QXQWhpRFEpmUh8gy6GkQs1lEcjvt8NzLP5mf9L7fmgQZCgvETLwuA9dmp7BPYS_G3pamDGqDoA'
 
 ## Users
 
@@ -194,9 +174,10 @@ Users can be retrieved either by their Keycloak user id, or return all users if 
 
 Example:  The first example will submit an empty set `{}` to return all users, then submit the first user's user id and request only that user's details.
 
-
 ```python
 # Get all users
+
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 
 apiRequest = "/users/query"
 data = {
@@ -206,57 +187,40 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'users': {'5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f': {'access': {'impersonate': True,
-        'manageGroupMembership': True,
-        'manage': True,
+    {'users': {'9727c4a8-d6fc-4aad-894f-9ee69801d2dd': {'access': {'manageGroupMembership': True,
+        'impersonate': False,
+        'view': True,
         'mapRoles': True,
-        'view': True},
-       'createdTimestamp': 1669221287375,
-       'disableableCredentialTypes': [],
-       'email': 'john.hansarick@wallaroo.ai',
-       'emailVerified': True,
-       'enabled': True,
-       'id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
-       'notBefore': 0,
-       'requiredActions': [],
-       'username': 'john.hansarick@wallaroo.ai'},
-      '941937b3-7dc8-4abe-8bb1-bd23c816421e': {'access': {'view': True,
-        'manage': True,
-        'manageGroupMembership': True,
-        'mapRoles': True,
-        'impersonate': True},
-       'createdTimestamp': 1669221214282,
+        'manage': True},
+       'createdTimestamp': 1677704075554,
        'disableableCredentialTypes': [],
        'emailVerified': False,
        'enabled': True,
-       'id': '941937b3-7dc8-4abe-8bb1-bd23c816421e',
+       'id': '9727c4a8-d6fc-4aad-894f-9ee69801d2dd',
        'notBefore': 0,
        'requiredActions': [],
        'username': 'admin'},
-      'da7c2f4c-822e-49eb-93d7-a4b90af9b4ca': {'access': {'mapRoles': True,
-        'impersonate': True,
+      'ca7d7043-8e94-42d5-9f3a-8f55c2e42814': {'access': {'impersonate': False,
         'manage': True,
+        'mapRoles': True,
         'manageGroupMembership': True,
         'view': True},
-       'createdTimestamp': 1669654086172,
+       'createdTimestamp': 1677704179667,
        'disableableCredentialTypes': [],
-       'email': 'kilvin.mitchell@wallaroo.ai',
-       'emailVerified': True,
+       'email': 'john.hummel@wallaroo.ai',
+       'emailVerified': False,
        'enabled': True,
-       'id': 'da7c2f4c-822e-49eb-93d7-a4b90af9b4ca',
+       'firstName': 'John',
+       'id': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'lastName': 'Hansarick',
        'notBefore': 0,
        'requiredActions': [],
-       'username': 'kilvin.mitchell@wallaroo.ai'}}}
-
-
-
+       'username': 'john.hummel@wallaroo.ai'}}}
 
 ```python
 # Get first user Keycloak id
-firstUserKeycloak = list(response['users'])[0]
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
+firstUserKeycloak = list(response['users'])[1]
 
 apiRequest = "/users/query"
 data = {
@@ -269,25 +233,25 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'users': {'5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f': {'access': {'view': True,
-        'manage': True,
-        'manageGroupMembership': True,
+    {'users': {'ca7d7043-8e94-42d5-9f3a-8f55c2e42814': {'access': {'impersonate': False,
+        'view': True,
         'mapRoles': True,
-        'impersonate': True},
-       'createdTimestamp': 1669221287375,
+        'manage': True,
+        'manageGroupMembership': True},
+       'createdTimestamp': 1677704179667,
        'disableableCredentialTypes': [],
-       'email': 'john.hansarick@wallaroo.ai',
-       'emailVerified': True,
+       'email': 'john.hummel@wallaroo.ai',
+       'emailVerified': False,
        'enabled': True,
-       'id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+       'federatedIdentities': [{'identityProvider': 'google',
+         'userId': '117610299312093432527',
+         'userName': 'john.hummel@wallaroo.ai'}],
+       'firstName': 'John',
+       'id': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'lastName': 'Hansarick',
        'notBefore': 0,
        'requiredActions': [],
-       'username': 'john.hansarick@wallaroo.ai'}}}
-
-
+       'username': 'john.hummel@wallaroo.ai'}}}
 
 ### Invite Users
 
@@ -301,9 +265,9 @@ Users can be invited through `/users/invite`.  When using YOUR SUFFIX, this will
 
 Example:  In this example, a new user will be invited to the Wallaroo instance and assigned a password.
 
-
 ```python
 # invite users
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/users/invite"
 data = {
     "email": newUser,
@@ -323,10 +287,9 @@ Users can be deactivated so they can not login to their Wallaroo instance.  Deac
 
 Example:  In this example, the `newUser` will be deactivated.
 
-
 ```python
 # Deactivate users
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/users/deactivate"
 
 data = {
@@ -334,18 +297,10 @@ data = {
 }
 ```
 
-
 ```python
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
-
-
-
-    {}
-
-
 
 ### Activate User
 
@@ -356,10 +311,9 @@ A deactivated user can be reactivated to allow them access to their Wallaroo ins
 
 Example:  In this example, the `newUser` will be activated.
 
-
 ```python
 # Activate users
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/users/activate"
 
 data = {
@@ -369,13 +323,6 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
-
-
-
-    {}
-
-
 
 ## Workspaces
 
@@ -388,10 +335,9 @@ List the workspaces for a specific user.
   
 Example:  In this example, the workspaces for the a specific user will be displayed, then workspaces for all users will be displayed.
 
-
 ```python
 # List workspaces by user id
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/list"
 
 data = {
@@ -402,37 +348,80 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     {'workspaces': [{'id': 1,
-       'name': 'john.hansarick@wallaroo.ai - Default Workspace',
-       'created_at': '2022-11-23T16:34:47.914362+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+       'name': 'john.hummel@wallaroo.ai - Default Workspace',
+       'created_at': '2023-03-01T20:56:22.658436+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [],
        'pipelines': []},
-      {'id': 2,
-       'name': 'alohaworkspace',
-       'created_at': '2022-11-23T16:44:28.782225+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+      {'id': 4,
+       'name': 'anomalyexampletest3',
+       'created_at': '2023-03-01T20:56:32.632146+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [1],
        'pipelines': [1]},
-      {'id': 4,
-       'name': 'testapiworkspace-cdf86c3c-8c9a-4bf4-865d-fe0ec00fad7c',
-       'created_at': '2022-11-28T16:48:29.622794+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+      {'id': 5,
+       'name': 'ccfraudcomparisondemo',
+       'created_at': '2023-03-01T21:02:40.955593+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
-       'models': [2, 3, 5, 4, 6, 7, 8, 9],
-       'pipelines': []}]}
-
-
-
+       'models': [2, 3, 4],
+       'pipelines': [3]},
+      {'id': 6,
+       'name': 'rlhxccfraudworkspace',
+       'created_at': '2023-03-01T21:30:28.848609+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [5],
+       'pipelines': [5]},
+      {'id': 7,
+       'name': 'mlflowstatsmodelworkspace',
+       'created_at': '2023-03-02T18:06:42.074341+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [6, 7],
+       'pipelines': [8]},
+      {'id': 8,
+       'name': 'mobilenetworkspace',
+       'created_at': '2023-03-02T18:24:27.304478+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [8, 9],
+       'pipelines': [10]},
+      {'id': 9,
+       'name': 'mobilenetworkspacetest',
+       'created_at': '2023-03-02T19:21:36.309503+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [10, 12],
+       'pipelines': [13]},
+      {'id': 10,
+       'name': 'resnetworkspace',
+       'created_at': '2023-03-02T19:22:28.371499+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [11],
+       'pipelines': [14]},
+      {'id': 11,
+       'name': 'resnetworkspacetest',
+       'created_at': '2023-03-02T19:35:30.236438+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [13],
+       'pipelines': [18]},
+      {'id': 12,
+       'name': 'shadowimageworkspacetest',
+       'created_at': '2023-03-02T19:37:23.348346+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [14, 15],
+       'pipelines': [20]}]}
 
 ```python
 # List workspaces
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/list"
 
 data = {
@@ -442,32 +431,76 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     {'workspaces': [{'id': 1,
-       'name': 'john.hansarick@wallaroo.ai - Default Workspace',
-       'created_at': '2022-11-23T16:34:47.914362+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+       'name': 'john.hummel@wallaroo.ai - Default Workspace',
+       'created_at': '2023-03-01T20:56:22.658436+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [],
        'pipelines': []},
-      {'id': 2,
-       'name': 'alohaworkspace',
-       'created_at': '2022-11-23T16:44:28.782225+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+      {'id': 4,
+       'name': 'anomalyexampletest3',
+       'created_at': '2023-03-01T20:56:32.632146+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [1],
        'pipelines': [1]},
-      {'id': 4,
-       'name': 'testapiworkspace-cdf86c3c-8c9a-4bf4-865d-fe0ec00fad7c',
-       'created_at': '2022-11-28T16:48:29.622794+00:00',
-       'created_by': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+      {'id': 5,
+       'name': 'ccfraudcomparisondemo',
+       'created_at': '2023-03-01T21:02:40.955593+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
-       'models': [2, 3, 5, 4, 6, 7, 8, 9],
-       'pipelines': []}]}
-
-
+       'models': [2, 3, 4],
+       'pipelines': [3]},
+      {'id': 6,
+       'name': 'rlhxccfraudworkspace',
+       'created_at': '2023-03-01T21:30:28.848609+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [5],
+       'pipelines': [5]},
+      {'id': 7,
+       'name': 'mlflowstatsmodelworkspace',
+       'created_at': '2023-03-02T18:06:42.074341+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [6, 7],
+       'pipelines': [8]},
+      {'id': 8,
+       'name': 'mobilenetworkspace',
+       'created_at': '2023-03-02T18:24:27.304478+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [8, 9],
+       'pipelines': [10]},
+      {'id': 9,
+       'name': 'mobilenetworkspacetest',
+       'created_at': '2023-03-02T19:21:36.309503+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [10, 12],
+       'pipelines': [13]},
+      {'id': 10,
+       'name': 'resnetworkspace',
+       'created_at': '2023-03-02T19:22:28.371499+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [11],
+       'pipelines': [14]},
+      {'id': 11,
+       'name': 'resnetworkspacetest',
+       'created_at': '2023-03-02T19:35:30.236438+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [13],
+       'pipelines': [18]},
+      {'id': 12,
+       'name': 'shadowimageworkspacetest',
+       'created_at': '2023-03-02T19:37:23.348346+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [14, 15],
+       'pipelines': [20]}]}
 
 ### Create Workspace
 
@@ -478,15 +511,14 @@ A new workspace will be created in the Wallaroo instance.  Upon creating, the wo
 * **Returns**:
   * **workspace_id** - (*int*):  The ID of the new workspace.
   
-Example:  In this example, a workspace with the name `testapiworkspace-` with a randomly generated UUID will be created, and the newly created workspace's `workspace_id` saved as the variable `exampleWorkspaceId` for use in other code examples.  After the request is complete, the [List Workspaces](#list-workspaces) command will be issued to demonstrate the new workspace has been created.
-
+Example:  In this example, a workspace with the name `testapiworkspace` will be created, and the newly created workspace's `workspace_id` saved as the variable `exampleWorkspaceId` for use in other code examples.  After the request is complete, the [List Workspaces](#list-workspaces) command will be issued to demonstrate the new workspace has been created.
 
 ```python
 # Create workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/create"
 
-exampleWorkspaceName = f"testapiworkspace-{uuid.uuid4()}"
+exampleWorkspaceName = "testapiworkspace"
 data = {
   "workspace_name": exampleWorkspaceName
 }
@@ -497,17 +529,11 @@ exampleWorkspaceId = response['workspace_id']
 response
 ```
 
-
-
-
-    {'workspace_id': 618489}
-
-
-
+    {'workspace_id': 13}
 
 ```python
 # List workspaces
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/list"
 
 data = {
@@ -517,46 +543,83 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'workspaces': [{'id': 15,
-       'name': 'john.hansarick@wallaroo.ai - Default Workspace',
-       'created_at': '2022-12-16T20:23:23.150058+00:00',
-       'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103',
+    {'workspaces': [{'id': 1,
+       'name': 'john.hummel@wallaroo.ai - Default Workspace',
+       'created_at': '2023-03-01T20:56:22.658436+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [],
        'pipelines': []},
-      {'id': 28,
-       'name': 'alohaworkspace',
-       'created_at': '2022-12-16T21:00:01.614796+00:00',
-       'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103',
+      {'id': 4,
+       'name': 'anomalyexampletest3',
+       'created_at': '2023-03-01T20:56:32.632146+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
-       'models': [2],
-       'pipelines': [4]},
-      {'id': 29,
-       'name': 'abtestworkspace',
-       'created_at': '2022-12-16T21:03:08.785538+00:00',
-       'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103',
+       'models': [1],
+       'pipelines': [1]},
+      {'id': 5,
+       'name': 'ccfraudcomparisondemo',
+       'created_at': '2023-03-01T21:02:40.955593+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
-       'models': [3, 5, 4, 6],
-       'pipelines': [6]},
-      {'id': 618487,
-       'name': 'sdkquickworkspace',
-       'created_at': '2022-12-20T15:56:22.088161+00:00',
-       'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103',
+       'models': [2, 3, 4],
+       'pipelines': [3]},
+      {'id': 6,
+       'name': 'rlhxccfraudworkspace',
+       'created_at': '2023-03-01T21:30:28.848609+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
-       'models': [48],
-       'pipelines': [76]},
-      {'id': 618489,
-       'name': 'testapiworkspace-e9e386a7-8146-4ead-b4c6-a2580af70083',
-       'created_at': '2022-12-20T19:34:30.392835+00:00',
-       'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103',
+       'models': [5],
+       'pipelines': [5]},
+      {'id': 7,
+       'name': 'mlflowstatsmodelworkspace',
+       'created_at': '2023-03-02T18:06:42.074341+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [6, 7],
+       'pipelines': [8]},
+      {'id': 8,
+       'name': 'mobilenetworkspace',
+       'created_at': '2023-03-02T18:24:27.304478+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [8, 9],
+       'pipelines': [10]},
+      {'id': 9,
+       'name': 'mobilenetworkspacetest',
+       'created_at': '2023-03-02T19:21:36.309503+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [10, 12],
+       'pipelines': [13]},
+      {'id': 10,
+       'name': 'resnetworkspace',
+       'created_at': '2023-03-02T19:22:28.371499+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [11],
+       'pipelines': [14]},
+      {'id': 11,
+       'name': 'resnetworkspacetest',
+       'created_at': '2023-03-02T19:35:30.236438+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [13],
+       'pipelines': [18]},
+      {'id': 12,
+       'name': 'shadowimageworkspacetest',
+       'created_at': '2023-03-02T19:37:23.348346+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'archived': False,
+       'models': [14, 15],
+       'pipelines': [20]},
+      {'id': 13,
+       'name': 'testapiworkspace',
+       'created_at': '2023-03-02T19:44:20.279346+00:00',
+       'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
        'archived': False,
        'models': [],
        'pipelines': []}]}
-
-
 
 ### Add User to Workspace
 
@@ -568,10 +631,9 @@ Existing users of the Wallaroo instance can be added to an existing workspace.
   
 Example:  The following example adds the user created in Invite Users request to the workspace created in the [Create Workspace](#create-workspace) request.
 
-
 ```python
 # Add existing user to existing workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/add_user"
 
 data = {
@@ -582,13 +644,6 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
-
-
-
-    {}
-
-
 
 ### List Users in a Workspace
 
@@ -602,10 +657,9 @@ Lists the users who are either owners or collaborators of a workspace.
   
 Example:  The following example will list all users part of the workspace created in the [Create Workspace](#create-workspace) request.
 
-
 ```python
 # List users in a workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/list_users"
 
 data = {
@@ -616,15 +670,8 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'users': [{'user_id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
-       'user_type': 'OWNER'},
-      {'user_id': 'da7c2f4c-822e-49eb-93d7-a4b90af9b4ca',
-       'user_type': 'COLLABORATOR'}]}
-
-
+    {'users': [{'user_id': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814',
+       'user_type': 'OWNER'}]}
 
 ### Remove User from a Workspace
 
@@ -640,10 +687,9 @@ Removes the user from the given workspace.  In this request, either the user's K
   
 Example:  The following example will remove the `newUser` from workspace created in the [Create Workspace](#create-workspace) request.  Then the users for that workspace will be listed to verify `newUser` has been removed.
 
-
 ```python
 # Remove existing user from an existing workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/remove_user"
 
 data = {
@@ -655,17 +701,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'affected_rows': 1}
-
-
-
-
 ```python
 # List users in a workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/workspaces/list_users"
 
 data = {
@@ -676,13 +714,8 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'users': [{'user_id': '5e9c9a2b-7a7f-454a-b8e7-91e3c2d86c9f',
+    {'users': [{'user_id': '5abe33ef-90d2-49bd-8f6a-21ef20c383e8',
        'user_type': 'OWNER'}]}
-
-
 
 ## Models
 
@@ -697,13 +730,12 @@ Uploads a ML Model to a Wallaroo workspace via POST with `Content-Type: multipar
   
 Example:  This example will upload the sample file `ccfraud.onnx` to the workspace created in the [Create Workspace](#create-workspace) step as `apitestmodel`.  The model name will be saved as `exampleModelName` for use in other examples.  The id of the uploaded model will be saved as `exampleModelId` for use in later examples.
 
-
 ```python
 # upload model - uses multiform data through a Python `request`
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/upload"
 
-exampleModelName = f"apitestmodel-{uuid.uuid4()}"
+exampleModelName = "apitestmodel"
 
 data = {
     "name":exampleModelName,
@@ -719,25 +751,14 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data, files)
 response
 ```
 
-
-
-
-    {'insert_models': {'returning': [{'models': [{'id': 68}]}]}}
-
-
-
+    {'insert_models': {'returning': [{'models': [{'id': 16}]}]}}
 
 ```python
 exampleModelId=response['insert_models']['returning'][0]['models'][0]['id']
 exampleModelId
 ```
 
-
-
-
-    10
-
-
+    16
 
 ### Stream Upload Model to Workspace
 
@@ -751,12 +772,11 @@ Streams a potentially large ML Model to a Wallaroo workspace via POST with `Cont
   
 Example:  This example will upload the sample file `ccfraud.onnx` to the workspace created in the [Create Workspace](#create-workspace) step as `apitestmodel`.
 
-
 ```python
 # stream upload model - next test is adding arbitrary chunks to the stream
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/upload_stream"
-exampleModelName = f"apitestmodel-{uuid.uuid4()}"
+exampleModelName = "apitestmodelstream"
 filename = 'streamfile.onnx'
 
 data = {
@@ -774,12 +794,7 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data=None, files=fil
 response
 ```
 
-
-
-
-    {'insert_models': {'returning': [{'models': [{'id': 11}]}]}}
-
-
+    {'insert_models': {'returning': [{'models': [{'id': 17}]}]}}
 
 ### List Models in Workspace
 
@@ -790,10 +805,9 @@ Returns a list of models added to a specific workspace.
   
 Example:  Display the models for the workspace used in the Upload Model to Workspace step.  The model id and model name will be saved as `exampleModelId` and `exampleModelName` variables for other examples.
 
-
 ```python
 # List models in a workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/list"
 
 data = {
@@ -804,17 +818,16 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'models': [{'id': 68,
-       'name': 'apitestmodel-dfa7e9fd-df72-4b28-93f6-3d147c9f962f',
+    {'models': [{'id': 17,
+       'name': 'apitestmodelstream',
        'owner_id': '""',
-       'created_at': '2022-12-20T19:34:47.014072+00:00',
-       'updated_at': '2022-12-20T19:34:47.014072+00:00'}]}
-
-
-
+       'created_at': '2023-03-02T19:44:56.549555+00:00',
+       'updated_at': '2023-03-02T19:44:56.549555+00:00'},
+      {'id': 16,
+       'name': 'apitestmodel',
+       'owner_id': '""',
+       'created_at': '2023-03-02T19:44:53.173913+00:00',
+       'updated_at': '2023-03-02T19:44:53.173913+00:00'}]}
 
 ```python
 exampleModelId = response['models'][0]['id']
@@ -838,10 +851,9 @@ Returns the model details by the specific model id.
   
 Example:  Retrieve the details for the model uploaded in the Upload Model to Workspace step.
 
-
 ```python
 # Get model details by id
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/get_by_id"
 
 data = {
@@ -852,18 +864,13 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'id': 11,
+    {'id': 17,
      'owner_id': '""',
-     'workspace_id': 5,
-     'name': 'apitestmodel-08b16b74-837c-4b4b-a6b7-49475ddece98',
-     'updated_at': '2022-11-28T21:30:05.071826+00:00',
-     'created_at': '2022-11-28T21:30:05.071826+00:00',
+     'workspace_id': 13,
+     'name': 'apitestmodelstream',
+     'updated_at': '2023-03-02T19:44:56.549555+00:00',
+     'created_at': '2023-03-02T19:44:56.549555+00:00',
      'model_config': None}
-
-
 
 ### Get Model Versions
 
@@ -883,13 +890,11 @@ Retrieves all versions of a model based on either the name of the model or the `
     * **file_name** - (*String*): The filename used when uploading the model.
     * **image_path** - (*String*): The image path of the model.
 
-
 Example:  Retrieve the versions for a previously uploaded model. The variables `exampleModelVersion` and `exampleModelSha` will store the model's version and SHA values for use in other examples.
-
 
 ```python
 # List models in a workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/list_versions"
 
 data = {
@@ -901,20 +906,14 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     [{'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 68,
-      'model_version': '87476d85-b8ee-4714-81ba-53041b26f50f',
+      'models_pk_id': 17,
+      'model_version': '0396de99-0a55-4880-9f53-8fdcd1b3357a',
       'owner_id': '""',
-      'model_id': 'apitestmodel-dfa7e9fd-df72-4b28-93f6-3d147c9f962f',
-      'id': 68,
-      'file_name': 'ccfraud.onnx',
+      'model_id': 'apitestmodelstream',
+      'id': 17,
+      'file_name': 'streamfile.onnx',
       'image_path': None}]
-
-
-
 
 ```python
 # Stored for future examples
@@ -932,10 +931,9 @@ Returns the model's configuration details.
   
 Example:  Submit the model id for the model uploaded in the Upload Model to Workspace step to retrieve configuration details.
 
-
 ```python
 # Get model config by id
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/get_config_by_id"
 
 data = {
@@ -946,12 +944,7 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     {'model_config': None}
-
-
 
 ### Get Model Details
 
@@ -964,10 +957,9 @@ Returns the model's configuration details.
   
 Example:  Submit the model id for the model uploaded in the Upload Model to Workspace step to retrieve configuration details.
 
-
 ```python
 # Get model config by id
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/models/get"
 
 data = {
@@ -978,24 +970,19 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'id': 11,
-     'name': 'apitestmodel-08b16b74-837c-4b4b-a6b7-49475ddece98',
+    {'id': 17,
+     'name': 'apitestmodelstream',
      'owner_id': '""',
-     'created_at': '2022-11-28T21:30:05.071826+00:00',
-     'updated_at': '2022-11-28T21:30:05.071826+00:00',
+     'created_at': '2023-03-02T19:44:56.549555+00:00',
+     'updated_at': '2023-03-02T19:44:56.549555+00:00',
      'models': [{'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-       'models_pk_id': 11,
-       'model_version': '2589d7e4-bc61-4cb7-8278-5399f28ad001',
+       'models_pk_id': 17,
+       'model_version': '0396de99-0a55-4880-9f53-8fdcd1b3357a',
        'owner_id': '""',
-       'model_id': 'apitestmodel-08b16b74-837c-4b4b-a6b7-49475ddece98',
-       'id': 11,
+       'model_id': 'apitestmodelstream',
+       'id': 17,
        'file_name': 'streamfile.onnx',
        'image_path': None}]}
-
-
 
 ## Pipeline Management
 
@@ -1012,13 +999,12 @@ Creates a new pipeline in the specified workspace.
 
 Example:  Two pipelines are created in the workspace created in the step Create Workspace.  One will be an empty pipeline without any models, the other will be created using the uploaded models in the Upload Model to Workspace step and no configuration details.  The pipeline id, variant id, and variant version of each pipeline will be stored for later examples.
 
-
 ```python
 # Create pipeline in a workspace
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/create"
 
-exampleEmptyPipelineName=f"emptypipeline-{uuid.uuid4()}"
+exampleEmptyPipelineName="emptypipeline"
 
 data = {
   "pipeline_id": exampleEmptyPipelineName,
@@ -1033,45 +1019,21 @@ emptyExamplePipelineVariantVersion=['pipeline_variant_version']
 response
 ```
 
-
-
-
-    {'pipeline_pk_id': 3,
-     'pipeline_variant_pk_id': 3,
-     'pipeline_variant_version': '84730f78-7b89-4420-bdcb-3c5abac0dd10'}
-
-
-
+    {'pipeline_pk_id': 22,
+     'pipeline_variant_pk_id': 22,
+     'pipeline_variant_version': 'e4c3a3dc-97ee-4020-88ce-3bf059b772ef'}
 
 ```python
 # Create pipeline in a workspace with models
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/create"
 
-exampleModelPipelineName=f"pipelinewithmodel-{uuid.uuid4()}"
-exampleModelDeployName = f"deploywithmodel-{uuid.uuid4()}"
+exampleModelPipelineName="pipelinewithmodel"
 
 data = {
   "pipeline_id": exampleModelPipelineName,
   "workspace_id": exampleWorkspaceId,
-  "definition": {
-      "id":exampleModelDeployName,
-      "steps":
-      [
-          {
-          "ModelInference":
-          {
-              "models": [
-                    {
-                        "name":exampleModelName,
-                        "version":exampleModelVersion,
-                        "sha":exampleModelSha
-                    }
-                ]
-          }
-          }
-      ]
-  }
+  "definition": {}
 }
 
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
@@ -1081,14 +1043,9 @@ emptyModelPipelineVariantVersion=['pipeline_variant_version']
 response
 ```
 
-
-
-
-    {'pipeline_pk_id': 108,
-     'pipeline_variant_pk_id': 108,
-     'pipeline_variant_version': '246685fd-258a-49a6-b431-ae4847890eee'}
-
-
+    {'pipeline_pk_id': 25,
+     'pipeline_variant_pk_id': 25,
+     'pipeline_variant_version': '8eaa146e-1bfb-4786-9969-4264877db7d2'}
 
 ### Deploy a Pipeline
 
@@ -1110,14 +1067,12 @@ Deploy a an existing pipeline.  Note that for any pipeline that has model steps,
 
 Examples:  Both the empty pipeline and pipeline with model created in the step [Create Pipeline in a Workspace](#create-pipeline-in-a-workspace) will be deployed and their deployment information saved for later examples.
 
-
-
 ```python
 # Deploy empty pipeline
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/deploy"
 
-exampleEmptyDeployId = f"emptydeploy-{uuid.uuid4()}"
+exampleEmptyDeployId = "emptydeploy"
 
 data = {
     "deploy_id": exampleEmptyDeployId,
@@ -1131,19 +1086,13 @@ response
 
 ```
 
-
-
-
-    {'id': 2}
-
-
-
+    {'id': 14}
 
 ```python
 # Deploy a pipeline with models
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/deploy"
-exampleModelDeployId=f"modeldeploy-{uuid.uuid4()}"
+exampleModelDeployId="modeldeploy"
 
 data = {
     "deploy_id": exampleModelDeployId,
@@ -1158,18 +1107,12 @@ data = {
     "pipeline_id": exampleModelPipelineId
 }
 
-
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 exampleModelDeploymentId=response['id']
 response
 ```
 
-
-
-
-    {'id': 60}
-
-
+    {'id': 17}
 
 ### Get Deployment Status
 
@@ -1180,10 +1123,9 @@ Returns the deployment status.
   
 Example: The deployed empty and model pipelines status will be displayed.
 
-
 ```python
 # Get empty pipeline deployment
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/status/get_deployment"
 
 data = {
@@ -1194,6 +1136,22 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
+    {'status': 'Starting',
+     'details': [],
+     'engines': [{'ip': None,
+       'name': 'engine-7c44d857cb-995p7',
+       'status': 'Pending',
+       'reason': None,
+       'details': ['containers with unready status: [engine]',
+        'containers with unready status: [engine]'],
+       'pipeline_statuses': None,
+       'model_statuses': None}],
+     'engine_lbs': [{'ip': '10.244.12.53',
+       'name': 'engine-lb-ddd995646-vjz7f',
+       'status': 'Running',
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ```python
 # Get model pipeline deployment
@@ -1208,30 +1166,25 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.4.1.151',
-       'name': 'engine-577db84597-x7bm4',
+     'engines': [{'ip': '10.244.13.27',
+       'name': 'engine-7df9567698-m7zdx',
        'status': 'Running',
        'reason': None,
        'details': [],
-       'pipeline_statuses': {'pipelines': [{'id': 'pipelinewithmodel-94676967-b018-4002-89ef-1d69defc6273',
+       'pipeline_statuses': {'pipelines': [{'id': 'pipelinewithmodel',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'apitestmodel-dfa7e9fd-df72-4b28-93f6-3d147c9f962f',
-          'version': '87476d85-b8ee-4714-81ba-53041b26f50f',
+       'model_statuses': {'models': [{'name': 'apitestmodelstream',
+          'version': '0396de99-0a55-4880-9f53-8fdcd1b3357a',
           'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.4.2.59',
-       'name': 'engine-lb-7d6f4bfdd-6hxj5',
+     'engine_lbs': [{'ip': '10.244.12.55',
+       'name': 'engine-lb-ddd995646-qk6tj',
        'status': 'Running',
        'reason': None,
        'details': []}],
      'sidekicks': []}
-
-
 
 ### Get External Inference URL
 
@@ -1239,22 +1192,21 @@ The API command `/admin/get_pipeline_external_url` retrieves the external infere
 
 * **Parameters**
   * **workspace_id** (*REQUIRED integer*):  The workspace integer id.
-  * **pipeline_name** (*REQUIRED string*): The name of the pipeline.
+  * **pipeline_name** (*REQUIRED string*): The name of the deployment.
 
 In this example, a list of the workspaces will be retrieved.  Based on the setup from the Internal Pipeline Deployment URL Tutorial, the workspace matching `urlworkspace` will have it's **workspace id** stored and used for the `/admin/get_pipeline_external_url` request with the pipeline `urlpipeline`.
 
 The External Inference URL will be stored as a variable for the next step.
 
-
 ```python
 ## Retrieve the pipeline's External Inference URL
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 
 apiRequest = "/admin/get_pipeline_external_url"
 
-
 data = {
     "workspace_id": exampleWorkspaceId,
-    "pipeline_name": exampleModelPipelineName
+    "pipeline_name": exampleModelDeployId
 }
 
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
@@ -1263,36 +1215,42 @@ externalUrl = response['url']
 externalUrl
 ```
 
+    {'url': 'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/modeldeploy-15'}
 
-```python
-exampleModelPipelineName
-```
+    'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/modeldeploy-15'
 
 ### Perform Inference Through External URL
 
 The inference can now be performed through the External Inference URL.  This URL will accept the same inference data file that is used with the Wallaroo SDK, or with an Internal Inference URL as used in the Internal Pipeline Inference URL Tutorial.
 
-For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request through the data file `data-1.json`.
+For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request.
 
+If the Wallaroo instance has been configured to enable Arrow support, then the file `cc_data_1k.df.json` will be used.  This is a DataFrame object.  If Arrow support has not been enabled, then the inference request is used with the Wallaroo proprietary JSON data file `cc_data_1k.json`.
 
 ```python
-TOKEN2 = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJEaXlQVjFQMUxHdV81WkpseXR3X2RZSnZwUjdodE9EN3V5cGxocjhacHNrIn0.eyJleHAiOjE2NzE1NjY5NDEsImlhdCI6MTY3MTU2MzM0MSwianRpIjoiN2Y2MTgyZmQtYTIyMS00Y2ZlLThjZDUtN2Y1ZDM5Y2MwZTAwIiwiaXNzIjoiaHR0cHM6Ly9hcGl0ZXN0LmtleWNsb2FrLndhbGxhcm9vY29tbXVuaXR5Lm5pbmphL2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6IjEyMmI2MGE1LWRkYzctNDNjOS05ZmM2LTIwZTljMmI3ZDg1NCIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwaS1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiNGY4ZDk0NDYtZmE1Ny00MGM3LTk1ZDAtM2E1OGY0YzVlMTQxIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiI0ZjhkOTQ0Ni1mYTU3LTQwYzctOTVkMC0zYTU4ZjRjNWUxNDEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMTIyYjYwYTUtZGRjNy00M2M5LTlmYzYtMjBlOWMyYjdkODU0IiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6InNjb3R0IiwiZW1haWwiOiJzY290dEB3YWxsYXJvby5haSJ9.jNw6LJrimK9HxCENWPkKQPVQXMmk2nGP_VGxSUv9vMdxuzYRONLRaTqrXoxz380IlPQT_QGoiMtA0vjMk40-jg0dAmTcWlDA0sGQyKQq2qIctutGCTbiVhOdmc_69kYyePXlYk3fvl16_L_ZcuhGjlS1Gwl1FtrI6jNAjCrBzTQf1MHHZPa77gxZrqK8D95EGYs34WDu359i5S-stPmH0D9OSTFad0UMZvmuTql4YBOIwWpDzgtU8nC_6XLkWYnzlasABDsfsLMggyWntULHeNxDd9wWK0QSdvGedRZdMhy8gRd0DrV3SFTwF9YvlR2q4t6zNbxWXDR-iF8I7Vog4w"
-
-externalURL2 = "https://apitest.api.YOUR SUFFIX/v1/api/pipelines/infer/test1-6"
-
-import json
+#TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
+# if Arrow has been enabled, set this to True.  Otherwise, leave as False.
+arrowEnabled = True
 ## Inference through external URL
 
 # retrieve the json data to submit
-data = json.load(open('./data/cc_data_1k.json','rb'))
+if arrowEnabled is True:
+    dataFile = './data/cc_data_1k.df.json'
+    data = json.load(open('./data/cc_data_1k.df.json','rb'))
+    contentType="application/json; format=pandas-records"
+else:
+    dataFile = './data/cc_data_1k.json'
+    data = json.load(open('./data/cc_data_1k.json','rb'))
+    contentType="application/json"
 
 # set the headers
 headers= {
-        'Authorization': 'Bearer ' + TOKEN2
-    }
+    'Authorization': 'Bearer ' + TOKEN,
+    'Content-Type': contentType
+}
 
 # submit the request via POST
-response = requests.post(externalURL2, json=data, headers=headers)
+response = requests.post(externalUrl, json=data, headers=headers)
 
 # Only the first 300 characters will be displayed for brevity
 printResponse = json.dumps(response.json())
@@ -1300,8 +1258,7 @@ print(printResponse[0:300])
 
 ```
 
-    [{"model_name": "apitestmodel-418716fb-f3da-4e11-bde5-be323c9382fe", "model_version": "1e794d4e-21d1-4140-9a52-7a5252094e7b", "pipeline_name": "test1", "outputs": [{"Float": {"v": 1, "dim": [1001, 1], "data": [0.993003249168396, 0.993003249168396, 0.993003249168396, 0.993003249168396, 0.001091688871
-
+    [{"time": 1677788050393, "in": {"tensor": [-1.0603297501, 2.3544967095, -3.5638788326, 5.1387348926, -1.2308457019, -0.7687824608, -3.5881228109, 1.8880837663, -3.2789674274, -3.9563254554, 4.0993439118, -5.6539176395, -0.8775733373, -9.131571192, -0.6093537873, -3.7480276773, -5.0309125017, -0.8748
 
 ### Undeploy a Pipeline
 
@@ -1315,10 +1272,9 @@ Undeploys a deployed pipeline.
 
 Example:  Both the empty pipeline and pipeline with models deployed in the step Deploy a Pipeline will be undeployed.
 
-
 ```python
 # Undeploy an empty pipeline
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/undeploy"
 
 data = {
@@ -1330,10 +1286,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
 ```python
 # Undeploy pipeline with models
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/undeploy"
 
 data = {
@@ -1359,14 +1314,12 @@ Copies an existing pipeline into a new one in the same workspace.  A new engine 
 
 Example:  The pipeline with models created in the step Create Pipeline in a Workspace will be copied into a new one.
 
-
-
 ```python
 # Copy a pipeline
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/pipelines/copy"
 
-exampleCopiedPipelineName=f"copiedmodelpipeline-{uuid.uuid4()}"
+exampleCopiedPipelineName="copiedmodelpipeline"
 
 data = {
   "name": exampleCopiedPipelineName,
@@ -1378,15 +1331,10 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'pipeline_pk_id': 5,
-     'pipeline_variant_pk_id': 5,
+    {'pipeline_pk_id': 26,
+     'pipeline_variant_pk_id': 26,
      'pipeline_version': None,
      'deployment': None}
-
-
 
 ## List Enablement Features
 
@@ -1399,10 +1347,9 @@ Lists the enablement features for the Wallaroo instance.
   * **name** - (*string*): Name of the Wallaroo instance.
   * **is_auth_enabled** - (*bool*): Whether authentication is enabled.
 
-
 ```python
 # List enablement features
-
+TOKEN=get_jwt_token(TOKENURL, CLIENT, SECRET, USERNAME, PASSWORD)
 apiRequest = "/features/list"
 
 data = {
@@ -1412,14 +1359,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
     {'features': {'plateau': 'true'},
      'name': 'Wallaroo Dev',
      'is_auth_enabled': True}
-
-
 
 ## Assays
 
@@ -1473,7 +1415,6 @@ Create a new array in a specified pipeline.
   * **assay_id** - (*integer*): The id of the new assay.
 
 As noted this example requires the [Wallaroo Assay Tutorial](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_insights) for historical data.  Before running this example, set the sample pipeline id, pipeline, name, model name, and workspace id in the code sample below.  For more information on retrieving this information, see the [Wallaroo Developer Guides](https://docs.wallaroo.ai/wallaroo-developer-guides/).
-
 
 ```python
 # Create assay
@@ -1534,13 +1475,6 @@ example_assay_id = response['assay_id']
 response
 ```
 
-
-
-
-    {'assay_id': 2}
-
-
-
 ### List Assays
 
 Lists all assays in the specified pipeline.
@@ -1553,7 +1487,6 @@ Lists all assays in the specified pipeline.
 Example:  Display a list of all assays in a workspace.  This will assume we have a workspace with an existing Assay and the associated data has been upload.  See the tutorial [Wallaroo Assays Tutorial](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_insights).
 
 For this reason, these values are hard coded for now.
-
 
 ```python
 ## First list all of the workspaces and the list of pipelines
@@ -1569,41 +1502,6 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'workspaces': [{'id': 1,
-       'name': 'john.hansarick@wallaroo.ai - Default Workspace',
-       'created_at': '2022-10-10T16:32:45.355874+00:00',
-       'created_by': 'f68760ad-a27c-4f9b-808f-0b512f07571f',
-       'archived': False,
-       'models': [],
-       'pipelines': []},
-      {'id': 3,
-       'name': 'testapiworkspace-e87e543f-25f1-4f6d-82c6-4eb48902575a',
-       'created_at': '2022-10-10T18:25:27.926919+00:00',
-       'created_by': 'f68760ad-a27c-4f9b-808f-0b512f07571f',
-       'archived': False,
-       'models': [1],
-       'pipelines': [1, 2, 3]},
-      {'id': 4,
-       'name': 'housepricedrift',
-       'created_at': '2022-10-10T18:38:50.748057+00:00',
-       'created_by': 'f68760ad-a27c-4f9b-808f-0b512f07571f',
-       'archived': False,
-       'models': [2],
-       'pipelines': [4]},
-      {'id': 5,
-       'name': 'housepricedrifts',
-       'created_at': '2022-10-10T18:45:00.152716+00:00',
-       'created_by': 'f68760ad-a27c-4f9b-808f-0b512f07571f',
-       'archived': False,
-       'models': [],
-       'pipelines': []}]}
-
-
-
-
 ```python
 # Get assays
 
@@ -1617,102 +1515,6 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    [{'id': 3,
-      'name': 'example assay',
-      'active': True,
-      'status': 'created',
-      'warning_threshold': None,
-      'alert_threshold': 0.1,
-      'pipeline_id': 4,
-      'pipeline_name': 'housepricepipe',
-      'last_run': None,
-      'next_run': '2022-10-10T19:00:43.941894+00:00',
-      'run_until': None,
-      'updated_at': '2022-10-10T19:00:43.945411+00:00',
-      'baseline': {'Fixed': {'pipeline': 'housepricepipe',
-        'model': 'housepricemodel',
-        'start_at': '2022-01-01T00:00:00+00:00',
-        'end_at': '2022-01-02T00:00:00+00:00'}},
-      'window': {'pipeline': 'housepricepipe',
-       'model': 'housepricemodel',
-       'width': '24 hours',
-       'start': None,
-       'interval': None},
-      'summarizer': {'type': 'UnivariateContinuous',
-       'bin_mode': 'Quantile',
-       'aggregation': 'Density',
-       'metric': 'PSI',
-       'num_bins': 5,
-       'bin_weights': None,
-       'bin_width': None,
-       'provided_edges': None,
-       'add_outlier_edges': True}},
-     {'id': 2,
-      'name': 'api_assay_test2',
-      'active': True,
-      'status': 'created',
-      'warning_threshold': 0.0,
-      'alert_threshold': 0.1,
-      'pipeline_id': 4,
-      'pipeline_name': 'housepricepipe',
-      'last_run': None,
-      'next_run': '2022-10-10T18:53:16.444786+00:00',
-      'run_until': None,
-      'updated_at': '2022-10-10T18:53:16.450269+00:00',
-      'baseline': {'Fixed': {'pipeline': 'housepricepipe',
-        'model': 'houseprice-model-yns',
-        'start_at': '2022-01-01T00:00:00-05:00',
-        'end_at': '2022-01-02T00:00:00-05:00'}},
-      'window': {'pipeline': 'housepricepipe',
-       'model': 'housepricemodel',
-       'width': '24 hours',
-       'start': None,
-       'interval': None},
-      'summarizer': {'type': 'UnivariateContinuous',
-       'bin_mode': 'Quantile',
-       'aggregation': 'Density',
-       'metric': 'PSI',
-       'num_bins': 5,
-       'bin_weights': None,
-       'bin_width': None,
-       'provided_edges': None,
-       'add_outlier_edges': True}},
-     {'id': 1,
-      'name': 'api_assay_test',
-      'active': True,
-      'status': 'created',
-      'warning_threshold': 0.0,
-      'alert_threshold': 0.1,
-      'pipeline_id': 4,
-      'pipeline_name': 'housepricepipe',
-      'last_run': None,
-      'next_run': '2022-10-10T18:48:00.829479+00:00',
-      'run_until': None,
-      'updated_at': '2022-10-10T18:48:00.833336+00:00',
-      'baseline': {'Fixed': {'pipeline': 'housepricepipe',
-        'model': 'houseprice-model-yns',
-        'start_at': '2022-01-01T00:00:00-05:00',
-        'end_at': '2022-01-02T00:00:00-05:00'}},
-      'window': {'pipeline': 'housepricepipe',
-       'model': 'housepricemodel',
-       'width': '24 hours',
-       'start': None,
-       'interval': None},
-      'summarizer': {'type': 'UnivariateContinuous',
-       'bin_mode': 'Quantile',
-       'aggregation': 'Density',
-       'metric': 'PSI',
-       'num_bins': 5,
-       'bin_weights': None,
-       'bin_width': None,
-       'provided_edges': None,
-       'add_outlier_edges': True}}]
-
-
-
 ## Activate or Deactivate Assay
 
 Activates or deactivates an existing assay.
@@ -1725,7 +1527,6 @@ Activates or deactivates an existing assay.
   * **active** - (*bool*): True to activate the assay, False to deactivate it.
 
 Example:  Assay 8 "House Output Assay" will be deactivated then activated.
-
 
 ```python
 # Deactivate assay
@@ -1741,14 +1542,6 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'id': 2, 'active': False}
-
-
-
-
 ```python
 # Activate assay
 
@@ -1762,13 +1555,6 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
-
-
-
-    {'id': 2, 'active': True}
-
-
 
 ### Create Interactive Baseline
 
@@ -1818,7 +1604,6 @@ Creates an interactive assay baseline.
   * {} when successful.
 
 Example:  An interactive assay baseline will be set for the assay "Test Assay" on Pipeline 4.
-
 
 ```python
 # Run interactive baseline
@@ -1876,86 +1661,6 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
 
-
-
-
-    {'assay_id': 3,
-     'name': 'example assay',
-     'created_at': 1665428974654,
-     'elapsed_millis': 3,
-     'pipeline_id': 4,
-     'pipeline_name': 'housepricepipe',
-     'iopath': 'input 0 0',
-     'baseline_summary': {'count': 1812,
-      'min': -3.6163810435665233,
-      'max': 7.112734553641073,
-      'mean': 0.03518936967736047,
-      'median': -0.39764636440424433,
-      'std': 0.9885006118746916,
-      'edges': [-3.6163810435665233,
-       -0.39764636440424433,
-       -0.39764636440424433,
-       0.6752651953165153,
-       0.6752651953165153,
-       7.112734553641073,
-       None],
-      'edge_names': ['left_outlier',
-       'q_20',
-       'q_40',
-       'q_60',
-       'q_80',
-       'q_100',
-       'right_outlier'],
-      'aggregated_values': [0.0,
-       0.5739514348785872,
-       0.0,
-       0.3383002207505519,
-       0.0,
-       0.08774834437086093,
-       0.0],
-      'aggregation': 'Density',
-      'start': '2022-01-01T05:00:00Z',
-      'end': '2022-01-02T05:00:00Z'},
-     'window_summary': {'count': 1812,
-      'min': -3.6163810435665233,
-      'max': 7.112734553641073,
-      'mean': 0.03518936967736047,
-      'median': -0.39764636440424433,
-      'std': 0.9885006118746916,
-      'edges': [-3.6163810435665233,
-       -0.39764636440424433,
-       -0.39764636440424433,
-       0.6752651953165153,
-       0.6752651953165153,
-       7.112734553641073,
-       None],
-      'edge_names': ['left_outlier',
-       'e_-3.98e-1',
-       'e_-3.98e-1',
-       'e_6.75e-1',
-       'e_6.75e-1',
-       'e_7.11e0',
-       'right_outlier'],
-      'aggregated_values': [0.0,
-       0.5739514348785872,
-       0.0,
-       0.3383002207505519,
-       0.0,
-       0.08774834437086093,
-       0.0],
-      'aggregation': 'Density',
-      'start': '2022-01-01T05:00:00Z',
-      'end': '2022-01-02T05:00:00Z'},
-     'warning_threshold': 0.0,
-     'alert_threshold': 0.1,
-     'score': 0.0,
-     'scores': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-     'index': None,
-     'summarizer_meta': '{"type":"UnivariateContinuous","bin_mode":"Quantile","aggregation":"Density","metric":"PSI","num_bins":5,"bin_weights":null,"provided_edges":null}',
-     'status': 'BaselineRun'}
-
-
-
 ### Get Assay Baseline
 
 Retrieve an assay baseline.
@@ -1972,7 +1677,6 @@ Retrieve an assay baseline.
   
 Example:  3 assay baselines for Workspace 6 and pipeline `houseprice-pipe-yns` will be retrieved.
 
-
 ```python
 # Get Assay Baseline
 
@@ -1987,86 +1691,6 @@ data = {
 response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response
 ```
-
-
-
-
-    [{'check_failures': [],
-      'elapsed': 138,
-      'model_name': 'housepricemodel',
-      'model_version': 'test_version',
-      'original_data': {'tensor': [[0.6752651953165153,
-         0.4999342471069234,
-         -0.1508359058521761,
-         0.20024994573167013,
-         -0.08666382440547035,
-         0.009116407905326388,
-         -0.002872821251696453,
-         -0.9179715198382244,
-         -0.305653139057544,
-         2.4393894526979074,
-         0.29288456205300767,
-         -0.3485179782510063,
-         1.1121054807107582,
-         0.20193559456886756,
-         -0.20817781526102327,
-         1.0279052268485522,
-         -0.0196096612880121]]},
-      'outputs': [{'Float': {'data': [13.262725830078123],
-         'dim': [1, 1],
-         'v': 1}}],
-      'pipeline_name': 'housepricepipe',
-      'time': 1643673456974},
-     {'check_failures': [],
-      'elapsed': 136,
-      'model_name': 'housepricemodel',
-      'model_version': 'test_version',
-      'original_data': {'tensor': [[-0.39764636440424433,
-         -1.4463372267359147,
-         0.044822346031326635,
-         -0.4259897870655369,
-         -0.08666382440547035,
-         -0.009153974747246364,
-         -0.2568455220872559,
-         0.005746226275241667,
-         -0.305653139057544,
-         -0.6285378875598833,
-         -0.5584151415472702,
-         -0.9748223338538442,
-         -0.65605032361317,
-         -1.5328599554165074,
-         -0.20817781526102327,
-         0.06504981348446033,
-         -0.20382525042318508]]},
-      'outputs': [{'Float': {'data': [12.82761001586914], 'dim': [1, 1], 'v': 1}}],
-      'pipeline_name': 'housepricepipe',
-      'time': 1643673504654},
-     {'check_failures': [],
-      'elapsed': 93,
-      'model_name': 'housepricemodel',
-      'model_version': 'test_version',
-      'original_data': {'tensor': [[-1.470557924125004,
-         -0.4732014898144956,
-         1.0989221532266944,
-         1.3317512811267456,
-         -0.08666382440547035,
-         0.006116141374609494,
-         -0.21472817109954076,
-         -0.9179715198382244,
-         -0.305653139057544,
-         -0.6285378875598833,
-         0.29288456205300767,
-         -0.14376463122700162,
-         -0.65605032361317,
-         1.1203567680905366,
-         -0.20817781526102327,
-         0.2692918708647222,
-         -0.23870674508328787]]},
-      'outputs': [{'Float': {'data': [13.03465175628662], 'dim': [1, 1], 'v': 1}}],
-      'pipeline_name': 'housepricepipe',
-      'time': 1643673552333}]
-
-
 
 ### Run Assay Interactively
 
@@ -2117,7 +1741,6 @@ Runs an assay.
   
 Example:  An interactive assay will be run for Assay exampleAssayId exampleAssayName.  Depending on the number of assay results and the data window, this may take some time.  This returns *all* of the results for this assay at this time.  The total number of responses will be displayed after.
 
-
 ```python
 # Run interactive assay
 
@@ -2167,105 +1790,9 @@ response = get_wallaroo_response(APIURL, apiRequest, TOKEN, data)
 response[0]
 ```
 
-
-
-
-    {'assay_id': 3,
-     'name': 'example assay',
-     'created_at': 1665429281268,
-     'elapsed_millis': 178,
-     'pipeline_id': 4,
-     'pipeline_name': 'housepricepipe',
-     'iopath': 'input 0 0',
-     'baseline_summary': {'count': 1812,
-      'min': -3.6163810435665233,
-      'max': 7.112734553641073,
-      'mean': 0.03518936967736047,
-      'median': -0.39764636440424433,
-      'std': 0.9885006118746916,
-      'edges': [-3.6163810435665233,
-       -0.39764636440424433,
-       -0.39764636440424433,
-       0.6752651953165153,
-       0.6752651953165153,
-       7.112734553641073,
-       None],
-      'edge_names': ['left_outlier',
-       'q_20',
-       'q_40',
-       'q_60',
-       'q_80',
-       'q_100',
-       'right_outlier'],
-      'aggregated_values': [0.0,
-       0.5739514348785872,
-       0.0,
-       0.3383002207505519,
-       0.0,
-       0.08774834437086093,
-       0.0],
-      'aggregation': 'Density',
-      'start': '2022-01-01T05:00:00Z',
-      'end': '2022-01-02T05:00:00Z'},
-     'window_summary': {'count': 1812,
-      'min': -3.6163810435665233,
-      'max': 3.8939998744787943,
-      'mean': 0.006175756859303479,
-      'median': -0.39764636440424433,
-      'std': 0.9720429128755866,
-      'edges': [-3.6163810435665233,
-       -0.39764636440424433,
-       -0.39764636440424433,
-       0.6752651953165153,
-       0.6752651953165153,
-       7.112734553641073,
-       None],
-      'edge_names': ['left_outlier',
-       'e_-3.98e-1',
-       'e_-3.98e-1',
-       'e_6.75e-1',
-       'e_6.75e-1',
-       'e_7.11e0',
-       'right_outlier'],
-      'aggregated_values': [0.0,
-       0.5883002207505519,
-       0.0,
-       0.3162251655629139,
-       0.0,
-       0.09547461368653422,
-       0.0],
-      'aggregation': 'Density',
-      'start': '2022-01-02T05:00:00Z',
-      'end': '2022-01-03T05:00:00Z'},
-     'warning_threshold': 0.0,
-     'alert_threshold': 0.1,
-     'score': 0.002495916218595029,
-     'scores': [0.0,
-      0.0003543090106786176,
-      0.0,
-      0.0014896074883327124,
-      0.0,
-      0.0006519997195836994,
-      0.0],
-     'index': None,
-     'summarizer_meta': {'type': 'UnivariateContinuous',
-      'bin_mode': 'Quantile',
-      'aggregation': 'Density',
-      'metric': 'PSI',
-      'num_bins': 5,
-      'bin_weights': None,
-      'provided_edges': None},
-     'status': 'Warning'}
-
-
-
-
 ```python
 print(len(response))
 ```
-
-    30
-
 
 ### Get Assay Results
 
@@ -2281,7 +1808,6 @@ Retrieve the results for an assay.
   * Assay Baseline
   
 Example:  Results for Assay 3 "example assay" will be retrieved for January 2 to January 3.  For the sake of time, only the first record will be displayed.
-
 
 ```python
 # Get Assay Results

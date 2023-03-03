@@ -37,12 +37,16 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
-
 ```python
 import wallaroo
 
 from wallaroo.ModelConversion import ConvertKerasArguments, ModelConversionSource, ModelConversionInputType
 from wallaroo.object import EntityNotFoundError
+import pandas as pd
+
+# used to display dataframe information without truncating
+from IPython.display import display
+pd.set_option('display.max_colwidth', None)
 ```
 
 ### Configuration and Methods
@@ -51,14 +55,12 @@ The following will set the workspace, pipeline, model name, the model file name 
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
 
-
 ```python
-workspace_name = 'keras-autoconvert-workspace'
-pipeline_name = 'keras-autoconvert-pipeline'
-model_name = 'simple-sentiment-model'
+workspace_name = 'externalkerasautoconvertworkspace'
+pipeline_name = 'externalkerasautoconvertpipeline'
+model_name = 'externalsimple-sentiment-model'
 model_file_name = 'simple_sentiment_model.zip'
 sample_data = 'simple_sentiment_testdata.json'
-
 
 def get_workspace(name):
     workspace = None
@@ -81,26 +83,40 @@ def get_pipeline(name):
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
-
 ```python
-# Client connection from local Wallaroo instance
-
-# wl = wallaroo.Client()
-
 # SSO login through keycloak
 
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
 
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+                auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                auth_type="sso")
+```
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
 ```
 
 ### Set the Workspace and Pipeline
 
 Set or create the workspace and pipeline based on the names configured earlier.
-
 
 ```python
 workspace = get_workspace(workspace_name)
@@ -111,17 +127,12 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
-<table><tr><th>name</th> <td>keras-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-07-07 16:27:57.437207+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-07 16:28:42.403022+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>simple-sentiment-model</td></tr></table>
-
-
+<table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `simple-sentiment-model`.  This includes the shape of the model.
-
 
 ```python
 model_columns = 100
@@ -139,8 +150,7 @@ model_conversion_type = ModelConversionSource.KERAS
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
-![converted model](./images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
-
+![converted model](/images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
 
 ```python
 # converts and uploads model.
@@ -148,12 +158,7 @@ model_wl = wl.convert_model('simple_sentiment_model.zip', model_conversion_type,
 model_wl
 ```
 
-
-
-
-    {'name': 'simple-sentiment-model', 'version': 'c76870f8-e16b-4534-bb17-e18a3e3806d5', 'file_name': '14d9ab8d-47f4-4557-82a7-6b26cb67ab05-converted.onnx', 'last_update_time': datetime.datetime(2022, 7, 7, 16, 41, 22, 528430, tzinfo=tzutc())}
-
-
+    {'name': 'externalsimple-sentiment-model', 'version': '7ac5e3a0-62f4-406e-87bb-185dd4f26fb6', 'file_name': '2f0a2876-fe21-44ac-9e1a-ba2462c77692-converted.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2023, 2, 21, 18, 16, 26, 708440, tzinfo=tzutc())}
 
 ## Test Inference
 
@@ -163,66 +168,67 @@ With the model uploaded and converted, we can run a sample inference.
 
 We will add the model as a step into our pipeline, then deploy it.
 
-
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
-    Waiting for deployment - this will take up to 45s .... ok
+<table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:30.388009+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f7141b40-c610-42f7-873c-6fcb2b6e9ada, d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td>externalsimple-sentiment-model</td></tr></table>
+{{</table>}}
 
+```python
+pipeline.status()
+```
 
-
-
-
-<table><tr><th>name</th> <td>keras-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-07-07 16:27:57.437207+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-07 16:41:23.615423+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>simple-sentiment-model</td></tr></table>
-
-
+    {'status': 'Running',
+     'details': [],
+     'engines': [{'ip': '10.48.0.50',
+       'name': 'engine-579bdcf5bd-9j2mk',
+       'status': 'Running',
+       'reason': None,
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'externalkerasautoconvertpipeline',
+          'status': 'Running'}]},
+       'model_statuses': {'models': [{'name': 'externalsimple-sentiment-model',
+          'version': '7ac5e3a0-62f4-406e-87bb-185dd4f26fb6',
+          'sha': '88f8118f5e9ea7368dde563413c77738e64b4e3f5856c3c9323b02bcf0dd1fd5',
+          'status': 'Running'}]}}],
+     'engine_lbs': [{'ip': '10.48.0.49',
+       'name': 'engine-lb-74b4969486-gmwzg',
+       'status': 'Running',
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ### Run a Test Inference
 
 We can run a test inference from the `simple_sentiment_testdata.json` file, then display just the results.
 
-
 ```python
-sample_data = 'simple_sentiment_testdata.json'
-result = pipeline.infer_from_file(sample_data)
-result[0].data()
+if arrowEnabled is True:
+    sample_data = 'simple_sentiment_testdata.df.json'
+    result = pipeline.infer_from_file(sample_data)
+    display(result["out.dense"])
+else:
+    sample_data = 'simple_sentiment_testdata.json'
+    result = pipeline.infer_from_file(sample_data)
+    display(result[0].data())
 ```
 
-    Waiting for inference response - this will take up to 45s .... ok
-
-
-
-
-
-    [array([[0.09469762],
-            [0.99103099],
-            [0.93407357],
-            [0.56030995],
-            [0.9964503 ]])]
-
-
+    0    [0.094697624]
+    1       [0.991031]
+    2     [0.93407357]
+    3     [0.56030995]
+    4      [0.9964503]
+    Name: out.dense, dtype: object
 
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
 
-
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s ................................... ok
+<table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:30.388009+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f7141b40-c610-42f7-873c-6fcb2b6e9ada, d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td>externalsimple-sentiment-model</td></tr></table>
+{{</table>}}
 
-
-
-
-
-<table><tr><th>name</th> <td>keras-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-07-07 16:27:57.437207+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-07 16:57:06.402657+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>simple-sentiment-model</td></tr></table>
-
-
-
-
-```python
-
-```

@@ -34,7 +34,6 @@ The following steps will perform the following:
 
 The first step is to import the libraries that we will need.
 
-
 ```python
 import json
 import os
@@ -42,21 +41,57 @@ import datetime
 
 import wallaroo
 from wallaroo.object import EntityNotFoundError
+
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
 ```
 
 ### Initialize connection
 
 Start a connect to the Wallaroo instance and save the connection into the variable `wl`.
 
+```python
+# Login through local Wallaroo instance
+
+wl = wallaroo.Client()
+
+# SSO login through keycloak
+
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR PREFIX"
+
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
+```
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
 
 ```python
-wl = wallaroo.Client()
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
 ```
+
+    True
 
 ### Set Configurations
 
 The following will set the workspace, model name, and pipeline that will be used for this example.  If the workspace or pipeline already exist, then they will assigned for use in this example.  If they do not exist, they will be created based on the names listed below.
-
 
 ```python
 workspace_name = 'bikedayevalworkspace'
@@ -68,7 +103,6 @@ model_file_name = 'bike_day_model.pkl'
 ## Set the Workspace and Pipeline
 
 This sample code will create or use the existing workspace `bike-day-workspace` as the current workspace.
-
 
 ```python
 def get_workspace(name):
@@ -95,19 +129,14 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
-<table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 19:11:16.553505+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
+<table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
 ### Upload Pickled Package Statsmodel Model
 
 Upload the statsmodel stored into the pickled package `bike_day_model.pkl`.  See the Notebook `train-statsmodel.ipynb` for more details on creating this package.
 
 Note that this package is being specified as a `python` configuration.
-
 
 ```python
 file_name = "bike_day_model.pkl"
@@ -119,141 +148,72 @@ bike_day_model = wl.upload_model(model_name, model_file_name).configure(runtime=
 
 We will now add the uploaded model as a step for the pipeline, then deploy it.
 
-
 ```python
 pipeline.add_model_step(bike_day_model)
 ```
 
-
-
-
-<table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 19:11:16.553505+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
 
 ```python
 pipeline.deploy()
 ```
 
-    Waiting for deployment - this will take up to 45s ................. ok
-
-
-
-
-
-<table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 20:10:27.589019+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:16:18.874015+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>00e53810-6278-463b-b1c7-6a63f25fd1ef, 91b1dd51-2adb-4003-ab68-91a8415210c1, 14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td>bikedaymodel</td></tr></table>
+{{</table>}}
 
 ```python
 pipeline.status()
 ```
 
-
-
-
     {'status': 'Running',
-     'details': None,
-     'engines': [{'ip': '10.164.3.4',
-       'name': 'engine-5f75f487c6-9d456',
+     'details': [],
+     'engines': [{'ip': '10.244.0.51',
+       'name': 'engine-6d5cc888b-v7mhj',
        'status': 'Running',
        'reason': None,
-       'pipeline_statuses': {'pipelines': [{'id': 'bike-day-evel-pipeline',
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'bikedayevalpipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'bike-day-model',
-          'version': 'ff154938-4e49-468e-ac6a-4ee37d62a724',
-          'sha': 'ba1fc2a6e8b876684f2fd11534ee6212f840f02cbaefaa48615016cb9e90b30c',
+       'model_statuses': {'models': [{'name': 'bikedaymodel',
+          'version': 'd14c4f84-4238-49cd-9a63-ff96d4d28b24',
+          'sha': '1bb486598732259efdd131b45d471e165b594d5443928ea9e50fa4c7e0b1b718',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.164.5.61',
-       'name': 'engine-lb-85846c64f8-khznn',
+     'engine_lbs': [{'ip': '10.244.1.13',
+       'name': 'engine-lb-ddd995646-49mdq',
        'status': 'Running',
-       'reason': None}]}
-
-
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ### Run Inference
 
 Perform an inference from the evaluation data JSON file `bike_day_eval.json`.
 
-
 ```python
-pipeline.infer_from_file('bike_day_eval.json')
+if arrowEnabled is True:
+    results = pipeline.infer_from_file('bike_day_eval.json', data_format="custom-json")
+else:
+    results = pipeline.infer_from_file('bike_day_eval.json')
+display(results)
 ```
 
-    Waiting for inference response - this will take up to 45s .. ok
-
-
-
-
-
-    [InferenceResult({'check_failures': [],
-      'elapsed': 5369777,
-      'model_name': 'bike-day-model',
-      'model_version': 'ff154938-4e49-468e-ac6a-4ee37d62a724',
-      'original_data': {'holiday': {'0': 0,
-                                    '1': 0,
-                                    '2': 0,
-                                    '3': 0,
-                                    '4': 0,
-                                    '5': 0,
-                                    '6': 0},
-                        'temp': {'0': 0.317391,
-                                 '1': 0.365217,
-                                 '2': 0.415,
-                                 '3': 0.54,
-                                 '4': 0.4725,
-                                 '5': 0.3325,
-                                 '6': 0.430435},
-                        'windspeed': {'0': 0.184309,
-                                      '1': 0.203117,
-                                      '2': 0.209579,
-                                      '3': 0.231017,
-                                      '4': 0.368167,
-                                      '5': 0.207721,
-                                      '6': 0.288783},
-                        'workingday': {'0': 1,
-                                       '1': 1,
-                                       '2': 1,
-                                       '3': 1,
-                                       '4': 0,
-                                       '5': 0,
-                                       '6': 1}},
-      'outputs': [{'Json': {'data': [{'forecast': [1882.3784554842296,
-                                                   2130.607915715519,
-                                                   2340.8400538168335,
-                                                   2895.754978556798,
-                                                   2163.65751556893,
-                                                   1509.1792126536425,
-                                                   2431.1838923984033]}],
-                            'dim': [1],
-                            'v': 1}}],
-      'pipeline_name': 'bike-day-evel-pipeline',
-      'time': 1657051854529})]
-
-
+    [{'forecast': [1882.378455403016,
+       2130.6079157429585,
+       2340.840053800859,
+       2895.754978555364,
+       2163.6575155637433,
+       1509.1792126514365,
+       2431.183892393437]}]
 
 ### Undeploy the Pipeline
 
 Undeploy the pipeline and return the resources back to the Wallaroo instance.
 
-
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s ................................ ok
+<table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:11.565861+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>91b1dd51-2adb-4003-ab68-91a8415210c1, 14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td>bikedaymodel</td></tr></table>
+{{</table>}}
 
-
-
-
-
-<table><tr><th>name</th> <td>bike-day-evel-pipeline</td></tr><tr><th>created</th> <td>2022-07-05 19:09:22.895067+00:00</td></tr><tr><th>last_updated</th> <td>2022-07-05 20:10:27.589019+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>steps</th> <td>bike-day-model</td></tr></table>
-
-
-
-
-```python
-
-```

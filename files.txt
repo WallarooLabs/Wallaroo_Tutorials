@@ -1,0 +1,7 @@
+wallaroo-model-cookbooks/computer-vision/models/README.md
+wallaroo-model-cookbooks/computer-vision/models/coco_classes.pickle
+wallaroo-model-cookbooks/computer-vision/models/frcnn-resnet.pt
+wallaroo-model-cookbooks/computer-vision/models/frcnn-resnet.pt.onnx
+wallaroo-model-cookbooks/computer-vision/models/mobilenet.pt
+wallaroo-model-cookbooks/computer-vision/models/mobilenet.pt.onnx
+wallaroo-model-cookbooks/computer-vision/models/post-process-drift-detection.py

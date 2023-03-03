@@ -30,13 +30,12 @@ Before starting, the following must be available:
 
 Wallaroo supports the following model versions:
 
-* XGBoost:  Version 1.6.0
+* XGBoost:  Version 1.6.2
 * SKLearn: 1.1.2
 
 ### Import Libraries
 
 Import the libraries that will be used for the auto-conversion process.
-
 
 ```python
 import pickle
@@ -48,42 +47,50 @@ from wallaroo.ModelConversion import ConvertSKLearnArguments, ConvertXGBoostArgs
 from wallaroo.object import EntityNotFoundError
 ```
 
+```python
+# Verify the version of XGBoost used to generate the models
+
+import sklearn
+import sklearn.datasets
+
+import xgboost as xgb
+
+print(xgb.__version__)
+print(sklearn.__version__)
+```
+
+    1.6.2
+    1.1.2
+
 The following code is used to either connect to an existing workspace or to create a new one.  For more details on working with workspaces, see the [Wallaroo Workspace Management Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-workspace-management/).
 
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance.
 
-
 ```python
+# Client connection from local Wallaroo instance
+
+wl = wallaroo.Client()
+
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR SUFFIX"
 
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="sso")
 ```
-
-    Please log into the following URL in a web browser:
-    
-    	https://YOUR PREFIX.keycloak.YOUR SUFFIX/auth/realms/master/device?user_code=YOYF-GYXO
-    
-    Login successful!
-
 
 ### Set the Workspace
 
 We'll connect or create the workspace `testautoconversion` and use it for our model testing.
 
-
 ```python
 workspace_name = 'testautoconversion'
 
 ```
-
 
 ```python
 def get_workspace(name):
@@ -96,7 +103,6 @@ def get_workspace(name):
     return workspace
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -105,12 +111,7 @@ wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
-
-
-
-    {'name': 'testautoconversion', 'id': 618493, 'archived': False, 'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103', 'created_at': '2022-12-20T21:49:16.041961+00:00', 'models': [], 'pipelines': []}
-
-
+    {'name': 'testautoconversion', 'id': 20, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T20:05:40.6269+00:00', 'models': [], 'pipelines': []}
 
 ### Set the Model Conversion Arguments
 
@@ -119,13 +120,12 @@ We'll create two different configurations, one for each of our models:
 * `sklearn_model_conversion_args`: Used for our sklearn model.
 * `xgboost_model_converstion_args`: Used for our XGBoost model.
 
-
 ```python
 # The number of columns
 NF=25
 
 sklearn_model_conversion_args = ConvertSKLearnArguments(
-    name="lm-test",
+    name="sklearntest",
     comment="test linear regression",
     number_of_columns=NF,
     input_type=ModelConversionInputType.Double
@@ -133,7 +133,7 @@ sklearn_model_conversion_args = ConvertSKLearnArguments(
 sklearn_model_conversion_type = ModelConversionSource.SKLEARN
 
 xgboost_model_conversion_args = ConvertXGBoostArgs(
-    name="xgb-test-reg",
+    name="xgbtestreg",
     comment="xgboost regression model test",
     number_of_columns=NF,
     input_type=ModelConversionInputType.Float32
@@ -145,7 +145,6 @@ xgboost_model_conversion_type = ModelConversionSource.XGBOOST
 
 The `convert_model` method converts the model using the arguments, and uploads it into the current workspace - in this case, `testconversion`.  Once complete, we can run `get_current_workspace` to verify that the models were uploaded.
 
-
 ```python
 # converts and uploads the sklearn model.
 wl.convert_model('sklearn-linear-model.pickle', sklearn_model_conversion_type, sklearn_model_conversion_args)
@@ -154,21 +153,11 @@ wl.convert_model('sklearn-linear-model.pickle', sklearn_model_conversion_type, s
 wl.convert_model('xgb_reg.pickle', xgboost_model_conversion_type, xgboost_model_conversion_args)
 ```
 
-
-
-
-    {'name': 'xgb-test-reg', 'version': '9d142873-baaa-4c4c-a9c1-484ad0a0f120', 'file_name': '06bd71fe-4852-4cf4-8bbe-3ea7792b6bc6-converted.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2022, 12, 20, 21, 49, 21, 458858, tzinfo=tzutc())}
-
-
-
+    {'name': 'xgbtestreg', 'version': '42779f3a-e874-4f8d-b985-822f2128a954', 'file_name': 'bffa90a2-5a27-4e77-a2f4-cd0f68f99d24-converted.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc())}
 
 ```python
 wl.get_current_workspace()
 ```
 
-
-
-
-    {'name': 'testautoconversion', 'id': 618493, 'archived': False, 'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103', 'created_at': '2022-12-20T21:49:16.041961+00:00', 'models': [{'name': 'lm-test', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2022, 12, 20, 21, 49, 18, 110465, tzinfo=tzutc()), 'created_at': datetime.datetime(2022, 12, 20, 21, 49, 18, 110465, tzinfo=tzutc())}, {'name': 'xgb-test-reg', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2022, 12, 20, 21, 49, 21, 458858, tzinfo=tzutc()), 'created_at': datetime.datetime(2022, 12, 20, 21, 49, 21, 458858, tzinfo=tzutc())}], 'pipelines': []}
-
+    {'name': 'testautoconversion', 'id': 20, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T20:05:40.6269+00:00', 'models': [{'name': 'sklearntest', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 35, 745445, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 2, 27, 20, 11, 35, 745445, tzinfo=tzutc())}, {'name': 'xgbtestreg', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc())}], 'pipelines': []}
 

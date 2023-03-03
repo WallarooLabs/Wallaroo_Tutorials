@@ -36,29 +36,58 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
-
 ```python
 import wallaroo
 
 from wallaroo.ModelConversion import ConvertXGBoostArgs, ModelConversionSource, ModelConversionInputType
 from wallaroo.object import EntityNotFoundError
+
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
 ```
 
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
-
 ```python
+# Login through local Wallaroo instance
+
+# wl = wallaroo.Client()
+
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR PREFIX"
 
+wallarooPrefix = "doc-test"
+wallarooSuffix = "wallaroocommunity.ninja"
 
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                auth_type="sso")
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
+```
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
 ```
 
 ### Configuration and Methods
@@ -67,14 +96,11 @@ The following will set the workspace, pipeline, model name, the model file name 
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
 
-
 ```python
 workspace_name = 'xgboost-regression-autoconvert-workspace'
 pipeline_name = 'xgboost-regression-autoconvert-pipeline'
 model_name = 'xgb-regression-model'
 model_file_name = 'xgb_reg.pickle'
-sample_data = 'xgb_regression_eval.json'
-
 
 def get_workspace(name):
     workspace = None
@@ -97,7 +123,6 @@ def get_pipeline(name):
 
 Set or create the workspace and pipeline based on the names configured earlier.
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -107,17 +132,12 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
-<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-12-20 21:53:01.841836+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 21:54:27.011551+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f783bbcf-6d80-4cf6-89b6-3ba88e629018, 02e73b24-87d7-4563-a845-507f8bbc9b8f</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-
-
+<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-23 16:29:55.996960+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
+{{</table>}}
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `xgb-class-model`.
-
 
 ```python
 #the number of columns
@@ -136,7 +156,6 @@ model_conversion_type = ModelConversionSource.XGBOOST
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
-
 ```python
 # convert and upload
 model_wl = wl.convert_model(model_file_name, model_conversion_type, model_conversion_args)
@@ -150,51 +169,117 @@ With the model uploaded and converted, we can run a sample inference.
 
 Add the uploaded and converted `model_wl` as a step in the pipeline, then deploy it.
 
-
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
+    Waiting for deployment - this will take up to 45s ............. ok
 
+<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-24 16:26:10.105654+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>73345b3e-e141-497e-bcab-e6145cb8b6ec, 6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
+{{</table>}}
 
+```python
+pipeline.status()
+```
 
-<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-12-20 21:53:01.841836+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 22:04:54.037529+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2cf02286-c9a1-41b7-aba5-f8b5264b63c6, f783bbcf-6d80-4cf6-89b6-3ba88e629018, 02e73b24-87d7-4563-a845-507f8bbc9b8f</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-
-
+    {'status': 'Running',
+     'details': [],
+     'engines': [{'ip': '10.48.1.19',
+       'name': 'engine-749bb6f4fd-4qt2x',
+       'status': 'Running',
+       'reason': None,
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'xgboost-regression-autoconvert-pipeline',
+          'status': 'Running'}]},
+       'model_statuses': {'models': [{'name': 'xgb-regression-model',
+          'version': '2f30475f-6385-4c5e-bfbb-9d47fa84f8ae',
+          'sha': '7414d26cb5495269bc54bcfeebd269d7c74412cbfca07562fc7cb184c55b6f8e',
+          'status': 'Running'}]}}],
+     'engine_lbs': [{'ip': '10.48.1.20',
+       'name': 'engine-lb-74b4969486-7jzwh',
+       'status': 'Running',
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ### Run the Inference
 
 Use the `test_class_eval.json` as set earlier as our `sample_data` and perform the inference.
 
-
 ```python
-result = pipeline.infer_from_file(sample_data)
-result[0].data()
+if arrowEnabled is True:
+    sample_data = 'xgb_regression_eval.df.json'
+    result = pipeline.infer_from_file(sample_data)
+    display(result)
+else:
+    sample_data = 'xgb_regression_eval.json'
+    result = pipeline.infer_from_file(sample_data)
+    result[0].data()
+    
 ```
 
-
-
-
-    [array([[  97.80789948],
-            [ 252.66326904],
-            [ -57.51101685],
-            [-206.99134827],
-            [ -59.34113312]])]
-
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-02-24 16:26:24.157</td>
+      <td>[-0.0337420814, -0.1876901281, 0.3183056488, 1.1831088244, -0.3047963287, 1.0713634828, 0.4679136198, 1.1382147115, 2.8101110944, -0.9981048796, -0.2543715265, 0.2845195171, -0.6477265924, -1.2198006181, 2.0592129832, -1.586429512, 0.1884164743, -0.3816011585, 1.0781704305, -0.2251253601, 0.6067409459, 0.9659944831, -0.690207203, -0.3849078305, -1.7806555641]</td>
+      <td>[124.11397]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-02-24 16:26:24.157</td>
+      <td>[-0.6374335428, 0.9713713274, -0.3899847809, -1.8685333445, 0.6264452739, 1.0778638153, -1.1687273967, -1.9366353171, -0.7583260267, -0.1288186991, 2.2018769654, -0.9383105208, -0.0959982166, 0.6889112707, 1.0172067951, -0.1988865499, 1.3461760224, -0.5692275708, 0.0112450486, -1.0244657911, -0.0065034946, -0.888033574, 2.5997682335, -0.6593191496, 0.4554196997]</td>
+      <td>[-238.03009]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-02-24 16:26:24.157</td>
+      <td>[0.9847406173, -0.6887896553, -0.9483266359, -0.6146245598, 0.395195321, 0.2237676197, -2.1580851068, -0.8124396117, 0.8795326949, 1.0463472648, -0.2343060791, 1.9127900859, -0.0636431887, 2.7055743269, 1.424242505, 0.1486958646, -0.7771892138, -0.6720552548, 0.9127712446, 0.680721406, 1.5207886874, 1.9579334337, -0.9336538468, -0.2942243461, 0.8563934417]</td>
+      <td>[253.06976]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-02-24 16:26:24.157</td>
+      <td>[-0.0894312686, 2.0916777545, 0.155086745, 0.8335388277, 0.4376497549, -0.2875695352, -1.272466627, -0.8226918076, -0.8637972417, -0.4856051115, -0.978749107, 0.2675108269, 0.5246808262, -0.96869578, 0.8475004997, 1.0027495438, 0.4704188579, 2.6906210825, 1.34454675, -1.4987055653, 0.680752942, -2.6459314502, 0.6274277031, 1.3640818416, -0.8077878088]</td>
+      <td>[141.34639]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-02-24 16:26:24.157</td>
+      <td>[-0.9200220805, -1.8760634694, -0.8277296049, 0.6511561005, 1.5066237509, -1.1236118386, -0.3776053288, -0.0445487434, -1.4965713379, -0.1756118518, 0.0317408338, 0.2496108303, 1.6857141605, 0.0339106658, -0.3340227553, -0.3428326984, -0.5932644698, -0.4395685475, -0.6870452688, -0.4132149028, -0.7352879532, 0.2080507404, 0.4575261189, -2.0175947284, 1.154633581]</td>
+      <td>[42.79154]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
 
-
 ```python
 pipeline.undeploy()
 ```
 
+    Waiting for undeployment - this will take up to 45s ..................................... ok
 
-
-
-<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2022-12-20 21:53:01.841836+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 22:04:54.037529+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2cf02286-c9a1-41b7-aba5-f8b5264b63c6, f783bbcf-6d80-4cf6-89b6-3ba88e629018, 02e73b24-87d7-4563-a845-507f8bbc9b8f</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-
+<table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-24 16:26:10.105654+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>73345b3e-e141-497e-bcab-e6145cb8b6ec, 6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
+{{</table>}}
 

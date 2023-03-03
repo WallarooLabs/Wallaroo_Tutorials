@@ -20,7 +20,7 @@ For this example, a virtual python environment will be used.  This will set the 
 
 The following is required for this tutorial:
 
-* A Wallaroo instance version 2022.4 or later.
+* A Wallaroo instance version 2023.1 or later.
 * Python 3.8.6 or later installed locally.
 * [Conda](https://docs.conda.io/en/latest/):  Used for managing python virtual environments.
 
@@ -75,12 +75,12 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo
+    pip install wallaroo==2022.4
     ```
 
 For organizations who will be using the Wallaroo SDK with Jupyter or similar services, the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
 
-![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
+![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png)
 
 To use a new Notebook:
 
@@ -91,7 +91,6 @@ To update an existing Notebook to use the new virtual environment as a kernel:
 
 1. From the main menu, select **Kernel->Change Kernel**.
 1. Select the new kernel.
-
 
 ## Sample Wallaroo Connection
 
@@ -113,43 +112,66 @@ The URLs are based on the Wallaroo Prefix and Wallaroo Suffix for the Wallaroo i
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-![Wallaroo Login](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
+![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png)
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-![Device Registration](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
+![Device Registration](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
-
 
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
-```
 
+# used to display dataframe information without truncating
+from IPython.display import display
+import pandas as pd
+pd.set_option('display.max_colwidth', None)
+```
 
 ```python
 wallaroo.__version__
 ```
 
-
-
-
-    '2022.4.0'
-
-
-
+    '2023.1.0rc1'
 
 ```python
+# Login through Wallaroo JupyterHub Service
+
+wl = wallaroo.Client()
+
 # SSO login through keycloak
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR SUFFIX"
 
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                auth_type="sso")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                 auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                 auth_type="sso")
 ```
+
+### Arrow Support
+
+As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
+
+If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
+
+The examples below will be shown in an arrow enabled environment.
+
+```python
+import os
+# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
+# os.environ["ARROW_ENABLED"]="True"
+
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+    arrowEnabled = False
+else:
+    arrowEnabled = True
+print(arrowEnabled)
+```
+
+    True
 
 ## Wallaroo Remote SDK Examples
 
@@ -161,14 +183,12 @@ We will create a workspace to work in and call it the `sdkworkspace`, then set i
 
 * **IMPORTANT NOTE**:  For this example, the Aloha model is stored in the file `alohacnnlstm.zip`.  When using tensor based models, the zip file **must** match the name of the tensor directory.  For example, if the tensor directory is `alohacnnlstm`, then the .zip file must be named `alohacnnlstm.zip`.
 
-
 ```python
 workspace_name = 'sdkquickworkspace'
 pipeline_name = 'sdkquickpipeline'
 model_name = 'sdkquickmodel'
 model_file_name = './alohacnnlstm.zip'
 ```
-
 
 ```python
 def get_workspace(name):
@@ -188,7 +208,6 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -198,31 +217,20 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-
-
-
-<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9cb1b842-f28b-4a9b-b0c3-eeced6067582</td></tr><tr><th>steps</th> <td></td></tr></table>
-
-
+<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2023-02-22 21:25:42.312061+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-22 21:27:26.092464+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6cd41955-6456-4401-84c6-72eb0b6b550b, f00085b6-a7d6-4297-92b7-9f52139e18ab, 109e38ce-908e-4821-ae14-a210e81f4def</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
+{{</table>}}
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
-
 
 ```python
 wl.get_current_workspace()
 ```
 
-
-
-
-    {'name': 'sdkquickworkspace', 'id': 618487, 'archived': False, 'created_by': '01a797f9-1357-4506-a4d2-8ab9c4681103', 'created_at': '2022-12-20T15:56:22.088161+00:00', 'models': [], 'pipelines': [{'name': 'sdkquickpipeline', 'create_time': datetime.datetime(2022, 12, 20, 15, 56, 22, 974010, tzinfo=tzutc()), 'definition': '[]'}]}
-
-
+    {'name': 'sdkquickworkspace', 'id': 66, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-02-22T21:25:41.546584+00:00', 'models': [{'name': 'sdkquickmodel', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 2, 22, 21, 25, 44, 989355, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 2, 22, 21, 25, 44, 989355, tzinfo=tzutc())}], 'pipelines': [{'name': 'sdkquickpipeline', 'create_time': datetime.datetime(2023, 2, 22, 21, 25, 42, 312061, tzinfo=tzutc()), 'definition': '[]'}]}
 
 ### Upload the Models
 
 Now we will upload our model.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
-
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -236,29 +244,52 @@ We will tell the deployment we are using a tensorflow model and give the deploym
 
 To do this, we'll create our pipeline that can ingest the data, pass the data to our Aloha model, and give us a final output.  We'll call our pipeline `externalsdkpipeline`, then deploy it so it's ready to receive data.  The deployment process usually takes about 45 seconds.
 
-
 ```python
 pipeline.add_model_step(model)
 ```
 
+<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2023-02-22 21:25:42.312061+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-22 21:27:26.092464+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6cd41955-6456-4401-84c6-72eb0b6b550b, f00085b6-a7d6-4297-92b7-9f52139e18ab, 109e38ce-908e-4821-ae14-a210e81f4def</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
+{{</table>}}
 
+```python
+pipeline
+```
 
-
-<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9cb1b842-f28b-4a9b-b0c3-eeced6067582</td></tr><tr><th>steps</th> <td></td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2023-02-22 21:25:42.312061+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-22 21:27:26.092464+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6cd41955-6456-4401-84c6-72eb0b6b550b, f00085b6-a7d6-4297-92b7-9f52139e18ab, 109e38ce-908e-4821-ae14-a210e81f4def</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
+{{</table>}}
 
 ```python
 pipeline.deploy()
 ```
 
-We can verify that the pipeline is running and list what models are associated with it.
+<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2023-02-22 21:25:42.312061+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-22 21:47:51.453099+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>19c972e4-41fa-42ea-be84-604e54b4b5ba, 37acbb17-8a8c-4169-8286-662e9cba3245, 6cd41955-6456-4401-84c6-72eb0b6b550b, f00085b6-a7d6-4297-92b7-9f52139e18ab, 109e38ce-908e-4821-ae14-a210e81f4def</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
+{{</table>}}
 
+We can verify that the pipeline is running and list what models are associated with it.
 
 ```python
 pipeline.status()
 ```
+
+    {'status': 'Running',
+     'details': [],
+     'engines': [{'ip': '10.48.0.209',
+       'name': 'engine-69478bcd58-kjwxn',
+       'status': 'Running',
+       'reason': None,
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'sdkquickpipeline',
+          'status': 'Running'}]},
+       'model_statuses': {'models': [{'name': 'sdkquickmodel',
+          'version': 'e476e115-ade4-40bf-acbb-4074270e01c6',
+          'sha': 'd71d9ffc61aaac58c2b1ed70a2db13d1416fb9d3f5b891e5e4e2e97180fe22f8',
+          'status': 'Running'}]}}],
+     'engine_lbs': [{'ip': '10.48.0.208',
+       'name': 'engine-lb-74b4969486-t9dmq',
+       'status': 'Running',
+       'reason': None,
+       'details': []}],
+     'sidekicks': []}
 
 ## Interferences
 
@@ -268,30 +299,131 @@ Now that the pipeline is deployed and our Aloha model is in place, we'll perform
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
 
-
 ```python
 ## Demonstrate via straight infer
-
 import json
-
-file = open('./data-1.json')
-
-data = json.load(file)
-
-result = pipeline.infer(data)
-print(result)
+if arrowEnabled is True:
+    data = pd.read_json("./data/data_1.df.json")
+    result = pipeline.infer(data)
+else:
+    data = json.load(open("./data/data_1.json"))
+    result = pipeline.infer(data)
+display(result)
 ```
+
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.text_input</th>
+      <th>out.locky</th>
+      <th>out.ramnit</th>
+      <th>out.ramdo</th>
+      <th>out.matsnu</th>
+      <th>out.pykspa</th>
+      <th>out.gozi</th>
+      <th>out.cryptolocker</th>
+      <th>out.dircrypt</th>
+      <th>out.corebot</th>
+      <th>out.main</th>
+      <th>out.qakbot</th>
+      <th>out.banjori</th>
+      <th>out.suppobox</th>
+      <th>out.simda</th>
+      <th>out.kraken</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-02-22 21:46:46.880</td>
+      <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 16, 32, 23, 29, 32, 30, 19, 26, 17]</td>
+      <td>[0.011029261]</td>
+      <td>[0.0009985747]</td>
+      <td>[0.0062362333]</td>
+      <td>[0.010341614]</td>
+      <td>[0.008038961]</td>
+      <td>[2.0289332e-05]</td>
+      <td>[0.012099553]</td>
+      <td>[4.7591206e-05]</td>
+      <td>[0.98291475]</td>
+      <td>[0.997564]</td>
+      <td>[0.016155045]</td>
+      <td>[0.0015195842]</td>
+      <td>[1.3889844e-27]</td>
+      <td>[1.7933435e-26]</td>
+      <td>[0.00031977228]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 
 ```python
-# Demonstrate from infer_from_file
-result = pipeline.infer_from_file("./data-1.json")
+# Infer from file
+if arrowEnabled is True:
+    result = pipeline.infer_from_file('./data/data_1.df.json')
+    display(result)
+else:
+    result = pipeline.infer_from_file("./data/data_1.json")
+    display(result[0].data())
 ```
 
+{{<table "table table-bordered">}}
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.text_input</th>
+      <th>out.simda</th>
+      <th>out.locky</th>
+      <th>out.gozi</th>
+      <th>out.kraken</th>
+      <th>out.ramnit</th>
+      <th>out.cryptolocker</th>
+      <th>out.ramdo</th>
+      <th>out.corebot</th>
+      <th>out.matsnu</th>
+      <th>out.dircrypt</th>
+      <th>out.qakbot</th>
+      <th>out.banjori</th>
+      <th>out.suppobox</th>
+      <th>out.main</th>
+      <th>out.pykspa</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-02-22 21:48:06.749</td>
+      <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 16, 32, 23, 29, 32, 30, 19, 26, 17]</td>
+      <td>[1.7933435e-26]</td>
+      <td>[0.011029261]</td>
+      <td>[2.0289332e-05]</td>
+      <td>[0.00031977228]</td>
+      <td>[0.0009985747]</td>
+      <td>[0.012099553]</td>
+      <td>[0.0062362333]</td>
+      <td>[0.98291475]</td>
+      <td>[0.010341614]</td>
+      <td>[4.7591206e-05]</td>
+      <td>[0.016155045]</td>
+      <td>[0.0015195842]</td>
+      <td>[1.3889844e-27]</td>
+      <td>[0.997564]</td>
+      <td>[0.008038961]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
-```python
-result[0].data()
-```
 
 ### Batch Inference
 
@@ -304,35 +436,16 @@ We'll pipe the `data-25k.json` file through the `pipeline` deployment URL, and p
 
 When retrieving the pipeline inference URL through an external SDK connection, the External Inference URL will be returned.  This URL will function provided that the **Enable external URL inference endpoints** is enabled.  For more information, see the [Wallaroo Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/).
 
-
-```python
-pipeline.deploy()
-```
-
-
-
-
-<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 16:00:39.475003+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d5db505b-79c3-4965-b8b8-6d8ccc10130a, 9cb1b842-f28b-4a9b-b0c3-eeced6067582</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
-
-
-
-
 ```python
 external_url = pipeline._deployment._url()
 external_url
 ```
 
-
-
-
-    'https://YOUR PREFIX.api.YOUR SUFFIX/v1/api/pipelines/infer/sdkquickpipeline-44'
-
-
+    'https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/sdkquickpipeline-47'
 
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 
 For this example, the API connection details will be retrieved, then used to submit an inference request through the external inference URL retrieved earlier.
-
 
 ```python
 connection =wl.mlops().__dict__
@@ -340,39 +453,35 @@ token = connection['token']
 token
 ```
 
-
-
-
-    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWalFITFhMMThub3BXNWVHM2hMOVJ5MDZ1SFVWMko1dHREUkVxSGtBT2VzIn0.eyJleHAiOjE2NzE1NTIwNzcsImlhdCI6MTY3MTU1MjAxNywiYXV0aF90aW1lIjoxNjcxNTUxNzU5LCJqdGkiOiI3YWYyZGRmYy1mMzQyLTQwNTYtYWQzMS01Y2ZlOWRkNmY0ODUiLCJpc3MiOiJodHRwczovL3NxdWlzaHktd2FsbGFyb28tNjE4Ny5rZXljbG9hay53YWxsYXJvby5kZXYvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiJiNGQ0YTJmOC1lOGMzLTQ0ZDgtYTc1YS05YmZiMTI3NGNiMzciLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctaWRlbnRpdHktcHJvdmlkZXJzIiwidmlldy1yZWFsbSIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJiNGQ0YTJmOC1lOGMzLTQ0ZDgtYTc1YS05YmZiMTI3NGNiMzciLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMDFhNzk3ZjktMTM1Ny00NTA2LWE0ZDItOGFiOWM0NjgxMTAzIiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.lQupCrqaVlBRO0-Q0DT75hzzmRYQwpO4Dh8P5XzMKDoapsQuOEiuX0uq-E6WjjVN7sKRRwlVnWgP86PQkO3Yx706bdiWKXM6rXRQSv3ZlyuFt0S15MoH40gAJIOSZLi6BtZwSI6RVIdYeEnGmbv9RfBqt9iYBj6E7OYGu-2DlPp2Pai2i61383iVNmaIkStgukKLsFEPAfyGccxK01OyBF1XcaVrv0j4FHjtrQG2Sjcvqb9hDIYIEpFYwZ5j2qxDwLeyoHPhfpB6aVjjXhEUQYodHRyLsacmBnKpqfkwNHi-ZdxrwvU1wtUU7sf0miCAC8UEdLCTi00uW5ukOar_zw'
-
-
-
+    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjTGZaYmhVQWl0a210Z0VLV0l1NnczTWlXYmUzWjc3cHdqVjJ2QWM2WUdZIn0.eyJleHAiOjE2NzcxMDI1NDQsImlhdCI6MTY3NzEwMjQ4NCwiYXV0aF90aW1lIjoxNjc3MTAxMTM3LCJqdGkiOiI4ZWRmOTE3MS1kMzg0LTQ5MGItYjUyZi01MmI2NWViMjNjZTUiLCJpc3MiOiJodHRwczovL3NwYXJrbHktYXBwbGUtMzAyNi5rZXljbG9hay53YWxsYXJvby5jb21tdW5pdHkvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI1MGY3NWI3MC1kOWFmLTRmYTYtODVkZC1lMzU0MmVmYjE2N2IiLCJhY3IiOiIwIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiI1MGY3NWI3MC1kOWFmLTRmYTYtODVkZC1lMzU0MmVmYjE2N2IiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.ErXJsmadl3w3YleT29dZoo6TNoC8QOxMHVWHTyV9FVsUhIegpQlwTmVjHITtPu5aoX9EXW-lFOtz3-gduozU31sxwtPQG4DbWy62akxA2H11EepXg70AqzMZvFxeSp5blPI6p6miNxPTGsjLds6vlgZwd48IgDOg5RBSgS6uWCvMaj4AsvsUFuSxKuNkf_WDK10J_x8dq3osBGAytCUTwiF0ybPObVDBtg9UySv-PHQyUsJXLZl7DLsBOJ9fPy-Te4AHsKBjOg2UYL6KGzduQ_BIwDMb8obG2ILc2s2_rjnfZ_4sImp3A7DppohwjRNl18-caJhOSnVrYU0en_LDHw'
 
 ```python
-!curl -X POST {external_url} -H "Content-Type:application/json" -H "Authorization: Bearer {token}" --data @data-25k.json > curl_response.txt
+if arrowEnabled is True:
+    dataFile="./data/data_25k.df.json"
+    contentType="application/json; format=pandas-records"
+else:
+    dataFile="./data/data_25k.json"
+    contentType="application/json"
+```
+
+```python
+!curl -X POST {external_url} -H "Content-Type:{contentType}" -H "Authorization: Bearer {token}" --data @{dataFile} > curl_response.txt
 ```
 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
-    100 13.0M  100 10.1M  100 2886k   631k   174k  0:00:16  0:00:16 --:--:-- 2766k886k      0   330k  0:00:08  0:00:08 --:--:--     0
-
+    100 34.3M  100 16.3M  100 18.0M  1115k  1229k  0:00:15  0:00:15 --:--:-- 4153k
 
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged pipeline.deploy() will restart the inference engine in the same configuration as before.
 
-
 ```python
 pipeline.undeploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2022-12-20 15:56:22.974010+00:00</td></tr><tr><th>last_updated</th> <td>2022-12-20 16:00:39.475003+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d5db505b-79c3-4965-b8b8-6d8ccc10130a, 9cb1b842-f28b-4a9b-b0c3-eeced6067582</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
-
-
-
+<table><tr><th>name</th> <td>sdkquickpipeline</td></tr><tr><th>created</th> <td>2023-02-22 21:25:42.312061+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-22 21:46:29.910170+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>37acbb17-8a8c-4169-8286-662e9cba3245, 6cd41955-6456-4401-84c6-72eb0b6b550b, f00085b6-a7d6-4297-92b7-9f52139e18ab, 109e38ce-908e-4821-ae14-a210e81f4def</td></tr><tr><th>steps</th> <td>sdkquickmodel</td></tr></table>
+{{</table>}}
 
 ```python
 
