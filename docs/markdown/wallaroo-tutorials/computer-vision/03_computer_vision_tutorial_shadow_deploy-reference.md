@@ -22,6 +22,7 @@ This process will use the following steps:
 
 The first step will be to import our libraries.  Please check with **Step 00: Introduction and Setup** and verify that the necessary libraries and applications are added to your environment.
 
+
 ```python
 import torch
 import pickle
@@ -41,6 +42,7 @@ from CVDemoUtils import CVDemo
 
 Now we connect to the Wallaroo instance.  If you are connecting from a remote connection, set the `wallarooPrefix` and `wallarooSuffix` and use them to connect.  If the connection is from within the Wallaroo instance cluster, then just `wl = wallaroo.Client()` can be used.
 
+
 ```python
 # Login through local service
 
@@ -51,13 +53,9 @@ Now we connect to the Wallaroo instance.  If you are connecting from a remote co
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
 
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
-
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                 auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
                 auth_type="sso")
-
 ```
 
 ### Arrow Support
@@ -67,6 +65,7 @@ As of the 2023.1 release, Wallaroo provides support for DataFrame and Arrow for 
 If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
 
 The examples below will be shown in an arrow enabled environment.
+
 
 ```python
 import os
@@ -84,6 +83,7 @@ print(arrowEnabled)
 
 The following variables and methods are used later to create or connect to an existing workspace, pipeline, and model.  This example has both the resnet model, and a post process script.
 
+
 ```python
 workspace_name = 'shadowimageworkspacetest'
 pipeline_name = 'shadowimagepipelinetest'
@@ -92,6 +92,7 @@ control_model_file_name = 'models/mobilenet.pt.onnx'
 challenger_model_name = 'resnet50'
 challenger_model_file_name = 'models/frcnn-resnet.pt.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -115,6 +116,7 @@ def get_pipeline(name):
 
 The workspace will be created or connected to, and set as the default workspace for this session.  Once that is done, then all models and pipelines will be set in that workspace.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
@@ -125,13 +127,16 @@ wl.get_current_workspace()
 
 We will now create or connect to an existing pipeline as named in the variables above, then upload each of the models.
 
+
 ```python
 pipeline = get_pipeline(pipeline_name)
 ```
 
+
 ```python
 control =  wl.upload_model(control_model_name, control_model_file_name)
 ```
+
 
 ```python
 challenger = wl.upload_model(challenger_model_name, challenger_model_file_name)
@@ -141,24 +146,38 @@ challenger = wl.upload_model(challenger_model_name, challenger_model_file_name)
 
 For this step, rather than deploying each model into a separate step, both will be deployed into a single step as a Shadow Deploy step.  This will take the inference input data and process it through both pipelines at the same time.  The inference results for the control will be stored in it's `['outputs']` array, while the results for the challenger are stored the `['shadow_data']` array.
 
+
 ```python
 pipeline.add_shadow_deploy(control, [challenger])
 
 ```
 
+
+
+
 <table><tr><th>name</th> <td>shadowimagepipelinetest</td></tr><tr><th>created</th> <td>2023-03-02 19:37:25.349488+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:37:25.349488+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>474cfb6d-51fc-4e9c-923e-4ca553e73ccd</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>shadowimagepipelinetest</td></tr><tr><th>created</th> <td>2023-03-02 19:37:25.349488+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:38:07.386270+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5b41a12c-f643-47ec-8b9f-842e658fd45c, 474cfb6d-51fc-4e9c-923e-4ca553e73ccd</td></tr><tr><th>steps</th> <td>mobilenet</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -184,11 +203,14 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Prepare input image
 
 Next we will load a sample image and resize it to the width and height required for the object detector.
 
 We will convert the image to a numpy ndim array and add it do a dictionary
+
 
 ```python
 
@@ -215,6 +237,7 @@ dictData = {"tensor": npArray.tolist()}
 
 Now lets have the model detect the objects on the image by running inference and extracting the results 
 
+
 ```python
 startTime = time.time()
 infResults = pipeline.infer(dictData, timeout=60)
@@ -229,6 +252,7 @@ else:
 ### Extract Control Inference Results
 
 First we'll extract the inference result data for the control model and map it onto the image.
+
 
 ```python
 df = pd.DataFrame(columns=['classification','confidence','x','y','width','height'])
@@ -269,9 +293,11 @@ results = {
 cvDemo.drawAndDisplayDetectedObjectsWithClassification(results)
 ```
 
+
     
 ![png](03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_25_0.png)
     
+
 
 ### Display the Control Results
 
@@ -280,6 +306,7 @@ Here we will use the Wallaroo CVDemo helper class to draw the control model resu
 The full results will be displayed in a dataframe with columns representing the classification, confidence, and bounding boxes of the objects identified.
 
 Once extracted from the results we will want to reshape the flattened array into an array with 4 elements (x,y,width,height).
+
 
 ```python
 idx = 0 
@@ -291,7 +318,23 @@ df
 
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -676,12 +719,14 @@ df
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ### Display the Challenger Results
 
 Here we will use the Wallaroo CVDemo helper class to draw the challenger model results on the input image.
+
 
 ```python
 challengerBoxes = shadow_data['resnet50'][0]
@@ -718,13 +763,17 @@ results = {
 cvDemo.drawAndDisplayDetectedObjectsWithClassification(results)
 ```
 
+
     
 ![png](03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_29_0.png)
     
 
+
+
 ### Display Challenger Results
 
 The inference results for the objects detected by the challenger model will be displayed including the confidence values.  Once extracted from the results we will want to reshape the flattened array into an array with 4 elements (x,y,width,height).
+
 
 ```python
 idx = 0 
@@ -734,7 +783,23 @@ for idx in range(0,len(challengerClasses)):
 challengerDf
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -849,16 +914,22 @@ challengerDf
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>86 rows × 6 columns</p>
+</div>
+
+
 
 
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>shadowimagepipelinetest</td></tr><tr><th>created</th> <td>2023-03-02 19:37:25.349488+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:38:07.386270+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5b41a12c-f643-47ec-8b9f-842e658fd45c, 474cfb6d-51fc-4e9c-923e-4ca553e73ccd</td></tr><tr><th>steps</th> <td>mobilenet</td></tr></table>
-{{</table>}}
+
+
 
 ### Conclusion
 

@@ -37,6 +37,7 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
+
 ```python
 import wallaroo
 
@@ -55,12 +56,14 @@ The following will set the workspace, pipeline, model name, the model file name 
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
 
+
 ```python
 workspace_name = 'externalkerasautoconvertworkspace'
 pipeline_name = 'externalkerasautoconvertpipeline'
 model_name = 'externalsimple-sentiment-model'
 model_file_name = 'simple_sentiment_model.zip'
 sample_data = 'simple_sentiment_testdata.json'
+
 
 def get_workspace(name):
     workspace = None
@@ -83,6 +86,7 @@ def get_pipeline(name):
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
+
 ```python
 # SSO login through keycloak
 
@@ -102,6 +106,7 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
@@ -118,6 +123,7 @@ print(arrowEnabled)
 
 Set or create the workspace and pipeline based on the names configured earlier.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -127,12 +133,17 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `simple-sentiment-model`.  This includes the shape of the model.
+
 
 ```python
 model_columns = 100
@@ -150,7 +161,8 @@ model_conversion_type = ModelConversionSource.KERAS
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
-![converted model](/images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
+![converted model](./images/wallaroo-tutorials/wallaroo-keras-converted-model.png)
+
 
 ```python
 # converts and uploads model.
@@ -158,7 +170,12 @@ model_wl = wl.convert_model('simple_sentiment_model.zip', model_conversion_type,
 model_wl
 ```
 
+
+
+
     {'name': 'externalsimple-sentiment-model', 'version': '7ac5e3a0-62f4-406e-87bb-185dd4f26fb6', 'file_name': '2f0a2876-fe21-44ac-9e1a-ba2462c77692-converted.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2023, 2, 21, 18, 16, 26, 708440, tzinfo=tzutc())}
+
+
 
 ## Test Inference
 
@@ -168,16 +185,25 @@ With the model uploaded and converted, we can run a sample inference.
 
 We will add the model as a step into our pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:30.388009+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f7141b40-c610-42f7-873c-6fcb2b6e9ada, d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td>externalsimple-sentiment-model</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -199,9 +225,12 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Run a Test Inference
 
 We can run a test inference from the `simple_sentiment_testdata.json` file, then display just the results.
+
 
 ```python
 if arrowEnabled is True:
@@ -214,6 +243,7 @@ else:
     display(result[0].data())
 ```
 
+
     0    [0.094697624]
     1       [0.991031]
     2     [0.93407357]
@@ -221,14 +251,19 @@ else:
     4      [0.9964503]
     Name: out.dense, dtype: object
 
+
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>externalkerasautoconvertpipeline</td></tr><tr><th>created</th> <td>2023-02-21 18:16:17.818879+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-21 18:16:30.388009+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f7141b40-c610-42f7-873c-6fcb2b6e9ada, d0be28f6-4a0b-4b1c-9196-d809e8e21379</td></tr><tr><th>steps</th> <td>externalsimple-sentiment-model</td></tr></table>
-{{</table>}}
+
 

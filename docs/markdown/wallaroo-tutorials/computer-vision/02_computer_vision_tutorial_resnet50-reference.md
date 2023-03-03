@@ -17,6 +17,7 @@ The following tutorial demonstrates how to use a trained mobilenet model deploye
 
 The first step will be to import our libraries.  Please check with **Step 00: Introduction and Setup** and verify that the necessary libraries and applications are added to your environment.
 
+
 ```python
 import torch
 import pickle
@@ -39,6 +40,7 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
@@ -55,6 +57,7 @@ print(arrowEnabled)
 
 Now we connect to the Wallaroo instance.  If you are connecting from a remote connection, set the `wallarooPrefix` and `wallarooSuffix` and use them to connect.  If the connection is from within the Wallaroo instance cluster, then just `wl = wallaroo.Client()` can be used.
 
+
 ```python
 # Login through local service
 
@@ -65,18 +68,15 @@ Now we connect to the Wallaroo instance.  If you are connecting from a remote co
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
 
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
-
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                 auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
                 auth_type="sso")
-
 ```
 
 ### Set Variables
 
 The following variables and methods are used later to create or connect to an existing workspace, pipeline, and model.  This example has both the resnet model, and a post process script.
+
 
 ```python
 workspace_name = 'resnetworkspacetest'
@@ -84,6 +84,7 @@ pipeline_name = 'resnetnetpipelinetest'
 model_name = 'resnet50'
 model_file_name = 'models/frcnn-resnet.pt.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -107,6 +108,7 @@ def get_pipeline(name):
 
 The workspace will be created or connected to, and set as the default workspace for this session.  Once that is done, then all models and pipelines will be set in that workspace.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
@@ -116,6 +118,7 @@ wl.get_current_workspace()
 ### Create Pipeline and Upload Model
 
 We will now create or connect to an existing pipeline as named in the variables above.
+
 
 ```python
 pipeline = get_pipeline(pipeline_name)
@@ -127,14 +130,19 @@ resnet_model = wl.upload_model(model_name, model_file_name)
 
 With the model uploaded, we can add it is as a step in the pipeline, then deploy it.  Once deployed, resources from the Wallaroo instance will be reserved and the pipeline will be ready to use the model to perform inference requests. 
 
+
 ```python
 pipeline.add_model_step(resnet_model)
 
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>resnetnetpipelinetest</td></tr><tr><th>created</th> <td>2023-03-02 19:35:32.620147+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:36:04.824928+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3d79d2d8-369e-4781-b796-d8c0c7144736, 9e290e9a-a735-499e-b5d2-e9e6c4d7fe14</td></tr><tr><th>steps</th> <td>resnet50</td></tr></table>
-{{</table>}}
+
+
 
 ## Test the pipeline by running inference on a sample image
 
@@ -143,6 +151,7 @@ pipeline.deploy()
 Next we will load a sample image and resize it to the width and height required for the object detector.
 
 We will convert the image to a numpy ndim array and add it do a dictionary
+
 
 ```python
 #The size the image will be resized to
@@ -169,6 +178,7 @@ With that done, we can have the model detect the objects on the image by running
 
 **IMPORTANT NOTE**:  If necessary, add `timeout=60` to the `infer` method if more time is needed to upload the data file for the inference request.
 
+
 ```python
 startTime = time.time()
 infResults = pipeline.infer(dictData)
@@ -183,6 +193,7 @@ else:
 ### Draw the Inference Results
 
 With our inference results, we can take them and use the Wallaroo CVDemo class and draw them onto the original image.  The bounding boxes and the confidence value will only be drawn on images where the model returned a 50% confidence rate in the object's identity.
+
 
 ```python
 df = pd.DataFrame(columns=['classification','confidence','x','y','width','height'])
@@ -223,13 +234,16 @@ infResults = {
 cvDemo.drawAndDisplayDetectedObjectsWithClassification(infResults)
 ```
 
+
     
 ![png](02_computer_vision_tutorial_resnet50-reference_files/02_computer_vision_tutorial_resnet50-reference_22_0.png)
     
 
+
 ### Extract the Inference Information
 
 To show what is going on in the background, we'll extract the inference results create a dataframe with columns representing the classification, confidence, and bounding boxes of the objects identified.
+
 
 ```python
 idx = 0 
@@ -240,7 +254,23 @@ for idx in range(0,len(classes)):
 df
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -355,21 +385,23 @@ df
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>100 rows × 6 columns</p>
+</div>
+
 
 
 ### Undeploy the Pipeline
 
 With the inference complete, we can undeploy the pipeline and return the resources back to the Wallaroo instance.
 
+
 ```python
 pipeline.undeploy()    
 ```
 
+
+
+
 <table><tr><th>name</th> <td>resnetnetpipelinetest</td></tr><tr><th>created</th> <td>2023-03-02 19:35:32.620147+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:36:04.824928+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3d79d2d8-369e-4781-b796-d8c0c7144736, 9e290e9a-a735-499e-b5d2-e9e6c4d7fe14</td></tr><tr><th>steps</th> <td>resnet50</td></tr></table>
-{{</table>}}
 
-```python
 
-```

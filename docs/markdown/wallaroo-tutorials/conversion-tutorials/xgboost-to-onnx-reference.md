@@ -16,6 +16,7 @@ This tutorial provides the following:
 
 The first step is to import our libraries we will be using.
 
+
 ```python
 import onnx
 import pickle
@@ -31,6 +32,7 @@ The following variables are required to be known before the process can be start
 * **number of columns**:  The number of columns used by the model.
 * **TARGET_OPSET**: Verify the TARGET_OPSET value taht will be used in the conversion process matches the current [Wallaroo model uploads requirements](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-model-management/#upload-models-to-a-workspace).
 
+
 ```python
 # set the number of columns
 ncols = 18
@@ -40,6 +42,7 @@ TARGET_OPSET = 15
 ### Load the XGBoost Model
 
 Next we will load our model that has been saved in the `pickle` format and unpickle it.
+
 
 ```python
 # load the xgboost model
@@ -71,6 +74,7 @@ convert_xgboost({XGBoost Model},
 
 With all of our data in place we can now convert our XBBoost model to ONNX using the `convert_xgboost` method.
 
+
 ```python
 onnx_model_converted = convert_xgboost(xgboost_model, 'tree-based classifier',
                              [('input', FloatTensorType([None, ncols]))],
@@ -81,9 +85,11 @@ onnx_model_converted = convert_xgboost(xgboost_model, 'tree-based classifier',
 
 With the model converted to ONNX, we can now save it and use it in a Wallaroo pipeline.
 
+
 ```python
 onnx.save_model(onnx_model_converted, "housing_model_xgb.onnx")
 ```
+
 
 ```python
 

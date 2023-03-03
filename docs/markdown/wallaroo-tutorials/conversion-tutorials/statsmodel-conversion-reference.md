@@ -34,6 +34,7 @@ The following steps will perform the following:
 
 The first step is to import the libraries that we will need.
 
+
 ```python
 import json
 import os
@@ -51,6 +52,7 @@ pd.set_option('display.max_colwidth', None)
 ### Initialize connection
 
 Start a connect to the Wallaroo instance and save the connection into the variable `wl`.
+
 
 ```python
 # Login through local Wallaroo instance
@@ -75,12 +77,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -89,9 +92,11 @@ print(arrowEnabled)
 
     True
 
+
 ### Set Configurations
 
 The following will set the workspace, model name, and pipeline that will be used for this example.  If the workspace or pipeline already exist, then they will assigned for use in this example.  If they do not exist, they will be created based on the names listed below.
+
 
 ```python
 workspace_name = 'bikedayevalworkspace'
@@ -103,6 +108,7 @@ model_file_name = 'bike_day_model.pkl'
 ## Set the Workspace and Pipeline
 
 This sample code will create or use the existing workspace `bike-day-workspace` as the current workspace.
+
 
 ```python
 def get_workspace(name):
@@ -129,14 +135,19 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 ### Upload Pickled Package Statsmodel Model
 
 Upload the statsmodel stored into the pickled package `bike_day_model.pkl`.  See the Notebook `train-statsmodel.ipynb` for more details on creating this package.
 
 Note that this package is being specified as a `python` configuration.
+
 
 ```python
 file_name = "bike_day_model.pkl"
@@ -148,23 +159,37 @@ bike_day_model = wl.upload_model(model_name, model_file_name).configure(runtime=
 
 We will now add the uploaded model as a step for the pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(bike_day_model)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:16:18.874015+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>00e53810-6278-463b-b1c7-6a63f25fd1ef, 91b1dd51-2adb-4003-ab68-91a8415210c1, 14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td>bikedaymodel</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -186,9 +211,12 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Run Inference
 
 Perform an inference from the evaluation data JSON file `bike_day_eval.json`.
+
 
 ```python
 if arrowEnabled is True:
@@ -198,6 +226,7 @@ else:
 display(results)
 ```
 
+
     [{'forecast': [1882.378455403016,
        2130.6079157429585,
        2340.840053800859,
@@ -206,14 +235,19 @@ display(results)
        1509.1792126514365,
        2431.183892393437]}]
 
+
 ### Undeploy the Pipeline
 
 Undeploy the pipeline and return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>bikedayevalpipeline</td></tr><tr><th>created</th> <td>2023-02-27 20:15:07.848652+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 20:15:11.565861+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>91b1dd51-2adb-4003-ab68-91a8415210c1, 14a140e1-640b-4cf5-9d45-dd27fe00ad80</td></tr><tr><th>steps</th> <td>bikedaymodel</td></tr></table>
-{{</table>}}
+
 

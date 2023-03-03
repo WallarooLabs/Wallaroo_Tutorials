@@ -31,6 +31,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -40,6 +41,7 @@ import pandas as pd
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Client connection from local Wallaroo instance
@@ -67,12 +69,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -80,6 +83,7 @@ print(arrowEnabled)
 ```
 
     True
+
 
 ## Create the Workspace
 
@@ -89,12 +93,14 @@ The model to be uploaded and used for inference will be labeled as `urldemomodel
 
 Once complete, the workspace will be created or, if already existing, set to the current workspace to host the pipelines and models.
 
+
 ```python
 workspace_name = 'urldemoworkspace'
 pipeline_name = 'urldemopipeline'
 model_name = 'urldemomodel'
 model_file_name = './alohacnnlstm.zip'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -114,6 +120,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -123,20 +130,31 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
+
 
 ```python
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'urldemoworkspace', 'id': 14, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T17:55:11.802586+00:00', 'models': [], 'pipelines': [{'name': 'urldemopipeline', 'create_time': datetime.datetime(2023, 2, 27, 17, 55, 12, 813456, tzinfo=tzutc()), 'definition': '[]'}]}
+
+
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
+
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -147,19 +165,28 @@ Now that we have a model that we want to use we will create a deployment for it.
 
 We will tell the deployment we are using a tensorflow model and give the deployment name and the configuration we want for the deployment.
 
+
 ```python
 pipeline.add_model_step(model)
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:56:25.368424+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-{{</table>}}
+
+
 
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -181,6 +208,8 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ## Interferences
 
 ### Infer 1 row
@@ -188,6 +217,7 @@ pipeline.status()
 Now that the pipeline is deployed and our Aloha model is in place, we'll perform a smoke test to verify the pipeline is up and running properly.  We'll use the `infer_from_file` command to load a single encoded URL into the inference engine and print the results back out.
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
+
 
 ```python
 if arrowEnabled is True:
@@ -197,7 +227,21 @@ else:
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -246,7 +290,7 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Batch Inference
@@ -254,6 +298,7 @@ display(result)
 Now that our smoke test is successful, we will retrieve the Internal Deployment URL and perform an inference by submitting our data through a `curl` command as detailed below.
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
+
 
 ```python
 inference_url = pipeline._deployment._url()
@@ -266,6 +311,8 @@ print(token)
     https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/urldemopipeline-11
     eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrTzQ2VjhoQWZDZTBjWU1ETkZobEZWS25HSC1HZy1xc1JkSlhwTTNQYjBJIn0.eyJleHAiOjE2Nzc1MjA3MDIsImlhdCI6MTY3NzUyMDY0MiwiYXV0aF90aW1lIjoxNjc3NTE4MzEyLCJqdGkiOiI1NTdkZDAxYi1jNTVkLTQ0MDQtYTI5ZC01MmRlOWU0MTc2NTciLCJpc3MiOiJodHRwczovL2RvYy10ZXN0LmtleWNsb2FrLndhbGxhcm9vY29tbXVuaXR5Lm5pbmphL2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6IjQzNWRhOTA1LTMxZTItNGU3NC1iNDIzLTQ1YzM4ZWRiNTg4OSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNkay1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYWNlMWEzMGQtNjZiYy00NGQ5LWJkMGEtYzYyMzc0NzhmZGFhIiwiYWNyIjoiMCIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhY2UxYTMwZC02NmJjLTQ0ZDktYmQwYS1jNjIzNzQ3OGZkYWEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjQzNWRhOTA1LTMxZTItNGU3NC1iNDIzLTQ1YzM4ZWRiNTg4OSIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbInVzZXIiXSwieC1oYXN1cmEtdXNlci1ncm91cHMiOiJ7fSJ9LCJuYW1lIjoiSm9obiBIYW5zYXJpY2siLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSIsImdpdmVuX25hbWUiOiJKb2huIiwiZmFtaWx5X25hbWUiOiJIYW5zYXJpY2siLCJlbWFpbCI6ImpvaG4uaHVtbWVsQHdhbGxhcm9vLmFpIn0.QTTxK6rE-SZIBR7z7hN1aIsGSsPYmBmuI-KxsmwzATjrCtOLO3ObE5YtBye3ITXkG4NAVN3c2llTSzrYLDeBMcsz17_T8UdSpwOVsDeTko-muhzQkcMnUrXGLsJDiOofS3ZT-_S66-IrCfGUD2D1Gj7ufbAnMipyTuE69L1QBEdoszcRfTR-epCqniayB3s6SkhBSgjmgvJcmMSIHxj3zg0siZAjQoxM6_E5GO_o__91p7FiADa0FH3xCmT9iOMM1NcF7FheBNX7xCXBBWekiy9bpB0BQISvMi1IcVCGeMZnTyO1o9ZgFbV5MG-SoKFyZrYUmhBf-JoRjecv1FYgIg
 
+
+
 ```python
 if arrowEnabled is True:
     dataFile="./data/data_25k.df.json"
@@ -275,6 +322,7 @@ else:
     contentType="application/json"
 ```
 
+
 ```python
 !curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
@@ -283,16 +331,21 @@ else:
                                      Dload  Upload   Total   Spent    Left  Speed
     100 34.3M  100 16.3M  100 18.0M   895k   988k  0:00:18  0:00:18 --:--:--  538k
 
+
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.
 
 **IMPORTANT NOTE**:  For the External Pipeline Deployment URL Tutorial, this pipeline will have to be deployed to make the External Deployment URL available.
 
+
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:56:25.368424+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-{{</table>}}
+
 

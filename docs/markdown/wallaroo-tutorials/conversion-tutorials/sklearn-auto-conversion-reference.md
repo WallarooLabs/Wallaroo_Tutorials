@@ -37,6 +37,7 @@ Wallaroo supports the following model versions:
 
 Import the libraries that will be used for the auto-conversion process.
 
+
 ```python
 import pickle
 import json
@@ -46,6 +47,7 @@ import wallaroo
 from wallaroo.ModelConversion import ConvertSKLearnArguments, ConvertXGBoostArgs, ModelConversionSource, ModelConversionInputType
 from wallaroo.object import EntityNotFoundError
 ```
+
 
 ```python
 # Verify the version of XGBoost used to generate the models
@@ -62,11 +64,13 @@ print(sklearn.__version__)
     1.6.2
     1.1.2
 
+
 The following code is used to either connect to an existing workspace or to create a new one.  For more details on working with workspaces, see the [Wallaroo Workspace Management Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-workspace-management/).
 
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance.
+
 
 ```python
 # Client connection from local Wallaroo instance
@@ -87,10 +91,12 @@ wl = wallaroo.Client()
 
 We'll connect or create the workspace `testautoconversion` and use it for our model testing.
 
+
 ```python
 workspace_name = 'testautoconversion'
 
 ```
+
 
 ```python
 def get_workspace(name):
@@ -103,6 +109,7 @@ def get_workspace(name):
     return workspace
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -111,7 +118,12 @@ wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'testautoconversion', 'id': 20, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T20:05:40.6269+00:00', 'models': [], 'pipelines': []}
+
+
 
 ### Set the Model Conversion Arguments
 
@@ -119,6 +131,7 @@ We'll create two different configurations, one for each of our models:
 
 * `sklearn_model_conversion_args`: Used for our sklearn model.
 * `xgboost_model_converstion_args`: Used for our XGBoost model.
+
 
 ```python
 # The number of columns
@@ -145,6 +158,7 @@ xgboost_model_conversion_type = ModelConversionSource.XGBOOST
 
 The `convert_model` method converts the model using the arguments, and uploads it into the current workspace - in this case, `testconversion`.  Once complete, we can run `get_current_workspace` to verify that the models were uploaded.
 
+
 ```python
 # converts and uploads the sklearn model.
 wl.convert_model('sklearn-linear-model.pickle', sklearn_model_conversion_type, sklearn_model_conversion_args)
@@ -153,11 +167,21 @@ wl.convert_model('sklearn-linear-model.pickle', sklearn_model_conversion_type, s
 wl.convert_model('xgb_reg.pickle', xgboost_model_conversion_type, xgboost_model_conversion_args)
 ```
 
+
+
+
     {'name': 'xgbtestreg', 'version': '42779f3a-e874-4f8d-b985-822f2128a954', 'file_name': 'bffa90a2-5a27-4e77-a2f4-cd0f68f99d24-converted.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc())}
+
+
+
 
 ```python
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'testautoconversion', 'id': 20, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T20:05:40.6269+00:00', 'models': [{'name': 'sklearntest', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 35, 745445, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 2, 27, 20, 11, 35, 745445, tzinfo=tzutc())}, {'name': 'xgbtestreg', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 2, 27, 20, 11, 36, 906580, tzinfo=tzutc())}], 'pipelines': []}
+
 

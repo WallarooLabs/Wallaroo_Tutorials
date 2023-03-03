@@ -63,22 +63,22 @@ The following instructions can be used to upload this tutorial and it's files in
 1. From the Azure Databricks dashboard, select **Repos**.
 1. Select where to place the repo, then select **Add Repo**.
  
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-select-add-repo.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-select-add-repo.png)
 
 1. Set the following:
  
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-add-repo-settings.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-add-repo-settings.png)
 
     1. **Create repo by cloning a Git repository**:  Uncheck
     1. **Repository name**:  Set any name based on the Databricks standard (no spaces, etc).
     1. Select **Create Repo**.
 1. Select the new tutorial, then from the repo menu dropdown, select **Import**.
  
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-select-import.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-select-import.png)
 
 1. Select the files to upload.  For this example, the following files are uploaded:
 
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-import-files.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-import-files.png)
 
     1. `ccfraud.onnx`:  A pretrained model from the Machine Learning Group's demonstration on [Credit Card Fraud detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
     1. Sample inference test data:
@@ -98,15 +98,15 @@ To upload model files to Azure Databricks using DBFS:
 1. From the Azure Databricks dashboard, select **Data**.
 1. Select **Add->Add data**.
 
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_add_data.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_add_data.png)
  
 1. Select **DBFS**.
 
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_dbfs.png)
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_dbfs.png)
 
 1. Select **Upload File** and enter the following:
  
-    ![](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_upload_files.png) 
+    ![](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_upload_files.png) 
 
     1. **DBFS Target Directory** (*Optional*): Optional step:  Set the directory where the files will be uploaded.
 1. Select the files to upload.  Note that each file will be given a location and they can be access with `/dbfs/PATH`.  For example, the file `alohacnnlstm.zip` uploaded to the directory `aloha` would be referenced with `/dbfs/FileStore/tables/aloha/alohacnnlstm.zip
@@ -133,20 +133,22 @@ Once run, the `wallaroo.Client` command provides a URL to grant the SDK permissi
 
 Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-![Wallaroo Login](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png)
+![Wallaroo Login](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png)
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-![Device Registration](/images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
+![Device Registration](./images/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png)
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
 
 Replace `YOUR PREFIX` and `YOUR SUFFIX` with the DNS prefix and suffix for the Wallaroo instance.  For more information, see the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 ```
+
 
 ```python
 # SSO login through keycloak
@@ -169,12 +171,14 @@ We will create a workspace to work in and call it the `databricksazuresdkworkspa
 
 Adjust file names and locations based on your requirements.
 
+
 ```python
 workspace_name = 'databricksazuresdkworkspace'
 pipeline_name = 'databricksazuresdkpipeline'
 model_name = 'ccfraudmodel'
 model_file_name = './ccfraud.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -194,6 +198,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -203,16 +208,20 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
 <table><tr><th>name</th> <td>databricksazuresdkpipeline</td></tr><tr><th>created</th> <td>2023-02-07 15:55:40.574745+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-07 15:55:40.574745+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ca6d6ea6-2e45-4795-9253-5c40e8483dc9</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
+
 
 ```python
 wl.get_current_workspace()
 ```
 
+
     Out[6]: {'name': 'databricksazuresdkworkspace', 'id': 8, 'archived': False, 'created_by': '3547815c-b48d-4e69-bfbd-fff9d525c5d7', 'created_at': '2023-02-07T15:55:39.548497+00:00', 'models': [], 'pipelines': [{'name': 'databricksazuresdkpipeline', 'create_time': datetime.datetime(2023, 2, 7, 15, 55, 40, 574745, tzinfo=tzutc()), 'definition': '[]'}]}
+
 
 ### Upload the Models
 
@@ -220,12 +229,15 @@ Now we will upload our model.
 
 **IMPORTANT NOTE**:  If using DBFS, use the file path format such as `/dbfs/FileStore/shared_uploads/YOURWORKSPACE/file` format rather than the `dbfs:` format.
 
+
 ```python
 model = wl.upload_model(model_name, model_file_name).configure()
 model
 ```
 
+
     Out[15]: {'name': 'ccfraudmodel', 'version': 'ccb488dd-36ed-4aaf-99cf-9a16bd3654db', 'file_name': 'ccfraud.onnx', 'image_path': None, 'last_update_time': datetime.datetime(2023, 2, 7, 16, 1, 0, 303545, tzinfo=tzutc())}
+
 
 ### Deploy a Model
 
@@ -233,25 +245,31 @@ Now that we have a model that we want to use we will create a deployment for it.
 
 To do this, we'll create our pipeline that can ingest the data, pass the data to our CCFraud model, and give us a final output.  We'll call our pipeline `databricksazuresdkpipeline`, then deploy it so it's ready to receive data.  The deployment process usually takes about 45 seconds.
 
+
 ```python
 pipeline.add_model_step(model)
 ```
 
+
 <table><tr><th>name</th> <td>databricksazuresdkpipeline</td></tr><tr><th>created</th> <td>2023-02-07 15:55:40.574745+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-07 15:57:24.803281+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>971f9db7-1b73-4e72-8cdb-cfa2d5a9ddd7, 6c1028c4-3ca7-47b0-b3a6-834d12b57fc9, ca6d6ea6-2e45-4795-9253-5c40e8483dc9</td></tr><tr><th>steps</th> <td>ccfraudmodel</td></tr></table>
-{{</table>}}
+
+
 
 ```python
 pipeline.deploy()
 ```
 
+
 <table><tr><th>name</th> <td>databricksazuresdkpipeline</td></tr><tr><th>created</th> <td>2023-02-07 15:55:40.574745+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-07 16:04:35.891487+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>091eed0f-8984-4753-9316-0fbbf68bb398, bb701da9-440b-4ce6-8b92-36446347e85c, 971f9db7-1b73-4e72-8cdb-cfa2d5a9ddd7, 6c1028c4-3ca7-47b0-b3a6-834d12b57fc9, ca6d6ea6-2e45-4795-9253-5c40e8483dc9</td></tr><tr><th>steps</th> <td>ccfraudmodel</td></tr></table>
-{{</table>}}
+
 
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 pipeline.status()
 ```
+
 
     Out[23]: {'status': 'Running',
      'details': [],
@@ -273,31 +291,38 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
 ## Interferences
 
 ### Infer 1 row
 
 Now that the pipeline is deployed and our CCfraud model is in place, we'll perform a smoke test to verify the pipeline is up and running properly.  We'll use the `infer_from_file` command to load a single transaction and determine if it is flagged for fraud.  If it returns correctly, a small value should be returned indicating a low likelihood that the transaction was fraudulent.
 
+
 ```python
 result = pipeline.infer_from_file("./ccfraud_smoke_test.json")
 
 ```
 
+
 ```python
 result[0].data()
 ```
 
+
     Out[25]: [array([[0.00149742]])]
+
 
 ### Batch Inference
 
 Now that our smoke test is successful, let's really give it some data.  We'll use the `cc_data_1k.json` file that contains 1,000 inferences to be performed.
 
+
 ```python
 result = pipeline.infer_from_file("./cc_data_1k.json")
 result
 ```
+
 
     Out[26]: [InferenceResult({'check_failures': [],
       'elapsed': 245003,
@@ -1219,9 +1244,11 @@ result
       'shadow_data': {},
       'time': 1675785912268})]
 
+
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged pipeline.deploy() will restart the inference engine in the same configuration as before.
+
 
 ```python
 pipeline.undeploy()

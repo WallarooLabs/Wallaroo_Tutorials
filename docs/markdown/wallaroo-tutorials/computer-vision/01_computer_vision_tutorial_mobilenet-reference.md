@@ -17,6 +17,7 @@ The following tutorial demonstrates how to use a trained mobilenet model deploye
 
 The first step will be to import our libraries.  Please check with **Step 00: Introduction and Setup** and verify that the necessary libraries and applications are added to your environment.
 
+
 ```python
 import torch
 import pickle
@@ -41,6 +42,7 @@ pd.set_option('display.max_colwidth', None)
 
 Now we connect to the Wallaroo instance.  If you are connecting from a remote connection, set the `wallarooPrefix` and `wallarooSuffix` and use them to connect.  If the connection is from within the Wallaroo instance cluster, then just `wl = wallaroo.Client()` can be used.
 
+
 ```python
 # Login through local service
 
@@ -51,16 +53,9 @@ Now we connect to the Wallaroo instance.  If you are connecting from a remote co
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
 
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
-
-# wallarooPrefix = "sparkly-apple-3026"
-# wallarooSuffix = "wallaroo.community"
-
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                 auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
                 auth_type="sso")
-
 ```
 
 ### Arrow Support
@@ -70,6 +65,7 @@ As of the 2023.1 release, Wallaroo provides support for DataFrame and Arrow for 
 If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
 
 The examples below will be shown in an arrow enabled environment.
+
 
 ```python
 import os
@@ -85,9 +81,11 @@ print(arrowEnabled)
 
     True
 
+
 ### Set Variables
 
 The following variables and methods are used later to create or connect to an existing workspace, pipeline, and model.
+
 
 ```python
 workspace_name = 'mobilenetworkspacetest'
@@ -95,6 +93,7 @@ pipeline_name = 'mobilenetpipeline'
 model_name = 'mobilenet'
 model_file_name = 'models/mobilenet.pt.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -118,17 +117,24 @@ def get_pipeline(name):
 
 The workspace will be created or connected to, and set as the default workspace for this session.  Once that is done, then all models and pipelines will be set in that workspace.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'mobilenetworkspacetest', 'id': 9, 'archived': False, 'created_by': 'ca7d7043-8e94-42d5-9f3a-8f55c2e42814', 'created_at': '2023-03-02T19:21:36.309503+00:00', 'models': [{'name': 'mobilenet', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 3, 2, 19, 21, 50, 515472, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 3, 2, 19, 21, 50, 515472, tzinfo=tzutc())}], 'pipelines': [{'name': 'mobilenetpipeline', 'create_time': datetime.datetime(2023, 3, 2, 19, 21, 51, 863552, tzinfo=tzutc()), 'definition': '[]'}]}
+
+
 
 ### Create Pipeline and Upload Model
 
 We will now create or connect to an existing pipeline as named in the variables above.
+
 
 ```python
 pipeline = get_pipeline(pipeline_name)
@@ -139,18 +145,24 @@ mobilenet_model = wl.upload_model(model_name, model_file_name)
 
 With the model uploaded, we can add it is as a step in the pipeline, then deploy it.  Once deployed, resources from the Wallaroo instance will be reserved and the pipeline will be ready to use the model to perform inference requests. 
 
+
 ```python
 pipeline.add_model_step(mobilenet_model)
 
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>mobilenetpipeline</td></tr><tr><th>created</th> <td>2023-03-02 19:21:51.863552+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:32:02.206502+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6682b775-3c04-4071-b643-8d52b3c06e56, baf226fc-bc5e-4c52-9962-d7b87c987ad3, 48280b55-1285-41e3-a1c6-3fbe05ee4d3a</td></tr><tr><th>steps</th> <td>mobilenet</td></tr></table>
-{{</table>}}
+
+
 
 ### Prepare input image
 
 Next we will load a sample image and resize it to the width and height required for the object detector.  Once complete, it the image will be converted to a numpy ndim array and added to a dictionary.
+
 
 ```python
 
@@ -174,6 +186,7 @@ dictData = {"tensor": npArray.tolist()}
 
 ```
 
+
 ```python
 # test turning this into a dataframe
 
@@ -184,6 +197,7 @@ dataframedata = pd.DataFrame.from_records(dictData)
 ### Run Inference
 
 With that done, we can have the model detect the objects on the image by running an inference through the pipeline, and storing the results for the next step.
+
 
 ```python
 startTime = time.time()
@@ -199,6 +213,7 @@ else:
 ### Draw the Inference Results
 
 With our inference results, we can take them and use the Wallaroo CVDemo class and draw them onto the original image.  The bounding boxes and the confidence value will only be drawn on images where the model returned a 90% confidence rate in the object's identity.
+
 
 ```python
 df = pd.DataFrame(columns=['classification','confidence','x','y','width','height'])
@@ -238,13 +253,16 @@ infResults = {
 image = cvDemo.drawAndDisplayDetectedObjectsWithClassification(infResults)
 ```
 
+
     
 ![png](01_computer_vision_tutorial_mobilenet-reference_files/01_computer_vision_tutorial_mobilenet-reference_22_0.png)
     
 
+
 ### Extract the Inference Information
 
 To show what is going on in the background, we'll extract the inference results create a dataframe with columns representing the classification, confidence, and bounding boxes of the objects identified.
+
 
 ```python
 idx = 0 
@@ -254,7 +272,23 @@ for idx in range(0,len(classes)):
 df
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -549,27 +583,22 @@ df
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ### Undeploy the Pipeline
 
 With the inference complete, we can undeploy the pipeline and return the resources back to the Wallaroo instance.
 
+
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>mobilenetpipeline</td></tr><tr><th>created</th> <td>2023-03-02 19:21:51.863552+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 19:32:02.206502+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6682b775-3c04-4071-b643-8d52b3c06e56, baf226fc-bc5e-4c52-9962-d7b87c987ad3, 48280b55-1285-41e3-a1c6-3fbe05ee4d3a</td></tr><tr><th>steps</th> <td>mobilenet</td></tr></table>
-{{</table>}}
 
-```python
-wl.list_pipelines()
-```
 
-<table><tr><th>name</th><th>created</th><th>last_updated</th><th>deployed</th><th>tags</th><th>versions</th><th>steps</th></tr><tr><td>resnetnetpipelinetest</td><td>2023-02-Mar 19:35:32</td><td>2023-02-Mar 19:36:04</td><td>True</td><td></td><td>3d79d2d8-369e-4781-b796-d8c0c7144736, 9e290e9a-a735-499e-b5d2-e9e6c4d7fe14</td><td>resnet50</td></tr><tr><td>resnetnetpipeline</td><td>2023-02-Mar 19:22:30</td><td>2023-02-Mar 19:23:02</td><td>False</td><td></td><td>2cccf77e-80ab-4c25-a619-95bfa523ce43, 7b89ebad-9a09-4f92-9833-5d01744ad766</td><td>resnet50</td></tr><tr><td>mobilenetpipeline</td><td>2023-02-Mar 19:21:51</td><td>2023-02-Mar 19:32:02</td><td>False</td><td></td><td>6682b775-3c04-4071-b643-8d52b3c06e56, baf226fc-bc5e-4c52-9962-d7b87c987ad3, 48280b55-1285-41e3-a1c6-3fbe05ee4d3a</td><td>mobilenet</td></tr><tr><td>mobilenetpipeline</td><td>2023-02-Mar 18:24:29</td><td>2023-02-Mar 18:35:47</td><td>False</td><td></td><td>13d03d7d-fbef-4887-a944-f1a002367de3, 60dc664f-46a5-4a2f-8097-161aedbe9dee, a1321ec0-60ad-4196-abe3-fa3d896016dc</td><td>mobilenet</td></tr><tr><td>mlflowstatsmodelpipeline</td><td>2023-02-Mar 18:06:43</td><td>2023-02-Mar 18:06:48</td><td>False</td><td></td><td>79d6eba9-5eb6-4d70-9676-dc2db997a7ea, 7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td><td>mlflowstatmodels</td></tr><tr><td>rlhxccfraudpipeline</td><td>2023-01-Mar 21:30:42</td><td>2023-01-Mar 21:54:07</td><td>False</td><td></td><td>71a113c2-efe9-4210-a3f7-e9502fadc410, c39f9574-1cc1-4413-81df-529afed73936, b167abbe-2e8a-4b3c-bd50-29cd9b34f019</td><td>rlhxccfraudmodel</td></tr><tr><td>cc-shadow</td><td>2023-01-Mar 21:02:41</td><td>2023-01-Mar 21:02:47</td><td>False</td><td></td><td>fc461810-13ce-4040-baf1-de3af2ec806b, 9e917ad1-65b4-4169-bf97-d81ec1a910e3</td><td>ccfraudlstm</td></tr><tr><td>anomaly-housing-pipeline3</td><td>2023-01-Mar 20:56:35</td><td>2023-01-Mar 20:56:36</td><td>True</td><td></td><td>74b332f9-f743-4369-aff3-117ac931a041, afd6c45f-6db5-415d-a033-f45e869a7bd5</td><td>anomaly-housing-model</td></tr></table>
-{{</table>}}
-
-```python
-
-```

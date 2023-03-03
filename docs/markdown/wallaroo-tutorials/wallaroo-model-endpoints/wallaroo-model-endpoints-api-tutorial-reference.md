@@ -50,6 +50,7 @@ This would create the following API endpoint:
 
 For this example, a connection to the Wallaroo SDK is used.  This will be used to retrieve the JWT token as describe above.  Update `wallarooPrefix = "YOUR PREFIX"` and `wallarooSuffix = "YOUR SUFFIX"` to match the Wallaroo instance used for this demonstration.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -64,6 +65,7 @@ import json
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Client connection from local Wallaroo instance
@@ -80,6 +82,7 @@ wl = wallaroo.Client()
 #                     auth_type="sso")
 ```
 
+
 ```python
 APIURL=f"https://{wallarooPrefix}.api.{wallarooSuffix}/v1/api"
 ```
@@ -92,12 +95,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -106,9 +110,11 @@ print(arrowEnabled)
 
     True
 
+
 ## Verify Pipeline Deployed
 
 We're using the same pipeline from the Internal Pipeline Inference URL Tutorial.  We'll deploy it via the SDK to verify it is running for the later tests.
+
 
 ```python
 workspace_name = 'urldemoworkspace'
@@ -142,8 +148,12 @@ pipeline
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:59:03.244180+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6db21694-9e11-42cb-914c-1528549cedca, 930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-{{</table>}}
+
+
 
 ### Get External Inference URL
 
@@ -158,6 +168,7 @@ In this example, a list of the workspaces will be retrieved.  Based on the setup
 The External Inference URL will be stored as a variable for the next step.
 
 **Modify these values to match the ones used in the Internal Pipeline Deployment URL Tutorial.**
+
 
 ```python
 # Retrieve the token
@@ -185,11 +196,13 @@ response = requests.post(apiRequest, json=data, headers=headers, verify=True)
 workspaces = response.json()
 ```
 
+
 ```python
 workspaceList = workspaces['workspaces']
 #print(workspaceList)
 workspaceId = list(filter(lambda x:x["name"]==workspaceName,workspaceList))[0]['id']
 ```
+
 
 ```python
 # Retrieve the token
@@ -215,13 +228,19 @@ externalUrl = response['url']
 externalUrl
 ```
 
+
+
+
     'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/urldemopipeline-11'
+
+
 
 ### Perform Inference Through External URL
 
 The inference can now be performed through the External Inference URL.  This URL will accept the same inference data file that is used with the Wallaroo SDK, or with an Internal Inference URL as used in the Internal Pipeline Inference URL Tutorial.
 
 For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request through the data file `data-1.json`.
+
 
 ```python
 # Retrieve the token
@@ -256,16 +275,22 @@ print(printResponse[0:300])
 
     [{"time": 1677520761514, "in": {"text_input": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 16, 32, 23, 29, 32, 30, 19, 26, 17]}, "out": {"corebot": [0.9829148], "banjori": [0.0015195871], "suppobox": [1.3889898e-27], "ma
 
+
 ### Undeploy the Pipeline
 
 With the tutorial complete, we'll use the SDK to undeploy the pipeline and return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:59:03.244180+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6db21694-9e11-42cb-914c-1528549cedca, 930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-{{</table>}}
+
+
 
 Wallaroo supports the ability to perform inferences through the SDK and through the API for each deployed pipeline.  For more information on how to use Wallaroo, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai) for full details.
 

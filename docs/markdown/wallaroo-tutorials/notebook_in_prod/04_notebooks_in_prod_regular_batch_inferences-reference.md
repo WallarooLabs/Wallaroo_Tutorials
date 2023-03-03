@@ -38,6 +38,7 @@ This process will use the following steps:
 
 Connect to the Wallaroo instance and set the `housepricing` workspace as the current workspace.
 
+
 ```python
 import json
 import pickle
@@ -53,6 +54,7 @@ from wallaroo_client import get_workspace
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Login through local Wallaroo instance
@@ -77,12 +79,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -90,6 +93,8 @@ print(arrowEnabled)
 ```
 
     True
+
+
 
 ```python
 def get_workspace(name):
@@ -109,6 +114,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 new_workspace = get_workspace("housepricing")
 _ = wl.set_current_workspace(new_workspace)
@@ -118,17 +124,23 @@ _ = wl.set_current_workspace(new_workspace)
 
 Deploy the `housing-pipe` workspace established in Stage 3: Deploy the Model in Wallaroo (`03_deploy_model.ipynb`).
 
+
 ```python
 pipeline = wl.pipelines_by_name("housing-pipe")[-1]
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-02-27 21:00:26.107908+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 21:01:46.967774+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fbb12aa3-7fa2-4553-9955-3dc7146bcd36, d92c7f3d-0b61-44fa-83e2-264d8a045879, b309144d-b5b0-4ca7-a073-4f4ad4145de7</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 ### Read In New House Listings
 
 From the data store, load the previous month's house listing and submit them to the deployed pipeline.
+
 
 ```python
 conn = simdb.simulate_db_connection()
@@ -144,7 +156,14 @@ newbatch.shape
 
     select * from house_listings where date > DATE(DATE(), '-1 month') AND sale_price is NULL
 
+
+
+
+
     (1090, 22)
+
+
+
 
 ```python
 if arrowEnabled is True:
@@ -159,13 +178,19 @@ else:
 len(predicted_prices)
 ```
 
+
+
+
     1090
+
+
 
 ### Send Predictions to Results Staging Table
 
 Take the predicted prices based on the inference results so they can be joined into the `house_listings` table.
 
 Once complete, undeploy the pipeline to return the resources back to the Kubernetes environment.
+
 
 ```python
 result_table = pd.DataFrame({
@@ -176,12 +201,29 @@ result_table = pd.DataFrame({
 result_table.to_sql('results_table', conn, index=False, if_exists='append')
 ```
 
+
 ```python
 # Display the top of the table for confirmation
 pd.read_sql_query("select * from results_table limit 5", conn)
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -218,7 +260,9 @@ pd.read_sql_query("select * from results_table limit 5", conn)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
+
 
 
 ```python
@@ -226,7 +270,11 @@ conn.close()
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-02-27 21:00:26.107908+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 21:01:46.967774+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fbb12aa3-7fa2-4553-9955-3dc7146bcd36, d92c7f3d-0b61-44fa-83e2-264d8a045879, b309144d-b5b0-4ca7-a073-4f4ad4145de7</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 From here, organizations can automate this process.  Other features could be used such as data analysis using Wallaroo assays, or other features such as shadow deployments to test champion and challenger models to find which models provide the best results.

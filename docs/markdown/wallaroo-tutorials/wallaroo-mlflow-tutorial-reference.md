@@ -69,6 +69,7 @@ To register a containerized MLFlow ML Model into Wallaroo, use the following gen
 
 We start by importing the libraries we will need to connect to Wallaroo and use our MLFlow models. This includes the `wallaroo` libraries, `pyarrow` for data types, and the `json` library for handling JSON data.
 
+
 ```python
 import uuid
 import json
@@ -86,6 +87,7 @@ import pyarrow as pa
 Connect to Wallaroo and store the connection in the variable `wl`.
 
 The folowing methods are used to create the workspace and pipeline for this tutorial.  A workspace is created and set as the current workspace that will contain the registered models and pipelines.
+
 
 ```python
 # Login through local service
@@ -110,6 +112,7 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
@@ -123,6 +126,8 @@ print(arrowEnabled)
 ```
 
     True
+
+
 
 ```python
 def get_workspace(name):
@@ -142,6 +147,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 prefix = 'mlflow'
 workspace_name= f"{prefix}statsmodelworkspace"
@@ -150,12 +156,14 @@ pipeline_name = f"{prefix}statsmodelpipeline"
 mlflowworkspace = get_workspace(workspace_name)
 wl.set_current_workspace(mlflowworkspace)
 
+
 pipeline = get_pipeline(pipeline_name)
 ```
 
 ### Set MLFlow Input Schemas
 
 Set the MLFlow input schemas through the `pyarrow` library.  In the examples below, the input schemas for both the MLFlow model `statsmodels-test` and the `statsmodels-test-postprocess` model.
+
 
 ```python
 sm_input_schema = pa.schema([
@@ -173,6 +181,7 @@ pp_input_schema = pa.schema([
 ### Register MLFlow Model
 
 Use the `register_model_image` method to register the Docker container containing the MLFlow models.
+
 
 ```python
 statsmodelUrl = "ghcr.io/wallaroolabs/wallaroo_tutorials/mlflow-statsmodels-example:2022.4"
@@ -192,24 +201,38 @@ pp_model = wl.register_model_image(
 
 With the models registered, we can add the MLFlow models as steps in the pipeline.  Once ready, we will deploy the pipeline so it is available for submitting data for running inferences.
 
+
 ```python
 pipeline.add_model_step(sm_model)
 pipeline.add_model_step(pp_model)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:48.462230+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>79d6eba9-5eb6-4d70-9676-dc2db997a7ea, 7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td>mlflowstatmodels</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -246,16 +269,35 @@ pipeline.status()
        'details': [],
        'statuses': '\n'}]}
 
+
+
 ### Run Inference
 
 Once the pipeline is running, we can submit our data to the pipeline and return our results.  Once finished, we will undeploy the pipeline to return the resources back to the cluster.
+
 
 ```python
 results = pipeline.infer_from_file('./resources/bike_day_eval_engine.json')
 results
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -286,7 +328,9 @@ results
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
+
 
 
 ```python
@@ -296,6 +340,7 @@ else:
     display(results[0].data()[0])
 ```
 
+
     [0.2819833755493164,
      0.6588467955589294,
      0.5723681449890137,
@@ -304,10 +349,15 @@ else:
      -1.8491559028625488,
      0.9338850378990173]
 
+
+
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>mlflowstatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-03-02 18:06:43.227930+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-02 18:06:48.462230+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>79d6eba9-5eb6-4d70-9676-dc2db997a7ea, 7e0bdce0-20ce-4b46-ae24-e1ac53a1c6d2</td></tr><tr><th>steps</th> <td>mlflowstatmodels</td></tr></table>
-{{</table>}}
+
 

@@ -23,7 +23,8 @@
 ```
     With:
 
-    <table>
+{{<table "table table-bordered">}}
+<table>
 
     Remove:
     

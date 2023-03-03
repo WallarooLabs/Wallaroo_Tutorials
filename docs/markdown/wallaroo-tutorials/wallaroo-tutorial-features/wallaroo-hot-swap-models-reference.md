@@ -43,6 +43,7 @@ The following steps demonstrate the following:
 
 Load the Python libraries used to connect and interact with the Wallaroo instance.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -62,12 +63,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -75,6 +77,7 @@ print(arrowEnabled)
 ```
 
     True
+
 
 ### Open a Connection to Wallaroo
 
@@ -93,6 +96,7 @@ The URLs are based on the Wallaroo Prefix and Wallaroo Suffix for the Wallaroo i
 If connecting from within the Wallaroo instance's JupyterHub service, then only `wl = wallaroo.Client()` is required.
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
+
 
 ```python
 # Internal Login
@@ -117,6 +121,7 @@ Just for the sake of this tutorial, we'll use the SDK below to create our worksp
 
 To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
 
+
 ```python
 import string
 import random
@@ -131,6 +136,7 @@ original_model_file_name = './ccfraud.onnx'
 replacement_model_name = f'{prefix}ccfraudreplacement'
 replacement_model_file_name = './xgboost_ccfraud.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -156,6 +162,7 @@ We will create a workspace based on the variable names set above, and set the ne
 
 Once set, the pipeline will be created.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -165,21 +172,31 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ggwzhotswappipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ad943ff6-1a38-4304-a243-6958ba118df2</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 ### Upload Models
 
 We can now upload both of the models.  In a later step, only one model will be added as a [pipeline step](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipeline/#add-a-step-to-a-pipeline), where the pipeline will submit inference requests to the pipeline.
+
 
 ```python
 original_model = wl.upload_model(original_model_name , original_model_file_name)
 replacement_model = wl.upload_model(replacement_model_name , replacement_model_file_name)
 ```
 
+
 ```python
 wl.list_models()
 ```
+
+
+
+
 
 <table>
   <tr>
@@ -207,30 +224,46 @@ wl.list_models()
   </tr>
 
 </table>
-{{</table>}}
+
+
+
 
 ### Add Model to Pipeline Step
 
 With the models uploaded, we will add the original model as a pipeline step, then deploy the pipeline so it is available for performing inferences.
+
 
 ```python
 pipeline.add_model_step(original_model)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ggwzhotswappipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ad943ff6-1a38-4304-a243-6958ba118df2</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ggwzhotswappipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:33:58.263239+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3078dffa-4e10-41ef-85bc-e7a0de5afa82, ad943ff6-1a38-4304-a243-6958ba118df2</td></tr><tr><th>steps</th> <td>ggwzccfraudoriginal</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -252,9 +285,12 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Verify the Model
 
 The pipeline is deployed with our model.  The following will verify that the model is operating correctly.  The `high_fraud.json` file contains data that the model should process as a high likelihood of being a fraudulent transaction.
+
 
 ```python
 if arrowEnabled is True:
@@ -264,7 +300,21 @@ else:
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -285,7 +335,7 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Replace the Model
@@ -294,17 +344,26 @@ The pipeline is currently deployed and is able to handle inferences.  The model 
 
 As an exercise, this deployment can be performed while inferences are actively being submitted to the pipeline to show how quickly the swap takes place.
 
+
 ```python
 pipeline.replace_with_model_step(0, replacement_model).deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ggwzhotswappipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:34:11.049248+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a620354f-291e-4a98-b5f7-9d8bf165b1df, 3078dffa-4e10-41ef-85bc-e7a0de5afa82, ad943ff6-1a38-4304-a243-6958ba118df2</td></tr><tr><th>steps</th> <td>ggwzccfraudoriginal</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 # Display the pipeline
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -326,9 +385,12 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Verify the Swap
 
 To verify the swap, we'll submit a set of inferences to the pipeline using the new model.  We'll display just the first 5 rows for space reasons.
+
 
 ```python
 if arrowEnabled is True:
@@ -339,7 +401,21 @@ else:
     display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -388,17 +464,21 @@ else:
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Undeploy the Pipeline
 
 With the tutorial complete, the pipeline is undeployed to return the resources back to the Wallaroo instance.
 
+
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ggwzhotswappipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:33:53.541871+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:34:11.049248+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a620354f-291e-4a98-b5f7-9d8bf165b1df, 3078dffa-4e10-41ef-85bc-e7a0de5afa82, ad943ff6-1a38-4304-a243-6958ba118df2</td></tr><tr><th>steps</th> <td>ggwzccfraudoriginal</td></tr></table>
-{{</table>}}
+
 

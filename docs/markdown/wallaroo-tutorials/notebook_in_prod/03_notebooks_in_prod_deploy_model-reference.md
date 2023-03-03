@@ -44,6 +44,7 @@ The process of uploading the model to Wallaroo follows these steps:
 
 First we import the required libraries to connect to the Wallaroo instance, then connect to the Wallaroo instance.
 
+
 ```python
 import json
 import pickle
@@ -62,10 +63,11 @@ import pandas as pd
 pd.set_option('display.max_colwidth', None)
 ```
 
+
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
+wl = wallaroo.Client()
 
 # SSO login through keycloak
 
@@ -85,12 +87,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -98,6 +101,8 @@ print(arrowEnabled)
 ```
 
     True
+
+
 
 ```python
 def get_workspace(name):
@@ -117,6 +122,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace_name = 'housepricing'
 model_name = "housepricemodel"
@@ -126,12 +132,19 @@ pipeline_name = "housing-pipe"
 
 The workspace `housepricing` will either be created or, if already existing, used and set to the current workspace.
 
+
 ```python
 new_workspace = get_workspace(workspace_name)
 new_workspace
 ```
 
+
+
+
     {'name': 'housepricing', 'id': 23, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T21:00:21.786653+00:00', 'models': [], 'pipelines': []}
+
+
+
 
 ```python
 _ = wl.set_current_workspace(new_workspace)
@@ -141,6 +154,7 @@ _ = wl.set_current_workspace(new_workspace)
 
 With the connection set and workspace prepared, upload the model created in `02_automated_training_process.ipynb` into the current workspace.
 
+
 ```python
 hpmodel = wl.upload_model(model_name, model_file).configure()
 ```
@@ -149,10 +163,12 @@ hpmodel = wl.upload_model(model_name, model_file).configure()
 
 Upload the `preprocess.py` and `postprocess.py` modules as models to be added to the pipeline.
 
+
 ```python
 # load the preprocess module
 module_pre = wl.upload_model("preprocess", "./preprocess.py").configure('python')
 ```
+
 
 ```python
 # load the postprocess module
@@ -162,6 +178,7 @@ module_post = wl.upload_model("postprocess", "./postprocess.py").configure('pyth
 ### Create and Deploy the Pipeline
 
 Create the pipeline with the preprocess module, housing model, and postprocess module as pipeline steps, then deploy the newpipeline.
+
 
 ```python
 pipeline = (wl.build_pipeline(pipeline_name)
@@ -173,12 +190,17 @@ pipeline = (wl.build_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-02-27 21:00:26.107908+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 21:00:27.425823+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d92c7f3d-0b61-44fa-83e2-264d8a045879, b309144d-b5b0-4ca7-a073-4f4ad4145de7</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 ### Test the Pipeline
 
 We will use a single query from the simulated `housing_price` table and infer.  When successful, we will undeploy the pipeline to restore the resources back to the Kubernetes environment.
+
 
 ```python
 conn = simdb.simulate_db_connection()
@@ -196,7 +218,24 @@ singleton
 
     select * from house_listings limit 1
 
-{{<table "table table-bordered">}}
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -251,8 +290,10 @@ singleton
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>1 rows × 22 columns</p>
+</div>
+
+
 
 
 ```python
@@ -265,15 +306,22 @@ else:
     display(result[0].data())
 ```
 
+
     [{'prediction': [224852.0]}]
 
+
 When finished, we undeploy the pipeline to return the resources back to the environment.
+
 
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-02-27 21:00:26.107908+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 21:00:27.425823+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d92c7f3d-0b61-44fa-83e2-264d8a045879, b309144d-b5b0-4ca7-a073-4f4ad4145de7</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 With this stage complete, we can proceed to Stage 4: Regular Batch Inference.

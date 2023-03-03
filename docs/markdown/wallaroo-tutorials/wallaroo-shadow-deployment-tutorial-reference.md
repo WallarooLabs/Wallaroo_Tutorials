@@ -35,6 +35,8 @@ All models are similar to the ones used for the Wallaroo-101 example included in
 
 The first step is to import the libraries required.
 
+
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -48,6 +50,7 @@ pd.set_option('display.max_colwidth', None)
 ### Connect to Wallaroo
 
 Connect to your Wallaroo instance and save the connection as the variable `wl`.
+
 
 ```python
 # Login through local Wallaroo instance
@@ -64,7 +67,12 @@ wl = wallaroo.Client()
 #                     auth_type="sso")
 ```
 
+
+
+
     <wallaroo.client.Client at 0x7f876c227250>
+
+
 
 ### Arrow Support
 
@@ -73,6 +81,7 @@ As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for 
 If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
 
 The examples below will be shown in an arrow enabled environment.
+
 
 ```python
 import os
@@ -90,6 +99,7 @@ print(arrowEnabled)
 
 The following variables are used to create or use existing workspaces, pipelines, and upload the models.  Adjust them based on your Wallaroo instance and organization requirements.
 
+
 ```python
 workspace_name = 'ccfraudcomparisondemo'
 pipeline_name = 'ccshadow'
@@ -104,6 +114,7 @@ shadow_model_02_file = 'models/modelA.onnx'
 ### Workspace and Pipeline
 
 The following creates or connects to an existing workspace based on the variable `workspace_name`, and creates or connects to a pipeline based on the variable `pipeline_name`.
+
 
 ```python
 def get_workspace(name):
@@ -123,6 +134,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -133,12 +145,17 @@ pipeline
 
 ```
 
+
+
+
 <table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 ### Load the Models
 
 The models will be uploaded into the current workspace based on the variable names set earlier and listed as the `champion`, `model2` and `model3`.
+
 
 ```python
 champion = wl.upload_model(champion_model_name, champion_model_file).configure()
@@ -153,6 +170,7 @@ A shadow deployment is created using the `add_shadow_deploy(champion, challenger
 * `champion`: The model that will be primarily used for inferences run through the pipeline.  Inference results will be returned through the Inference Object's `data` element.
 * `challengers[]`: An array of models that will be used for inferences iteratively.  Inference results will be returned through the Inference Object's `shadow_data` element.
 
+
 ```python
 pipeline.add_shadow_deploy(champion, [model2, model3])
 pipeline.deploy()
@@ -160,8 +178,13 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s .............. ok
 
+
+
+
+
 <table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:45.086221+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c97f777b-72f2-4a94-b2ea-a21bb33c032f, 32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
-{{</table>}}
+
+
 
 ### Run Test Inference
 
@@ -173,6 +196,7 @@ For Arrow disabled environments, the output is from the Wallaroo InferenceResult
 
 Using the data from `sample_data_file`, a test inference will be made.  As mentioned earlier, the inference results from the `champion` model will be available in the returned InferenceResult Object's `data` element, while inference results from each of the `challenger` models will be in the returned InferenceResult Object's `shadow_data` element.
 
+
 ```python
 if arrowEnabled is True:
     sample_data_file = './smoke_test.df.json'
@@ -183,7 +207,21 @@ else:
 display(response)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -208,18 +246,35 @@ display(response)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### View Pipeline Logs
 
 With the inferences complete, we can retrieve the log data from the pipeline with the pipeline `logs` method.  Note that for **each** inference request, the logs return **one entry per model**.  For this example, for one inference request three log entries will be created.
 
+
 ```python
 pipeline.logs()
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -244,7 +299,8 @@ pipeline.logs()
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ### View Logs Per Model
@@ -254,6 +310,7 @@ Another way of displaying the logs would be to specify the model.
 For Arrow enabled Wallaroo instances the model outputs are listed by column.  The output data is set by the term `out`, followed by the name of the model.  For the default model, this is `out.dense_1`, while the shadow deployed models are in the format `out_{model name}.variable`, where `{model name}` is the name of the shadow deployed model.
 
 For arrow disabled Wallaroo instances, to view the inputs and results for the shadow deployed models, use the pipeline `logs_shadow_deploy()` method.  The results will be grouped by the inputs.
+
 
 ```python
 logs = pipeline.logs()
@@ -266,7 +323,21 @@ else:
     display(shadow_logs)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -291,12 +362,13 @@ else:
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Undeploy the Pipeline
 
 With the tutorial complete, we undeploy the pipeline and return the resources back to the system.
+
 
 ```python
 pipeline.undeploy()
@@ -304,6 +376,10 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s .................................... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>ccshadow</td></tr><tr><th>created</th> <td>2023-03-03 19:20:44.224839+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:20:45.086221+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c97f777b-72f2-4a94-b2ea-a21bb33c032f, 32d751ec-f17b-4516-bc26-e3ef914f0938</td></tr><tr><th>steps</th> <td>ccfraud-lstm</td></tr></table>
-{{</table>}}
+
 

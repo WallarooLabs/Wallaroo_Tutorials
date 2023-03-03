@@ -8,6 +8,7 @@ The model is a "demand curve" that predicts the expected number of units of a pr
 
 Data preprocessing is required to create the features used by the model. Simple postprocessing prevents nonsensical estimates (e.g. negative units sold).
 
+
 ## Open a Connection to Wallaroo
 
 The first step is to connect to Wallaroo through the Wallaroo client.  The Python library is included in the Wallaroo install and available through the Jupyter Hub interface provided with your Wallaroo environment.
@@ -15,6 +16,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
 The other libraries shown below are used for this example.
+
 
 ```python
 import json
@@ -29,6 +31,7 @@ from IPython.display import display
 import pandas as pd
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Client connection from local Wallaroo instance
@@ -53,12 +56,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -67,9 +71,11 @@ print(arrowEnabled)
 
     True
 
+
 Now that the Wallaroo client has been initialized, we can create the workspace and call it `demandcurveworkspace`, then set it as our current workspace.  We'll also create our pipeline so it's ready when we add our models to it.
 
 We'll set some variables and methods to create our workspace, pipelines and models.  Note that as of the July 2022 release of Wallaroo, workspace names must be unique.  Pipelines with the same name will be created as a new version when built.
+
 
 ```python
 workspace_name = 'demandcurveworkspace'
@@ -77,6 +83,7 @@ pipeline_name = 'demandcurvepipeline'
 model_name = 'demandcurvemodel'
 model_file_name = './demand_curve_v1.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -96,6 +103,7 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -105,8 +113,12 @@ demandcurve_pipeline = get_pipeline(pipeline_name)
 demandcurve_pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0b7583a3-b11b-4f87-975d-2a6aa4306564</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 With our workspace established, we'll upload three models:
 
@@ -116,15 +128,18 @@ With our workspace established, we'll upload three models:
 
 Note that the order we upload our models isn't important - we'll be establishing the actual process of moving data from one model to the next when we set up our pipeline.
 
+
 ```python
 # upload to wallaroo
 demand_curve_model = wl.upload_model(model_name, model_file_name).configure()
 ```
 
+
 ```python
 # load the preprocess module
 module_pre = wl.upload_model("preprocess", "./preprocess.py").configure('python')
 ```
+
 
 ```python
 # load the postprocess module
@@ -137,6 +152,7 @@ With our models uploaded, we're going to create our own pipeline and give it thr
 * Second, we apply the data to our `demand_curve_model`.
 * And finally, we prepare our data for output with the `module_post`.
 
+
 ```python
 # now make a pipeline
 demandcurve_pipeline.add_model_step(module_pre)
@@ -144,23 +160,36 @@ demandcurve_pipeline.add_model_step(demand_curve_model)
 demandcurve_pipeline.add_model_step(module_post)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0b7583a3-b11b-4f87-975d-2a6aa4306564</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
 
 And with that - let's deploy our model pipeline.  This usually takes about 45 seconds for the deployment to finish.
+
 
 ```python
 demandcurve_pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 18:51:25.156342+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>eb3773df-47a4-4d29-8817-a692ba33fb1c, 0b7583a3-b11b-4f87-975d-2a6aa4306564</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 We can check the status of our pipeline to make sure everything was set up correctly:
+
 
 ```python
 demandcurve_pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -190,7 +219,10 @@ demandcurve_pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 Everything is ready.  Let's feed our pipeline some data.  We have some information prepared with the `daily_purchasses.csv` spreadsheet.  We'll start with just one row to make sure that everything is working correctly.
+
 
 ```python
 # read in some purchase data
@@ -204,11 +236,13 @@ subsamp_raw
 input_dict = conversion.pandas_to_dict(subsamp_raw)
 ```
 
+
 ```python
 result = demandcurve_pipeline.infer(input_dict)
 ```
 
 We can see from the `prediction` field that the demand curve has a predicted slope of 6.68 from our sample data.  We can isolate that by specifying just the data output below.
+
 
 ```python
 if arrowEnabled is True:
@@ -217,11 +251,14 @@ else:
     display(result[0].data())
 ```
 
+
     [6.68025518653071]
+
 
 # Bulk Inference
 
 The initial test went perfectly.  Now let's throw some more data into our pipeline.  We'll draw 10 random rows from our spreadsheet, perform an inference from that, and then display the results and the logs showing the pipeline's actions.
+
 
 ```python
 # Let's do 10 rows at once (drawn randomly)
@@ -229,12 +266,14 @@ ix = numpy.random.choice(purchases.shape[0], size=10, replace=False)
 output = demandcurve_pipeline.infer(conversion.pandas_to_dict(purchases.iloc[ix,: ]))
 ```
 
+
 ```python
 if arrowEnabled is True:
     display(output[0]['prediction'])
 else:
     display(output[0].data())
 ```
+
 
     [49.73419363867448,
      33.125323160373426,
@@ -247,15 +286,21 @@ else:
      33.125323160373426,
      33.125323160373426]
 
+
 ## Undeploy the Pipeline
 
 Once we've finished with our demand curve demo, we'll undeploy the pipeline and give the resources back to our Kubernetes cluster.
+
 
 ```python
 demandcurve_pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-02-27 18:51:20.074971+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 18:51:25.156342+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>eb3773df-47a4-4d29-8817-a692ba33fb1c, 0b7583a3-b11b-4f87-975d-2a6aa4306564</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
-{{</table>}}
+
+
 
 Thank you for being a part of this demonstration.  If you have additional questions, please feel free to contact us at Wallaroo.

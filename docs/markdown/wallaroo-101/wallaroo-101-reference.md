@@ -80,6 +80,7 @@ This is accomplished using the `wallaroo.Client()` command, which provides a URL
 
 If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -91,11 +92,18 @@ import pandas as pd
 pd.set_option('display.max_colwidth', None)
 ```
 
+
 ```python
 wallaroo.__version__
 ```
 
+
+
+
     '2023.1.0rc1'
+
+
+
 
 ```python
 # Login through local Wallaroo instance
@@ -120,6 +128,7 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
@@ -134,6 +143,7 @@ print(arrowEnabled)
 
     True
 
+
 ## Create a New Workspace
 
 Next we're going to create a new workspace called `ccfraudworkspace` for our model, then set it as our current workspace context.  We'll be doing this through the SDK, but here's an example of doing it through the Wallaroo dashboard.
@@ -142,23 +152,24 @@ The method we'll introduce below will either **create** a new workspace if it do
 
 The first part is to return to your Wallaroo Dashboard.  In the top navigation panel next to your user name there's a drop down with your workspaces.  In this example it just has "My Workspace".  Select **View Workspaces**.
 
-![Select View Workspaces](/images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
+![Select View Workspaces](./images/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png)
 
 From here, enter the name of our new workspace as `ccfraud-workspace`.  If it already exists, you can skip this step.
 
 * **IMPORTANT NOTE**:  Workspaces do not have forced unique names.  It is highly recommended to use an existing workspace when possible, or establish a naming convention for your workspaces to keep their names unique to remove confusion with teams.
 
-![Create ccfraud-workspace](/images/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png)
+![Create ccfraud-workspace](./images/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png)
 
 Once complete, you'll be able to select the workspace from the drop down list in your dashboard.
 
-![ccfraud-workspace exists](/images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
+![ccfraud-workspace exists](./images/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png)
 
 Just for the sake of this tutorial, we'll use the SDK below to create our workspace , assign as our **current workspace**, then display all of the workspaces we have at the moment.  We'll also set up for our models and pipelines down the road, so we have one spot to change names to whatever fits your organization's standards best.
 
 To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
 
 When we create our new workspace, we'll save it in the Python variable `workspace` so we can refer to it as needed.
+
 
 ```python
 import string
@@ -171,6 +182,7 @@ pipeline_name = f'{prefix}ccfraudpipeline'
 model_name = f'{prefix}ccfraudmodel'
 model_file_name = './ccfraud.onnx'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -190,17 +202,28 @@ def get_pipeline(name):
     return pipeline
 ```
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
 wl.set_current_workspace(workspace)
 ```
 
+
+
+
     {'name': 'uupfccfraudworkspace', 'id': 114, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-01T21:59:42.738409+00:00', 'models': [], 'pipelines': []}
+
+
+
 
 ```python
 wl.list_workspaces()
 ```
+
+
+
+
 
 <table>
     <tr>
@@ -219,6 +242,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>testautoconversion</td>
     <td>2023-02-21 17:02:22</td>
@@ -226,6 +250,7 @@ wl.list_workspaces()
     <td>2</td>
     <td>0</td>
 </tr>
+
 
 <tr >
     <td>kerasautoconvertworkspace</td>
@@ -235,6 +260,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>externalkerasautoconvertworkspace</td>
     <td>2023-02-21 18:16:14</td>
@@ -242,6 +268,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>ccfraudcomparisondemo</td>
@@ -251,6 +278,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>isolettest</td>
     <td>2023-02-21 21:24:33</td>
@@ -258,6 +286,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>bikedayevalworkspace</td>
@@ -267,6 +296,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>xgboost-classification-autoconvert-workspace</td>
     <td>2023-02-22 17:28:52</td>
@@ -274,6 +304,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>xgboost-regression-autoconvert-workspace</td>
@@ -283,6 +314,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>housepricing</td>
     <td>2023-02-22 18:28:40</td>
@@ -290,6 +322,7 @@ wl.list_workspaces()
     <td>3</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>sdkquickworkspace</td>
@@ -299,6 +332,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>jchdemandcurveworkspace</td>
     <td>2023-02-22 22:23:21</td>
@@ -306,6 +340,7 @@ wl.list_workspaces()
     <td>3</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>jchdemandcurveworkspace2</td>
@@ -315,6 +350,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>demandcurveworkspace</td>
     <td>2023-02-23 15:14:32</td>
@@ -322,6 +358,7 @@ wl.list_workspaces()
     <td>3</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>yqecccfraudworkspace</td>
@@ -331,6 +368,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>mobilenetworkspace2</td>
     <td>2023-02-23 18:03:12</td>
@@ -338,6 +376,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>mobilenetworkspacetest</td>
@@ -347,6 +386,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>mlflowstatsmodelworkspace</td>
     <td>2023-02-23 23:14:12</td>
@@ -354,6 +394,7 @@ wl.list_workspaces()
     <td>2</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>statsmodelworkspace</td>
@@ -363,6 +404,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>wjtxedgeworkspaceexample</td>
     <td>2023-02-27 17:46:51</td>
@@ -370,6 +412,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>xtwjccfraudworkspace</td>
@@ -379,6 +422,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>ccfraudcomparisondemo2a</td>
     <td>2023-02-28 20:01:40</td>
@@ -386,6 +430,7 @@ wl.list_workspaces()
     <td>3</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>ccfraudcomparisondemo3</td>
@@ -395,6 +440,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>ccfraudcomparisondemo4</td>
     <td>2023-02-28 20:21:21</td>
@@ -402,6 +448,7 @@ wl.list_workspaces()
     <td>3</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>ccfraudcomparisondemo5</td>
@@ -411,6 +458,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>ccfraudcomparisondemo6</td>
     <td>2023-02-28 20:25:57</td>
@@ -419,6 +467,7 @@ wl.list_workspaces()
     <td>1</td>
 </tr>
 
+
 <tr >
     <td>anomalyexampletest</td>
     <td>2023-02-28 20:37:58</td>
@@ -426,6 +475,7 @@ wl.list_workspaces()
     <td>1</td>
     <td>1</td>
 </tr>
+
 
 <tr >
     <td>uupfccfraudworkspace</td>
@@ -436,22 +486,32 @@ wl.list_workspaces()
 </tr>
 
 </table>
-{{</table>}}
+
+
+
 
 Just to make sure, let's list our current workspace.  If everything is going right, it will show us we're in the `ccfraud-workspace` with the appropriate prefix.
+
 
 ```python
 wl.set_current_workspace(workspace)
 wl.get_current_workspace()
 ```
 
+
+
+
     {'name': 'uupfccfraudworkspace', 'id': 114, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-01T21:59:42.738409+00:00', 'models': [], 'pipelines': []}
+
+
 
 ## Upload a model
 
 Our workspace is created.  Let's upload our credit card fraud model to it.  This is the file name `ccfraud.onnx`, and we'll upload it as `ccfraudmodel`.  The credit card fraud model is trained to detect credit card fraud based on a 0 to 1 model:  The closer to 0 the less likely the transactions indicate fraud, while the closer to 1 the more likely the transactions indicate fraud.
 
+
 Since we're already in our default workspace `ccfraudworkspace`, it'll be uploaded right to there.  Once that's done uploading, we'll list out all of the models currently deployed so we can see it included.
+
 
 ```python
 ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
@@ -459,9 +519,14 @@ ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
 
 We can verify that our model was uploaded by listing the models uploaded to our Wallaroo instance with the `list_models()` command.  Note that since we uploaded this model before, we now have different versions of it we can use for our testing.
 
+
 ```python
 wl.list_models()
 ```
+
+
+
+
 
 <table>
   <tr>
@@ -481,7 +546,9 @@ wl.list_models()
   </tr>
 
 </table>
-{{</table>}}
+
+
+
 
 ## Create a Pipeline
 
@@ -489,18 +556,25 @@ With our model uploaded, time to create our pipeline and deploy it so it can acc
 
 * **NOTE**:  Pipeline names must be unique.  If two pipelines are assigned the same name, the new pipeline is created as a new **version** of the pipeline.
 
+
 ```python
 ccfraud_pipeline = get_pipeline(pipeline_name)
 ```
 
 Now our pipeline is set.  Let's add a single **step** to it - in this case, our `ccfraud_model` that we uploaded to our workspace.
 
+
 ```python
 ccfraud_pipeline.add_model_step(ccfraud_model)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 for d in wl.list_deployments(): d.undeploy()
@@ -508,18 +582,27 @@ for d in wl.list_deployments(): d.undeploy()
 
 And now we can deploy our pipeline and assign resources to it.  This typically takes about 45 seconds once the command is issued.
 
+
 ```python
 ccfraud_pipeline.deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:04:51.394606+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6b63ccf6-870a-4299-8213-ec3b4538ce0d, 70349464-78ca-4699-ae31-1b6322e44232, b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td>uupfccfraudmodel</td></tr></table>
-{{</table>}}
+
+
 
 We can see our new pipeline with the `status()` command.
+
 
 ```python
 ccfraud_pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -541,9 +624,12 @@ ccfraud_pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ## Running Interfences
 
 With our pipeline deployed, let's run a smoke test to make sure it's working right.  We'll run an inference through our pipeline from the file `smoke_test.json` and see the results.  This should give us a result near 0 - not likely a fraudulent activity.
+
 
 ```python
 if arrowEnabled is True:
@@ -553,7 +639,21 @@ else:
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -574,10 +674,11 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 Looks good!  Time to run the real test on some real data.  Run another inference this time from the file `high_fraud.json` and let's see the results.  This should give us an output that indicates a high level of fraud - well over 90%.
+
 
 ```python
 if arrowEnabled is True:
@@ -587,7 +688,21 @@ else:
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -608,7 +723,7 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 Now that we've tested our pipeline, let's run it with something larger.  We have two batch files - `cc_data_1k.json` that contains 1,000 credit card records to test for fraud.  The other is `cc_data_10k.json` which has 10,000 credit card records to test.
@@ -620,6 +735,7 @@ For Arrow enabled instances of Wallaroo, inference results are returned as a [pa
 For non-Arrow enabled instances of Wallaroo, inferences are returned as the [InferenceResult object](https://docs.wallaroo.ai/wallaroo-sdk/wallaroo-sdk-essentials-guide/#inferenceresult-object).
 
 With the inference result we'll output just the cases likely to be fraud.  For Arrow enabled Wallaroo instances, we'll parse the dataframe returned as the inference result.  For non-Arrow Wallaroo instances, we'll use the Inference Result object's `data()` method.
+
 
 ```python
 outputs = None
@@ -634,6 +750,7 @@ else:
     result = filter(lambda x: x > 0.75, sequence[0])
     display(sequence[0])
 ```
+
 
     0        [0.99300325]
     1        [0.99300325]
@@ -657,7 +774,9 @@ else:
     10176           [1.0]
     Name: out.dense_1, dtype: object
 
+
 We can view the inputs either through the `in.tensor` column from our DataFrame for Arrow enabled environments, or with the InferenceResult object through the `input_data()` for non-Arrow enabled environments.  We'll display just the first row in either case.
+
 
 ```python
 if arrowEnabled is True:
@@ -665,6 +784,7 @@ if arrowEnabled is True:
 else:
     display(outputs[0].input_data()["tensor"][0])
 ```
+
 
     [-1.0603297501,
      2.3544967095,
@@ -696,6 +816,7 @@ else:
      -0.1466244739,
      -1.4463212439]
 
+
 ## Batch Deployment through a Pipeline Deployment URL
 
 This next step requires some manual use.  We're going to have `ccfraud_pipeline` display its deployment url - this allows us to submit data through a HTTP interface and get the results back.
@@ -704,6 +825,7 @@ First we'll request the url with the `_deployment._url()` method.
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
 
+
 ```python
 deploy_url = ccfraud_pipeline._deployment._url()
 print(deploy_url)
@@ -711,9 +833,11 @@ print(deploy_url)
 
     https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/uupfccfraudpipeline-166
 
+
 The API connection details can be retrieved through the Wallaroo client `mlops()` command.  This will display the connection URL, bearer token, and other information.  The bearer token is available for one hour before it expires.
 
 For this example, the API connection details will be retrieved, then used to submit an inference request through the external inference URL retrieved earlier.
+
 
 ```python
 connection =wl.mlops().__dict__
@@ -721,9 +845,15 @@ token = connection['token']
 token
 ```
 
+
+
+
     'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjTGZaYmhVQWl0a210Z0VLV0l1NnczTWlXYmUzWjc3cHdqVjJ2QWM2WUdZIn0.eyJleHAiOjE2Nzc3MDg0MTksImlhdCI6MTY3NzcwODM1OSwiYXV0aF90aW1lIjoxNjc3NzA3NDIzLCJqdGkiOiJhZWY2YTFjYy02NDgxLTRkODEtYjg2Yi0yMGU1ZTY4MTcwZTAiLCJpc3MiOiJodHRwczovL3NwYXJrbHktYXBwbGUtMzAyNi5rZXljbG9hay53YWxsYXJvby5jb21tdW5pdHkvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjpbIm1hc3Rlci1yZWFsbSIsImFjY291bnQiXSwic3ViIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoic2RrLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiIyYWIzZDY0ZC01NmJiLTQ1MDgtOGU4ZS1lNmExMzJlZDEwYWYiLCJhY3IiOiIwIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImNyZWF0ZS1yZWFsbSIsImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwiY3JlYXRlLWNsaWVudCIsIm1hbmFnZS11c2VycyIsInF1ZXJ5LXJlYWxtcyIsInZpZXctYXV0aG9yaXphdGlvbiIsInF1ZXJ5LWNsaWVudHMiLCJxdWVyeS11c2VycyIsIm1hbmFnZS1ldmVudHMiLCJtYW5hZ2UtcmVhbG0iLCJ2aWV3LWV2ZW50cyIsInZpZXctdXNlcnMiLCJ2aWV3LWNsaWVudHMiLCJtYW5hZ2UtYXV0aG9yaXphdGlvbiIsIm1hbmFnZS1jbGllbnRzIiwicXVlcnktZ3JvdXBzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImVtYWlsIHByb2ZpbGUiLCJzaWQiOiIyYWIzZDY0ZC01NmJiLTQ1MDgtOGU4ZS1lNmExMzJlZDEwYWYiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS11c2VyLWlkIjoiMTM4YmQ3ZTYtNGRjOC00ZGMxLWE3NjAtYzllNzIxZWYzYzM3IiwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLWFsbG93ZWQtcm9sZXMiOlsidXNlciJdLCJ4LWhhc3VyYS11c2VyLWdyb3VwcyI6Int9In0sInByZWZlcnJlZF91c2VybmFtZSI6ImpvaG4uaGFuc2FyaWNrQHdhbGxhcm9vLmFpIiwiZW1haWwiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSJ9.gTzaCHqmV_LsYIROOr2bxu3s9eDAhyz1ZVjGhXm21iWAe-1YMHgMUoC0zHtZKRt3fGaPswkj3LpC9RC2KaiYFc94KXSbyVKVq9--M5CVYQ2xqXrIY02fOsogMuqGtRusHQISRvx6dLYjJJdw6B_DwQL8vTC0C82VeBdWz-mIpi_gqQ2T2UKlNB-kBnjtY5BtlzBugF4_DKi5o3ePBoZZzT4EuionnDDJEF-L-5Pg5ioWXYyH7ianb-FcTLJqESAhgs9PlCWhtwGnJQVJmv5BdREkGvtRmDWzlbVYKX4tl_Giag_zO0U58fqD9AdiMFTndiryn1zxKyf1hxoS-3fXxQ'
 
+
+
 The `deploy_url` variable will be used to access the pipeline inference URL, and the `token` variable used to authenticate for this batch inference process.
+
 
 ```python
 if arrowEnabled is True:
@@ -734,6 +864,7 @@ else:
     contentType="application/json"
 ```
 
+
 ```python
 !curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
@@ -742,13 +873,19 @@ else:
                                      Dload  Upload   Total   Spent    Left  Speed
     100 13.7M  100 6325k  100 7743k  2560k  3133k  0:00:02  0:00:02 --:--:-- 5702k
 
+
 With our work in the pipeline done, we'll undeploy it to get back our resources from the Kubernetes cluster.  If we keep the same settings we can redeploy the pipeline with the same configuration in the future.
+
 
 ```python
 ccfraud_pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>uupfccfraudpipeline</td></tr><tr><th>created</th> <td>2023-03-01 22:00:37.919002+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-01 22:04:51.394606+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6b63ccf6-870a-4299-8213-ec3b4538ce0d, 70349464-78ca-4699-ae31-1b6322e44232, b78f3d0a-ea52-47a6-959d-d4aa0b60c7b1</td></tr><tr><th>steps</th> <td>uupfccfraudmodel</td></tr></table>
-{{</table>}}
+
+
 
 And there we have it!  Feel free to use this as a template for other models, inferences and pipelines that you want to deploy with Wallaroo!

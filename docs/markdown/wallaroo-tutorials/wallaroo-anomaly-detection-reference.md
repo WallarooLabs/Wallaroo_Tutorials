@@ -26,6 +26,7 @@ This demonstration assumes that a Wallaroo instance has been installed.
 
 The first step is to import the libraries needed for this notebook.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -44,6 +45,7 @@ pd.set_option('display.max_colwidth', None)
 
 The following command will create a connection to the Wallaroo instance and store it in the variable `wl`.
 
+
 ```python
 # Client connection from local Wallaroo instance
 
@@ -59,6 +61,7 @@ wl = wallaroo.Client()
 #                     auth_type="sso")
 ```
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
@@ -73,9 +76,11 @@ print(arrowEnabled)
 
     True
 
+
 ### Create Workspace
 
 We will create a workspace to manage our pipeline and models.  The following variables will set the name of our sample workspace then set it as the current workspace.
+
 
 ```python
 workspace_name = 'anomalytesting'
@@ -94,11 +99,17 @@ workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 ```
 
+
+
+
     {'name': 'anomalyexamples', 'id': 139, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-03T19:11:35.338843+00:00', 'models': [{'name': 'anomaly-housing-model', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 3, 3, 19, 11, 35, 799799, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 3, 3, 19, 11, 35, 799799, tzinfo=tzutc())}], 'pipelines': [{'name': 'anomalyhousingpipeline', 'create_time': datetime.datetime(2023, 3, 3, 19, 11, 35, 879127, tzinfo=tzutc()), 'definition': '[]'}]}
+
+
 
 ## Upload The Model
 
 The housing model will be uploaded for use in our pipeline.
+
 
 ```python
 housing_model = wl.upload_model("anomaly-housing-model", "./models/housing.zip").configure("tensorflow")
@@ -110,21 +121,26 @@ The pipeline `anomaly-housing-pipeline` will be created and the `anomaly-housing
 
 Once complete, the pipeline will be deployed and ready for inferences.
 
+
+
 ```python
 p = wl.build_pipeline('anomalyhousing')
 p = p.add_model_step(housing_model)
 
 ```
 
+
 ```python
 p = p.add_validation('price too high', housing_model.outputs[0][0] < 100.0)
 ```
+
 
 ```python
 pipeline = p.deploy()
 ```
 
     Waiting for deployment - this will take up to 45s ................ ok
+
 
 ### Testing
 
@@ -133,6 +149,7 @@ Two data points will be fed used for an inference.
 The first, labeled `response_normal`, will not trigger an anomaly detection.  The other, labeled `response_trigger`, will trigger the anomaly detection, which will be shown in the InferenceResult `check_failures` array.  
 
 Note that multiple validations can be created to allow for multiple anomalies detected.
+
 
 ```python
 if arrowEnabled is True:
@@ -144,7 +161,21 @@ response_normal = pipeline.infer(test_input)
 display(response_normal)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -165,7 +196,8 @@ display(response_normal)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ```python
@@ -178,7 +210,21 @@ response_trigger = pipeline.infer(test_input)
 display(response_trigger)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -199,7 +245,7 @@ display(response_trigger)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Multiple Tests
@@ -207,6 +253,7 @@ display(response_trigger)
 With the initial tests run, we can run the inferences against a larger set of data and identify anomalies that appear versus the expected results.  These will be displayed into a graph so we can see where the anomalies occur.  In this case with the house that came in at $350 million - outside of our validation range.
 
 Note:  Because this is splitting one batch inference into 400 separate inferences for this example, it may take longer to run.
+
 
 ```python
 if arrowEnabled is True:
@@ -223,11 +270,13 @@ else:
         responses_anomaly.extend(pipeline.infer(test_data_anomaly.data[nth]))
 ```
 
+
 ```python
 import pandas as pd
 import matplotlib.pyplot as plt
 %matplotlib inline
 ```
+
 
 ```python
 if arrowEnabled is True:
@@ -240,9 +289,11 @@ plt.axvline(x=100, color='gray', ls='--')
 _ = plt.title('Distribution of predicted home sales price')
 ```
 
+
     
 ![png](wallaroo-anomaly-detection-reference_files/wallaroo-anomaly-detection-reference_20_0.png)
     
+
 
 ### How To Check For Anomalies
 
@@ -255,12 +306,27 @@ There are two primary methods for detecting anomalies with Wallaroo:
 
 Anomalies can be displayed through the pipeline `logs()` method.  The parameter `valid=False` will show any validations that were flagged as `False` - in this case, houses that were above 100 million in value.
 
+
 ```python
 logs = pipeline.logs(valid=False)
 display(logs)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -270,12 +336,13 @@ display(logs)
   <tbody>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Undeploy The Pipeline
 
 With the example complete, we undeploy the pipeline to return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
@@ -283,6 +350,10 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ..................................... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>anomalyhousingpipeline</td></tr><tr><th>created</th> <td>2023-03-03 19:11:35.879127+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-03 19:19:27.462171+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>649283cf-6a4c-45b5-a6a7-a7c7dada5d84, 58c17376-838f-4121-91c4-4ff6dcb85728, f05819e7-8019-4f5c-ae07-6f74c02450d0, 09f7b6e3-009f-4e0f-b93a-9225975c8fbd</td></tr><tr><th>steps</th> <td>anomaly-housing-model</td></tr></table>
-{{</table>}}
+
 

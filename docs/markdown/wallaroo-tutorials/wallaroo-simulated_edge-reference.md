@@ -38,6 +38,7 @@ This is accomplished using the `wallaroo.Client()` command, which provides a URL
 
 If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -48,6 +49,7 @@ from IPython.display import display
 # used to display dataframe information without truncating
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Client connection from local Wallaroo instance
@@ -72,12 +74,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -86,11 +89,13 @@ print(arrowEnabled)
 
     True
 
+
 ## Useful variables
 
 The following variables and methods are used to create a workspace, the pipeline in the example workspace and upload models into it.
 
 To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
+
 
 ```python
 import string
@@ -104,6 +109,7 @@ workspace_name = f'{prefix}edgeworkspaceexample'
 model_name = f'{prefix}alohamodel'
 model_file_name = './alohacnnlstm.zip'
 ```
+
 
 ```python
 def get_workspace(name):
@@ -127,6 +133,7 @@ def get_pipeline(name):
 
 Create the workspace and set it as our default workspace.  If a workspace by the same name already exists, then that workspace will be used.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -134,11 +141,17 @@ wl.set_current_workspace(workspace)
 workspace
 ```
 
+
+
+
     {'name': 'wjtxedgeworkspaceexample', 'id': 86, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-02-27T17:46:51.007989+00:00', 'models': [], 'pipelines': []}
+
+
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
+
 
 ```python
 model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
@@ -146,6 +159,7 @@ model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
 
 # Define the resource budget
 The DeploymentConfig object specifies the resources to allocate for a model pipeline. In this case, we're going to set a very small budget, one that is too small for this model and then expand it based on testing. To start with, we'll use 1 CPU and 150 MB of RAM.
+
 
 ```python
 deployment_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(1).memory("150Mi").build()
@@ -164,20 +178,29 @@ To do this, we'll create our pipeline that can ingest the data, pass the data to
 for p in wl.list_pipelines(): p.undeploy()
 ```
 
+
 ```python
 pipeline = get_pipeline(pipeline_name)
 pipeline.add_model_step(model)
 pipeline.deploy(deployment_config=deployment_config)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:46:54.419854+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
-{{</table>}}
+
+
 
 We can verify that the pipeline is running and list what models are associated with it.
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -199,6 +222,8 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ## Inferences
 
 ### Infer 1 row
@@ -206,6 +231,7 @@ pipeline.status()
 Now that the pipeline is deployed and our model is in place, we'll perform a smoke test to verify the pipeline is up and running properly.  We'll use the `infer_from_file` command to load a single encoded URL into the inference engine and print the results back out.
 
 The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
+
 
 ```python
 if arrowEnabled is True:
@@ -215,7 +241,21 @@ else:
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -264,10 +304,11 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
+
 
 ```python
 inference_url = pipeline._deployment._url()
@@ -278,6 +319,8 @@ token = connection['token']
 
     https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/wjtxedgepipelineexample-106
 
+
+
 ```python
 if arrowEnabled is True:
     dataFile="./data/data_1k.df.json"
@@ -287,6 +330,7 @@ else:
     contentType="application/json"
 ```
 
+
 ```python
 !curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
 ```
@@ -294,6 +338,7 @@ else:
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
     100  735k  100    95  100  735k     52   408k  0:00:01  0:00:01 --:--:--  409k
+
 
 # Redeploy with a little larger budget 
 If you look in the file curl_response.txt, you will see that the inference failed:
@@ -305,17 +350,23 @@ this model, we need to add more memory. Let's do that now.
 The following DeploymentConfig is the same as the original, but increases the memory from 150MB to 300MB. This sort
 of budget would be available on some network routers.
 
+
 ```python
 pipeline.undeploy()
 deployment_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(1).memory("300Mi").build()
 pipeline.deploy(deployment_config=deployment_config)
 ```
 
+
+
+
 <table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:47:57.057785+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2ebda792-0d70-459b-b1cf-0348abcd6a06, e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
-{{</table>}}
+
+
 
 # Re-run inference
 Running the same curl command again should now produce a curl_response.txt file containing the expected results.
+
 
 ```python
 !curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
@@ -324,6 +375,7 @@ Running the same curl command again should now produce a curl_response.txt file 
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                      Dload  Upload   Total   Spent    Left  Speed
     100 1402k  100  666k  100  735k   172k   190k  0:00:03  0:00:03 --:--:--  362k
+
 
 It is important to note that increasing the memory was necessary to run a batch of 1,000 inferences at once. If this is not a design
 use case for your system, running with the smaller memory budget may be acceptable. Wallaroo allows you to easily test difference
@@ -334,11 +386,15 @@ while not over-provisioning scarce resources.
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.  Note that if the deployment variable is unchanged aloha_pipeline.deploy() will restart the inference engine in the same configuration as before.
 
+
 ```python
 pipeline.undeploy()
 
 ```
 
+
+
+
 <table><tr><th>name</th> <td>wjtxedgepipelineexample</td></tr><tr><th>created</th> <td>2023-02-27 17:46:53.711612+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:47:57.057785+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2ebda792-0d70-459b-b1cf-0348abcd6a06, e33295e1-fa57-4709-a5ee-23cdd2b66131, 1fc9d0e7-6783-4050-9b86-6f0276fb8745</td></tr><tr><th>steps</th> <td>wjtxalohamodel</td></tr></table>
-{{</table>}}
+
 

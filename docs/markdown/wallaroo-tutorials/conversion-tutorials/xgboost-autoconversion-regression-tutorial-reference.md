@@ -36,6 +36,7 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
+
 ```python
 import wallaroo
 
@@ -52,6 +53,7 @@ pd.set_option('display.max_colwidth', None)
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
+
 ```python
 # Login through local Wallaroo instance
 
@@ -61,9 +63,6 @@ Connect to your Wallaroo instance and store the connection into the variable `wl
 
 # wallarooPrefix = "YOUR PREFIX"
 # wallarooSuffix = "YOUR PREFIX"
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
 
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
@@ -78,12 +77,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -95,6 +95,7 @@ print(arrowEnabled)
 The following will set the workspace, pipeline, model name, the model file name used when uploading and converting the `keras` model, and the sample data.
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
+
 
 ```python
 workspace_name = 'xgboost-regression-autoconvert-workspace'
@@ -123,6 +124,7 @@ def get_pipeline(name):
 
 Set or create the workspace and pipeline based on the names configured earlier.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -132,12 +134,17 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
+
+
+
 <table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-23 16:29:55.996960+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-{{</table>}}
+
+
 
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `xgb-class-model`.
+
 
 ```python
 #the number of columns
@@ -156,6 +163,7 @@ model_conversion_type = ModelConversionSource.XGBOOST
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
+
 ```python
 # convert and upload
 model_wl = wl.convert_model(model_file_name, model_conversion_type, model_conversion_args)
@@ -169,18 +177,28 @@ With the model uploaded and converted, we can run a sample inference.
 
 Add the uploaded and converted `model_wl` as a step in the pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
 
     Waiting for deployment - this will take up to 45s ............. ok
 
+
+
+
+
 <table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-24 16:26:10.105654+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>73345b3e-e141-497e-bcab-e6145cb8b6ec, 6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-{{</table>}}
+
+
+
 
 ```python
 pipeline.status()
 ```
+
+
+
 
     {'status': 'Running',
      'details': [],
@@ -202,9 +220,12 @@ pipeline.status()
        'details': []}],
      'sidekicks': []}
 
+
+
 ### Run the Inference
 
 Use the `test_class_eval.json` as set earlier as our `sample_data` and perform the inference.
+
 
 ```python
 if arrowEnabled is True:
@@ -218,7 +239,21 @@ else:
     
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -267,12 +302,13 @@ else:
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
@@ -280,6 +316,10 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ..................................... ok
 
+
+
+
+
 <table><tr><th>name</th> <td>xgboost-regression-autoconvert-pipeline</td></tr><tr><th>created</th> <td>2023-02-22 17:36:31.143795+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-24 16:26:10.105654+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>73345b3e-e141-497e-bcab-e6145cb8b6ec, 6f6a7cf1-b328-4a67-a37d-4047b1082516, 00bb4dd6-3061-4619-9491-a3b7c307f784, 45081f0c-1991-4ce0-907c-6135ca328084, 1220c119-45e9-4ff4-bdfd-8ff2f95486d5</td></tr><tr><th>steps</th> <td>xgb-regression-model</td></tr></table>
-{{</table>}}
+
 

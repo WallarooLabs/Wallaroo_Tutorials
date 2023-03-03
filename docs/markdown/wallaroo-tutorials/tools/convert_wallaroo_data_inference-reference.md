@@ -1,4 +1,4 @@
-The following guide on using inference data inputs from Wallaroo proprietary JSON to either Pandas DataFrame or Apache Arrow downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/quickstartguide_samples/blob/20230207_arrow_versions/tools/convert_wallaroo_data_to_pandas_arrow).
+The following guide on using inference data inputs from Wallaroo proprietary JSON to either Pandas DataFrame or Apache Arrow downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/tools/convert_wallaroo_data_to_pandas_arrow).
 
 ## Introduction
 
@@ -27,6 +27,7 @@ The following demonstrates how to convert Wallaroo Proprietary JSON to Pandas Da
 
 The following establishes a connection to a Wallaroo instance for testing and sample inferences.  These steps can be skipped if no sample inferences are required, and are used to demonstrate how inference inputs and output work with Pandas DataFrame and Apache Arrow.
 
+
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
@@ -37,6 +38,7 @@ from IPython.display import display
 import pandas as pd
 pd.set_option('display.max_colwidth', None)
 ```
+
 
 ```python
 # Login through local Wallaroo instance
@@ -52,6 +54,7 @@ wl = wallaroo.Client()
 #                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
 #                     auth_type="sso")
 ```
+
 
 ```python
 workspace_name = 'inferencedataexamplesworkspace'
@@ -89,12 +92,17 @@ pipeline = get_pipeline(pipeline_name)
 pipeline.add_model_step(model).deploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>inferencedataexamplespipeline</td></tr><tr><th>created</th> <td>2023-02-28 17:42:19.166319+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-28 17:42:19.871068+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0ae102ab-082b-4991-9eb2-f43b44d29ed7, 5a90c841-63c6-45c0-b6e6-042e5d213146</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
-{{</table>}}
+
+
 
 ### Enable Arrow SDK Support
 
 The following is only required when the environment `"ARROW_ENABLED"` has not been set locally.  This environment variable is required in the current release of the SDK to enable Arrow support.
+
 
 ```python
 import os
@@ -110,6 +118,7 @@ The following demonstrates how to convert Wallaroo Proprietary JSON to Pandas Da
 
 The following libraries are used as part of the conversion process.
 
+
 ```python
 import pandas as pd
 import pyarrow as pa
@@ -121,6 +130,7 @@ import numpy as np
 ### Load Wallaroo Data
 
 The Wallaroo data will be saved to a variable.  This sample input when run through the trained model as an inference returns a high probability of fraud.
+
 
 ```python
 # Start with the single example
@@ -164,13 +174,28 @@ high_fraud_data = {
 
 The Wallaroo proprietary JSON file will now be converted into Pandas DataFrame.
 
+
 ```python
 high_fraud_dataframe =  pd.DataFrame.from_records(high_fraud_data)
 display(high_fraud_dataframe)
 
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -185,12 +210,13 @@ display(high_fraud_dataframe)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### DataFrame for Inferences
 
 Once converted, the DataFrame version of the data can be used for inferences in an Arrow enabled Wallaroo instance.
+
 
 ```python
 # Use this dataframe to infer
@@ -198,7 +224,21 @@ result = pipeline.infer(high_fraud_dataframe)
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -219,12 +259,13 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Pandas JSON to Pandas DataFrame
 
 For JSON data that is in the Pandas DataFrame format, the data can be turned into a Pandas DataFrame object through the same method.  Note that the original variable is **JSON**, which could have come from a file, to a DataFrame object.
+
 
 ```python
 high_fraud_dataframe_json = [
@@ -264,13 +305,28 @@ high_fraud_dataframe_json = [
 ]
 ```
 
+
 ```python
 # Infer from the JSON
 high_fraud_from_dataframe_json =  pd.DataFrame.from_records(high_fraud_dataframe_json)
 display(high_fraud_from_dataframe_json)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -285,7 +341,8 @@ display(high_fraud_from_dataframe_json)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ```python
@@ -294,7 +351,21 @@ results = pipeline.infer(high_fraud_from_dataframe_json)
 display(results)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -315,12 +386,13 @@ display(results)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ## Convert Wallaroo JSON File to Pandas DataFrame
 
 When working with files containing Wallaroo JSON data, these can be imported from their original JSON, then converted to a Pandas DataFrame object with the pandas method `read_json`.
+
 
 ```python
 high_fraud_filename = "./data/high_fraud.json"
@@ -328,7 +400,21 @@ high_fraud_data_from_file =  pd.read_json(high_fraud_filename, orient="records")
 display(high_fraud_data_from_file)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -343,10 +429,11 @@ display(high_fraud_data_from_file)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 The data can be used in an inference either with the `infer` method on the DataFrame object, or directly from the file.  Note that in either case, the returned object is a DataFrame.
+
 
 ```python
 # Use this dataframe to infer
@@ -354,7 +441,21 @@ result =  pipeline.infer(high_fraud_data_from_file)
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -375,7 +476,8 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ```python
@@ -384,7 +486,21 @@ result = pipeline.infer_from_file(high_fraud_filename)
 display(result)
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -405,7 +521,7 @@ display(result)
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ## Convert Pandas DataFrame to Arrow Table
@@ -414,21 +530,28 @@ The helper file `convert_wallaroo_data.py` is used to convert from Pandas DataFr
 
 Arrow requires the user to specify the exact datatypes of the array elements before passing the data to the engine. If you are aware of what data type the model expects, create a dictionary with column names as key and data type as the value and pass it as a param in place of `data_type_dict`. If not, the `convert_to_pa_dtype` function will try and guess the equivalent pyarrow data type and use it (this may or may not work as intended).
 
+
 ```python
 import convert_wallaroo_data
 ```
+
 
 ```python
 data_type_dict = {"tensor": pa.float32()}
 ```
 
+
 ```python
 pa_table = convert_wallaroo_data.convert_pandas_to_arrow(high_fraud_dataframe, data_type_dict)
 ```
 
+
 ```python
 pa_table
 ```
+
+
+
 
     pyarrow.Table
     tensor: fixed_size_list<item: float>[29]
@@ -436,13 +559,17 @@ pa_table
     ----
     tensor: [[[1.0678325,18.155556,-1.6589551,5.211179,2.345247,...,8.484355,14.64541,26.852377,2.7165291,3.0611956]]]
 
+
+
 An inference can be done using the arrow table.  The following shows the code sample and result.  Note that when submitting an Arrow table to `infer`, that the returned object is an Arrow table.
+
 
 ```python
 # use the arrow table for infer:
 result = pipeline.infer(pa_table)
 display(result)
 ```
+
 
     pyarrow.Table
     time: timestamp[ms]
@@ -457,13 +584,16 @@ display(result)
     out.dense_1: [[[0.981199]]]
     check_failures: [[0]]
 
+
 ### Save Arrow Table to Arrow File
 
 The converted Arrow table can be saved using the `pyarrow` library.
 
+
 ```python
 arrow_file_name = "./data/high_fraud.arrow"
 ```
+
 
 ```python
 with pa.OSFile(arrow_file_name, 'wb') as sink:
@@ -474,10 +604,12 @@ with pa.OSFile(arrow_file_name, 'wb') as sink:
 
 `infer_from_file` can be performed using the new `arrow` file.  Note again that when submitting an inference with an Arrow object, the returning value is an Arrow object.
 
+
 ```python
 result = pipeline.infer_from_file(arrow_file_name)
 display(result)
 ```
+
 
     pyarrow.Table
     time: timestamp[ms]
@@ -492,9 +624,11 @@ display(result)
     out.dense_1: [[[0.981199]]]
     check_failures: [[0]]
 
+
 ## Read Arrow File to DataFrame
 
 The data can go the opposite direction - reading from an Arrow binary file, and turning the data into either an Arrow table with the Arrow `read_all` method, or just the data into a DataFrame with the Arrow `read_pandas` method.
+
 
 ```python
 with pa.ipc.open_file(arrow_file_name) as source:
@@ -504,13 +638,29 @@ with pa.ipc.open_file(arrow_file_name) as source:
             display(table_df)
 ```
 
+
     pyarrow.Table
     tensor: fixed_size_list<item: float>[29]
       child 0, item: float
     ----
     tensor: [[[1.0678325,18.155556,-1.6589551,5.211179,2.345247,...,8.484355,14.64541,26.852377,2.7165291,3.0611956]]]
 
-{{<table "table table-bordered">}}
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -525,19 +675,34 @@ with pa.ipc.open_file(arrow_file_name) as source:
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ### Convert Arrow Infer to DataFrame
 
 When an infer result is returned as an Arrow object, it can be converted to a DataFrame for easy viewing.
 
+
 ```python
 result = pipeline.infer_from_file(arrow_file_name)
 display(result.to_pandas())
 ```
 
-{{<table "table table-bordered">}}
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -558,7 +723,7 @@ display(result.to_pandas())
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
 
 
 ## Convert Flattened Arrow Table to Multi-Dimensional Pandas DataFrame
@@ -569,6 +734,7 @@ For situations where the original data was in a multi-dimensional DataFrame, the
 
 Here is a sample infer result data in Arrow Table format.
 
+
 ```python
 time_array = pa.array([datetime.datetime(2023, 2 , 22, 22, 14)])
 in_tensor_array = pa.array([[1.5997242884551583,-0.72885535293112,-0.8464381472712799,-0.48041787186839674,0.8211244519635765,0.999086254697715,-1.365979802921807,0.36611200379560294,1.27093766309002,0.4895466723195178]])
@@ -578,6 +744,9 @@ names = ["time", "in.tensor", "out.reshape", "check_failures"]
 flattened_2d_table = pa.Table.from_arrays([time_array, in_tensor_array, out_array, check_failures_array], names = names)
 flattened_2d_table
 ```
+
+
+
 
     pyarrow.Table
     time: timestamp[us]
@@ -592,9 +761,15 @@ flattened_2d_table
     out.reshape: [[[1.8749652,-0.94025564,-1.0790397,-0.72123086,0.90895796,1.092086,-1.2834015,0.340406,1.2441622,0.57471186]]]
     check_failures: [[0]]
 
+
+
+
 ```python
 flattened_2d_table["out.reshape"]
 ```
+
+
+
 
     <pyarrow.lib.ChunkedArray object at 0x28903b040>
     [
@@ -614,17 +789,22 @@ flattened_2d_table["out.reshape"]
       ]
     ]
 
+
+
 ### Verify the Shape
 
 Let's suppose the shape of the output that natively comes out of the model is [2,5].  We can use that to make sure the shape is correct when translating from the 1 dimensional Arrow table.
+
 
 ```python
 tensor_type = {"shape": [2, 5]}
 ```
 
+
 ```python
 output_df = flattened_2d_table.to_pandas()['out.reshape'] 
 ```
+
 
 ```python
 # numpy array, shape [N, 2, 5] 
@@ -633,24 +813,48 @@ output_list = [elt.reshape(tensor_type['shape']) for elt in output_df]
 output_tensor = np.stack(output_list)
 ```
 
+
 ```python
 output_tensor
 ```
+
+
+
 
     array([[[ 1.8749652 , -0.94025564, -1.0790397 , -0.72123086,
               0.90895796],
             [ 1.092086  , -1.2834015 ,  0.340406  ,  1.2441622 ,
               0.57471186]]])
 
+
+
+
 ```python
 output_2d_df = pd.DataFrame(output_tensor.tolist())
 ```
+
 
 ```python
 output_2d_df
 ```
 
-{{<table "table table-bordered">}}
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -667,17 +871,22 @@ output_2d_df
     </tr>
   </tbody>
 </table>
-{{</table>}}
+</div>
+
 
 
 ## Undeploy Pipeline
 
 The pipeline will now be undeployed to return the resources back to the Wallaroo instance.
 
+
 ```python
 pipeline.undeploy()
 ```
 
+
+
+
 <table><tr><th>name</th> <td>inferencedataexamplespipeline</td></tr><tr><th>created</th> <td>2023-02-28 17:42:19.166319+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-28 17:42:19.871068+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0ae102ab-082b-4991-9eb2-f43b44d29ed7, 5a90c841-63c6-45c0-b6e6-042e5d213146</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
-{{</table>}}
+
 

@@ -25,6 +25,7 @@ The included OpenCV class is included in this demonstration as `CVDemoUtils.py`,
 * libsm
 * libxext
 
+
 ### Internal JupyterHub Service
 
 To install these dependencies in the Wallaroo JupyterHub service, use the following commands from a terminal shell via the following procedure:
@@ -73,6 +74,7 @@ brew install ffmpeg libsm libxext
     1. [ipywidgets](https://pypi.org/project/ipywidgets/)
 
 These can be installed by running the command below in the Wallaroo JupyterHub service.  Note the use of `pip install torch --no-cache-dir` for low memory environments.
+
 
 ```python
 !pip install torchvision

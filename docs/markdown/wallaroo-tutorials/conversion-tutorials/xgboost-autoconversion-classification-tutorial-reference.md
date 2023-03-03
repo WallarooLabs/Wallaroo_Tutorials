@@ -41,6 +41,7 @@ To use the Wallaroo autoconverter `convert_model(path, source_type, conversion_a
 
 The first step is to import the libraries needed.
 
+
 ```python
 import wallaroo
 
@@ -57,6 +58,7 @@ pd.set_option('display.max_colwidth', None)
 
 Connect to your Wallaroo instance and store the connection into the variable `wl`.
 
+
 ```python
 # Login through local Wallaroo instance
 
@@ -66,9 +68,6 @@ Connect to your Wallaroo instance and store the connection into the variable `wl
 
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR PREFIX"
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
 
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
@@ -83,12 +82,13 @@ If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're no
 
 The examples below will be shown in an arrow enabled environment.
 
+
 ```python
 import os
 # Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
 # os.environ["ARROW_ENABLED"]="True"
 
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"] == "False":
+if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
     arrowEnabled = False
 else:
     arrowEnabled = True
@@ -100,6 +100,7 @@ print(arrowEnabled)
 The following will set the workspace, pipeline, model name, the model file name used when uploading and converting the `keras` model, and the sample data.
 
 The functions `get_workspace(name)` will either set the current workspace to the requested name, or create it if it does not exist.  The function `get_pipeline(name)` will either set the pipeline used to the name requested, or create it in the current workspace if it does not exist.
+
 
 ```python
 workspace_name = 'xgboost-classification-autoconvert-workspace'
@@ -128,6 +129,7 @@ def get_pipeline(name):
 
 Set or create the workspace and pipeline based on the names configured earlier.
 
+
 ```python
 workspace = get_workspace(workspace_name)
 
@@ -140,6 +142,7 @@ pipeline
 ### Set the Model Autoconvert Parameters
 
 Set the paramters for converting the `xgb-class-model`.
+
 
 ```python
 #the number of columns
@@ -158,6 +161,7 @@ model_conversion_type = ModelConversionSource.XGBOOST
 
 Now we can upload the convert the model.  Once finished, it will be stored as `{unique-file-id}-converted.onnx`.
 
+
 ```python
 # convert and upload
 model_wl = wl.convert_model(model_file_name, model_conversion_type, model_conversion_args)
@@ -171,6 +175,7 @@ With the model uploaded and converted, we can run a sample inference.
 
 Add the uploaded and converted `model_wl` as a step in the pipeline, then deploy it.
 
+
 ```python
 pipeline.add_model_step(model_wl).deploy()
 ```
@@ -178,6 +183,7 @@ pipeline.add_model_step(model_wl).deploy()
 ### Run the Inference
 
 Use the evaluation data to verify the process completed successfully.
+
 
 ```python
 if arrowEnabled is True:
@@ -193,6 +199,7 @@ else:
 ### Undeploy the Pipeline
 
 With the tests complete, we will undeploy the pipeline to return the resources back to the Wallaroo instance.
+
 
 ```python
 pipeline.undeploy()
