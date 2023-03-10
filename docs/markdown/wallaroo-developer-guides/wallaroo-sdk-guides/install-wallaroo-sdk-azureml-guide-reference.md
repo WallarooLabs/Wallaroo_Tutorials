@@ -80,7 +80,7 @@ To set up the virtual environment in Azure ML for using the Wallaroo SDK with Az
 1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo==2022.4
+    pip install wallaroo==2023.1.0
     ```
 
 

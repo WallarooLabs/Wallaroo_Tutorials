@@ -75,7 +75,7 @@ To set up the virtual environment in Google Workbench for using the Wallaroo SDK
 1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
     ```bash
-    pip install wallaroo==2022.4
+    pip install wallaroo==2023.1.0
     ```
 
 Once the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
