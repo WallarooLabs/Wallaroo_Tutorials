@@ -10,8 +10,8 @@ import convert_wallaroo_data
 # List of files to convert
 jsonFileList = [
     {
-        "inputFile": "wallaroo-model-cookbooks/aloha/data/data_1k.test.df.json",
-        "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data/data_1k.test.arrow"
+        "inputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.df.json",
+        "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.arrow"
     },
     # {
     #     "inputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.df.json",
