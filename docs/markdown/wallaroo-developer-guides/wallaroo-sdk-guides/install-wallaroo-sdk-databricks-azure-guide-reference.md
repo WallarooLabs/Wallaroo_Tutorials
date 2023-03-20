@@ -50,6 +50,9 @@ To install the Wallaroo SDK in a Azure Databricks environment:
 1. Select **Libraries**.
 1. Select **Install new**.
 1. Select **PyPI**.  In the **Package** field, enter the current version of the [Wallaroo SDK](https://pypi.org/project/wallaroo/).  It is recommended to specify the version, which as of this writing is `wallaroo==2023.1.0`.
+
+    * **IMPORTANT NOTE**:  The version of the Wallaroo SDK should match the Wallaroo instance.  For example, this example connects to a Wallaroo Enterprise version `2023.1` instance, so the SDK version should be `wallaroo==2023.1.0`.
+
 1. Select **Install**.
 
 Once the **Status** shows **Installed**, it will be available in Azure Databricks notebooks and other tools that use the cluster.

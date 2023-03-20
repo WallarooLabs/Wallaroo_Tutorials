@@ -74,6 +74,8 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
     
 1. Install the Wallaroo SDK.  This process may take several minutes while the other required Python libraries are added to the virtual environment.
 
+    * **IMPORTANT NOTE**:  The version of the Wallaroo SDK should match the Wallaroo instance.  For example, this example connects to a Wallaroo Enterprise version `2023.1` instance, so the SDK version should be `wallaroo==2023.1.0`.
+
     ```bash
     pip install wallaroo==2023.1.0
     ```
