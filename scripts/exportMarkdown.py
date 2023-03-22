@@ -134,26 +134,26 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
     #     "outputFile": "xgboost-to-onnx-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api-tutorial.ipynb",
-    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-    #     "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-setup.ipynb",
-    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-    #     "outputFile": "wallaroo-model-endpoints-setup-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-setup-reference.md"
+    },
     # {
     #     "inputFile": "development/sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
     #     "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
     #     "outputFile": "install-wallaroo-sdk-google-vertex-guide-reference.md"
     # },
-    {
-        "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
-        "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
-    },
+    # {
+    #     "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+    #     "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+    #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/wallaroo-tag-management/wallaroo-tags-guide.ipynb",
     #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",

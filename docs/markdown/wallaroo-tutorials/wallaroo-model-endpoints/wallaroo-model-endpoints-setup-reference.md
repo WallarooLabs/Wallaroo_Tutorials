@@ -1,106 +1,99 @@
 This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-features/wallaroo-model-endpoints).
 
-## Internal Pipeline Inference URL Tutorial
+## Wallaroo SDK Inference Tutorial
 
-Wallaroo provides the ability to perform inferences through deployed pipelines via both internal and external inference URLs.  These inference URLs allow inferences to be performed by submitting data to the internal or external URL with the inference results returned in the same format as the [InferenceResult Object](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/#run-inference-through-a-pipeline).
-
-**Internal URLs** are available only through the internal Kubernetes environment hosting the Wallaroo instance as demonstrated in this tutorial.
-**External URLs** are available outside of the Kubernetes environment, such as the public internet.  These are demonstrated in the External Pipeline Deployment URL Tutorial.
+Wallaroo provides the ability to perform inferences through deployed pipelines via the Wallaroo SDK and the Wallaroo MLOps API.  This example demonstrates performing inferences using the Wallaroo SDK.
 
 The following tutorial shows how to set up an environment and demonstrates how to use the Internal Deployment URL.  This example provides the following:
 
-* `alohacnnlstm.zip`:  Aloha model used as part of the [Aloha Quick Tutorial](https://docs.wallaroo.ai/wallaroo-tutorials/wallaroo-quick-start-aloha/).
-* For Arrow enabled instances:
-  * `data_1.df.json`, `data_1k.df.json` and `data_25k.df.json`:  Sample data used for testing inferences with the sample model.
-* For Arrow distabled instances:
-  * `data_1.json`, `data_1k.json` and `data_25k.json`:  Sample data used for testing inferences with the sample model.
+* `ccfraud.onnx`:  A pre-trained credit card fraud detection model.
+* `data/cc_data_1k.arrow`, `data/cc_data_10k.arrow`: Sample testing data in Apache Arrow format with 1,000 and 10,000 records respectively.
 
-For our example, we will perform the following:
+This example and sample data comes from the Machine Learning Group's demonstration on [Credit Card Fraud detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
 
+### Prerequisites
+
+The following is required for this tutorial:
+
+* A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/).
+* The following Python libraries:
+  * `os`
+  * [`pandas`](https://pypi.org/project/pandas/)
+  * [`polars`](https://pypi.org/project/polars/)
+  * [`pyarrow`](https://pypi.org/project/pyarrow/)
+  * [`wallaroo`](https://pypi.org/project/wallaroo/) (Installed in the Wallaroo JupyterHub service by default).
+
+### Tutorial Goals
+
+This demonstration provides a quick tutorial on performing inferences using the Wallaroo SDK using the Pipeline `infer` and `infer_from_file` methods.  This following steps will be performed:
+
+* Connect to a Wallaroo instance using environmental variables.  This bypasses the browser link confirmation for a seamless login.  For more information, see the [Wallaroo SDK Essentials Guide:  Client Connection](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 * Create a workspace for our work.
-* Upload the Aloha model.
-* Create a pipeline that can ingest our submitted data, submit it to the model, and export the results.
-* Run a sample inference through our pipeline via the SDK to demonstrate the inference is accurate.
-* Run a sample inference through our pipeline's Internal URL and store the results in a file.
-
-All sample data and models are available through the [Wallaroo Quick Start Guide Samples repository](https://github.com/WallarooLabs/quickstartguide_samples).
+* Upload the `ccfraud` model.
+* Create a pipeline and add the `ccfraud` model as a pipeline step.
+* Run a sample inference through our pipeline SDK Pipeline `infer` method.
+* Run a batch inference sample inference through our pipeline's Internal URL and store the results in a file.
 
 ## Open a Connection to Wallaroo
 
-The first step is to connect to Wallaroo through the Wallaroo client.  The Python library is included in the Wallaroo install and available through the Jupyter Hub interface provided with your Wallaroo environment.
+The first step is to connect to Wallaroo through the Wallaroo client.  This example will store the user's credentials into the file `./creds.json` which contains the following:
 
-This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
+```json
+{
+    "username": "{Connecting User's Username}", 
+    "password": "{Connecting User's Password}", 
+    "email": "{Connecting User's Email Address}"
+}
+```
 
+Replace the `username`, `password`, and `email` fields with the user account connecting to the Wallaroo instance.  This allows a seamless connection to the Wallaroo instance and bypasses the standard browser based confirmation link.  For more information, see the [Wallaroo SDK Essentials Guide:  Client Connection](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
+
+If running this example within the internal Wallaroo JupyterHub service, use the `wallaroo.Client(auth_type="user_password")` method. If connecting externally via the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/), use the following to specify the URL of the Wallaroo instance as defined in the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/), replacing `wallarooPrefix` and `wallarooSuffix` with your Wallaroo instance's DNS prefix and suffix.
 
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
+import os
+
+# used for the Wallaroo 2023.1 Wallaroo SDK for Arrow support
+os.environ["ARROW_ENABLED"]="True"
 
 # used to display dataframe information without truncating
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
 
-
 ```python
+# Retrieve the login credentials.
+os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
+
 # Client connection from local Wallaroo instance
 
-wl = wallaroo.Client()
+wl = wallaroo.Client(auth_type="user_password")
 
-# SSO login through keycloak
+# Login from external connection
 
 # wallarooPrefix = "YOUR PREFIX"
 # wallarooSuffix = "YOUR SUFFIX"
 
-# wallarooPrefix = "doc-test"
-# wallarooSuffix = "wallaroocommunity.ninja"
-
 # wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
 #                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-#                     auth_type="sso")
+#                     auth_type="user_password")
 ```
-
-### Arrow Support
-
-As of the 2023.1 release, Wallaroo provides support for dataframe and Arrow for inference inputs.  This tutorial allows users to adjust their experience based on whether they have enabled Arrow support in their Wallaroo instance or not.
-
-If Arrow support has been enabled, `arrowEnabled=True`. If disabled or you're not sure, set it to `arrowEnabled=False`
-
-The examples below will be shown in an arrow enabled environment.
-
-
-```python
-import os
-# Only set the below to make the OS environment ARROW_ENABLED to TRUE.  Otherwise, leave as is.
-# os.environ["ARROW_ENABLED"]="True"
-
-if "ARROW_ENABLED" not in os.environ or os.environ["ARROW_ENABLED"].casefold() == "False".casefold():
-    arrowEnabled = False
-else:
-    arrowEnabled = True
-print(arrowEnabled)
-```
-
-    True
-
 
 ## Create the Workspace
 
-We will create a workspace to work in and call it the `urldemoworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `urldemopipeline`.
+We will create a workspace to work in and call it the `sdkinferenceexampleworkspace`, then set it as current workspace environment.  We'll also create our pipeline in advance as `sdkinferenceexamplepipeline`.
 
-The model to be uploaded and used for inference will be labeled as `urldemomodel`.  Modify these to your organizations requirements.
-
-Once complete, the workspace will be created or, if already existing, set to the current workspace to host the pipelines and models.
-
+The model to be uploaded and used for inference will be labeled as `ccfraud`.
 
 ```python
-workspace_name = 'urldemoworkspace'
-pipeline_name = 'urldemopipeline'
-model_name = 'urldemomodel'
-model_file_name = './alohacnnlstm.zip'
+workspace_name = 'sdkinferenceexampleworkspace'
+pipeline_name = 'sdkinferenceexamplepipeline'
+model_name = 'ccfraud'
+model_file_name = './ccfraud.onnx'
 ```
-
 
 ```python
 def get_workspace(name):
@@ -120,232 +113,359 @@ def get_pipeline(name):
     return pipeline
 ```
 
-
 ```python
 workspace = get_workspace(workspace_name)
 
 wl.set_current_workspace(workspace)
-
-pipeline = get_pipeline(pipeline_name)
-pipeline
 ```
 
+    {'name': 'sdkinferenceexampleworkspace', 'id': 166, 'archived': False, 'created_by': '138bd7e6-4dc8-4dc1-a760-c9e721ef3c37', 'created_at': '2023-03-22T16:47:38.511084+00:00', 'models': [], 'pipelines': []}
 
+## Build Pipeline
 
+In a production environment, the pipeline would already be set up with the model and pipeline steps.  We would then select it and use it to perform our inferences.
 
-<table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td></td></tr></table>
+For this example we will create the pipeline and add the `ccfraud` model as a pipeline step and deploy it.  Deploying a pipeline allocates resources from the Kubernetes cluster hosting the Wallaroo instance and prepares it for performing inferences.
 
+If this process was already completed, it can be commented out and skipped for the next step [Select Pipeline](#select-pipeline).
 
-
-We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
-
+Then we will list the pipelines and select the one we will be using for the inference demonstrations.
 
 ```python
-wl.get_current_workspace()
+# Create or select the current pipeline
+
+ccfraudpipeline = get_pipeline(pipeline_name)
+
+# Add ccfraud model as the pipeline step
+
+ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
+
+ccfraudpipeline.add_model_step(ccfraud_model).deploy()
 ```
 
+<table><tr><th>name</th> <td>sdkinferenceexamplepipeline</td></tr><tr><th>created</th> <td>2023-03-22 16:47:39.971582+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-22 17:04:14.651605+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>44a4fa30-96d2-447c-bb9c-d16db0a122e3, a0fd9445-e9cc-4342-9e26-21952656c54b, dd554f0a-0013-4955-bbcf-73038cbf2b05</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
 
+## Select Pipeline
 
-
-    {'name': 'urldemoworkspace', 'id': 14, 'archived': False, 'created_by': '435da905-31e2-4e74-b423-45c38edb5889', 'created_at': '2023-02-27T17:55:11.802586+00:00', 'models': [], 'pipelines': [{'name': 'urldemopipeline', 'create_time': datetime.datetime(2023, 2, 27, 17, 55, 12, 813456, tzinfo=tzutc()), 'definition': '[]'}]}
-
-
-
-# Upload the Models
-
-Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
-
+This step assumes that the pipeline is prepared with `ccfraud` as the current step.  The method `pipelines_by_name(pipeline_name)` returns an array of pipelines with names matching the `pipeline_name` field.  This example assumes only one pipeline is assigned the name `sdkinferenceexamplepipeline`.
 
 ```python
-model = wl.upload_model(model_name, model_file_name).configure("tensorflow")
+# List the pipelines by name in the current workspace - just the first several to save space.
+
+display(wl.list_pipelines()[:5])
+
+# Set the `pipeline` variable to our sample pipeline.
+
+pipeline = wl.pipelines_by_name(pipeline_name)[0]
+display(pipeline)
 ```
 
-## Deploy The Pipeline
-Now that we have a model that we want to use we will create a deployment for it. 
+    [{'name': 'sdkinferenceexamplepipeline', 'create_time': datetime.datetime(2023, 3, 22, 16, 47, 39, 971582, tzinfo=tzutc()), 'definition': '[]'},
+     {'name': 'tgcbalohapipeline', 'create_time': datetime.datetime(2023, 3, 21, 19, 13, 8, 485434, tzinfo=tzutc()), 'definition': '[]'},
+     {'name': 'vgvwimdbpipeline', 'create_time': datetime.datetime(2023, 3, 20, 20, 46, 55, 788942, tzinfo=tzutc()), 'definition': '[]'},
+     {'name': 'yarbalohapipeline', 'create_time': datetime.datetime(2023, 3, 20, 19, 33, 46, 153485, tzinfo=tzutc()), 'definition': '[]'},
+     {'name': 'eyheccfraudpipeline', 'create_time': datetime.datetime(2023, 3, 20, 18, 49, 36, 234562, tzinfo=tzutc()), 'definition': '[]'}]
 
-We will tell the deployment we are using a tensorflow model and give the deployment name and the configuration we want for the deployment.
-
-
-```python
-pipeline.add_model_step(model)
-pipeline.deploy()
-```
-
-
-
-
-<table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:56:25.368424+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-
-
-
-We can verify that the pipeline is running and list what models are associated with it.
-
-
-```python
-pipeline.status()
-```
-
-
-
-
-    {'status': 'Running',
-     'details': [],
-     'engines': [{'ip': '10.244.0.37',
-       'name': 'engine-85c895dbbf-tfq4r',
-       'status': 'Running',
-       'reason': None,
-       'details': [],
-       'pipeline_statuses': {'pipelines': [{'id': 'urldemopipeline',
-          'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'urldemomodel',
-          'version': 'a4a80d9f-dcfe-419d-becd-dbab31b65904',
-          'sha': 'd71d9ffc61aaac58c2b1ed70a2db13d1416fb9d3f5b891e5e4e2e97180fe22f8',
-          'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.1.12',
-       'name': 'engine-lb-ddd995646-p4nb2',
-       'status': 'Running',
-       'reason': None,
-       'details': []}],
-     'sidekicks': []}
-
-
+<table><tr><th>name</th> <td>sdkinferenceexamplepipeline</td></tr><tr><th>created</th> <td>2023-03-22 16:47:39.971582+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-22 17:04:14.651605+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>44a4fa30-96d2-447c-bb9c-d16db0a122e3, a0fd9445-e9cc-4342-9e26-21952656c54b, dd554f0a-0013-4955-bbcf-73038cbf2b05</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
 
 ## Interferences
 
-### Infer 1 row
+Once a pipeline has been deployed, an inference can be run.  This will submit data to the pipeline, where it is processed through each of the pipeline's steps with the output of the previous step providing the input for the next step.  The final step will then output the result of all of the pipeline's steps.
 
-Now that the pipeline is deployed and our Aloha model is in place, we'll perform a smoke test to verify the pipeline is up and running properly.  We'll use the `infer_from_file` command to load a single encoded URL into the inference engine and print the results back out.
+* Inputs are either sent one of the following:
+  * [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).  The return value will be a pandas.DataFrame.
+  * [Apache Arrow](https://arrow.apache.org/) (**Preferred**).  The return value will be an Apache Arrow table.
 
-The result should tell us that the tokenized URL is legitimate (0) or fraud (1).  This sample data should return close to 0.
+Inferences are performed through the Wallaroo SDK via the Pipeline `infer` and `infer_from_file` methods.
 
+### infer Method
+
+Now that the pipeline is deployed we'll perform an inference using the Pipeline `infer` method, and submit a pandas DataFrame as our input data.  This will return a pandas DataFrame as the inference output.
+
+For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference through Local Variable](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-through-local-variable).
 
 ```python
-if arrowEnabled is True:
-    result = pipeline.infer_from_file('./data/data_1.df.json')
-else:
-    result = pipeline.infer_from_file("./data/data_1.json")
+smoke_test = pd.DataFrame.from_records([
+    {
+        "tensor":[
+            1.0678324729,
+            0.2177810266,
+            -1.7115145262,
+            0.682285721,
+            1.0138553067,
+            -0.4335000013,
+            0.7395859437,
+            -0.2882839595,
+            -0.447262688,
+            0.5146124988,
+            0.3791316964,
+            0.5190619748,
+            -0.4904593222,
+            1.1656456469,
+            -0.9776307444,
+            -0.6322198963,
+            -0.6891477694,
+            0.1783317857,
+            0.1397992467,
+            -0.3554220649,
+            0.4394217877,
+            1.4588397512,
+            -0.3886829615,
+            0.4353492889,
+            1.7420053483,
+            -0.4434654615,
+            -0.1515747891,
+            -0.2668451725,
+            -1.4549617756
+        ]
+    }
+])
+result = pipeline.infer(smoke_test)
 display(result)
 ```
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
       <th>time</th>
-      <th>in.text_input</th>
-      <th>out.qakbot</th>
-      <th>out.gozi</th>
-      <th>out.cryptolocker</th>
-      <th>out.pykspa</th>
-      <th>out.kraken</th>
-      <th>out.locky</th>
-      <th>out.corebot</th>
-      <th>out.ramdo</th>
-      <th>out.suppobox</th>
-      <th>out.simda</th>
-      <th>out.matsnu</th>
-      <th>out.banjori</th>
-      <th>out.main</th>
-      <th>out.ramnit</th>
-      <th>out.dircrypt</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
       <th>check_failures</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-02-27 17:57:33.165</td>
-      <td>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 16, 32, 23, 29, 32, 30, 19, 26, 17]</td>
-      <td>[0.016155062]</td>
-      <td>[2.0289372e-05]</td>
-      <td>[0.012099565]</td>
-      <td>[0.008038961]</td>
-      <td>[0.0003197726]</td>
-      <td>[0.011029283]</td>
-      <td>[0.9829148]</td>
-      <td>[0.006236233]</td>
-      <td>[1.3889951e-27]</td>
-      <td>[1.793378e-26]</td>
-      <td>[0.010341615]</td>
-      <td>[0.0015195857]</td>
-      <td>[0.997564]</td>
-      <td>[0.0009985751]</td>
-      <td>[4.7591297e-05]</td>
+      <td>2023-03-22 17:05:36.431</td>
+      <td>[1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]</td>
+      <td>[0.0014974177]</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-</div>
+
+### infer_from_file Method
+
+This example uses the Pipeline method `infer_from_file` to submit 10,000 records as a batch using an Apache Arrow table.  The method will return an Apache Arrow table.  For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference From A File](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-from-a-file)
+
+The results will be converted into a [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), and then for comparison a [polars.DataFrame](https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html).  The results will be filtered by transactions likely to be credit card fraud.  Note that `polars.DataFrame` uses Apache Arrow as its base data type, and may be preferred for faster results.
+
+```python
+result = pipeline.infer_from_file('./data/cc_data_10k.arrow')
+
+display(result)
+```
+
+    pyarrow.Table
+    time: timestamp[ms]
+    in.tensor: list<item: float> not null
+      child 0, item: float
+    out.dense_1: list<inner: float not null> not null
+      child 0, inner: float not null
+    check_failures: int8
+    ----
+    time: [[2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,...,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159,2023-03-22 17:07:12.159]]
+    in.tensor: [[[-1.0603298,2.3544967,-3.5638788,5.138735,-1.2308457,...,0.038412016,1.0993439,1.2603409,-0.14662448,-1.4463212],[-1.0603298,2.3544967,-3.5638788,5.138735,-1.2308457,...,0.038412016,1.0993439,1.2603409,-0.14662448,-1.4463212],...,[-2.1694233,-3.1647356,1.2038506,-0.2649221,0.0899006,...,1.8174038,-0.19327773,0.94089776,0.825025,1.6242892],[-0.12405868,0.73698884,1.0311689,0.59917533,0.11831961,...,-0.36567155,-0.87004745,0.41288367,0.49470216,-0.6710689]]]
+    out.dense_1: [[[0.99300325],[0.99300325],...,[0.00024175644],[0.0010648072]]]
+    check_failures: [[0,0,0,0,0,...,0,0,0,0,0]]
+
+```python
+# use pyarrow to convert results to a pandas DataFrame and display only the results with > 0.75
+
+import pyarrow as pa
+
+list = [0.75]
+
+outputs =  result.to_pandas()
+# display(outputs)
+filter = [elt[0] > 0.75 for elt in outputs['out.dense_1']]
+outputs = outputs.loc[filter]
+display(outputs)
+```
 
 
-### Batch Inference
-
-Now that our smoke test is successful, we will retrieve the Internal Deployment URL and perform an inference by submitting our data through a `curl` command as detailed below.
-
-* **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.  External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and that [Model Endpoints Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) external endpoints are enabled in the Wallaroo configuration options.
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.dense_1</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]</td>
+      <td>[0.99300325]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]</td>
+      <td>[0.99300325]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]</td>
+      <td>[0.99300325]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]</td>
+      <td>[0.99300325]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-9.716793, 9.174981, -14.450761, 8.653825, -11.039951, 0.6602411, -22.825525, -9.919395, -8.064324, -16.737926, 4.852197, -12.563343, -1.0762653, -7.524591, -3.2938414, -9.62102, -15.6501045, -7.089741, 1.7687134, 5.044906, -11.365625, 4.5987034, 4.4777045, 0.31702697, -2.2731977, 0.07944675, -10.052058, -2.024108, -1.0611985]</td>
+      <td>[1.0]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>941</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-0.50492376, 1.9348029, -3.4217603, 2.2165704, -0.6545315, -1.9004827, -1.6786858, 0.5380051, -2.7229102, -5.265194, 3.504164, -5.4661765, 0.68954825, -8.725291, 2.0267954, -5.4717045, -4.9123807, -1.6131229, 3.8021576, 1.3881834, 1.0676425, 0.28200775, -0.30759808, -0.48498034, 0.9507336, 1.5118006, 1.6385275, 1.072455, 0.7959132]</td>
+      <td>[0.9873102]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1445</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-7.615594, 4.659706, -12.057331, 7.975307, -5.1068773, -1.6116138, -12.146941, -0.5952333, -6.4605103, -12.535655, 10.017626, -14.839381, 0.34900802, -14.953928, -0.3901092, -9.342014, -14.285043, -5.758632, 0.7512068, 1.4632998, -3.3777077, 0.9950705, -0.5855211, -1.6528498, 1.9089833, 1.6860862, 5.5044003, -3.703297, -1.4715525]</td>
+      <td>[1.0]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2092</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-14.115489, 9.905631, -18.67885, 4.602589, -15.404288, -3.7169847, -15.887272, 15.616176, -3.2883947, -7.0224414, 4.086536, -5.7809114, 1.2251061, -5.4301147, -0.14021407, -6.0200763, -12.957546, -5.545689, 0.86074656, 2.2463796, 2.492611, -2.9649208, -2.265674, 0.27490455, 3.9263225, -0.43438172, 3.1642237, 1.2085277, 0.8223642]</td>
+      <td>[0.99999]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2220</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-0.1098309, 2.5842443, -3.5887418, 4.63558, 1.1825614, -1.2139517, -0.7632139, 0.6071841, -3.7244265, -3.501917, 4.3637576, -4.612757, -0.44275254, -10.346612, 0.66243565, -0.33048683, 1.5961986, 2.5439718, 0.8787973, 0.7406088, 0.34268215, -0.68495077, -0.48357907, -1.9404846, -0.059520483, 1.1553137, 0.9918434, 0.7067319, -1.6016251]</td>
+      <td>[0.91080534]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4135</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-0.547029, 2.2944348, -4.149202, 2.8648357, -0.31232587, -1.5427867, -2.1489344, 0.9471863, -2.663241, -4.2572775, 2.1116028, -6.2264414, -1.1307784, -6.9296007, 1.0049651, -5.876498, -5.6855297, -1.5800936, 3.567338, 0.5962099, 1.6361043, 1.8584082, -0.08202618, 0.46620172, -2.234368, -0.18116793, 1.744976, 2.1414309, -1.6081295]</td>
+      <td>[0.98877275]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4236</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-3.135635, -1.483817, -3.0833669, 1.6626456, -0.59695035, -0.30199608, -3.316563, 1.869609, -1.8006078, -4.5662026, 2.8778172, -4.0887237, -0.43401834, -3.5816982, 0.45171788, -5.725131, -8.982029, -4.0279546, 0.89264476, 0.24721873, 1.8289508, 1.6895254, -2.5555577, -2.4714024, -0.4500012, 0.23333028, 2.2119386, -2.041805, 1.1568314]</td>
+      <td>[0.95601666]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5658</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-5.4078765, 3.9039962, -8.98522, 5.128742, -7.373224, -2.946234, -11.033238, 5.914019, -5.669241, -12.041053, 6.950792, -12.488795, 1.2236942, -14.178565, 1.6514667, -12.47019, -22.350504, -8.928755, 4.54775, -0.11478994, 3.130207, -0.70128506, -0.40275285, 0.7511918, -0.1856308, 0.92282087, 0.146656, -1.3761806, 0.42997098]</td>
+      <td>[1.0]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6768</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-16.900557, 11.7940855, -21.349983, 4.746453, -17.54182, -3.415758, -19.897173, 13.8569145, -3.570626, -7.388376, 3.0761156, -4.0583425, 1.2901028, -2.7997534, -0.4298746, -4.777225, -11.371295, -5.2725616, 0.0964799, 4.2148075, -0.8343371, -2.3663573, -1.6571938, 0.2110055, 4.438088, -0.49057993, 2.342008, 1.4479793, -1.4715525]</td>
+      <td>[0.9999745]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6780</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-0.74893713, 1.3893062, -3.7477517, 2.4144504, -0.11061429, -1.0737498, -3.1504633, 1.2081385, -1.332872, -4.604276, 4.438548, -7.687688, 1.1683422, -5.3296027, -0.19838685, -5.294243, -5.4928794, -1.3254275, 4.387228, 0.68643385, 0.87228596, -0.1154091, -0.8364338, -0.61202216, 0.10518055, 2.2618086, 1.1435078, -0.32623357, -1.6081295]</td>
+      <td>[0.9852645]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7133</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-7.5131927, 6.507386, -12.439463, 5.7453, -9.513038, -1.4236209, -17.402607, -3.0903268, -5.378041, -15.169325, 5.7585907, -13.448207, -0.45244268, -8.495097, -2.2323692, -11.429063, -19.578058, -8.367617, 1.8869618, 2.1813896, -4.799091, 2.4388566, 2.9503248, 0.6293566, -2.6906652, -2.1116931, -6.4196434, -1.4523355, -1.4715525]</td>
+      <td>[1.0]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7566</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-2.1804514, 1.0243497, -4.3890443, 3.4924, -3.7609894, 0.023624033, -2.7677023, 1.1786921, -2.9450424, -6.8823, 6.1294384, -9.564066, -1.6273017, -10.940607, 0.3062539, -8.854589, -15.382658, -5.419305, 3.2210033, -0.7381137, 0.9632334, 0.6612066, 2.1337948, -0.90536207, 0.7498649, -0.019404415, 5.5950212, 0.26602694, 1.7534728]</td>
+      <td>[0.9999705]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7911</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-1.594454, 1.8545462, -2.6311765, 2.759316, -2.6988854, -0.08155677, -3.8566258, -0.04912437, -1.9640644, -4.2058415, 3.391933, -6.471933, -0.9877536, -6.188904, 1.2249585, -8.652863, -11.170872, -6.134417, 2.5400054, -0.29327056, 3.591464, 0.3057127, -0.052313827, 0.06196331, -0.82863224, -0.2595842, 1.0207018, 0.019899422, 1.0935433]</td>
+      <td>[0.9980203]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8921</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-0.21756083, 1.786712, -3.4240367, 2.7769134, -1.420116, -2.1018193, -3.4615245, 0.7367844, -2.3844852, -6.3140697, 4.382665, -8.348951, -1.6409378, -10.611383, 1.1813216, -6.251184, -10.577264, -3.5184007, 0.7997489, 0.97915924, 1.081642, -0.7852368, -0.4761941, -0.10635195, 2.066527, -0.4103488, 2.8288178, 1.9340333, -1.4715525]</td>
+      <td>[0.99950194]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9244</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-3.314442, 2.4431305, -6.1724143, 3.6737356, -3.81542, -1.5950849, -4.8292923, 2.9850774, -4.22416, -7.5519834, 6.1932964, -8.59886, 0.25443414, -11.834097, -0.39583337, -6.015362, -13.532762, -4.226845, 1.1153877, 0.17989528, 1.3166595, -0.64433384, 0.2305495, -0.5776498, 0.7609739, 2.2197483, 4.01189, -1.2347667, 1.2847253]</td>
+      <td>[0.9999876]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10176</th>
+      <td>2023-03-22 17:07:12.159</td>
+      <td>[-5.0815525, 3.9294617, -8.4077635, 6.373701, -7.391173, -2.1574461, -10.345097, 5.5896044, -6.3736906, -11.330594, 6.618754, -12.93748, 1.1884484, -13.9628935, 1.0340953, -12.278127, -23.333889, -8.886669, 3.5720036, -0.3243157, 3.4229393, 0.493529, 0.08469851, 0.791218, 0.30968663, 0.6811129, 0.39306796, -1.5204874, 0.9061435]</td>
+      <td>[1.0]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
 
 ```python
-inference_url = pipeline._deployment._url()
-print(inference_url)
-connection =wl.mlops().__dict__
-token = connection['token']
-print(token)
+# use polars to convert results to a polars DataFrame and display only the results with > 0.75
+
+import polars as pl
+
+outputs =  pl.from_arrow(result)
+
+display(outputs.filter(pl.col("out.dense_1").apply(lambda x: x[0]) > 0.75))
 ```
 
-    https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/urldemopipeline-11
-    eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJrTzQ2VjhoQWZDZTBjWU1ETkZobEZWS25HSC1HZy1xc1JkSlhwTTNQYjBJIn0.eyJleHAiOjE2Nzc1MjA3MDIsImlhdCI6MTY3NzUyMDY0MiwiYXV0aF90aW1lIjoxNjc3NTE4MzEyLCJqdGkiOiI1NTdkZDAxYi1jNTVkLTQ0MDQtYTI5ZC01MmRlOWU0MTc2NTciLCJpc3MiOiJodHRwczovL2RvYy10ZXN0LmtleWNsb2FrLndhbGxhcm9vY29tbXVuaXR5Lm5pbmphL2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6IjQzNWRhOTA1LTMxZTItNGU3NC1iNDIzLTQ1YzM4ZWRiNTg4OSIsInR5cCI6IkJlYXJlciIsImF6cCI6InNkay1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiYWNlMWEzMGQtNjZiYy00NGQ5LWJkMGEtYzYyMzc0NzhmZGFhIiwiYWNyIjoiMCIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsibWFuYWdlLXVzZXJzIiwidmlldy11c2VycyIsInF1ZXJ5LWdyb3VwcyIsInF1ZXJ5LXVzZXJzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJhY2UxYTMwZC02NmJjLTQ0ZDktYmQwYS1jNjIzNzQ3OGZkYWEiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjQzNWRhOTA1LTMxZTItNGU3NC1iNDIzLTQ1YzM4ZWRiNTg4OSIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbInVzZXIiXSwieC1oYXN1cmEtdXNlci1ncm91cHMiOiJ7fSJ9LCJuYW1lIjoiSm9obiBIYW5zYXJpY2siLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSIsImdpdmVuX25hbWUiOiJKb2huIiwiZmFtaWx5X25hbWUiOiJIYW5zYXJpY2siLCJlbWFpbCI6ImpvaG4uaHVtbWVsQHdhbGxhcm9vLmFpIn0.QTTxK6rE-SZIBR7z7hN1aIsGSsPYmBmuI-KxsmwzATjrCtOLO3ObE5YtBye3ITXkG4NAVN3c2llTSzrYLDeBMcsz17_T8UdSpwOVsDeTko-muhzQkcMnUrXGLsJDiOofS3ZT-_S66-IrCfGUD2D1Gj7ufbAnMipyTuE69L1QBEdoszcRfTR-epCqniayB3s6SkhBSgjmgvJcmMSIHxj3zg0siZAjQoxM6_E5GO_o__91p7FiADa0FH3xCmT9iOMM1NcF7FheBNX7xCXBBWekiy9bpB0BQISvMi1IcVCGeMZnTyO1o9ZgFbV5MG-SoKFyZrYUmhBf-JoRjecv1FYgIg
-
-
-
-```python
-if arrowEnabled is True:
-    dataFile="./data/data_25k.df.json"
-    contentType="application/json; format=pandas-records"
-else:
-    dataFile="./data/data_25k.json"
-    contentType="application/json"
-```
-
-
-```python
-!curl -X POST {inference_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data @{dataFile} > curl_response.txt
-```
-
-      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                     Dload  Upload   Total   Spent    Left  Speed
-    100 34.3M  100 16.3M  100 18.0M   895k   988k  0:00:18  0:00:18 --:--:--  538k
-
+<div><style>
+.dataframe > thead > tr > th,
+.dataframe > tbody > tr > td {
+  text-align: right;
+}
+</style>
+<small>shape: (20, 4)</small><table><thead><tr><th>time</th><th>in.tensor</th><th>out.dense_1</th><th>check_failures</th></tr><tr><td>datetime[ms]</td><td>list[f32]</td><td>list[f32]</td><td>i8</td></tr></thead><tbody><tr><td>2023-03-22 17:07:12.159</td><td>[-1.06033, 2.354497, … -1.446321]</td><td>[0.993003]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-1.06033, 2.354497, … -1.446321]</td><td>[0.993003]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-1.06033, 2.354497, … -1.446321]</td><td>[0.993003]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-1.06033, 2.354497, … -1.446321]</td><td>[0.993003]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-9.716793, 9.174981, … -1.061198]</td><td>[1.0]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-0.504924, 1.934803, … 0.795913]</td><td>[0.98731]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-7.615594, 4.659706, … -1.471552]</td><td>[1.0]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-14.115489, 9.905631, … 0.822364]</td><td>[0.99999]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-0.109831, 2.584244, … -1.601625]</td><td>[0.910805]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-0.547029, 2.294435, … -1.60813]</td><td>[0.988773]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-3.135635, -1.483817, … 1.156831]</td><td>[0.956017]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-5.407876, 3.903996, … 0.429971]</td><td>[1.0]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-16.900557, 11.794086, … -1.471552]</td><td>[0.999974]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-0.748937, 1.389306, … -1.60813]</td><td>[0.985264]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-7.513193, 6.507386, … -1.471552]</td><td>[1.0]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-2.180451, 1.02435, … 1.753473]</td><td>[0.99997]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-1.594454, 1.854546, … 1.093543]</td><td>[0.99802]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-0.217561, 1.786712, … -1.471552]</td><td>[0.999502]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-3.314442, 2.44313, … 1.284725]</td><td>[0.999988]</td><td>0</td></tr><tr><td>2023-03-22 17:07:12.159</td><td>[-5.081553, 3.929462, … 0.906143]</td><td>[1.0]</td><td>0</td></tr></tbody></table>
 
 ## Undeploy Pipeline
 
 When finished with our tests, we will undeploy the pipeline so we have the Kubernetes resources back for other tasks.
 
-**IMPORTANT NOTE**:  For the External Pipeline Deployment URL Tutorial, this pipeline will have to be deployed to make the External Deployment URL available.
-
-
 ```python
 pipeline.undeploy()
 ```
 
-
-
-
-<table><tr><th>name</th> <td>urldemopipeline</td></tr><tr><th>created</th> <td>2023-02-27 17:55:12.813456+00:00</td></tr><tr><th>last_updated</th> <td>2023-02-27 17:56:25.368424+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>930fe54d-9503-4768-8bf9-499f72272098, 54158104-c71d-4980-a6a3-25564c909b44</td></tr><tr><th>steps</th> <td>urldemomodel</td></tr></table>
-
+<table><tr><th>name</th> <td>sdkinferenceexamplepipeline</td></tr><tr><th>created</th> <td>2023-03-22 16:47:39.971582+00:00</td></tr><tr><th>last_updated</th> <td>2023-03-22 17:04:14.651605+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>44a4fa30-96d2-447c-bb9c-d16db0a122e3, a0fd9445-e9cc-4342-9e26-21952656c54b, dd554f0a-0013-4955-bbcf-73038cbf2b05</td></tr><tr><th>steps</th> <td>ccfraud</td></tr></table>
 
