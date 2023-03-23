@@ -102,9 +102,6 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
 
-wallarooPrefix = "sparkly-apple-3026"
-wallarooSuffix = "wallaroo.community"
-
 wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
                     auth_type="user_password")
@@ -174,6 +171,8 @@ The model is uploaded using the `/v1/api/models/upload` command.  This uploads a
   * **workspace_id** - (*REQUIRED int*): The numerical id of the workspace to upload the model to.  Stored earlier as `workspaceId`.
 
 Directly after we will use the `/models/list_versions` to retrieve model details used for later steps.
+
+Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/#upload-model-to-workspace)
 
 ```python
 # Upload Model
@@ -278,6 +277,8 @@ Create Pipeline in a Workspace with the `/v1/api/pipelines/create` command.  Thi
   * **workspace_id** - (REQUIRED int): Numerical id of the workspace for the new pipeline.  Stored earlier as `workspaceId`.
   * **definition** - (REQUIRED string): Pipeline definitions, can be `{}` for none.
 
+Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Create Pipeline in a Workspace](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#create-pipeline-in-a-workspace)
+
 ```python
 # Create pipeline
 
@@ -327,6 +328,8 @@ Pipelines are deployed through the MLOps API command `/v1/api/pipelines/deploy` 
 * **Returns**
   * **id** (*int*): The deployment id.
 
+Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Deploy a Pipeline](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#deploy-a-pipeline)
+
 ```python
 # Deploy Pipeline
 
@@ -375,7 +378,7 @@ In this example, a list of the workspaces will be retrieved.  Based on the setup
 
 The External Inference URL will be stored as a variable for the next step.
 
-**Modify these values to match the ones used in the Internal Pipeline Deployment URL Tutorial.**
+Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Get External Inference URL](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#get-external-inference-url)
 
 ```python
 # Retrieve the token
@@ -408,6 +411,8 @@ externalUrl
 The inference can now be performed through the External Inference URL.  This URL will accept the same inference data file that is used with the Wallaroo SDK, or with an Internal Inference URL as used in the Internal Pipeline Inference URL Tutorial.
 
 For this example, the `externalUrl` retrieved through the [Get External Inference URL](#get-external-inference-url) is used to submit a single inference request through the data file `data-1.json`.
+
+Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Perform Inference Through External URL](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#perform-inference-through-external-url)
 
 ```python
 # Retrieve the token
@@ -472,7 +477,6 @@ display(response)
       <th>in</th>
       <th>out</th>
       <th>check_failures</th>
-      <th>metadata</th>
     </tr>
   </thead>
   <tbody>
@@ -482,7 +486,6 @@ display(response)
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
   </tbody>
 </table>
@@ -517,7 +520,6 @@ display(response.head(5))
       <th>in</th>
       <th>out</th>
       <th>check_failures</th>
-      <th>metadata</th>
     </tr>
   </thead>
   <tbody>
@@ -527,7 +529,6 @@ display(response.head(5))
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
     <tr>
       <th>1</th>
@@ -535,7 +536,6 @@ display(response.head(5))
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
     <tr>
       <th>2</th>
@@ -543,7 +543,6 @@ display(response.head(5))
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
     <tr>
       <th>3</th>
@@ -551,7 +550,6 @@ display(response.head(5))
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
     <tr>
       <th>4</th>
@@ -559,7 +557,6 @@ display(response.head(5))
       <td>{'tensor': [0.5817662, 0.09788155, 0.15468194, 0.4754102, -0.19788623, -0.45043448, 0.016654044, -0.025607055, 0.09205616, -0.27839172, 0.059329946, -0.019658541, -0.42250833, -0.12175389, 1.5473095, 0.23916228, 0.3553975, -0.76851654, -0.7000849, -0.11900433, -0.3450517, -1.1065114, 0.25234112, 0.020944182, 0.21992674, 0.25406894, -0.04502251, 0.10867739, 0.25471792]}</td>
       <td>{'tensor': [0.5817662, 0.09788155, 0.15468194, 0.4754102, -0.19788623, -0.45043448, 0.016654044, -0.025607055, 0.09205616, -0.27839172, 0.059329946, -0.019658541, -0.42250833, -0.12175389, 1.5473095, 0.23916228, 0.3553975, -0.76851654, -0.7000849, -0.11900433, -0.3450517, -1.1065114, 0.25234112, 0.020944182, 0.21992674, 0.25406894, -0.04502251, 0.10867739, 0.25471792]}</td>
       <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
     </tr>
   </tbody>
 </table>
@@ -567,6 +564,8 @@ display(response.head(5))
 ### Undeploy the Pipeline
 
 With the tutorial complete, we'll undeploy the pipeline with `/v1/api/pipelines/undeploy` and return the resources back to the Wallaroo instance.
+
+Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Undeploy a Pipeline](https://staging.docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#undeploy-a-pipeline)
 
 ```python
 # Retrieve the token
@@ -593,5 +592,3 @@ display(response)
     None
 
 Wallaroo supports the ability to perform inferences through the SDK and through the API for each deployed pipeline.  For more information on how to use Wallaroo, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai) for full details.
-
-##
