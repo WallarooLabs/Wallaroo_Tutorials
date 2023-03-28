@@ -10,21 +10,21 @@ import convert_wallaroo_data
 # List of files to convert
 jsonFileList = [
     {
-        "inputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.df.json",
-        "arrowOutputFile": "wallaroo-model-cookbooks/imdb/data/test_data_50K.arrow"
-    },
+        "data_type_dict": {"text_input": pa.float32()},
+        "inputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.df.json",
+        "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.arrow"
+    }
     # {
     #     "inputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.df.json",
     #     "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.arrow"
     # }
-
 ]
 
 def main():
     # convert all of the JSON files to dataframe and arrow
     for currentFile in jsonFileList:
         currentDataFrame = pd.read_json(currentFile['inputFile'], orient="records")
-        newArrowTable = convert_wallaroo_data.convert_pandas_to_arrow(currentDataFrame, None)
+        newArrowTable = convert_wallaroo_data.convert_pandas_to_arrow(currentDataFrame, currentFile['data_type_dict'])
         with pa.OSFile(currentFile['arrowOutputFile'], 'wb') as sink:
             with pa.ipc.new_file(sink, newArrowTable.schema) as arrow_ipc:
                 arrow_ipc.write(newArrowTable)
