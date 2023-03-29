@@ -9,15 +9,16 @@ import convert_wallaroo_data
 
 # List of files to convert
 jsonFileList = [
-    {
-        "data_type_dict": {"text_input": pa.float32()},
-        "inputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.df.json",
-        "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.arrow"
-    }
     # {
+    #     "data_type_dict": {"text_input": pa.float32()},
     #     "inputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.df.json",
     #     "arrowOutputFile": "wallaroo-model-cookbooks/aloha/data/data_25k.arrow"
     # }
+    {
+        "data_type_dict": None,
+        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.df.json",
+        "arrowOutputFile": "wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow"
+    }
 ]
 
 def main():
