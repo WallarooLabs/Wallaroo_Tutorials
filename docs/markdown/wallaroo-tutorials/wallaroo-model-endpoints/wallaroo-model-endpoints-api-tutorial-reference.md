@@ -404,7 +404,7 @@ externalUrl = response['url']
 externalUrl
 ```
 
-    'https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/apiinferenceexamplepipeline-465'
+    'https://wallaroo.api.example.com/v1/api/pipelines/infer/apiinferenceexamplepipeline-465'
 
 ### Perform Inference Through External URL
 

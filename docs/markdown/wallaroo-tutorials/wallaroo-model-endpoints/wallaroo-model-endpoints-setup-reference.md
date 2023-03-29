@@ -74,19 +74,16 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 
 # Client connection from local Wallaroo instance
 
-# wl = wallaroo.Client(auth_type="user_password")
+wl = wallaroo.Client(auth_type="user_password")
 
 # Login from external connection
 
-wallarooPrefix = "YOUR PREFIX"
-wallarooSuffix = "YOUR SUFFIX"
+# wallarooPrefix = "YOUR PREFIX"
+# wallarooSuffix = "YOUR SUFFIX"
 
-wallarooPrefix = "sparkly-apple-3026"
-wallarooSuffix = "wallaroo.community"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="user_password")
+# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+#                     auth_type="user_password")
 ```
 
 ## Create the Workspace
@@ -501,7 +498,7 @@ deploy_url = pipeline._deployment._url()
 print(deploy_url)
 ```
 
-    https://sparkly-apple-3026.api.wallaroo.community/v1/api/pipelines/infer/sdkinferenceexamplepipeline-458
+    https://wallaroo.api.example.com/v1/api/pipelines/infer/sdkinferenceexamplepipeline-458
 
 ### HTTP Inference with DataFrame Input
 
