@@ -175,7 +175,7 @@ display(pipeline)
 # 
 # Now that the pipeline is deployed we'll perform an inference using the Pipeline `infer` method, and submit a pandas DataFrame as our input data.  This will return a pandas DataFrame as the inference output.
 # 
-# For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference through Local Variable](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-through-local-variable).
+# For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference through Local Variable](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-through-local-variable).
 
 # %%
 smoke_test = pd.DataFrame.from_records([
@@ -219,7 +219,7 @@ display(result)
 # %% [markdown]
 # ### infer_from_file Method
 # 
-# This example uses the Pipeline method `infer_from_file` to submit 10,000 records as a batch using an Apache Arrow table.  The method will return an Apache Arrow table.  For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference From A File](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-from-a-file)
+# This example uses the Pipeline method `infer_from_file` to submit 10,000 records as a batch using an Apache Arrow table.  The method will return an Apache Arrow table.  For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference From A File](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-from-a-file)
 # 
 # The results will be converted into a [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), and then for comparison a [polars.DataFrame](https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html).  The results will be filtered by transactions likely to be credit card fraud.  Note that `polars.DataFrame` uses Apache Arrow as its base data type, and may be preferred for faster results.
 
@@ -253,7 +253,7 @@ display(outputs.filter(pl.col("out.dense_1").apply(lambda x: x[0]) > 0.75))
 # %% [markdown]
 # ## Inferences via HTTP POST
 # 
-# Each pipeline has its own Inference URL that allows HTTP/S POST submissions of inference requests.  Full details are available from the [Inferencing via the Wallaroo MLOps API](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-api-inferences/).
+# Each pipeline has its own Inference URL that allows HTTP/S POST submissions of inference requests.  Full details are available from the [Inferencing via the Wallaroo MLOps API](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-api-inferences/).
 # 
 # This example will demonstrate performing inferences with a DataFrame input and an Apache Arrow input.
 
