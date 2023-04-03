@@ -20,8 +20,6 @@
 # 
 # * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
-#   * `os`
-#   * `requests`
 #   * [`pandas`](https://pypi.org/project/pandas/)
 #   * [`polars`](https://pypi.org/project/polars/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -60,6 +58,8 @@
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
+import polars as pl
+import pyarrow as pa
 import os
 
 # used for the Wallaroo 2023.1 Wallaroo SDK for Arrow support
@@ -167,7 +167,8 @@ display(pipeline)
 # 
 # * Inputs are either sent one of the following:
 #   * [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).  The return value will be a pandas.DataFrame.
-#   * [Apache Arrow](https://arrow.apache.org/) (**Preferred**).  The return value will be an Apache Arrow table.
+#   * [Apache Arrow](https://arrow.apache.org/).  The return value will be an Apache Arrow table.
+#   * [Custom JSON](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/#inferenceresult-object).  The return value will be a Wallaroo InferenceResult object.
 # 
 # Inferences are performed through the Wallaroo SDK via the Pipeline `infer` and `infer_from_file` methods.
 # 
@@ -231,8 +232,6 @@ display(result)
 # %%
 # use pyarrow to convert results to a pandas DataFrame and display only the results with > 0.75
 
-import pyarrow as pa
-
 list = [0.75]
 
 outputs =  result.to_pandas()
@@ -243,8 +242,6 @@ display(outputs)
 
 # %%
 # use polars to convert results to a polars DataFrame and display only the results with > 0.75
-
-import polars as pl
 
 outputs =  pl.from_arrow(result)
 
@@ -265,15 +262,23 @@ display(outputs.filter(pl.col("out.dense_1").apply(lambda x: x[0]) > 0.75))
 # * [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk).  This method requires a Wallaroo based user.
 # * [API Clent Secret](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-keycloak).  This is the recommended method as it is user independent.  It allows any valid user to make an inference request.
 # 
-# This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.mlops().__dict__` method, extracting the token from the response.
+# This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.auth.auth_header()` method, extracting the Authentication header from the response.
 # 
 # Reference:  [MLOps API Retrieve Token Through Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk)
 
 # %%
+pipeline.deploy()
+
+# %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
-display(token)
+# connection =wl.mlops().__dict__
+# token = connection['token']
+# display(token)
+
+# trying with headers
+
+headers = wl.auth.auth_header()
+display(headers)
 
 # %% [markdown]
 # ### Retrieve the Pipeline Inference URL
@@ -296,6 +301,10 @@ print(deploy_url)
 # Retrieve the token
 connection =wl.mlops().__dict__
 token = connection['token']
+auth_header = wl.auth.auth_header()
+
+# get authorization header
+headers = wl.auth.auth_header()
 
 ## Inference through external URL using dataframe
 
@@ -336,49 +345,66 @@ data = pd.DataFrame.from_records([
     }
 ])
 
-contentType = 'application/json; format=pandas-records'
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type': contentType
-}
+# set the content type for pandas records
+headers['Content-Type']= 'application/json; format=pandas-records'
+
+# set accept as pandas-records
+headers['Accept']='application/json; format=pandas-records'
+
+# display(headers)
 
 # submit the request via POST, import as pandas DataFrame
-response = pd.DataFrame.from_records(requests.post(deploy_url, data=data.to_json(orient="records"), headers=headers).json())
-display(response)
+response = pd.DataFrame.from_records(
+                requests.post(
+                    deploy_url, 
+                    data=data.to_json(orient="records"), 
+                    headers=headers)
+                .json()
+            )
+display(response.loc[:,["time", "out"]])
 
 # %%
-!curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data '{data.to_json(orient="records")}' > curl_response.txt
+!curl -X POST {deploy_url} -H "Authorization: {headers['Authorization']}" -H "Content-Type:{headers['Content-Type']}" -H "Accept:{headers['Accept']}" --data '{data.to_json(orient="records")}'
 
 # %% [markdown]
 # ### HTTP Inference with Arrow Input
 # 
 # The following example performs a HTTP Inference request with an Apache Arrow input.  The request will be made with first a Python `requests` method, then using `curl`.
+# 
+# Only the first 5 rows will be displayed for space purposes.
 
 # %%
-# Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+# get authorization header
+headers = wl.auth.auth_header()
 
 # Submit arrow file
 dataFile="./data/cc_data_10k.arrow"
 
 data = open(dataFile,'rb').read()
 
-contentType="application/vnd.apache.arrow.file"
+# set the content type for Arrow table
+headers['Content-Type']= "application/vnd.apache.arrow.file"
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type': contentType
-}
+# set accept as pandas-records
+headers['Accept']="application/vnd.apache.arrow.file"
 
-response = pd.DataFrame.from_records(requests.post(deploy_url, headers=headers, data=data, verify=True).json())
-display(response.head(5))
+response = requests.post(
+                    deploy_url, 
+                    headers=headers, 
+                    data=data, 
+                    verify=True
+                )
+
+# Arrow table is retrieved 
+with pa.ipc.open_file(response.content) as reader:
+    arrow_table = reader.read_all()
+
+# convert to Polars DataFrame and display the first 5 rows
+display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
 
 # %%
-!curl -X POST {deploy_url} -H "Authorization: Bearer {token}" -H "Content-Type:{contentType}" --data-binary @{dataFile} > curl_response.arrow
+!curl -X POST {deploy_url} -H "Authorization: {headers['Authorization']}" -H "Content-Type:{headers['Content-Type']}" -H "Accept:{headers['Accept']}" --data-binary @{dataFile} > curl_response.arrow
 
 # %% [markdown]
 # ## Undeploy Pipeline

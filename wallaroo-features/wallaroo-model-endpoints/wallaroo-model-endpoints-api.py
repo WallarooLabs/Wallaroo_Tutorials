@@ -19,8 +19,6 @@
 # 
 # * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
-#   * `os`
-#   * `requests`
 #   * [`pandas`](https://pypi.org/project/pandas/)
 #   * [`polars`](https://pypi.org/project/polars/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -88,6 +86,10 @@ from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import os
 
+import polars as pl
+
+import pyarrow as pa
+
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -95,7 +97,7 @@ from requests.auth import HTTPBasicAuth
 import string
 import random
 
-# make a random 4 character prefix
+# make a random 4 character prefix to prevent workspace and pipeline name clobbering
 prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 
 import json
@@ -127,15 +129,14 @@ APIURL=f"https://{wallarooPrefix}.api.{wallarooSuffix}"
 # %% [markdown]
 # ## Retrieve the JWT Token
 # 
-# As mentioned earlier, there are multiple methods of authenticating to the Wallaroo instance for MLOps API calls.  This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.mlops().__dict__` method, extracting the token from the response.
+# As mentioned earlier, there are multiple methods of authenticating to the Wallaroo instance for MLOps API calls.  This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.auth.auth_header()` method, extracting the token from the response.
 # 
 # Reference:  [MLOps API Retrieve Token Through Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk)
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
-display(token)
+headers = wl.auth.auth_header()
+display(headers)
 
 # %% [markdown]
 # ## Create Workspace
@@ -148,8 +149,10 @@ display(token)
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 # Create workspace
 apiRequest = f"{APIURL}/v1/api/workspaces/create"
@@ -158,11 +161,6 @@ workspace_name = f"{prefix}apiinferenceexampleworkspace"
 
 data = {
   "workspace_name": workspace_name
-}
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
@@ -185,11 +183,8 @@ workspaceId = response['workspace_id']
 # Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/#upload-model-to-workspace)
 
 # %%
-# Upload Model
-
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
 
 apiRequest = f"{APIURL}/v1/api/models/upload"
 
@@ -199,10 +194,6 @@ data = {
     "name":model_name,
     "visibility":"public",
     "workspace_id": workspaceId
-}
-
-headers= {
-    'Authorization': 'Bearer ' + token
 }
 
 files = {
@@ -215,18 +206,13 @@ display(response)
 modelId=response['insert_models']['returning'][0]['models'][0]['id'] # Stored for later steps.
 
 # %%
-# Retrieve uploaded model details
-
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/models/list_versions"
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
 
 data = {
   "model_id": model_name,
@@ -257,8 +243,10 @@ exampleModelSha = response[-1]['sha']
 # Create pipeline
 
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/create"
 
@@ -268,11 +256,6 @@ data = {
   "pipeline_id": pipeline_name,
   "workspace_id": workspaceId,
   "definition": {}
-}
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
@@ -308,17 +291,14 @@ pipeline_variant_version=['pipeline_variant_version']
 # Deploy Pipeline
 
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/deploy"
 
 exampleModelDeployId=pipeline_name
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
 
 data = {
     "deploy_id": exampleModelDeployId,
@@ -355,8 +335,10 @@ exampleModelDeploymentId=response['id']
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 ## Retrieve the pipeline's External Inference URL
 
@@ -367,14 +349,10 @@ data = {
     "pipeline_name": pipeline_name
 }
 
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
-
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-externalUrl = response['url']
-externalUrl
+deployurl = response['url']
+deployurl
+
 
 # %% [markdown]
 # ### Perform Inference Through External URL
@@ -387,8 +365,10 @@ externalUrl
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json; format=pandas-records'
 
 ## Inference through external URL using dataframe
 
@@ -429,37 +409,45 @@ data = [
     }
 ]
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json; format=pandas-records'
-}
-
 # submit the request via POST, import as pandas DataFrame
-response = pd.DataFrame.from_records(requests.post(externalUrl, json=data, headers=headers).json())
+response = pd.DataFrame.from_records(
+    requests.post(
+        deployurl, 
+        json=data, 
+        headers=headers)
+        .json()
+    )
+
 display(response)
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/vnd.apache.arrow.file'
+
+# set accept as pandas-records
+headers['Accept']="application/vnd.apache.arrow.file"
 
 # Submit arrow file
 dataFile="./data/cc_data_10k.arrow"
 
 data = open(dataFile,'rb').read()
 
+response = requests.post(
+                    deployurl, 
+                    headers=headers, 
+                    data=data, 
+                    verify=True
+                )
 
-contentType="application/vnd.apache.arrow.file"
+# Arrow table is retrieved 
+with pa.ipc.open_file(response.content) as reader:
+    arrow_table = reader.read_all()
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/vnd.apache.arrow.file'
-}
-
-response = pd.DataFrame.from_records(requests.post(externalUrl, headers=headers, data=data, verify=True).json())
-display(response.head(5))
+# convert to Polars DataFrame and display the first 5 rows
+display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
 
 # %% [markdown]
 # ### Undeploy the Pipeline
@@ -470,20 +458,16 @@ display(response.head(5))
 
 # %%
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/undeploy"
 
 data = {
     "pipeline_id": pipeline_id,
     "deployment_id":exampleModelDeploymentId
-}
-
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json; format=pandas-records'
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
