@@ -18,8 +18,6 @@ The following is required for this tutorial:
 
 * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 * The following Python libraries:
-  * `os`
-  * `requests`
   * [`pandas`](https://pypi.org/project/pandas/)
   * [`polars`](https://pypi.org/project/polars/)
   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -78,12 +76,15 @@ Replace the `username`, `password`, and `email` fields with the user account con
 
 Update `wallarooPrefix = "YOUR PREFIX"` and `wallarooSuffix = "YOUR SUFFIX"` to match the Wallaroo instance used for this demonstration.
 
-
 ```python
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import os
+
+import polars as pl
+
+import pyarrow as pa
 
 import requests
 from requests.auth import HTTPBasicAuth
@@ -92,7 +93,7 @@ from requests.auth import HTTPBasicAuth
 import string
 import random
 
-# make a random 4 character prefix
+# make a random 4 character prefix to prevent workspace and pipeline name clobbering
 prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 
 import json
@@ -101,7 +102,6 @@ import json
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
-
 
 ```python
 # Retrieve the login credentials.
@@ -121,28 +121,23 @@ wl = wallaroo.Client(auth_type="user_password")
 #                     auth_type="user_password")
 ```
 
-
 ```python
 APIURL=f"https://{wallarooPrefix}.api.{wallarooSuffix}"
 ```
 
 ## Retrieve the JWT Token
 
-As mentioned earlier, there are multiple methods of authenticating to the Wallaroo instance for MLOps API calls.  This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.mlops().__dict__` method, extracting the token from the response.
+As mentioned earlier, there are multiple methods of authenticating to the Wallaroo instance for MLOps API calls.  This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.auth.auth_header()` method, extracting the token from the response.
 
 Reference:  [MLOps API Retrieve Token Through Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk)
 
-
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
-display(token)
+headers = wl.auth.auth_header()
+display(headers)
 ```
 
-
-    'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJjTGZaYmhVQWl0a210Z0VLV0l1NnczTWlXYmUzWjc3cHdqVjJ2QWM2WUdZIn0.eyJleHAiOjE2Nzk1MjA1NjMsImlhdCI6MTY3OTUyMDUwMywianRpIjoiZGQwOGE2MWUtZmYxZC00MmFjLTg3M2ItOGQ3OGVlOTFkODQzIiwiaXNzIjoiaHR0cHM6Ly9zcGFya2x5LWFwcGxlLTMwMjYua2V5Y2xvYWsud2FsbGFyb28uY29tbXVuaXR5L2F1dGgvcmVhbG1zL21hc3RlciIsImF1ZCI6WyJtYXN0ZXItcmVhbG0iLCJhY2NvdW50Il0sInN1YiI6IjEzOGJkN2U2LTRkYzgtNGRjMS1hNzYwLWM5ZTcyMWVmM2MzNyIsInR5cCI6IkJlYXJlciIsImF6cCI6InNkay1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiODlkODg0YzUtMmU0MC00MTRmLWE1MjYtMmUwNGM4YjVkNGJkIiwiYWNyIjoiMSIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJjcmVhdGUtcmVhbG0iLCJkZWZhdWx0LXJvbGVzLW1hc3RlciIsIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im1hc3Rlci1yZWFsbSI6eyJyb2xlcyI6WyJ2aWV3LXJlYWxtIiwidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJtYW5hZ2UtaWRlbnRpdHktcHJvdmlkZXJzIiwiaW1wZXJzb25hdGlvbiIsImNyZWF0ZS1jbGllbnQiLCJtYW5hZ2UtdXNlcnMiLCJxdWVyeS1yZWFsbXMiLCJ2aWV3LWF1dGhvcml6YXRpb24iLCJxdWVyeS1jbGllbnRzIiwicXVlcnktdXNlcnMiLCJtYW5hZ2UtZXZlbnRzIiwibWFuYWdlLXJlYWxtIiwidmlldy1ldmVudHMiLCJ2aWV3LXVzZXJzIiwidmlldy1jbGllbnRzIiwibWFuYWdlLWF1dGhvcml6YXRpb24iLCJtYW5hZ2UtY2xpZW50cyIsInF1ZXJ5LWdyb3VwcyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwic2lkIjoiODlkODg0YzUtMmU0MC00MTRmLWE1MjYtMmUwNGM4YjVkNGJkIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtdXNlci1pZCI6IjEzOGJkN2U2LTRkYzgtNGRjMS1hNzYwLWM5ZTcyMWVmM2MzNyIsIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbInVzZXIiXSwieC1oYXN1cmEtdXNlci1ncm91cHMiOiJ7fSJ9LCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJqb2huLmhhbnNhcmlja0B3YWxsYXJvby5haSIsImVtYWlsIjoiam9obi5oYW5zYXJpY2tAd2FsbGFyb28uYWkifQ.X2Ng65ISBSGF408GFP7uw7n8jO8iQ5t88mFpMmRars7YyjgBsz4dS5epQqdPrTxPyE9HmmC7pipTkz1jq-JA_WzM6FXzQNa0_6R5CX2JfPTdVS_L2u3dMWtENS_bRRg1smuIIlhub77y8bR8Y-J4sOkTC5BrRMVJy-Co2Z9eeAhtR39h0LvGbeWkbsbr2olE-d3EPE7Ws8vfaKi_uVNNhCt3gj0r6VM8PinYIjhoQiGte1ZJnplXDSk1SUE9dLXRC1MLTCCoQCTinzId4Wu4O6EZcJCJf1JBpYLfras0c4rrzf_r9ZtIssmxGrTEeOopH3SsuSU3097q7dyZsjww4A'
-
+    {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJCRFdIZ3Q0WmxRdEIxVDNTTkJ2RjlkYkU3RmxkSWdXRENwb041UkJLeTlrIn0.eyJleHAiOjE2ODAyOTQxNTcsImlhdCI6MTY4MDI5NDA5NywianRpIjoiOTMzMWQ5NzEtZWQ5OS00N2YzLWE1NDgtNzE4OGFiM2JjODU1IiwiaXNzIjoiaHR0cHM6Ly9kb2MtdGVzdC5rZXljbG9hay53YWxsYXJvb2NvbW11bml0eS5uaW5qYS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiI1NmQ5NzQ4MC1iYjY0LTQ1NzUtYWNiNi1mOTNkMDU2NTJlODYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjFiZGZjOWU5LTdkMzMtNDFjNC1iODJlLWRmYmIwZGY4ZDY4NSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMWJkZmM5ZTktN2QzMy00MWM0LWI4MmUtZGZiYjBkZjhkNjg1IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiI1NmQ5NzQ4MC1iYjY0LTQ1NzUtYWNiNi1mOTNkMDU2NTJlODYiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwibmFtZSI6IkpvaG4gSGFuc2FyaWNrIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5odW1tZWxAd2FsbGFyb28uYWkiLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiSGFuc2FyaWNrIiwiZW1haWwiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSJ9.J_b3gQXV-72jOYUNsvYNA39wMPzdTEJaTSzxyskRSNYlIkSpoCTAUBEtRZ6_FurQDw9iYiTprwe0PJp5PrF1jcvjVp44eMSrG4dPMLlLet8q_3NknQemxpA91jcwyHowk27SC5IFJFvbimN4DBjd-wJV9cnTs46m9omfmfqscqQO7RKSSLCG3U-4r3LhxwahtfvlAfV0iufTQ_sO5UeuovZyRBO6TCjjJiG6CyXZBOLJIAcW_e1mTJgWm3Ggk-GfT4W7e-bp6B1RFzJ17U00sNoHuVBQ_YGq-YLr4slQCz8XrJr_HE6ctcQQvT25I_rSCcqY_ma_D-0rSz-S-4iF3Q'}
 
 ## Create Workspace
 
@@ -152,11 +147,12 @@ Workspaces are created through the MLOps API with the `/v1/api/workspaces/create
 
 Reference: [MLOps API Create Workspace](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-workspaces/#create-workspace)
 
-
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 # Create workspace
 apiRequest = f"{APIURL}/v1/api/workspaces/create"
@@ -167,20 +163,13 @@ data = {
   "workspace_name": workspace_name
 }
 
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
-
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
 display(response)
 # Stored for future examples
 workspaceId = response['workspace_id']
 ```
 
-
-    {'workspace_id': 167}
-
+    {'workspace_id': 29}
 
 ## Upload Model
 
@@ -195,13 +184,9 @@ Directly after we will use the `/models/list_versions` to retrieve model details
 
 Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/#upload-model-to-workspace)
 
-
 ```python
-# Upload Model
-
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
 
 apiRequest = f"{APIURL}/v1/api/models/upload"
 
@@ -211,10 +196,6 @@ data = {
     "name":model_name,
     "visibility":"public",
     "workspace_id": workspaceId
-}
-
-headers= {
-    'Authorization': 'Bearer ' + token
 }
 
 files = {
@@ -227,24 +208,16 @@ display(response)
 modelId=response['insert_models']['returning'][0]['models'][0]['id'] # Stored for later steps.
 ```
 
-
-    {'insert_models': {'returning': [{'models': [{'id': 509}]}]}}
-
-
+    {'insert_models': {'returning': [{'models': [{'id': 73}]}]}}
 
 ```python
-# Retrieve uploaded model details
-
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/models/list_versions"
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
 
 data = {
   "model_id": model_name,
@@ -260,40 +233,14 @@ exampleModelVersion = response[-1]['model_version']
 exampleModelSha = response[-1]['sha']
 ```
 
-
     [{'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 502,
-      'model_version': 'e8d54fd0-56d5-463d-85b0-95eda93212e0',
+      'models_pk_id': 73,
+      'model_version': '751588c5-0822-48af-aacb-69c4de04f2a2',
       'owner_id': '""',
-      'model_id': 'ccfraud',
-      'id': 502,
-      'file_name': 'ccfraud.onnx',
-      'image_path': None},
-     {'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 502,
-      'model_version': '3045258c-74cf-4e3b-a86c-eaba4b3398bd',
-      'owner_id': '""',
-      'model_id': 'ccfraud',
-      'id': 504,
-      'file_name': 'ccfraud.onnx',
-      'image_path': None},
-     {'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 502,
-      'model_version': '29a33571-eeb5-4076-9f4d-62d4a5a45877',
-      'owner_id': '""',
-      'model_id': 'ccfraud',
-      'id': 505,
-      'file_name': 'ccfraud.onnx',
-      'image_path': None},
-     {'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 509,
-      'model_version': '9573321a-2d15-456f-b01f-ccc437ddfe54',
-      'owner_id': '""',
-      'model_id': 'ccfraud',
-      'id': 509,
+      'model_id': 'kykpccfraud',
+      'id': 73,
       'file_name': 'ccfraud.onnx',
       'image_path': None}]
-
 
 ## Create Pipeline
 
@@ -306,13 +253,14 @@ Create Pipeline in a Workspace with the `/v1/api/pipelines/create` command.  Thi
 
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Create Pipeline in a Workspace](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#create-pipeline-in-a-workspace)
 
-
 ```python
 # Create pipeline
 
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/create"
 
@@ -322,11 +270,6 @@ data = {
   "pipeline_id": pipeline_name,
   "workspace_id": workspaceId,
   "definition": {}
-}
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
@@ -358,22 +301,18 @@ Pipelines are deployed through the MLOps API command `/v1/api/pipelines/deploy` 
 
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Deploy a Pipeline](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#deploy-a-pipeline)
 
-
 ```python
 # Deploy Pipeline
 
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/deploy"
 
 exampleModelDeployId=pipeline_name
-
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
 
 data = {
     "deploy_id": exampleModelDeployId,
@@ -388,15 +327,12 @@ data = {
     "pipeline_id": pipeline_id
 }
 
-
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
 display(response)
 exampleModelDeploymentId=response['id']
 ```
 
-
-    {'id': 465}
-
+    {'id': 92}
 
 ## Get External Inference URL
 
@@ -412,11 +348,12 @@ The External Inference URL will be stored as a variable for the next step.
 
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Get External Inference URL](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#get-external-inference-url)
 
-
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 ## Retrieve the pipeline's External Inference URL
 
@@ -427,22 +364,13 @@ data = {
     "pipeline_name": pipeline_name
 }
 
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json'
-}
-
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-externalUrl = response['url']
-externalUrl
+deployurl = response['url']
+deployurl
+
 ```
 
-
-
-
-    'https://wallaroo.api.example.com/v1/api/pipelines/infer/apiinferenceexamplepipeline-465'
-
-
+    'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/kykpapiinferenceexamplepipeline-92'
 
 ### Perform Inference Through External URL
 
@@ -452,11 +380,12 @@ For this example, the `externalUrl` retrieved through the [Get External Inferenc
 
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Perform Inference Through External URL](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#perform-inference-through-external-url)
 
-
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json; format=pandas-records'
 
 ## Inference through external URL using dataframe
 
@@ -497,33 +426,19 @@ data = [
     }
 ]
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json; format=pandas-records'
-}
-
 # submit the request via POST, import as pandas DataFrame
-response = pd.DataFrame.from_records(requests.post(externalUrl, json=data, headers=headers).json())
+response = pd.DataFrame.from_records(
+    requests.post(
+        deployurl, 
+        json=data, 
+        headers=headers)
+        .json()
+    )
+
 display(response)
 ```
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table>
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -537,7 +452,7 @@ display(response)
   <tbody>
     <tr>
       <th>0</th>
-      <td>1679521134293</td>
+      <td>1680294219728</td>
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>[]</td>
@@ -545,104 +460,44 @@ display(response)
     </tr>
   </tbody>
 </table>
-</div>
-
-
 
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/vnd.apache.arrow.file'
+
+# set accept as pandas-records
+headers['Accept']="application/vnd.apache.arrow.file"
 
 # Submit arrow file
 dataFile="./data/cc_data_10k.arrow"
 
 data = open(dataFile,'rb').read()
 
+response = requests.post(
+                    deployurl, 
+                    headers=headers, 
+                    data=data, 
+                    verify=True
+                )
 
-contentType="application/vnd.apache.arrow.file"
+# Arrow table is retrieved 
+with pa.ipc.open_file(response.content) as reader:
+    arrow_table = reader.read_all()
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/vnd.apache.arrow.file'
-}
-
-response = pd.DataFrame.from_records(requests.post(externalUrl, headers=headers, data=data, verify=True).json())
-display(response.head(5))
+# convert to Polars DataFrame and display the first 5 rows
+display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
 ```
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
+<div><style>
+.dataframe > thead > tr > th,
+.dataframe > tbody > tr > td {
+  text-align: right;
+}
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>time</th>
-      <th>in</th>
-      <th>out</th>
-      <th>check_failures</th>
-      <th>metadata</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1679521597449</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1679521597449</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>1679521597449</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1679521597449</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>{'tensor': [-1.0603298, 2.3544967, -3.5638788, 5.138735, -1.2308457, -0.76878244, -3.5881228, 1.8880838, -3.2789674, -3.9563255, 4.099344, -5.653918, -0.8775733, -9.131571, -0.6093538, -3.7480276, -5.0309124, -0.8748149, 1.9870535, 0.7005486, 0.9204423, -0.10414918, 0.32295644, -0.74181414, 0.038412016, 1.0993439, 1.2603409, -0.14662448, -1.4463212]}</td>
-      <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1679521597449</td>
-      <td>{'tensor': [0.5817662, 0.09788155, 0.15468194, 0.4754102, -0.19788623, -0.45043448, 0.016654044, -0.025607055, 0.09205616, -0.27839172, 0.059329946, -0.019658541, -0.42250833, -0.12175389, 1.5473095, 0.23916228, 0.3553975, -0.76851654, -0.7000849, -0.11900433, -0.3450517, -1.1065114, 0.25234112, 0.020944182, 0.21992674, 0.25406894, -0.04502251, 0.10867739, 0.25471792]}</td>
-      <td>{'tensor': [0.5817662, 0.09788155, 0.15468194, 0.4754102, -0.19788623, -0.45043448, 0.016654044, -0.025607055, 0.09205616, -0.27839172, 0.059329946, -0.019658541, -0.42250833, -0.12175389, 1.5473095, 0.23916228, 0.3553975, -0.76851654, -0.7000849, -0.11900433, -0.3450517, -1.1065114, 0.25234112, 0.020944182, 0.21992674, 0.25406894, -0.04502251, 0.10867739, 0.25471792]}</td>
-      <td>[]</td>
-      <td>{'last_model': '{"model_name":"","model_sha":""}'}</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
+<small>shape: (5, 2)</small><table border="1" class="dataframe"><thead><tr><th>time</th><th>out</th></tr><tr><td>i64</td><td>struct[1]</td></tr></thead><tbody><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[0.581766, 0.097882, … 0.254718]}</td></tr></tbody></table>
 
 ### Undeploy the Pipeline
 
@@ -650,11 +505,12 @@ With the tutorial complete, we'll undeploy the pipeline with `/v1/api/pipelines/
 
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Undeploy a Pipeline](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#undeploy-a-pipeline)
 
-
 ```python
 # Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
 
 apiRequest = f"{APIURL}/v1/api/pipelines/undeploy"
 
@@ -663,19 +519,11 @@ data = {
     "deployment_id":exampleModelDeploymentId
 }
 
-# set the headers
-headers= {
-    'Authorization': 'Bearer ' + token,
-    'Content-Type':'application/json; format=pandas-records'
-}
-
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
 display(response)
 ```
 
-
     None
-
 
 Wallaroo supports the ability to perform inferences through the SDK and through the API for each deployed pipeline.  For more information on how to use Wallaroo, see the [Wallaroo Documentation Site](https://docs.wallaroo.ai) for full details.
 
