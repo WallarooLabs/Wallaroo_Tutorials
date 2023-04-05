@@ -112,9 +112,9 @@ def get_workspace(name):
 
 def get_pipeline(name):
     try:
-        pipeline = wl.pipelines_by_name(pipeline_name)[0]
+        pipeline = wl.pipelines_by_name(name)[0]
     except EntityNotFoundError:
-        pipeline = wl.build_pipeline(pipeline_name)
+        pipeline = wl.build_pipeline(name)
     return pipeline
 ```
 
@@ -150,7 +150,7 @@ ccfraudpipeline.add_model_step(ccfraud_model).deploy()
 
 ## Select Pipeline
 
-This step assumes that the pipeline is prepared with `ccfraud` as the current step.  The method `pipelines_by_name(pipeline_name)` returns an array of pipelines with names matching the `pipeline_name` field.  This example assumes only one pipeline is assigned the name `sdkinferenceexamplepipeline`.
+This step assumes that the pipeline is prepared with `ccfraud` as the current step.  The method `pipelines_by_name(name)` returns an array of pipelines with names matching the `pipeline_name` field.  This example assumes only one pipeline is assigned the name `sdkinferenceexamplepipeline`.
 
 ```python
 # List the pipelines by name in the current workspace - just the first several to save space.
@@ -159,7 +159,7 @@ display(wl.list_pipelines()[:5])
 
 # Set the `pipeline` variable to our sample pipeline.
 
-pipeline = wl.pipelines_by_name(pipeline_name)[0]
+pipeline = wl.pipelines_by_name(name)[0]
 display(pipeline)
 ```
 

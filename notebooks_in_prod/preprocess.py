@@ -22,7 +22,7 @@ def create_features(housing_data):
     housing_data['house_age'] = thisyear - housing_data['yr_built']
     housing_data['renovated'] =  np.where((housing_data['yr_renovated'] > 0), 1, 0) 
     housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_data['yr_renovated'] - housing_data['yr_built'], 0)
-    return housing_data.loc[:, _vars]
+    return housing_data.loc[:, _vars].to_numpy().tolist()
 
 # If the data is a json string, call this wrapper instead
 # Expected input:
