@@ -30,6 +30,8 @@ tutorials=(
     ["notebooks_in_prod"]="notebooks_in_prod"
     ["anomaly_detection"]="wallaroo-testing-tutorials/anomaly_detection"
     ["shadow_deploy"]="wallaroo-testing-tutorials/shadow_deploy"
+    ["assays_model_insights"]="wallaroo-features/model_insights"
+    ["mlflow_tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial
     )
 
 currentDirectory=$PWD

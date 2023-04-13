@@ -134,16 +134,16 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
     #     "outputFile": "xgboost-to-onnx-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-setup-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
+    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+    #     "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
+    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+    #     "outputFile": "wallaroo-model-endpoints-setup-reference.md"
+    # },
     # {
     #     "inputFile": "development/sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
     #     "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
@@ -214,11 +214,11 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials/tools/",
     #     "outputFile": "convert_wallaroo_data_inference-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
-    #     "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
-    #     "outputFile": "house-price-model-saga.md"
-    # },
+    {
+        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
+        "outputFile": "house-price-model-saga.md"
+    },
 ]
 
 def main():

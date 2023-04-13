@@ -18,6 +18,8 @@ The following is required for this tutorial:
 
 * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 * The following Python libraries:
+  * `os`
+  * `requests`
   * [`pandas`](https://pypi.org/project/pandas/)
   * [`polars`](https://pypi.org/project/polars/)
   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -93,8 +95,9 @@ from requests.auth import HTTPBasicAuth
 import string
 import random
 
-# make a random 4 character prefix to prevent workspace and pipeline name clobbering
+# make a random 4 character prefix
 prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+display(prefix)
 
 import json
 
@@ -103,22 +106,27 @@ from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 ```
 
+    'cxzu'
+
 ```python
 # Retrieve the login credentials.
-os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
+os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json.example'
 
 # Client connection from local Wallaroo instance
 
-wl = wallaroo.Client(auth_type="user_password")
+# wl = wallaroo.Client(auth_type="user_password")
 
 # Login from external connection
 
-# wallarooPrefix = "YOUR PREFIX"
-# wallarooSuffix = "YOUR SUFFIX"
+wallarooPrefix = "YOUR PREFIX"
+wallarooSuffix = "YOUR SUFFIX"
 
-# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-#                     auth_type="user_password")
+wallarooPrefix = "doc-test"
+wallarooSuffix = "wallaroocommunity.ninja"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="user_password")
 ```
 
 ```python
@@ -137,7 +145,7 @@ headers = wl.auth.auth_header()
 display(headers)
 ```
 
-    {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJCRFdIZ3Q0WmxRdEIxVDNTTkJ2RjlkYkU3RmxkSWdXRENwb041UkJLeTlrIn0.eyJleHAiOjE2ODAyOTQxNTcsImlhdCI6MTY4MDI5NDA5NywianRpIjoiOTMzMWQ5NzEtZWQ5OS00N2YzLWE1NDgtNzE4OGFiM2JjODU1IiwiaXNzIjoiaHR0cHM6Ly9kb2MtdGVzdC5rZXljbG9hay53YWxsYXJvb2NvbW11bml0eS5uaW5qYS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiI1NmQ5NzQ4MC1iYjY0LTQ1NzUtYWNiNi1mOTNkMDU2NTJlODYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjFiZGZjOWU5LTdkMzMtNDFjNC1iODJlLWRmYmIwZGY4ZDY4NSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiMWJkZmM5ZTktN2QzMy00MWM0LWI4MmUtZGZiYjBkZjhkNjg1IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiI1NmQ5NzQ4MC1iYjY0LTQ1NzUtYWNiNi1mOTNkMDU2NTJlODYiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwibmFtZSI6IkpvaG4gSGFuc2FyaWNrIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5odW1tZWxAd2FsbGFyb28uYWkiLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiSGFuc2FyaWNrIiwiZW1haWwiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSJ9.J_b3gQXV-72jOYUNsvYNA39wMPzdTEJaTSzxyskRSNYlIkSpoCTAUBEtRZ6_FurQDw9iYiTprwe0PJp5PrF1jcvjVp44eMSrG4dPMLlLet8q_3NknQemxpA91jcwyHowk27SC5IFJFvbimN4DBjd-wJV9cnTs46m9omfmfqscqQO7RKSSLCG3U-4r3LhxwahtfvlAfV0iufTQ_sO5UeuovZyRBO6TCjjJiG6CyXZBOLJIAcW_e1mTJgWm3Ggk-GfT4W7e-bp6B1RFzJ17U00sNoHuVBQ_YGq-YLr4slQCz8XrJr_HE6ctcQQvT25I_rSCcqY_ma_D-0rSz-S-4iF3Q'}
+    {'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIxNi01alZna1lYMW1ackg3aTZMRnFGN2RtN2ZBN1dOcWJHQnBpYzhta2pvIn0.eyJleHAiOjE2ODA1NDY0NDIsImlhdCI6MTY4MDU0NjM4MiwianRpIjoiMDQyZWVjZTAtZTY4ZS00MDM4LTlkNGMtZGU5MThiMjI5OTgyIiwiaXNzIjoiaHR0cHM6Ly9kb2MtdGVzdC5rZXljbG9hay53YWxsYXJvb2NvbW11bml0eS5uaW5qYS9hdXRoL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiI2NzcyYzRjMS0zNTU5LTQ0MmYtYjU3Mi01NDU5Y2NmM2M4OWYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzZGstY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjYxZjUwMmFmLWE3MTUtNDA5ZC1hM2VjLWNiYjFjYzkyZDFjNSIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsibWFzdGVyLXJlYWxtIjp7InJvbGVzIjpbIm1hbmFnZS11c2VycyIsInZpZXctdXNlcnMiLCJxdWVyeS1ncm91cHMiLCJxdWVyeS11c2VycyJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiNjFmNTAyYWYtYTcxNS00MDlkLWEzZWMtY2JiMWNjOTJkMWM1IiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJodHRwczovL2hhc3VyYS5pby9qd3QvY2xhaW1zIjp7IngtaGFzdXJhLXVzZXItaWQiOiI2NzcyYzRjMS0zNTU5LTQ0MmYtYjU3Mi01NDU5Y2NmM2M4OWYiLCJ4LWhhc3VyYS1kZWZhdWx0LXJvbGUiOiJ1c2VyIiwieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLXVzZXItZ3JvdXBzIjoie30ifSwibmFtZSI6IkpvaG4gSGFuc2FyaWNrIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiam9obi5odW1tZWxAd2FsbGFyb28uYWkiLCJnaXZlbl9uYW1lIjoiSm9obiIsImZhbWlseV9uYW1lIjoiSGFuc2FyaWNrIiwiZW1haWwiOiJqb2huLmh1bW1lbEB3YWxsYXJvby5haSJ9.TFqtLWK0vaJ-yFw2tW4Am28dyUhPwQeHjl1or50eVU-3igyxeQsW57_75x1Pk0N2Jzu0v2JKG6EGztB2Z9GZwXSaKEo1bKJPm46OEv_4Kx3GUkt7jP8a-0YPQopa7L183Iv5sB4NcA9azQD9qyoJW9visXcueWA2uNS7IaGN_Z1dMDkt6mD5IOixROIF1rzXo0nABBSAlxLfNDMn7U-1W2r58LcQGVCjOq2KiBdaLF0TMhgYahAHKrIt_ZxvUs3XcCp16_kwC6wcGw6qKZN6FcghXaT405sZyIN1DeIztyEumrlq0EgrKPeNjgj50EpjHfvfLITboIutjjWG4_GYag'}
 
 ## Create Workspace
 
@@ -169,7 +177,7 @@ display(response)
 workspaceId = response['workspace_id']
 ```
 
-    {'workspace_id': 29}
+    {'workspace_id': 22}
 
 ## Upload Model
 
@@ -185,6 +193,8 @@ Directly after we will use the `/models/list_versions` to retrieve model details
 Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/#upload-model-to-workspace)
 
 ```python
+## upload model
+
 # Retrieve the token
 headers = wl.auth.auth_header()
 
@@ -199,48 +209,15 @@ data = {
 }
 
 files = {
-    "file": ('ccfraud.onnx', open('./ccfraud.onnx','rb'))
-}
+    'file': (model_name, open('./ccfraud.onnx', 'rb'))
+    }
 
-response = requests.post(apiRequest, data=data, headers=headers, files=files, verify=True).json()
+response = requests.post(apiRequest, files=files, data=data, headers=headers).json()
 display(response)
-
-modelId=response['insert_models']['returning'][0]['models'][0]['id'] # Stored for later steps.
+modelId=response['insert_models']['returning'][0]['models'][0]['id']
 ```
 
-    {'insert_models': {'returning': [{'models': [{'id': 73}]}]}}
-
-```python
-# Retrieve the token
-headers = wl.auth.auth_header()
-
-# set Content-Type type
-headers['Content-Type']='application/json'
-
-apiRequest = f"{APIURL}/v1/api/models/list_versions"
-
-data = {
-  "model_id": model_name,
-  "models_pk_id": modelId
-}
-
-response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-display(response)
-
-# Stored for future examples - get the last model id information
-
-exampleModelVersion = response[-1]['model_version']
-exampleModelSha = response[-1]['sha']
-```
-
-    [{'sha': 'bc85ce596945f876256f41515c7501c399fd97ebcb9ab3dd41bf03f8937b4507',
-      'models_pk_id': 73,
-      'model_version': '751588c5-0822-48af-aacb-69c4de04f2a2',
-      'owner_id': '""',
-      'model_id': 'kykpccfraud',
-      'id': 73,
-      'file_name': 'ccfraud.onnx',
-      'image_path': None}]
+    {'insert_models': {'returning': [{'models': [{'id': 42}]}]}}
 
 ## Create Pipeline
 
@@ -317,12 +294,8 @@ exampleModelDeployId=pipeline_name
 data = {
     "deploy_id": exampleModelDeployId,
     "pipeline_version_pk_id": pipeline_variant_id,
-    "models": [
-        {
-            "name":model_name,
-            "version":exampleModelVersion,
-            "sha":exampleModelSha
-        }
+    "model_ids": [
+        modelId
     ],
     "pipeline_id": pipeline_id
 }
@@ -332,7 +305,7 @@ display(response)
 exampleModelDeploymentId=response['id']
 ```
 
-    {'id': 92}
+    {'id': 19}
 
 ## Get External Inference URL
 
@@ -370,7 +343,7 @@ deployurl
 
 ```
 
-    'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/kykpapiinferenceexamplepipeline-92'
+    'https://doc-test.api.wallaroocommunity.ninja/v1/api/pipelines/infer/cxzuapiinferenceexamplepipeline-19'
 
 ### Perform Inference Through External URL
 
@@ -452,7 +425,7 @@ display(response)
   <tbody>
     <tr>
       <th>0</th>
-      <td>1680294219728</td>
+      <td>1680546406671</td>
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>{'tensor': [1.0678324729, 0.2177810266, -1.7115145262, 0.682285721, 1.0138553067, -0.4335000013, 0.7395859437, -0.2882839595, -0.447262688, 0.5146124988, 0.3791316964, 0.5190619748, -0.4904593222, 1.1656456469, -0.9776307444, -0.6322198963, -0.6891477694, 0.1783317857, 0.1397992467, -0.3554220649, 0.4394217877, 1.4588397512, -0.3886829615, 0.4353492889, 1.7420053483, -0.4434654615, -0.1515747891, -0.2668451725, -1.4549617756]}</td>
       <td>[]</td>
@@ -460,6 +433,7 @@ display(response)
     </tr>
   </tbody>
 </table>
+</div>
 
 ```python
 # Retrieve the token
@@ -491,13 +465,9 @@ with pa.ipc.open_file(response.content) as reader:
 display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
 ```
 
-<div><style>
-.dataframe > thead > tr > th,
-.dataframe > tbody > tr > td {
-  text-align: right;
-}
-</style>
-<small>shape: (5, 2)</small><table border="1" class="dataframe"><thead><tr><th>time</th><th>out</th></tr><tr><td>i64</td><td>struct[1]</td></tr></thead><tbody><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[0.581766, 0.097882, … 0.254718]}</td></tr></tbody></table>
+<small>shape: (5, 2)</small>
+
+<table><thead><tr><th>time</th><th>out</th></tr><tr><td>i64</td><td>struct[1]</td></tr></thead><tbody><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[-1.06033, 2.354497, … -1.446321]}</td></tr><tr><td>1680294232288</td><td>{[0.581766, 0.097882, … 0.254718]}</td></tr></tbody></table></div>
 
 ### Undeploy the Pipeline
 
@@ -506,21 +476,21 @@ With the tutorial complete, we'll undeploy the pipeline with `/v1/api/pipelines/
 Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Undeploy a Pipeline](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#undeploy-a-pipeline)
 
 ```python
-# Retrieve the token
-headers = wl.auth.auth_header()
+# # Retrieve the token
+# headers = wl.auth.auth_header()
 
-# set Content-Type type
-headers['Content-Type']='application/json'
+# # set Content-Type type
+# headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/pipelines/undeploy"
+# apiRequest = f"{APIURL}/v1/api/pipelines/undeploy"
 
-data = {
-    "pipeline_id": pipeline_id,
-    "deployment_id":exampleModelDeploymentId
-}
+# data = {
+#     "pipeline_id": pipeline_id,
+#     "deployment_id":exampleModelDeploymentId
+# }
 
-response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-display(response)
+# response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
+# display(response)
 ```
 
     None
