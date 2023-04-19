@@ -6,6 +6,7 @@
         "ipykernel",
         "Keycloak",
         "LSTM",
+        "mainpipeline",
         "modularizes",
         "pyarrow",
         "quantile",
