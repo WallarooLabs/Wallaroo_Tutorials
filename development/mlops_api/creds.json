@@ -1,5 +1,7 @@
 {
     "username": "YOUR USERNAME", 
     "password": "YOUR PASSWORD", 
-    "email": "YOUR EMAIL"
+    "email": "YOUR EMAIL",
+    "confidentialClient": "YOUR CONFIDENTIAL CLIENT",
+    "confidentialPassword": "YOUR CONFIDENTIAL PASSWORD"
 }
