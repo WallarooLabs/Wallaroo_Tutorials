@@ -3,6 +3,7 @@
         "conda",
         "Databricks",
         "DBFS",
+        "iopath",
         "ipykernel",
         "Keycloak",
         "LSTM",
