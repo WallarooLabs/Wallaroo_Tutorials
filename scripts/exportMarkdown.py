@@ -34,11 +34,11 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials",
     #     "outputFile": "wallaroo-quick-start-imdb-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/model_insights/model-insights.ipynb",
-    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "wallaroo-model-insights-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/model_insights/model-insights.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "wallaroo-model-insights-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
     #     "outputDir": "docs/markdown/wallaroo-tutorials",
@@ -214,10 +214,15 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials/tools/",
     #     "outputFile": "convert_wallaroo_data_inference-reference.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
+    #     "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
+    #     "outputFile": "house-price-model-saga.md"
+    # },
     {
-        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
-        "outputFile": "house-price-model-saga.md"
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
+        "outputFile": "pipeline_log_tutorial.md"
     },
 ]
 
