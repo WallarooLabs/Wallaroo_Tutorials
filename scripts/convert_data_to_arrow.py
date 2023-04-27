@@ -16,8 +16,8 @@ jsonFileList = [
     # }
     {
         "data_type_dict": None,
-        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.df.json",
-        "arrowOutputFile": "wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow"
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/data/xtest-1.df.json",
+        "arrowOutputFile": "wallaroo-features/pipeline_log_tutorial/data/xtest-1.arrow"
     }
 ]
 
