@@ -30,5 +30,3 @@ def wallaroo_json(data):
         'prediction': prediction
     }
     return(result)
-
-    
