@@ -63,7 +63,7 @@ with pa.ipc.open_file(response.content) as reader:
     arrow_table = reader.read_all()
 
 # Perform the inference
-results = pipeline.infer(arrow_table)
+pipeline.infer(arrow_table)
 
 # Undeploy the pipeline and return the resources back to the Wallaroo instance
 pipeline.undeploy()
