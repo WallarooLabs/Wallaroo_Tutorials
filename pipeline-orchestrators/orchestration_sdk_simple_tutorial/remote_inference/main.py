@@ -44,8 +44,6 @@ pipeline = get_pipeline(pipeline_name)
 
 inference_source_connection = wl.get_connection(name="external_inference_connection")
 
-inference_results_connection = wl.get_connection(name="inference_results_connection")
-
 print(f"Getting arrow table file")
 # Retrieve the file
 # set accept as apache arrow table
@@ -67,9 +65,5 @@ print("Inference time.  Displaying results after.")
 result = pipeline.infer(arrow_table)
 
 result_dataframe = result.to_pandas()
-
-# # Save result to local file - should be /home/jovyen
-
-# result_dataframe.to_json(inference_results_connection.details()['location'], orient="records")
 
 print(result_dataframe.head(5))
