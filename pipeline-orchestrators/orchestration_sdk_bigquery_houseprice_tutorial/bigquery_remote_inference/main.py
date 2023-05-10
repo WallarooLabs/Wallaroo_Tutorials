@@ -59,6 +59,9 @@ wl.set_current_workspace(workspace)
 
 pipeline = get_pipeline(pipeline_name)
 
+# deploy the pipeline
+pipeline.deploy()
+
 # get the connections
 big_query_input_connection = wl.get_connection(name=bigquery_connection_input_name)
 big_query_output_connection = wl.get_connection(name=bigquery_connection_output_name)
@@ -102,3 +105,6 @@ bigqueryoutputclient.insert_rows_from_dataframe(
 # close the bigquery clients
 bigqueryinputclient.close()
 bigqueryoutputclient.close()
+
+# deploy the pipeline
+pipeline.undeploy()
