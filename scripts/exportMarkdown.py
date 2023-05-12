@@ -220,11 +220,11 @@ fileList = [
     #     "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
     #     "outputFile": "house-price-model-saga.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-    #     "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
-    #     "outputFile": "pipeline_log_tutorial.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
@@ -251,7 +251,8 @@ def format(document_file):
     document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
     document = re.sub('</table>', r'</table>\n{{</table>}}', document)
     # remove any div table sections
-    document = re.sub(r'<div>.*</style>', '', document, flags=re.S)
+    document = re.sub('<div>', '', document)
+    document = re.sub(r'<style.*?>.*?</style>', '', document, flags=re.S)
     document = re.sub('</div>', '', document)
 
 
