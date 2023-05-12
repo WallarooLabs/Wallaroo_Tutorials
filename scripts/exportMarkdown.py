@@ -12,6 +12,7 @@ This uses the jupyter nbconvert command.  For now this will always assume we're 
 import os
 import nbformat
 from traitlets.config import Config
+import re
 #import argparse
 
 c = Config()
@@ -225,17 +226,52 @@ fileList = [
     #     "outputFile": "pipeline_log_tutorial.md"
     # },
     {
-        "inputFile": "wallaroo-features/pipeline-orchestrators/data_connectors_and_orchestrators_simple_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/data_connectors/",
+        "inputFile": "pipeline-orchestrators/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     },
+    {
+        "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
+    },
+    {
+        "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
+    },
 ]
+
+def format(document_file):
+    # Take the markdown file, remove the extra spaces
+    document = open(document_file, "r").read()
+    result = re.sub
+    
+    # fix tables for publication
+    document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
+    document = re.sub('</table>', r'</table>\n{{</table>}}', document)
+    # remove any div table sections
+    document = re.sub(r'<div>.*</style>', '', document, flags=re.S)
+    document = re.sub('</div>', '', document)
+
+
+    # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
+    document = re.sub(r'\n[\n]+', r'\n\n', document)
+    
+    
+
+    # save the file for testing
+    newdocument = open(f"{document_file}", "w")
+    newdocument.write(document)
+    newdocument.close()
 
 def main():
     for currentFile in fileList:
         convert_cmd = f'jupyter nbconvert --config ./config/exportconfig.py --to markdown --output-dir {currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
         #print(convert_cmd)
         os.system(convert_cmd)
+        format(f'{currentFile["outputDir"]}/{currentFile["outputFile"]}')
+        # format(f'currentFile["outputDir"]/{currentFile["outputFile"]}')
 
 if __name__ == '__main__':
     main()
