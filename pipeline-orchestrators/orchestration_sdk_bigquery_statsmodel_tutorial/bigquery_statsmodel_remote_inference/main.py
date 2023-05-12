@@ -71,6 +71,9 @@ print(wl.get_current_workspace())
 
 pipeline = get_pipeline(pipeline_name)
 
+print(pipeline.variants()[0].__dict__)
+print(pipeline.variants()[0].definition())
+
 # deploy the pipeline
 print("\nDeploying pipeline.")
 print(pipeline_name)
