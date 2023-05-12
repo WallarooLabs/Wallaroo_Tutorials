@@ -103,19 +103,7 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-
-# # SSO login through keycloak
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
-
-    Please log into the following URL in a web browser:
-    
-    	https://product-uat-ee.keycloak.wallaroocommunity.ninja/auth/realms/master/device?user_code=LVKS-MMUE
-    
-    Login successful!
 
 ## Variable Declaration
 
@@ -372,6 +360,488 @@ inference_dataframe_input = bigqueryinputclient.query(
 
 ```python
 inference_dataframe_input.head(5)
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tensor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+### Sample Inference
+
+With our data retrieved, we'll perform an inference and display the results.
+
+```python
+result = pipeline.infer(inference_dataframe_input)
+display(result.head(5))
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-10 22:15:35.591</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-10 22:15:35.591</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-10 22:15:35.591</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-10 22:15:35.591</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-10 22:15:35.591</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+### Upload the Results
+
+With the query complete, we'll upload the results back to the BigQuery dataset.
+
+```python
+output_table = bigqueryoutputclient.get_table(f"{big_query_output_connection.details()['dataset']}.{big_query_output_connection.details()['table']}")
+
+bigqueryoutputclient.insert_rows_from_dataframe(
+    output_table, 
+    dataframe=result.rename(columns={"in.tensor":"in_tensor", "out.variable":"out_variable"})
+)
+```
+
+    [[], []]
+
+## Wallaroo ML Workload Orchestration Example
+
+With the pipeline deployed and our connections set, we will now generate our ML Workload Orchestration.  See the [Wallaroo ML Workload Orchestrations guide](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-ml-workload-orchestration/) for full details.
+
+Orchestrations are uploaded to the Wallaroo instance as a ZIP file with the following requirements:
+
+| Parameter | Type | Description |
+|---|---|---|
+| **User Code** | (*Required*) Python script as `.py` files | If `main.py` exists, then that will be used as the task entrypoint. Otherwise, the **first** `main.py` found in any subdirectory will be used as the entrypoint. |
+| Python Library Requirements | (*Optional*) `requirements.txt` file in the [requirements file format](https://pip.pypa.io/en/stable/reference/requirements-file-format/).  A standard Python requirements.txt for any dependencies to be provided in the task environment. The Wallaroo SDK will already be present and **should not be included in the requirements.txt**. Multiple requirements.txt files are not allowed. |
+| Other artifacts | &nbsp; | Other artifacts such as files, data, or code to support the orchestration.
+
+For our example, our orchestration will:
+
+1. Use the `bigquery_remote_inference` to open a connection to the input and output tables.
+1. Deploy the pipeline.
+1. Perform an inference with the input data.
+1. Save the inference results to the output table.
+1. Undeploy the pipeline.
+
+This sample script is stored in `bigquery_remote_inference/main.py` with an `requirements.txt` file having the specific libraries for the Google BigQuery connection., and packaged into the orchestration as `./bigquery_remote_inference/bigquery_remote_inference.zip`.  We'll display the steps in uploading the orchestration to the Wallaroo instance.
+
+Note that the orchestration assumes the pipeline is already deployed.
+
+### Upload the Orchestration
+
+Orchestrations are uploaded with the Wallaroo client `upload_orchestration(path)` method with the following parameters.
+
+| Parameter | Type | Description |
+| --- | --- | ---|
+| **path** | string (Required) | The path to the ZIP file to be uploaded. |
+
+Once uploaded, the deployment will be prepared and any requirements will be downloaded and installed.
+
+For this example, the orchestration `./bigquery_remote_inference/bigquery_remote_inference.zi` will be uploaded and saved to the variable `orchestration`.
+
+```python
+orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
+```
+
+### Orchestration Status
+
+We will loop until the uploaded orchestration's `status` displays `ready`.
+
+```python
+while orchestration.status() != 'ready':
+    print(orchestration.status())
+    time.sleep(5)
+```
+
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+
+```python
+wl.list_orchestrations()
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>status</th><th>name</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>f5db5dd3-0961-4807-8147-ea42c013cd01</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>ff31c711cf31fb0e2cd2944a8b47c19f55702698320989050f58085ba277a6a1</td><td>2023-10-May 22:15:50</td><td>2023-10-May 22:16:54</td></tr><tr><td>97c8a469-3a9c-4bec-842c-a5cc162d09f7</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>4ee31c3787c7ee2656262eba0e7803c09358543ea45590ff8209910daa201a71</td><td>2023-10-May 20:53:48</td><td>2023-10-May 20:54:44</td></tr><tr><td>404e6010-fff1-4cf7-96da-b7a08e22c020</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>93ff9ddbec3a56ca86e66c10a471baf1290adfead84f67ccfa7a15678b8427ca</td><td>2023-10-May 20:51:45</td><td>2023-10-May 20:52:45</td></tr></table>
+{{</table>}}
+
+## Task Management Tutorial
+
+Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have three run options.
+
+| Type | SDK Call |  How triggered |
+|---|---|:---|
+| Once       | `orchestration.run_once(json_args)` | User makes one api call. Task runs once and exits.| Single batch, experimentation. |
+| Scheduled  | `orchestration.run_scheduled(name, schedule, timeout, json_args)` | User provides schedule. Task runs exits whenever schedule dictates. | Recurrent batch. |
+
+### Run Task Once
+
+We'll do both a Run Once task and generate our Run Once Task from our orchestration.
+
+Tasks are generated and run once with the Orchestration `run_once(arguments)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
+
+We'll display the last 5 rows of our BigQuery output table, then start the task that will perform the same inference we did above.
+
+```python
+task_inference_results = bigqueryoutputclient.query(
+        f"""
+        SELECT *
+        FROM {big_query_output_connection.details()['dataset']}.{big_query_output_connection.details()['table']}
+        ORDER BY time DESC
+        LIMIT 5
+        """
+    ).to_dataframe()
+
+display(task_inference_results)
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11995</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1010.0, 6000.0, 1.0, 0.0, 0.0, 4.0, 6.0, 1010.0, 0.0, 47.771, -122.353, 1610.0, 7313.0, 70.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11996</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 700.0, 8100.0, 1.0, 0.0, 0.0, 3.0, 6.0, 700.0, 0.0, 47.7492, -122.311, 1230.0, 8100.0, 65.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11997</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.5, 1120.0, 6653.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1120.0, 0.0, 47.7321, -122.334, 1580.0, 7355.0, 78.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11998</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1170.0, 7142.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1170.0, 0.0, 47.7497, -122.313, 1170.0, 7615.0, 63.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>11999</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.75, 1300.0, 10030.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1300.0, 0.0, 47.7359, -122.192, 1520.0, 7713.0, 48.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+```python
+# Example: run once
+
+import datetime
+task_start = datetime.datetime.now()
+
+task = orchestration.run_once({})
+task
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>ID</td><td>8defc235-1c71-4337-89c6-1fe84eedef15</td>
+  </tr>
+  <tr>
+    <td>Status</td><td>pending</td>
+  </tr>
+  <tr>
+    <td>Type</td><td>Temporary Run</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-10-May 22:17:13</td>
+  </tr>
+  <tr>
+    <td>Updated At</td><td>2023-10-May 22:17:13</td>
+  </tr>
+</table>
+{{</table>}}
+
+### Task Status
+
+The list of tasks in the Wallaroo instance is retrieves through the Wallaroo Client `list_tasks()` method.  This returns an array list of the following.
+
+| Parameter | Type | Description |
+| --- | --- | ---|
+| **id** | string | The UUID identifier for the task. |
+| **status** | enum | The status of the task.  Values are: <br><ul><li>`pending`: The task has not been started.</li><li>`started`: The task has been scheduled to execute.</li><li>`pending_kill`: The task kill command has been issued and the task is scheduled to be stopped.</li></ul> |
+| **type** | string | The type of the task.  Values are: <br><ul><li>`Temporary Run`: The task runs once then stop.</li><li>`Scheduled Run`: The task repeats on a `cron` like schedule.</li></ul> |
+| **created at** | DateTime | The date and time the task was started. |
+| **updated at** | DateTime | The date and time the task was updated. |
+
+For this example, the status of the previously created task will be generated, then looped until it has reached status `started`.
+
+```python
+while task.status() != "started":
+    display(task.status())
+    time.sleep(5)
+```
+
+    'started'
+
+```python
+wl.list_tasks()
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>c266e5ff-f485-4caa-a1aa-48586f2e1cbf</td><td>started</td><td>Temporary Run</td><td>2023-10-May 20:54:55</td><td>2023-10-May 20:55:01</td></tr><tr><td>00b07dc2-1070-4497-9cff-ed6106b28dc0</td><td>started</td><td>Temporary Run</td><td>2023-10-May 21:05:40</td><td>2023-10-May 21:05:45</td></tr><tr><td>8defc235-1c71-4337-89c6-1fe84eedef15</td><td>started</td><td>Temporary Run</td><td>2023-10-May 22:17:13</td><td>2023-10-May 22:17:20</td></tr></table>
+{{</table>}}
+
+### Task Results
+
+We can view the inferences from our logs and verify that new entries were added from our task.  We'll query the last 5 rows of our inference output table after a wait of 60 seconds.
+
+```python
+time.sleep(60)
+
+task_inference_results = bigqueryoutputclient.query(
+        f"""
+        SELECT *
+        FROM {big_query_output_connection.details()['dataset']}.{big_query_output_connection.details()['table']}
+        ORDER BY time DESC LIMIT 5"""
+    ).to_dataframe()
+
+display(task_inference_results)
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12995</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1010.0, 6000.0, 1.0, 0.0, 0.0, 4.0, 6.0, 1010.0, 0.0, 47.771, -122.353, 1610.0, 7313.0, 70.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12996</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 700.0, 8100.0, 1.0, 0.0, 0.0, 3.0, 6.0, 700.0, 0.0, 47.7492, -122.311, 1230.0, 8100.0, 65.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12997</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.5, 1120.0, 6653.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1120.0, 0.0, 47.7321, -122.334, 1580.0, 7355.0, 78.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12998</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1170.0, 7142.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1170.0, 0.0, 47.7497, -122.313, 1170.0, 7615.0, 63.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12999</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.75, 1300.0, 10030.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1300.0, 0.0, 47.7359, -122.192, 1520.0, 7713.0, 48.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+## Scheduled Run Task Example
+
+The other method of using tasks is as a **scheduled run** through the Orchestration `run_scheduled(name, schedule, timeout, json_args)`.  This sets up a task to run on an regular schedule as defined by the `schedule` parameter in the `cron` service format.  For example:
+
+```python
+schedule={'42 * * * *'}
+```
+
+Runs on the 42nd minute of every hour.
+
+For our example, we will create a scheduled task to run every 1 minute, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+
+```python
+task_inference_results = bigqueryoutputclient.query(
+        f"""
+        SELECT *
+        FROM {big_query_output_connection.details()['dataset']}.{big_query_output_connection.details()['table']}
+        ORDER BY time DESC LIMIT 5"""
+    ).to_dataframe()
+
+display(task_inference_results.tail(5))
+
+scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/1 * * * *", timeout=120, json_args={})
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12995</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1010.0, 6000.0, 1.0, 0.0, 0.0, 4.0, 6.0, 1010.0, 0.0, 47.771, -122.353, 1610.0, 7313.0, 70.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12996</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 700.0, 8100.0, 1.0, 0.0, 0.0, 3.0, 6.0, 700.0, 0.0, 47.7492, -122.311, 1230.0, 8100.0, 65.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12997</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.5, 1120.0, 6653.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1120.0, 0.0, 47.7321, -122.334, 1580.0, 7355.0, 78.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12998</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[2.0, 1.0, 1170.0, 7142.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1170.0, 0.0, 47.7497, -122.313, 1170.0, 7615.0, 63.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>12999</th>
+      <td>2023-05-10 21:26:08.181</td>
+      <td>[3.0, 1.75, 1300.0, 10030.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1300.0, 0.0, 47.7359, -122.192, 1520.0, 7713.0, 48.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+```python
+while scheduled_task.status() != "started":
+    display(scheduled_task.status())
+    time.sleep(5)
+```
+
+```python
+#wait 120 seconds to give the scheduled event time to finish
+time.sleep(120)
+task_inference_results = bigqueryoutputclient.query(
+        f"""
+        SELECT *
+        FROM {big_query_output_connection.details()['dataset']}.{big_query_output_connection.details()['table']}
+        ORDER BY time DESC LIMIT 5"""
+    ).to_dataframe()
+
+display(task_inference_results.tail(5))
 ```
 
 {{<table "table table-striped table-bordered" >}}
