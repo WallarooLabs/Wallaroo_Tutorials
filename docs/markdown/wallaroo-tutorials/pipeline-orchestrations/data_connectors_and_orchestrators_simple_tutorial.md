@@ -67,16 +67,7 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
-
-# # SSO login through keycloak
-
-wallarooPrefix = "product-uat-ee"
-wallarooSuffix = "wallaroocommunity.ninja"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+wl = wallaroo.Client()
 ```
 
 ```python
@@ -404,6 +395,139 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 ```
 
     datetime.datetime(2023, 5, 9, 14, 27, 7, 784253)
+
+    Warning: Pipeline log size limit exceeded. Please request logs using export_logs
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.tensor</th>
+      <th>out.variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[4.0, 2.5, 2510.0, 47044.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2510.0, 0.0, 47.7699, -122.085, 2600.0, 42612.0, 27.0, 0.0, 0.0]</td>
+      <td>[721143.6]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[4.0, 2.5, 4090.0, 11225.0, 2.0, 0.0, 0.0, 3.0, 10.0, 4090.0, 0.0, 47.581, -121.971, 3510.0, 8762.0, 9.0, 0.0, 0.0]</td>
+      <td>[1048372.4]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[2.0, 1.0, 720.0, 5000.0, 1.0, 0.0, 0.0, 5.0, 6.0, 720.0, 0.0, 47.5195, -122.374, 810.0, 5000.0, 63.0, 0.0, 0.0]</td>
+      <td>[244566.38]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[4.0, 2.75, 2930.0, 22000.0, 1.0, 0.0, 3.0, 4.0, 9.0, 1580.0, 1350.0, 47.3227, -122.384, 2930.0, 9758.0, 36.0, 0.0, 0.0]</td>
+      <td>[518869.0]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>500</th>
+      <td>2023-05-09 20:26:09.822</td>
+      <td>[2.0, 1.0, 850.0, 5000.0, 1.0, 0.0, 0.0, 3.0, 6.0, 850.0, 0.0, 47.3817, -122.314, 1160.0, 5000.0, 39.0, 0.0, 0.0]</td>
+      <td>[236238.66]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+<p>501 rows × 4 columns</p>
+
+## Scheduled Run Task Example
+
+The other method of using tasks is as a **scheduled run** through the Orchestration `run_scheduled(name, schedule, timeout, json_args)`.  This sets up a task to run on an regular schedule as defined by the `schedule` parameter in the `cron` service format.  For example:
+
+```python
+schedule={'42 * * * *'}
+```
+
+Runs on the 42nd minute of every hour.
+
+For our example, we will create a scheduled task to run every 1 minute, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+
+```python
+scheduled_task_start = datetime.datetime.now()
+```
+
+```python
+
+scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/1 * * * *", timeout=120, json_args={})
+```
+
+```python
+while scheduled_task.status() != "started":
+    display(scheduled_task.status())
+    time.sleep(5)
+```
+
+    'pending'
+
+```python
+#wait 120 seconds to give the scheduled event time to finish
+time.sleep(120)
+scheduled_task_end = datetime.datetime.now()
+
+pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_task_end)
+```
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 

@@ -257,6 +257,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # },
+<<<<<<< HEAD
     # {
     #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -463,6 +464,13 @@ def move_images(image_directory):
         os.system(f"cp -rf ./{source_directory}/{reference} {target_directory}")
 
 =======
+=======
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
+>>>>>>> de47173 (updated pipeline tutorial)
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
@@ -489,7 +497,8 @@ def format(document_file):
     document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
     document = re.sub('</table>', r'</table>\n{{</table>}}', document)
     # remove any div table sections
-    document = re.sub(r'<div>.*</style>', '', document, flags=re.S)
+    document = re.sub('<div>', '', document)
+    document = re.sub(r'<style.*?>.*?</style>', '', document, flags=re.S)
     document = re.sub('</div>', '', document)
 
 
