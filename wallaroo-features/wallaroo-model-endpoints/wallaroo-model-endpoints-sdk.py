@@ -81,7 +81,10 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 
 wl = wallaroo.Client(auth_type="user_password")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5e9007 (removed polars and simplified login.)
 # %% [markdown]
 # ## Create the Workspace
 # 

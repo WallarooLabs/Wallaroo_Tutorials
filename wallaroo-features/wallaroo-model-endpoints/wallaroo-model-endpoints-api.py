@@ -491,7 +491,11 @@ with pa.ipc.open_file(response.content) as reader:
     arrow_table = reader.read_all()
 
 # convert to Polars DataFrame and display the first 5 rows
+<<<<<<< HEAD
 display(arrow_table.to_pandas().head(5).loc[:,["time", "out"]])
+=======
+display(arrow_table.to_pandas.head(5).loc[:,["time", "out"]])
+>>>>>>> d5e9007 (removed polars and simplified login.)
 
 # %% [markdown]
 # ### Undeploy the Pipeline
