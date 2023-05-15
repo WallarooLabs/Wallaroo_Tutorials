@@ -79,15 +79,6 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 
 wl = wallaroo.Client(auth_type="user_password")
 
-# Login from external connection
-
-# wallarooPrefix = "YOUR PREFIX"
-# wallarooSuffix = "YOUR SUFFIX"
-
-# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-#                     auth_type="user_password")
-
 # %% [markdown]
 # ## Create the Workspace
 # 
