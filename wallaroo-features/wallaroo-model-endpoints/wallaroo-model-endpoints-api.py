@@ -86,8 +86,6 @@ from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import os
 
-import polars as pl
-
 import pyarrow as pa
 
 import requests
@@ -113,15 +111,6 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 # Client connection from local Wallaroo instance
 
 wl = wallaroo.Client(auth_type="user_password")
-
-# Login from external connection
-
-# wallarooPrefix = "YOUR PREFIX"
-# wallarooSuffix = "YOUR SUFFIX"
-
-# wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-#                     auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-#                     auth_type="user_password")
 
 # %%
 APIURL=f"https://{wallarooPrefix}.api.{wallarooSuffix}"
@@ -447,7 +436,7 @@ with pa.ipc.open_file(response.content) as reader:
     arrow_table = reader.read_all()
 
 # convert to Polars DataFrame and display the first 5 rows
-display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
+display(arrow_table.to_pandas.head(5).loc[:,["time", "out"]])
 
 # %% [markdown]
 # ### Undeploy the Pipeline
