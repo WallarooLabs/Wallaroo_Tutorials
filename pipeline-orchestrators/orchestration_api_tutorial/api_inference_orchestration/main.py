@@ -9,10 +9,24 @@ os.environ["ARROW_ENABLED"]="True"
 
 wl = wallaroo.Client()
 
-# Setting variables for later steps
+if wl.in_task():
+    arguments = wl.task_args()
+    print(wl.task_args())
 
-workspace_name = 'simpleorchestrationworkspace'
-pipeline_name = 'simpleorchestrationpipeline'
+    if "workspace_name" in arguments:
+        workspace_name = arguments['workspace_name']
+    else:
+        workspace_name = 'apiorchestrationworkspace'
+
+    if "pipeline_name" in arguments:
+        pipeline_name = arguments['pipeline_name']
+    else:
+        pipeline_name = 'apipipeline'
+
+else:
+    # we're not in the task, so use the default values
+    workspace_name = 'apiorchestrationworkspace'
+    pipeline_name = 'apipipeline'
 
 # helper methods to retrieve workspaces and pipelines
 
@@ -40,30 +54,16 @@ wl.set_current_workspace(workspace)
 print(f"Getting the pipeline {pipeline_name}")
 pipeline = get_pipeline(pipeline_name)
 
-# Get the connection - assuming it will be the only one
+# deploy the pipeline
 
-inference_source_connection = wl.get_connection(name="external_inference_connection")
+print("Deploying the pipeline.")
+pipeline.deploy()
 
-print(f"Getting arrow table file")
-# Retrieve the file
-# set accept as apache arrow table
-headers = {
-    'Accept': 'application/vnd.apache.arrow.file'
-}
+# sample inference
+print("Performing sample inference.")
+normal_input = pd.DataFrame.from_records({"tensor": [[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]]})
+result = pipeline.infer(normal_input)
+print(result)
 
-response = requests.get(
-                    inference_source_connection.details()['host'], 
-                    headers=headers
-                )
-
-# Arrow table is retrieved 
-with pa.ipc.open_file(response.content) as reader:
-    arrow_table = reader.read_all()
-
-print("Inference time.  Displaying results after.")
-# Perform the inference
-result = pipeline.infer(arrow_table)
-
-result_dataframe = result.to_pandas()
-
-print(result_dataframe.head(5))
+print("Undeploying the pipeline")
+pipeline.undeploy()
