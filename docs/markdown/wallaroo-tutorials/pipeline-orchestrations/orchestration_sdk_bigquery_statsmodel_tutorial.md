@@ -87,7 +87,7 @@ import db_dtypes
 wallaroo.__version__
 ```
 
-    '2023.2.0rc2'
+    '2023.2.0rc3'
 
 ### Connect to the Wallaroo Instance
 
@@ -100,19 +100,7 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 ```python
 # Login through local Wallaroo instance
 
-# wl = wallaroo.Client()
-
-# # SSO login through keycloak
-
-# wallarooPrefix = "product-uat-ee"
-# wallarooSuffix = "wallaroocommunity.ninja"
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallaroocommunity.ninja"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
+wl = wallaroo.Client()
 ```
 
 ## Variable Declaration
@@ -219,7 +207,7 @@ pipeline.add_model_step(bike_day_model)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-11 18:51:52.266084+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 18:53:05.836042+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2ebd2911-47e8-4c10-8b59-f37d6d7ee948, 5ea9cdf0-d03e-4bba-acb6-e2dc071df842, 9984bdfb-fe27-40b5-8e4b-1bd46c09d30a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:18:25.881352+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:21:29.710017+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>cd7a9868-df30-4449-b38e-975cafe3f16f, 48067335-d92b-4875-a3d5-5cee01fefb08, 727b2f8c-2969-41a9-8a89-c13bfc7436c4, 89bf55ba-6124-4dad-9090-f01650c95db1, 67677cde-21ff-40b2-9655-7c1ee71d5c8d</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
 {{</table>}}
 
 ```python
@@ -228,7 +216,7 @@ pipeline.deploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-11 18:51:52.266084+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 18:58:02.257796+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>68ee66b5-454e-4e2a-9524-d11f8629adfd, 2ebd2911-47e8-4c10-8b59-f37d6d7ee948, 5ea9cdf0-d03e-4bba-acb6-e2dc071df842, 9984bdfb-fe27-40b5-8e4b-1bd46c09d30a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:18:25.881352+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:24:27.541392+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fae72d3e-9b1f-40ee-a24f-e9724b3f3e4c, cd7a9868-df30-4449-b38e-975cafe3f16f, 48067335-d92b-4875-a3d5-5cee01fefb08, 727b2f8c-2969-41a9-8a89-c13bfc7436c4, 89bf55ba-6124-4dad-9090-f01650c95db1, 67677cde-21ff-40b2-9655-7c1ee71d5c8d</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
 {{</table>}}
 
 ### Sample Inferences
@@ -244,15 +232,6 @@ print(results)
 ```
 
     [{'forecast': [1882.3784555157672, 2130.607915701861, 2340.84005381799, 2895.754978552066, 2163.657515565616, 1509.1792126509536, 2431.1838923957016]}]
-
-```python
-# Undeploy the pipeline
-pipeline.undeploy()
-```
-
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-11 18:51:52.266084+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 18:58:02.257796+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>68ee66b5-454e-4e2a-9524-d11f8629adfd, 2ebd2911-47e8-4c10-8b59-f37d6d7ee948, 5ea9cdf0-d03e-4bba-acb6-e2dc071df842, 9984bdfb-fe27-40b5-8e4b-1bd46c09d30a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
-{{</table>}}
 
 ## Create Connections
 
@@ -273,7 +252,7 @@ See the `statsmodel_forecast_inputs` and `statsmodel_forecast_outputs` details l
 ```python
 connection_input = get_connection(bigquery_connection_input_name, bigquery_connection_input_type, bigquery_connection_input_argument)
 connection_output = get_connection(bigquery_connection_output_name, bigquery_connection_output_type, bigquery_connection_output_argument)
-#wl.list_connections()
+
 display(connection_input)
 display(connection_output)
 ```
@@ -294,7 +273,7 @@ display(connection_output)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-11T18:52:55.992411+00:00</td>
+    <td>Created At</td><td>2023-05-17T17:24:32.276657+00:00</td>
   </tr>
 </table>
 {{</table>}}
@@ -315,7 +294,7 @@ display(connection_output)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-11T18:52:56.877371+00:00</td>
+    <td>Created At</td><td>2023-05-17T17:24:32.876291+00:00</td>
   </tr>
 </table>
 {{</table>}}
@@ -347,7 +326,7 @@ display(big_query_output_connection)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-11T18:52:55.992411+00:00</td>
+    <td>Created At</td><td>2023-05-17T17:24:32.276657+00:00</td>
   </tr>
 </table>
 {{</table>}}
@@ -368,7 +347,7 @@ display(big_query_output_connection)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-11T18:52:56.877371+00:00</td>
+    <td>Created At</td><td>2023-05-17T17:24:32.876291+00:00</td>
   </tr>
 </table>
 {{</table>}}
@@ -384,10 +363,6 @@ The method Workspace [`add_connection(connection_name)`](https://staging.docs.wa
 We'll add both connections to our sample workspace, then list the connections available to the workspace to confirm.
 
 ```python
-# wl.list_connections()
-```
-
-```python
 workspace.add_connection(bigquery_connection_input_name)
 workspace.add_connection(bigquery_connection_output_name)
 
@@ -395,7 +370,7 @@ workspace.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>bigqueryforecastinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-11T18:52:55.992411+00:00</td></tr><tr><td>bigqueryforecastoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-11T18:52:56.877371+00:00</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>bigqueryforecastinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.276657+00:00</td></tr><tr><td>bigqueryforecastoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.876291+00:00</td></tr></table>
 {{</table>}}
 
 ## Big Query Connection Inference Example
@@ -478,7 +453,7 @@ pipeline.deploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-11 18:51:52.266084+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 18:59:01.260909+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c3380b5c-1279-4af9-adde-4364dbef4b4b, 68ee66b5-454e-4e2a-9524-d11f8629adfd, 2ebd2911-47e8-4c10-8b59-f37d6d7ee948, 5ea9cdf0-d03e-4bba-acb6-e2dc071df842, 9984bdfb-fe27-40b5-8e4b-1bd46c09d30a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:18:25.881352+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:24:59.806764+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e59f94a9-f52e-47fd-b5b4-038f8c17bf0c, fae72d3e-9b1f-40ee-a24f-e9724b3f3e4c, cd7a9868-df30-4449-b38e-975cafe3f16f, 48067335-d92b-4875-a3d5-5cee01fefb08, 727b2f8c-2969-41a9-8a89-c13bfc7436c4, 89bf55ba-6124-4dad-9090-f01650c95db1, 67677cde-21ff-40b2-9655-7c1ee71d5c8d</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
 {{</table>}}
 
 ```python
@@ -538,40 +513,31 @@ display(task_inference_results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 19:03:12.788764+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 18:59:14.228778+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 18:53:20.880502+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 18:36:06.815699+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 18:33:28.542601+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
 </table>
-{{</table>}}
-
-```python
-#deploy the pipeline
-pipeline.undeploy()
-```
-
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-11 18:51:52.266084+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 18:59:01.260909+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c3380b5c-1279-4af9-adde-4364dbef4b4b, 68ee66b5-454e-4e2a-9524-d11f8629adfd, 2ebd2911-47e8-4c10-8b59-f37d6d7ee948, 5ea9cdf0-d03e-4bba-acb6-e2dc071df842, 9984bdfb-fe27-40b5-8e4b-1bd46c09d30a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
 {{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
@@ -608,17 +574,19 @@ Orchestrations are uploaded with the Wallaroo client `upload_orchestration(path)
 
 Once uploaded, the deployment will be prepared and any requirements will be downloaded and installed.
 
-For this example, the orchestration `./bigquery_remote_inference/bigquery_remote_inference.zi` will be uploaded and saved to the variable `orchestration`.
+For this example, the orchestration `./bigquery_remote_inference/bigquery_remote_inference.zip` will be uploaded and saved to the variable `orchestration`.  Then we will loop until the orchestration status is `ready`.
 
 ```python
-orchestration = wl.upload_orchestration(path="./bigquery_statsmodel_remote_inference/bigquery_statsmodel_remote_inference.zip")
+pipeline.deploy()
 ```
 
-### Orchestration Status
-
-We will loop until the uploaded orchestration's `status` displays `ready`.
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:18:25.881352+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:33:42.399087+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f4fe79bf-d71b-4eda-8ca5-5336d45850a9, e59f94a9-f52e-47fd-b5b4-038f8c17bf0c, fae72d3e-9b1f-40ee-a24f-e9724b3f3e4c, cd7a9868-df30-4449-b38e-975cafe3f16f, 48067335-d92b-4875-a3d5-5cee01fefb08, 727b2f8c-2969-41a9-8a89-c13bfc7436c4, 89bf55ba-6124-4dad-9090-f01650c95db1, 67677cde-21ff-40b2-9655-7c1ee71d5c8d</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+{{</table>}}
 
 ```python
+orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
+
 while orchestration.status() != 'ready':
     print(orchestration.status())
     time.sleep(5)
@@ -632,13 +600,14 @@ while orchestration.status() != 'ready':
     packaging
     packaging
     packaging
+    packaging
 
 ```python
 wl.list_orchestrations()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>status</th><th>name</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>30d171eb-c225-4dd5-9902-6d1c34e2f457</td><td>ready</td><td>bigquery_statsmodel_remote_inference.zip</td><td>6f9c76cfce70afae13b7486a92210f49644149696f47b307b48edd1caee10f15</td><td>2023-11-May 19:04:55</td><td>2023-11-May 19:05:42</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>16261c6d-2dc5-4e07-95f8-ebf199c724f3</td><td>None</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>950537...80d788</td><td>2023-17-May 17:32:51</td><td>2023-17-May 17:33:38</td></tr></table>
 {{</table>}}
 
 ## Task Management Tutorial
@@ -647,14 +616,14 @@ Once an Orchestration has the status `ready`, it can be run as a task.  Tasks ha
 
 | Type | SDK Call |  How triggered |
 |---|---|:---|
-| Once       | `orchestration.run_once(json_args)` | User makes one api call. Task runs once and exits.| Single batch, experimentation. |
+| Once       | `orchestration.run_once(name, json_args, timeout)` | Task runs once and exits.| Single batch, experimentation. |
 | Scheduled  | `orchestration.run_scheduled(name, schedule, timeout, json_args)` | User provides schedule. Task runs exits whenever schedule dictates. | Recurrent batch. |
 
 ### Run Task Once
 
 We'll do both a Run Once task and generate our Run Once Task from our orchestration.
 
-Tasks are generated and run once with the Orchestration `run_once(arguments)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
+Tasks are generated and run once with the Orchestration `run_once(name, json_args, timeout)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
 We'll display the last 5 rows of our BigQuery output table, then start the task that will perform the same inference we did above.
 
@@ -685,27 +654,27 @@ display(task_inference_results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 19:03:12.788764+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 18:59:14.228778+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 18:53:20.880502+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 18:36:06.815699+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 18:33:28.542601+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -714,7 +683,7 @@ display(task_inference_results)
 
 ```python
 # Example: run once
-task = orchestration.run_once({})
+task = orchestration.run_once(name="big query statsmodel run once", json_args={})
 task
 ```
 
@@ -725,7 +694,10 @@ task
     <th>Value</th>
   </tr>
   <tr>
-    <td>ID</td><td>dc953f02-d0b2-4dac-94dd-c0e953cf5121</td>
+    <td>ID</td><td>1490818f-bac3-4254-91e2-5250e3dab645</td>
+  </tr>
+  <tr>
+    <td>Name</td><td>big query statsmodel run once</td>
   </tr>
   <tr>
     <td>Status</td><td>pending</td>
@@ -734,10 +706,10 @@ task
     <td>Type</td><td>Temporary Run</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-11-May 19:05:58</td>
+    <td>Created At</td><td>2023-17-May 17:38:05</td>
   </tr>
   <tr>
-    <td>Updated At</td><td>2023-11-May 19:05:58</td>
+    <td>Updated At</td><td>2023-17-May 17:38:05</td>
   </tr>
 </table>
 {{</table>}}
@@ -762,12 +734,14 @@ while task.status() != "started":
     time.sleep(5)
 ```
 
+    'pending'
+
 ```python
 wl.list_tasks()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>dc953f02-d0b2-4dac-94dd-c0e953cf5121</td><td>started</td><td>Temporary Run</td><td>2023-11-May 19:05:58</td><td>2023-11-May 19:06:04</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>1490818f-bac3-4254-91e2-5250e3dab645</td><td>big query statsmodel run once</td><td>started</td><td>Temporary Run</td><td>2023-17-May 17:38:05</td><td>2023-17-May 17:38:10</td></tr></table>
 {{</table>}}
 
 ### Task Results
@@ -775,7 +749,7 @@ wl.list_tasks()
 We can view the inferences from our logs and verify that new entries were added from our task.  We'll query the last 5 rows of our inference output table after a wait of 60 seconds.
 
 ```python
-time.sleep(60)
+time.sleep(30)
 
 # Get the last insert to the output table to verify
 
@@ -803,27 +777,27 @@ display(task_inference_results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 19:06:23.579872+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 19:03:12.788764+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 18:59:14.228778+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 18:53:20.880502+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 18:36:06.815699+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -869,27 +843,27 @@ scheduled_task = orchestration.run_scheduled(name="simple_statsmodel_inference_s
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 19:06:23.579872+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 19:03:12.788764+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 18:59:14.228778+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 18:53:20.880502+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 18:36:06.815699+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -904,7 +878,7 @@ while scheduled_task.status() != "started":
 
 ```python
 #wait 120 seconds to give the scheduled event time to finish
-time.sleep(120)
+time.sleep(60)
 task_inference_results = bigqueryoutputclient.query(
         f"""
         SELECT *
@@ -929,27 +903,27 @@ display(task_inference_results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 19:11:28.716606+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 19:10:28.763992+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 19:09:21.577224+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 19:06:23.579872+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 19:03:12.788764+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -992,17 +966,16 @@ pipeline02.add_model_step(bike_day_model)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-11 19:50:20.988291+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 19:50:20.988291+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>21d33ade-7d5d-4b97-876a-8c2cd90fe955</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-17 17:39:48.567140+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:39:48.567140+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0d102f2f-67d4-4207-9fbf-d8b11af05bad</td></tr><tr><th>steps</th> <td></td></tr></table>
 {{</table>}}
 
 ```python
 # required to set the pipeline steps
 pipeline02.deploy()
-pipeline02.undeploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-11 19:50:20.988291+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-11 20:12:46.905527+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fbdb52d4-0b28-4f94-afce-282f635c4f89, 973f1995-539d-475a-9acb-c63ab322fbd1, 6e853955-7db3-4bdd-a10d-6c48e959d6f1, 3c3aaa31-18da-4edb-8098-133e50f4657f, cd7ade4d-bcce-4105-982c-76548cc43caf, 21d33ade-7d5d-4b97-876a-8c2cd90fe955</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-17 17:39:48.567140+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:39:50.077773+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>48addf0b-2628-4c97-9b12-5c3bbb9b7099, 0d102f2f-67d4-4207-9fbf-d8b11af05bad</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
 {{</table>}}
 
 ```python
@@ -1020,7 +993,7 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 
 # Generate the run once task with the new parameter
-task = orchestration.run_once({ "pipeline_name": newpipeline_name })
+task = orchestration.run_once(name="parameter sample", json_args={ "pipeline_name": newpipeline_name })
 display(task)
 
 # wait for the task to run
@@ -1041,27 +1014,27 @@ while task.status() != "started":
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 20:11:04.519782+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 20:04:49.821907+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 20:03:25.094349+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 20:02:08.732396+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 19:59:19.455953+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -1075,7 +1048,10 @@ while task.status() != "started":
     <th>Value</th>
   </tr>
   <tr>
-    <td>ID</td><td>902fca67-83b2-48b0-83aa-0bbe24c6a0a5</td>
+    <td>ID</td><td>33dec30e-0413-485b-aa22-6aeb7f71fdb7</td>
+  </tr>
+  <tr>
+    <td>Name</td><td>parameter sample</td>
   </tr>
   <tr>
     <td>Status</td><td>pending</td>
@@ -1084,10 +1060,10 @@ while task.status() != "started":
     <td>Type</td><td>Temporary Run</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-11-May 20:13:41</td>
+    <td>Created At</td><td>2023-17-May 17:40:04</td>
   </tr>
   <tr>
-    <td>Updated At</td><td>2023-11-May 20:13:41</td>
+    <td>Updated At</td><td>2023-17-May 17:40:04</td>
   </tr>
 </table>
 {{</table>}}
@@ -1096,7 +1072,7 @@ while task.status() != "started":
 
 ```python
 # wait 60 seconds then display the results
-time.sleep(60)
+time.sleep(30)
 
 task_inference_results = bigqueryoutputclient.query(
         f"""
@@ -1122,27 +1098,27 @@ display(task_inference_results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-11 20:13:57.448442+00:00</td>
+      <td>2023-05-17 17:25:05.452843+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-11 20:11:04.519782+00:00</td>
+      <td>2023-05-11 20:13:57.448442+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-11 20:04:49.821907+00:00</td>
+      <td>2023-05-11 20:11:04.519782+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-11 20:03:25.094349+00:00</td>
+      <td>2023-05-11 20:04:49.821907+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-11 20:02:08.732396+00:00</td>
+      <td>2023-05-11 20:03:25.094349+00:00</td>
       <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
     </tr>
   </tbody>
@@ -1151,4 +1127,14 @@ display(task_inference_results)
 
 ## Conclusion
 
-With that, our tutorial is over.  Please feel free to use this tutorial code in your own Wallaroo related projects.
+With that, our tutorial is over.  Please feel free to use this tutorial code in your own Wallaroo related projects.  Our last task will be to undeploy our pipelines to restore the resources back to the Wallaroo instance.
+
+```python
+pipeline.undeploy()
+pipeline02.undeploy()
+```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-17 17:39:48.567140+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:39:50.077773+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>48addf0b-2628-4c97-9b12-5c3bbb9b7099, 0d102f2f-67d4-4207-9fbf-d8b11af05bad</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodel</td></tr></table>
+{{</table>}}
+

@@ -290,7 +290,6 @@ while orchestration.status() != 'ready':
 ```
 
     pending_packaging
-    pending_packaging
     packaging
     packaging
     packaging
@@ -352,7 +351,7 @@ wl.list_orchestrations()
 
 ## Task Management Tutorial
 
-Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have the following.
+### Upload Orchestration via File Object
 
 | Type | SDK Call |  How triggered |
 |---|---|:---|
@@ -366,7 +365,7 @@ We'll do both a Run Once task and generate our Run Once Task from our orchestrat
 Tasks are generated and run once with the Orchestration `run_once(name, json_args, timeout)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
 ```python
-# Example: run once
+zipfile = open("./remote_inference/remote_inference.zip", "rb").read()
 
 import datetime
 task_start = datetime.datetime.now()
@@ -554,8 +553,6 @@ while scheduled_task.status() != "started":
     display(scheduled_task.status())
     time.sleep(5)
 ```
-
-    'pending'
 
 ```python
 #wait 420 seconds to give the scheduled event time to finish
