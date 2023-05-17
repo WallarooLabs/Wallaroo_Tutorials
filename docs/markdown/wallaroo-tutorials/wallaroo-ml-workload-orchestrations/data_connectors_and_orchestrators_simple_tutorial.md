@@ -352,7 +352,7 @@ wl.list_orchestrations()
 
 ## Task Management Tutorial
 
-Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have three run options.
+Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have the following.
 
 | Type | SDK Call |  How triggered |
 |---|---|:---|
