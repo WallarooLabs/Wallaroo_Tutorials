@@ -3,9 +3,6 @@ from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import pyarrow as pa
 import requests
-import os
-# Used for the Wallaroo SDK version 2023.1
-os.environ["ARROW_ENABLED"]="True"
 
 wl = wallaroo.Client()
 
@@ -13,6 +10,7 @@ wl = wallaroo.Client()
 
 workspace_name = 'orchestrationworkspace'
 pipeline_name = 'orchestrationpipeline'
+connection_name = "houseprice_arrow_table"
 
 # helper methods to retrieve workspaces and pipelines
 
@@ -39,12 +37,10 @@ wl.set_current_workspace(workspace)
 
 print(f"Getting the pipeline {pipeline_name}")
 pipeline = get_pipeline(pipeline_name)
-
+pipeline.deploy()
 # Get the connection - assuming it will be the only one
 
-inference_source_connection = wl.get_connection(name="external_inference_connection")
-
-inference_results_connection = wl.get_connection(name="inference_results_connection")
+inference_source_connection = wl.get_connection(name=connection_name)
 
 print(f"Getting arrow table file")
 # Retrieve the file
@@ -65,9 +61,6 @@ with pa.ipc.open_file(response.content) as reader:
 print("Inference time.  Displaying results after.")
 # Perform the inference
 result = pipeline.infer(arrow_table)
-
-# Save result to local file - should be /home/jovyen
-
-result.to_json(inference_results_connection.details()['location'], orient="records")
-
 print(result)
+
+pipeline.undeploy()
