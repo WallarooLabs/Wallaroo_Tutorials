@@ -312,18 +312,18 @@ orchestrations = wl.list_orchestrations()
 
 ## Task Management Tutorial
 
-Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have three run options.
+Once an Orchestration has the status `ready`, it can be run as a task.  Tasks have the following.
 
 | Type | SDK Call |  How triggered |
 |---|---|:---|
-| Once       | `orchestration.run_once(json_args)` | User makes one api call. Task runs once and exits.| Single batch, experimentation. |
+| Once       | `orchestration.run_once(name, json_args, timeout)` | User makes one api call. Task runs once and exits.| Single batch, experimentation. |
 | Scheduled  | `orchestration.run_scheduled(name, schedule, timeout, json_args)` | User provides schedule. Task runs exits whenever schedule dictates. | Recurrent batch. |
 
 ### Run Task Once
 
 We'll do both a Run Once task and generate our Run Once Task from our orchestration.
 
-Tasks are generated and run once with the Orchestration `run_once(arguments)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
+Tasks are generated and run once with the Orchestration `run_once(name, json_args, timeout)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
 ```python
 # Example: run once
