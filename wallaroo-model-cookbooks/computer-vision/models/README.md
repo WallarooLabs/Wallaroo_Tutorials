@@ -2,6 +2,15 @@
 
 In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.
 
+<<<<<<< HEAD
+=======
+To download the Wallaroo Computer Vision tutorials
+
+git clone https://github.com/WallarooLabs/csa_demo.git
+
+cd computer-vision/models
+
+>>>>>>> 07b717a (pipeline logs and other updates/)
 Use the following cmd in a terminal
 
 gcloud storage cp gs://wallaroo-model-zoo/open-source/computer-vision/models/* .

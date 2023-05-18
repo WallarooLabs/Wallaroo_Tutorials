@@ -57,7 +57,11 @@
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
+<<<<<<< HEAD
 import os
+=======
+import polars as pl
+>>>>>>> 07b717a (pipeline logs and other updates/)
 import pyarrow as pa
 
 # used to display dataframe information without truncating
