@@ -67,20 +67,7 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
-
-    Please log into the following URL in a web browser:
-    
-    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=BPUA-QLYQ
-    
-    Login successful!
 
 ## Wallaroo MLOps API URL
 
@@ -96,9 +83,6 @@ Set the Wallaroo Prefix and Suffix in the code segment below based on your Walla
 ```python
 wallarooPrefix = "YOUR PREFIX"
 wallarooSuffix = "YOUR SUFFIX"
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallarooexample.ai"
 
 APIURL = f"https://{wallarooPrefix}.api.{wallarooSuffix}"
 ```
@@ -396,10 +380,14 @@ Pipeline logs are retrieved through the Wallaroo MLOps API with the following re
 
 * **REQUEST URL**
   * `v1/api/pipelines/get_logs`
+* **Headers**
+  * **Accept**:
+    * `application/json; format=pandas-records`: For the logs returned as pandas DataFrame
+    * `application/vnd.apache.arrow.file`: for the logs returned as Apache Arrow
 * **PARAMETERS**
   * **pipeline_id** (*String* *Required*): The name of the pipeline.
   * **workspace_id** (*Integer* *Required*): The numerical identifier of the workspace.
-  * **cursor** (*String* *Optional*): Cursor returned with a previous page of results
+  * **cursor** (*String* *Optional*): Cursor returned with a previous page of results from a pipeline log request, used to retrieve the next page of information.
   * **order**  (*String* *Optional* Default: `Desc`): The order for log inserts returned.  Valid values are:
     * `Asc`: In chronological order of inserts.
     * `Desc`: In reverse chronological order of inserts.
@@ -407,11 +395,14 @@ Pipeline logs are retrieved through the Wallaroo MLOps API with the following re
   * **start_time** (*String* *Optional*): The start time of the period to retrieve logs for in RFC 3339 format for DateTime.  **Must** be combined with `end_time`.
   * **end_time** (*String* *Optional*): The end time of the period to retrieve logs for in RFC 3339 format for DateTime.  **Must** be combined with `start_time`. 
 * **RETURNS**
-  * The logs in `'application/json; format=pandas-records'` format.
+  * The logs are returned by default as  `'application/json; format=pandas-records'` format.  To request the logs as Apache Arrow tables, set the submission header `Accept` to `application/vnd.apache.arrow.file`.
   * Headers:
-    * x-iteration-cursor
-    * x-iteration-status
-      * One of All, SchemaChange, RecordLimited, ByteLimited
+    * x-iteration-cursor: Used to retrieve the next page of results.  This is not included if `x-iteration-status` is `All`.
+    * x-iteration-status: Informs whether there are more records available outside of this log request parameters.
+      * All: This page includes all logs available from this request.  If `x-iteration-status` is `All`, then `x-iteration-cursor` is not provided.
+      * SchemaChange: A change in the log schema caused by actions such as pipeline version, etc.
+      * RecordLimited: The number of records exceeded from the page size, more records can be requested as the next page.  There **may** be more records available to retrieve OR the record limit was reached for this request even if no more records are available in next cursor request.
+      * ByteLimited: The number of records exceeded the pipeline log limit which is around 100K. 
 
 ```python
 # retrieve the authorization token
@@ -482,10 +473,11 @@ cursor = response.headers['x-iteration-cursor']
 {{</table>}}
 
 ```python
-# Get additional records from page_size = 1000
+# Get next page of results as an arrow table
 
 # retrieve the authorization token
 headers = wl.auth.auth_header()
+headers['Accept']="application/vnd.apache.arrow.file"
 
 url = f"{APIURL}/v1/api/pipelines/get_logs"
 
@@ -498,13 +490,14 @@ data = {
 }
 
 response = requests.post(url, headers=headers, json=data)
-standard_logs = pd.DataFrame.from_records(response.json())
 
-display(len(standard_logs))
-display(standard_logs.head(5).loc[:, ["time", "in", "out"]])
+# Arrow table is retrieved 
+with pa.ipc.open_file(response.content) as reader:
+    arrow_table = reader.read_all()
+
+# convert to Polars DataFrame and display the first 5 rows
+display(arrow_table.to_pandas().head(5).loc[:,["time", "out"]])
 ```
-
-    2
 
 {{<table "table table-striped table-bordered" >}}
 <table>
@@ -512,22 +505,34 @@ display(standard_logs.head(5).loc[:, ["time", "in", "out"]])
     <tr style="text-align: right;">
       <th></th>
       <th>time</th>
-      <th>in</th>
       <th>out</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1684424434650</td>
-      <td>{'tensor': [4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]}</td>
-      <td>{'variable': [718013.7]}</td>
+      <td>1684427140394</td>
+      <td>{'variable': [718013.75]}</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1684424435023</td>
-      <td>{'tensor': [4.0, 3.0, 3710.0, 20000.0, 2.0, 0.0, 2.0, 5.0, 10.0, 2760.0, 950.0, 47.6696, -122.261, 3970.0, 20000.0, 79.0, 0.0, 0.0]}</td>
-      <td>{'variable': [1514079.4]}</td>
+      <td>1684427140394</td>
+      <td>{'variable': [615094.56]}</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1684427140394</td>
+      <td>{'variable': [448627.72]}</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1684427140394</td>
+      <td>{'variable': [758714.2]}</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1684427140394</td>
+      <td>{'variable': [513264.7]}</td>
     </tr>
   </tbody>
 </table>
@@ -555,6 +560,7 @@ response = requests.post(url, headers=headers, json=data)
 standard_logs = pd.DataFrame.from_records(response.json())
 
 display(standard_logs.head(5).loc[:, ["time", "in", "out"]])
+display(response.headers)
 ```
 
 {{<table "table table-striped table-bordered" >}}
@@ -583,6 +589,8 @@ display(standard_logs.head(5).loc[:, ["time", "in", "out"]])
   </tbody>
 </table>
 {{</table>}}
+
+    {'content-type': 'application/json; format=pandas-records', 'x-iteration-status': 'All', 'content-length': '840', 'date': 'Thu, 18 May 2023 17:10:22 GMT', 'x-envoy-upstream-service-time': '5', 'server': 'envoy'}
 
 ## Shadow Deploy Pipelines
 
