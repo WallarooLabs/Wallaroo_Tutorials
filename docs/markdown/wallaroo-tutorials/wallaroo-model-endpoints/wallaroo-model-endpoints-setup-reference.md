@@ -590,7 +590,7 @@ data = open(dataFile,'rb').read()
 # set the content type for Arrow table
 headers['Content-Type']= "application/vnd.apache.arrow.file"
 
-# set accept as pandas-records
+# set accept as Apache Arrow
 headers['Accept']="application/vnd.apache.arrow.file"
 
 response = requests.post(
