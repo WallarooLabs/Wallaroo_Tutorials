@@ -9,3 +9,4 @@ wallaroo-model-cookbooks/computer-vision/models/mobilenet.pt
 wallaroo-model-cookbooks/computer-vision/models/mobilenet.pt.onnx
 wallaroo-model-cookbooks/computer-vision/models/post-process-drift-detection.py
 tools/convert_wallaroo_data_to_pandas_arrow/data/high_fraud.arrow
+creds.json.example
