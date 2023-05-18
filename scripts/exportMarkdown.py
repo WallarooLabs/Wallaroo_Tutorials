@@ -404,6 +404,16 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
         "outputFile": "wallaroo-model-registry-demonstration.md"
     },
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
+    {
+        "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
+        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_api_log_tutorial.md"
+    },
 
 ]
 
