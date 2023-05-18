@@ -49,10 +49,6 @@ import pandas as pd
 pd.set_option('display.max_colwidth', None)
 import pyarrow as pa
 
-import os
-# Used for the Wallaroo SDK version 2023.1
-os.environ["ARROW_ENABLED"]="True"
-
 import time
 
 import requests
@@ -77,7 +73,7 @@ wl = wallaroo.Client()
 The variable `APIURL` is used to specify the connection to the Wallaroo instance's MLOps API URL, and is composed of the Wallaroo DNS prefix and suffix.  For full details, see the [Wallaroo API Connection Guide
 ](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/).
 
-The variables `wallarooPrefix` and `wallarooSuffix` variables will be used to derive the API url.  For example, if the Wallaroo Prefix is `doc-test` and the url is `wallaroo.ai`, then the MLOps API URL would be `doc-test.api.example.com/v1/api/{request}`.
+The variables `wallarooPrefix` and `wallarooSuffix` variables will be used to derive the API url.  For example, if the Wallaroo Prefix is `doc-test` and the url is `example.com`, then the MLOps API URL would be `doc-test.api.example.com/v1/api/{request}`.
 
 Set the Wallaroo Prefix and Suffix in the code segment below based on your Wallaroo instance.
 

@@ -70,10 +70,6 @@ import pandas as pd
 pd.set_option('display.max_colwidth', None)
 import pyarrow as pa
 
-import os
-# Used for the Wallaroo SDK version 2023.1
-os.environ["ARROW_ENABLED"]="True"
-
 import time
 import json
 
