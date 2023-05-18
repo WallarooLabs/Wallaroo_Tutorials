@@ -1,9 +1,6 @@
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
-import os
-#Used for the Wallaroo SDK version 2023.1
-os.environ["ARROW_ENABLED"]="True"
 
 # bigquery library
 from google.cloud import bigquery

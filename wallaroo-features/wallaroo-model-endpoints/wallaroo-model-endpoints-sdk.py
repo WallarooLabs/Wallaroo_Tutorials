@@ -60,10 +60,6 @@ from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import polars as pl
 import pyarrow as pa
-import os
-
-# used for the Wallaroo 2023.1 Wallaroo SDK for Arrow support
-os.environ["ARROW_ENABLED"]="True"
 
 # used to display dataframe information without truncating
 from IPython.display import display

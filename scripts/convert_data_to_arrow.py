@@ -3,10 +3,6 @@ import pyarrow as pa
 import json
 import convert_wallaroo_data
 
-# setting arrow on or off
-#import os
-#os.environ["ARROW_ENABLED"]="False"
-
 # List of files to convert
 jsonFileList = [
     # {
