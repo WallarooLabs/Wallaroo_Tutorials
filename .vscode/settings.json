@@ -3,10 +3,13 @@
         "conda",
         "Databricks",
         "DBFS",
+        "iopath",
         "ipykernel",
         "Keycloak",
         "LSTM",
+        "mainpipeline",
         "modularizes",
+        "pyarrow",
         "quantile",
         "wallaroosdk"
     ]

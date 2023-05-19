@@ -27,6 +27,9 @@
 <table>
 
     Remove:
+
+</table>
+{{</table>}}
     
 
 [ ] Verify images are replaced into /images where needed.
