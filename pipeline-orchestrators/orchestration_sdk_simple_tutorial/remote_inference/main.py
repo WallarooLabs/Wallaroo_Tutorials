@@ -8,8 +8,23 @@ wl = wallaroo.Client()
 
 # Setting variables for later steps
 
-workspace_name = 'simpleorchestrationworkspace'
-pipeline_name = 'simpleorchestrationpipeline'
+# get the arguments
+arguments = wl.task_args()
+
+if "workspace_name" in arguments:
+    workspace_name = arguments['workspace_name']
+else:
+    workspace_name="simpleorchestrationworkspace"
+
+if "pipeline_name" in arguments:
+    pipeline_name = arguments['pipeline_name']
+else:
+    pipeline_name="simpleorchestrationpipeline"
+
+if "connection_name" in arguments:
+    connection_name = arguments['connection_name']
+else:
+    connection_name = "external_inference_connection"
 
 # helper methods to retrieve workspaces and pipelines
 
@@ -39,7 +54,7 @@ pipeline = get_pipeline(pipeline_name)
 
 # Get the connection - assuming it will be the only one
 
-inference_source_connection = wl.get_connection(name="external_inference_connection")
+inference_source_connection = wl.get_connection(name=connection_name)
 
 print(f"Getting arrow table file")
 # Retrieve the file

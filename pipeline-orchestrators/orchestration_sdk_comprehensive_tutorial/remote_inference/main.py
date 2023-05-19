@@ -8,9 +8,24 @@ wl = wallaroo.Client()
 
 # Setting variables for later steps
 
-workspace_name = 'orchestrationworkspace'
-pipeline_name = 'orchestrationpipeline'
-connection_name = "houseprice_arrow_table"
+# get the arguments
+arguments = wl.task_args()
+
+if "workspace_name" in arguments:
+    workspace_name = arguments['workspace_name']
+else:
+    workspace_name="orchestrationworkspace"
+
+if "pipeline_name" in arguments:
+    pipeline_name = arguments['pipeline_name']
+else:
+    pipeline_name="orchestrationpipeline"
+
+if "connection_name" in arguments:
+    connection_name = arguments['connection_name']
+else:
+    connection_name = "houseprice_arrow_table"
+
 
 # helper methods to retrieve workspaces and pipelines
 
