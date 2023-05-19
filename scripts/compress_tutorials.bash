@@ -32,6 +32,12 @@ tutorials=(
     ["shadow_deploy"]="wallaroo-testing-tutorials/shadow_deploy"
     ["assays_model_insights"]="wallaroo-features/model_insights"
     ["mlflow_tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial"
+    ["connection_api_bigquery_tutorial"]="pipeline-orchestrators/connection_api_bigquery_tutorial"
+    ["orchestration_api_simple_tutorial"]="pipeline-orchestrators/orchestration_api_simple_tutorial"
+    ["orchestration_sdk_bigquery_houseprice_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial"
+    ["orchestration_sdk_bigquery_statsmodel_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial"
+    ["orchestration_sdk_comprehensive_tutorial"]="pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial"
+    ["orchestration_sdk_simple_tutorial"]="pipeline-orchestrators/orchestration_sdk_simple_tutorial"
     )
 
 currentDirectory=$PWD

@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial).
 
 ## Wallaroo ML Workload Orchestration House Price Model Tutorial
 
@@ -757,7 +757,9 @@ schedule={'42 * * * *'}
 
 Runs on the 42nd minute of every hour.
 
-For our example, we will create a scheduled task to run every 1 minute, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+For our example, we will create a scheduled task to run every 5 minutes, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+
+It is recommended that orchestrations that have pipeline deploy or undeploy commands be spaced out no less than 5 minutes to prevent colliding with other tasks that use the same pipeline.
 
 ```python
 task_inference_results = bigqueryoutputclient.query(
@@ -769,7 +771,7 @@ task_inference_results = bigqueryoutputclient.query(
 
 display(task_inference_results.tail(5))
 
-scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/1 * * * *", timeout=120, json_args={})
+scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/5 * * * *", timeout=120, json_args={})
 ```
 
 {{<table "table table-striped table-bordered" >}}
@@ -830,8 +832,8 @@ while scheduled_task.status() != "started":
 ```
 
 ```python
-#wait 120 seconds to give the scheduled event time to finish
-time.sleep(120)
+#wait 420 seconds to give the scheduled event time to finish
+time.sleep(420)
 task_inference_results = bigqueryoutputclient.query(
         f"""
         SELECT *

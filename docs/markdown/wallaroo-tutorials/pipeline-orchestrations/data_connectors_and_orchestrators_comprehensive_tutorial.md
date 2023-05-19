@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial).
 
 ## Pipeline Orchestration Comprehensive Tutorial
 
@@ -71,7 +71,17 @@ pd.set_option('display.max_colwidth', None)
 import pyarrow as pa
 
 import requests
+
+# Used to create unique workspace and pipeline names
+import string
+import random
+
+# make a random 4 character prefix
+suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+display(suffix)
 ```
+
+    'mrhh'
 
 ### Connect to the Wallaroo Instance
 
@@ -90,11 +100,11 @@ wl = wallaroo.Client()
 ```python
 # Setting variables for later steps
 
-workspace_name = 'orchestrationworkspace'
-pipeline_name = 'orchestrationpipeline'
-model_name = 'orchestrationmodel'
+workspace_name = f'orchestrationworkspace{suffix}'
+pipeline_name = f'orchestrationpipeline{suffix}'
+model_name = f'orchestrationmodel{suffix}'
 model_file_name = './models/rf_model.onnx'
-connection_name = "houseprice_arrow_table"
+connection_name = f'houseprice_arrow_table{suffix}'
 ```
 
 ### Helper Methods
@@ -149,7 +159,7 @@ pipeline.add_model_step(housing_model_control)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>orchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:40:11.391198+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:40:11.391198+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6964e793-b45d-41b8-9ef7-f773c1dc4fe5</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>orchestrationpipelinemrhh</td></tr><tr><th>created</th> <td>2023-05-19 20:50:05.233902+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:05.233902+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1382876a-eeb4-4f50-817b-5bf0604f21d4</td></tr><tr><th>steps</th> <td></td></tr></table>
 {{</table>}}
 
 ```python
@@ -158,7 +168,7 @@ pipeline.deploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>orchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:40:11.391198+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:40:14.433826+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0e260e71-8b80-4ed3-b23f-209c4eeb4b02, 6964e793-b45d-41b8-9ef7-f773c1dc4fe5</td></tr><tr><th>steps</th> <td>orchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>orchestrationpipelinemrhh</td></tr><tr><th>created</th> <td>2023-05-19 20:50:05.233902+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:08.177531+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9a5c2d59-48da-40ff-b7ae-9f3a529b9aaf, 1382876a-eeb4-4f50-817b-5bf0604f21d4</td></tr><tr><th>steps</th> <td>orchestrationmodelmrhh</td></tr></table>
 {{</table>}}
 
 ### Sample Inferences
@@ -188,140 +198,140 @@ display(large_inference_result.head(20))
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.0, 2140.0, 4923.0, 1.0, 0.0, 0.0, 4.0, 8.0, 1070.0, 1070.0, 47.6902, -122.339, 1470.0, 4923.0, 86.0, 0.0, 0.0]</td>
       <td>[668288.0]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 3.5, 3590.0, 5334.0, 2.0, 0.0, 2.0, 3.0, 9.0, 3140.0, 450.0, 47.6763, -122.267, 2100.0, 6250.0, 9.0, 0.0, 0.0]</td>
       <td>[1004846.5]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.0, 1280.0, 960.0, 2.0, 0.0, 0.0, 3.0, 9.0, 1040.0, 240.0, 47.602, -122.311, 1280.0, 1173.0, 0.0, 0.0, 0.0]</td>
       <td>[684577.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.5, 2820.0, 15000.0, 2.0, 0.0, 0.0, 4.0, 9.0, 2820.0, 0.0, 47.7255, -122.101, 2440.0, 15000.0, 29.0, 0.0, 0.0]</td>
       <td>[727898.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.25, 1790.0, 11393.0, 1.0, 0.0, 0.0, 3.0, 8.0, 1790.0, 0.0, 47.6297, -122.099, 2290.0, 11894.0, 36.0, 0.0, 0.0]</td>
       <td>[559631.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 1.5, 1010.0, 7683.0, 1.5, 0.0, 0.0, 5.0, 7.0, 1010.0, 0.0, 47.72, -122.318, 1550.0, 7271.0, 61.0, 0.0, 0.0]</td>
       <td>[340764.53]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.0, 1270.0, 1323.0, 3.0, 0.0, 0.0, 3.0, 8.0, 1270.0, 0.0, 47.6934, -122.342, 1330.0, 1323.0, 8.0, 0.0, 0.0]</td>
       <td>[442168.06]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 1.75, 2070.0, 9120.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1250.0, 820.0, 47.6045, -122.123, 1650.0, 8400.0, 57.0, 0.0, 0.0]</td>
       <td>[630865.6]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 1.0, 1620.0, 4080.0, 1.5, 0.0, 0.0, 3.0, 7.0, 1620.0, 0.0, 47.6696, -122.324, 1760.0, 4080.0, 91.0, 0.0, 0.0]</td>
       <td>[559631.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 3.25, 3990.0, 9786.0, 2.0, 0.0, 0.0, 3.0, 9.0, 3990.0, 0.0, 47.6784, -122.026, 3920.0, 8200.0, 10.0, 0.0, 0.0]</td>
       <td>[909441.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.0, 1780.0, 19843.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1780.0, 0.0, 47.4414, -122.154, 2210.0, 13500.0, 52.0, 0.0, 0.0]</td>
       <td>[313096.0]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.5, 2130.0, 6003.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2130.0, 0.0, 47.4518, -122.12, 1940.0, 4529.0, 11.0, 0.0, 0.0]</td>
       <td>[404040.8]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 1.75, 1660.0, 10440.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1040.0, 620.0, 47.4448, -121.77, 1240.0, 10380.0, 36.0, 0.0, 0.0]</td>
       <td>[292859.5]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[3.0, 2.5, 2110.0, 4118.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2110.0, 0.0, 47.3878, -122.153, 2110.0, 4044.0, 25.0, 0.0, 0.0]</td>
       <td>[338357.88]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>2023-05-17 17:40:40.126</td>
+      <td>2023-05-19 20:50:24.194</td>
       <td>[4.0, 2.25, 2200.0, 11250.0, 1.5, 0.0, 0.0, 5.0, 7.0, 1300.0, 900.0, 47.6845, -122.201, 2320.0, 10814.0, 94.0, 0.0, 0.0]</td>
       <td>[682284.6]</td>
       <td>0</td>
@@ -350,12 +360,12 @@ Connections are created with the Wallaroo client command [`create_connection`](h
 | **type** | string (Required) | The user defined type of connection. |
 | **details** | Dict (Requires) | User defined configuration details for the data connection.  These can be `{'username':'dataperson', 'password':'datapassword', 'port': 3339}`, or `{'token':'abcde123==', 'host':'example.com', 'port:1234'}`, or other user defined combinations.  |
 
-We'll create the connection named `houseprice_arrow_table`, set it to the type `HTTPFILE`, and provide the details as `'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'` - the location for our sample Arrow table inference input.
+We'll create the connection named `houseprice_arrow_table`, set it to the type `HTTPFILE`, and provide the details as `'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'` - the location for our sample Arrow table inference input.
 
 ```python
 wl.create_connection(connection_name, 
                   "HTTPFILE", 
-                  {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
+                  {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
                   )
 ```
 
@@ -366,7 +376,7 @@ wl.create_connection(connection_name,
     <th>Value</th>
   </tr>
   <tr>
-    <td>Name</td><td>houseprice_arrow_table</td>
+    <td>Name</td><td>houseprice_arrow_tablemrhh</td>
   </tr>
   <tr>
     <td>Connection Type</td><td>HTTPFILE</td>
@@ -375,7 +385,10 @@ wl.create_connection(connection_name,
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-17T17:42:20.215405+00:00</td>
+    <td>Created At</td><td>2023-05-19T20:50:24.878300+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
 {{</table>}}
@@ -389,7 +402,7 @@ wl.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>external_inference_connection</td><td>HTTP</td><td>*****</td><td>2023-05-17T14:03:08.288200+00:00</td></tr><tr><td>bigqueryhouseapioutputsxmzn</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:07:05.669298+00:00</td></tr><tr><td>bigqueryhouseapiinputzjbz</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:12:10.751778+00:00</td></tr><tr><td>bigqueryhouseapioutputszjbz</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:12:12.247243+00:00</td></tr><tr><td>bigqueryhouseinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:59:45.947103+00:00</td></tr><tr><td>bigqueryhouseoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:59:46.601720+00:00</td></tr><tr><td>bigqueryforecastinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.276657+00:00</td></tr><tr><td>bigqueryforecastoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.876291+00:00</td></tr><tr><td>houseprice_arrow_table2</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:40:40.763136+00:00</td></tr><tr><td>houseprice_arrow_table3</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:40:41.517898+00:00</td></tr><tr><td>houseprice_arrow_table</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:42:20.215405+00:00</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>houseprice_arrow_tablemrhh</td><td>HTTPFILE</td><td>*****</td><td>2023-05-19T20:50:24.878300+00:00</td><td>[]</td></tr></table>
 {{</table>}}
 
 ### Add Connection to Workspace
@@ -415,7 +428,7 @@ workspace.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>houseprice_arrow_table</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:42:20.215405+00:00</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>houseprice_arrow_tablemrhh</td><td>HTTPFILE</td><td>*****</td><td>2023-05-19T20:50:24.878300+00:00</td><td>['orchestrationworkspacemrhh']</td></tr></table>
 {{</table>}}
 
 ### Get Connection
@@ -434,7 +447,7 @@ The Connection method `details()` retrieves a the connection `details()` as a `d
 display(connection.details())
 ```
 
-    {'host': 'https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
+    {'host': 'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
 
 ### Using a Connection Example
 
@@ -479,140 +492,140 @@ display(result_table.head(20))
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.0, 2140.0, 4923.0, 1.0, 0.0, 0.0, 4.0, 8.0, 1070.0, 1070.0, 47.6902, -122.339, 1470.0, 4923.0, 86.0, 0.0, 0.0]</td>
       <td>[668288.0]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 3.5, 3590.0, 5334.0, 2.0, 0.0, 2.0, 3.0, 9.0, 3140.0, 450.0, 47.6763, -122.267, 2100.0, 6250.0, 9.0, 0.0, 0.0]</td>
       <td>[1004846.5]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.0, 1280.0, 960.0, 2.0, 0.0, 0.0, 3.0, 9.0, 1040.0, 240.0, 47.602, -122.311, 1280.0, 1173.0, 0.0, 0.0, 0.0]</td>
       <td>[684577.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.5, 2820.0, 15000.0, 2.0, 0.0, 0.0, 4.0, 9.0, 2820.0, 0.0, 47.7255, -122.101, 2440.0, 15000.0, 29.0, 0.0, 0.0]</td>
       <td>[727898.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.25, 1790.0, 11393.0, 1.0, 0.0, 0.0, 3.0, 8.0, 1790.0, 0.0, 47.6297, -122.099, 2290.0, 11894.0, 36.0, 0.0, 0.0]</td>
       <td>[559631.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 1.5, 1010.0, 7683.0, 1.5, 0.0, 0.0, 5.0, 7.0, 1010.0, 0.0, 47.72, -122.318, 1550.0, 7271.0, 61.0, 0.0, 0.0]</td>
       <td>[340764.53]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.0, 1270.0, 1323.0, 3.0, 0.0, 0.0, 3.0, 8.0, 1270.0, 0.0, 47.6934, -122.342, 1330.0, 1323.0, 8.0, 0.0, 0.0]</td>
       <td>[442168.06]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 1.75, 2070.0, 9120.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1250.0, 820.0, 47.6045, -122.123, 1650.0, 8400.0, 57.0, 0.0, 0.0]</td>
       <td>[630865.6]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 1.0, 1620.0, 4080.0, 1.5, 0.0, 0.0, 3.0, 7.0, 1620.0, 0.0, 47.6696, -122.324, 1760.0, 4080.0, 91.0, 0.0, 0.0]</td>
       <td>[559631.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 3.25, 3990.0, 9786.0, 2.0, 0.0, 0.0, 3.0, 9.0, 3990.0, 0.0, 47.6784, -122.026, 3920.0, 8200.0, 10.0, 0.0, 0.0]</td>
       <td>[909441.1]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.0, 1780.0, 19843.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1780.0, 0.0, 47.4414, -122.154, 2210.0, 13500.0, 52.0, 0.0, 0.0]</td>
       <td>[313096.0]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.5, 2130.0, 6003.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2130.0, 0.0, 47.4518, -122.12, 1940.0, 4529.0, 11.0, 0.0, 0.0]</td>
       <td>[404040.8]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 1.75, 1660.0, 10440.0, 1.0, 0.0, 0.0, 3.0, 7.0, 1040.0, 620.0, 47.4448, -121.77, 1240.0, 10380.0, 36.0, 0.0, 0.0]</td>
       <td>[292859.5]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[3.0, 2.5, 2110.0, 4118.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2110.0, 0.0, 47.3878, -122.153, 2110.0, 4044.0, 25.0, 0.0, 0.0]</td>
       <td>[338357.88]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>2023-05-17 17:43:50.585</td>
+      <td>2023-05-19 20:50:30.348</td>
       <td>[4.0, 2.25, 2200.0, 11250.0, 1.5, 0.0, 0.0, 5.0, 7.0, 1300.0, 900.0, 47.6845, -122.201, 2320.0, 10814.0, 94.0, 0.0, 0.0]</td>
       <td>[682284.6]</td>
       <td>0</td>
@@ -649,9 +662,7 @@ connection.delete_connection()
 wl.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>external_inference_connection</td><td>HTTP</td><td>*****</td><td>2023-05-17T14:03:08.288200+00:00</td></tr><tr><td>bigqueryhouseapioutputsxmzn</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:07:05.669298+00:00</td></tr><tr><td>bigqueryhouseapiinputzjbz</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:12:10.751778+00:00</td></tr><tr><td>bigqueryhouseapioutputszjbz</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:12:12.247243+00:00</td></tr><tr><td>bigqueryhouseinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:59:45.947103+00:00</td></tr><tr><td>bigqueryhouseoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T16:59:46.601720+00:00</td></tr><tr><td>bigqueryforecastinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.276657+00:00</td></tr><tr><td>bigqueryforecastoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-17T17:24:32.876291+00:00</td></tr><tr><td>houseprice_arrow_table2</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:40:40.763136+00:00</td></tr><tr><td>houseprice_arrow_table3</td><td>HTTPFILE</td><td>*****</td><td>2023-05-17T17:40:41.517898+00:00</td></tr></table>
-{{</table>}}
+(no connections)
 
 ## Orchestration Tutorial
 
@@ -740,9 +751,23 @@ wl = wallaroo.Client()
 
 # Setting variables for later steps
 
-workspace_name = 'orchestrationworkspace'
-pipeline_name = 'orchestrationpipeline'
-connection_name = "houseprice_arrow_table"
+# get the arguments
+arguments = wl.task_args()
+
+if "workspace_name" in arguments:
+    workspace_name = arguments['workspace_name']
+else:
+    workspace_name="orchestrationworkspace"
+
+if "pipeline_name" in arguments:
+    pipeline_name = arguments['pipeline_name']
+else:
+    pipeline_name="orchestrationpipeline"
+
+if "connection_name" in arguments:
+    connection_name = arguments['connection_name']
+else:
+    connection_name = "houseprice_arrow_table"
 
 # helper methods to retrieve workspaces and pipelines
 
@@ -804,13 +829,9 @@ This is saved to the file `./remote_inference/remote_inference.zip`.
 To prepare the Wallaroo instance, we'll once again create the Wallaroo connection `houseprice_arrow_table` and apply it to the workspace.
 
 ```python
-connection = wl.list_connections()[0]
-```
-
-```python
 wl.create_connection(connection_name, 
                   "HTTPFILE", 
-                  {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
+                  {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
                   )
 
 workspace.add_connection(connection_name)
@@ -854,6 +875,8 @@ while orchestration.status() != 'ready':
 ```
 
     pending_packaging
+    pending_packaging
+    packaging
     packaging
     packaging
     packaging
@@ -871,7 +894,7 @@ wl.list_orchestrations()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>be238470-86e1-49a7-83b9-2940f71b9f1d</td><td>comprehensive sample</td><td>ready</td><td>remote_inference.zip</td><td>805a93...7384bf</td><td>2023-17-May 18:15:09</td><td>2023-17-May 18:15:53</td></tr><tr><td>e9c8b5ff-be6a-4ceb-bd22-6c7cd63e24ba</td><td>bigquery example</td><td>ready</td><td>remote_inference.zip</td><td>bf26b4...ed87be</td><td>2023-17-May 17:44:01</td><td>2023-17-May 17:44:44</td></tr><tr><td>05539e2e-965c-4a9f-b953-5f82a8f96618</td><td>comprehensive example</td><td>ready</td><td>remote_inference.zip</td><td>6bac88...1947a5</td><td>2023-17-May 18:04:43</td><td>2023-17-May 18:05:26</td></tr><tr><td>b96dfa0a-0d5c-43cc-a7dd-376b732b2cda</td><td>comprehensive example</td><td>ready</td><td>remote_inference.zip</td><td>f1c032...9370f2</td><td>2023-17-May 18:09:49</td><td>2023-17-May 18:10:32</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>9534a646-254e-4d86-a577-5c40e5defeb3</td><td>comprehensive sample</td><td>ready</td><td>remote_inference.zip</td><td>b88e93...2396fb</td><td>2023-19-May 20:50:33</td><td>2023-19-May 20:51:24</td></tr></table>
 {{</table>}}
 
 ## Task Management Tutorial
@@ -887,13 +910,19 @@ Once an Orchestration has the status `ready`, it can be run as a task.  Tasks ha
 
 Tasks are generated and run once with the Orchestration `run_once(name, json_args, timeout)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
+For our example, we will pass the workspace, pipeline, and connection into our task.
+
 ```python
 # Example: run once
 
 import datetime
 task_start = datetime.datetime.now()
 
-task = orchestration.run_once(name="house price run once task", json_args={})
+task = orchestration.run_once(name="house price run once", json_args={"workspace_name": workspace_name, 
+                                                                           "pipeline_name":pipeline_name,
+                                                                           "connection_name": connection_name
+                                                                           }
+                            )
 task
 ```
 
@@ -904,10 +933,10 @@ task
     <th>Value</th>
   </tr>
   <tr>
-    <td>ID</td><td>d0d9f48a-2028-47f8-84e0-c6659bcbfcc3</td>
+    <td>ID</td><td>7bce29ee-70c7-4c59-b7ec-0c9941073883</td>
   </tr>
   <tr>
-    <td>Name</td><td>house price run once task</td>
+    <td>Name</td><td>house price run once</td>
   </tr>
   <tr>
     <td>Status</td><td>pending</td>
@@ -916,10 +945,10 @@ task
     <td>Type</td><td>Temporary Run</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-17-May 18:15:57</td>
+    <td>Created At</td><td>2023-19-May 20:51:31</td>
   </tr>
   <tr>
-    <td>Updated At</td><td>2023-17-May 18:15:57</td>
+    <td>Updated At</td><td>2023-19-May 20:51:31</td>
   </tr>
 </table>
 {{</table>}}
@@ -946,6 +975,8 @@ while task.status() != "started":
 
     'pending'
 
+    'pending'
+
 ### Task Results
 
 We can view the inferences from our logs and verify that new entries were added from our task.  In our case, we'll assume the task once started takes about 1 minute to run (deploy the pipeline, run the inference, undeploy the pipeline).  We'll add in a wait of 1 minute, then display the logs during the time period the task was running.
@@ -959,7 +990,7 @@ display(task_end)
 pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 ```
 
-    datetime.datetime(2023, 5, 17, 12, 17, 4, 443106)
+    datetime.datetime(2023, 5, 19, 14, 52, 43, 243562)
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
@@ -977,35 +1008,35 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 18:16:05.018</td>
+      <td>2023-05-19 20:51:43.045</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 18:16:05.018</td>
+      <td>2023-05-19 20:51:43.045</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 18:16:05.018</td>
+      <td>2023-05-19 20:51:43.045</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 18:16:05.018</td>
+      <td>2023-05-19 20:51:43.045</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 18:16:05.018</td>
+      <td>2023-05-19 20:51:43.045</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
@@ -1018,52 +1049,61 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
       <td>...</td>
     </tr>
     <tr>
-      <th>512</th>
-      <td>2023-05-17 18:16:05.018</td>
-      <td>[4.0, 2.5, 2740.0, 43101.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2740.0, 0.0, 47.7649, -122.049, 2740.0, 33447.0, 21.0, 0.0, 0.0]</td>
-      <td>[727898.1]</td>
+      <th>501</th>
+      <td>2023-05-19 20:51:43.045</td>
+      <td>[3.0, 2.5, 1570.0, 1433.0, 3.0, 0.0, 0.0, 3.0, 8.0, 1570.0, 0.0, 47.6858, -122.336, 1570.0, 2652.0, 4.0, 0.0, 0.0]</td>
+      <td>[557391.25]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>513</th>
-      <td>2023-05-17 18:16:05.018</td>
-      <td>[4.0, 3.25, 3320.0, 8587.0, 3.0, 0.0, 0.0, 3.0, 11.0, 2950.0, 370.0, 47.691, -122.337, 1860.0, 5668.0, 6.0, 0.0, 0.0]</td>
-      <td>[1130661.0]</td>
+      <th>502</th>
+      <td>2023-05-19 20:51:43.045</td>
+      <td>[3.0, 2.5, 2390.0, 15669.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2390.0, 0.0, 47.7446, -122.193, 2640.0, 12500.0, 24.0, 0.0, 0.0]</td>
+      <td>[741973.6]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>514</th>
-      <td>2023-05-17 18:16:05.018</td>
-      <td>[4.0, 2.5, 3130.0, 13202.0, 2.0, 0.0, 0.0, 3.0, 10.0, 3130.0, 0.0, 47.5878, -121.976, 2840.0, 10470.0, 19.0, 0.0, 0.0]</td>
-      <td>[879083.4]</td>
+      <th>503</th>
+      <td>2023-05-19 20:51:43.045</td>
+      <td>[3.0, 0.75, 920.0, 20412.0, 1.0, 1.0, 2.0, 5.0, 6.0, 920.0, 0.0, 47.4781, -122.49, 1162.0, 54705.0, 64.0, 0.0, 0.0]</td>
+      <td>[338418.8]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>515</th>
-      <td>2023-05-17 18:16:05.018</td>
-      <td>[2.0, 1.75, 1370.0, 5125.0, 1.0, 0.0, 0.0, 5.0, 6.0, 1370.0, 0.0, 47.6926, -122.346, 1200.0, 5100.0, 70.0, 0.0, 0.0]</td>
-      <td>[444933.16]</td>
+      <th>504</th>
+      <td>2023-05-19 20:51:43.045</td>
+      <td>[4.0, 2.5, 2800.0, 246114.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2800.0, 0.0, 47.6586, -121.962, 2750.0, 60351.0, 15.0, 0.0, 0.0]</td>
+      <td>[765468.75]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>516</th>
-      <td>2023-05-17 18:16:05.018</td>
-      <td>[4.0, 2.5, 2040.0, 5508.0, 2.0, 0.0, 0.0, 4.0, 8.0, 2040.0, 0.0, 47.5719, -122.007, 2130.0, 5496.0, 18.0, 0.0, 0.0]</td>
-      <td>[627853.5]</td>
+      <th>505</th>
+      <td>2023-05-19 20:51:43.045</td>
+      <td>[2.0, 1.0, 1120.0, 9912.0, 1.0, 0.0, 0.0, 4.0, 6.0, 1120.0, 0.0, 47.3735, -122.43, 1540.0, 9750.0, 34.0, 0.0, 0.0]</td>
+      <td>[309800.75]</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 {{</table>}}
-<p>517 rows × 4 columns</p>
+<p>506 rows × 4 columns</p>
 
 ### Scheduled Tasks
 
-Scheduled tasks are run with the Orchestration `run_scheduled` method.  We'll set it up to run every minute, then check the results.
+Scheduled tasks are run with the Orchestration `run_scheduled` method.  We'll set it up to run every 5 minutes, then check the results.
+
+It is recommended that orchestrations that have pipeline deploy or undeploy commands be spaced out no less than 5 minutes to prevent colliding with other tasks that use the same pipeline.
 
 ```python
 task_start = datetime.datetime.now()
-task_scheduled = orchestration.run_scheduled(name="schedule example", timeout=600, schedule="*/1, *, *, *, *", json_args={})
+schedule = "*/5 * * * *"
+task_scheduled = orchestration.run_scheduled(name="schedule example", 
+                                             timeout=600, 
+                                             schedule=schedule, 
+                                             json_args={"workspace_name": workspace_name, 
+                                                        "pipeline_name": pipeline_name,
+                                                        "connection_name": connection_name
+                                            })
 while task_scheduled.status() != "started":
     display(task_scheduled.status())
     time.sleep(5)
@@ -1077,7 +1117,7 @@ task_scheduled
     <th>Value</th>
   </tr>
   <tr>
-    <td>ID</td><td>c6f1a4dd-f24f-42b5-87b2-db3dc5c9d817</td>
+    <td>ID</td><td>487fe7c0-c818-4156-b238-71da4aa9da87</td>
   </tr>
   <tr>
     <td>Name</td><td>schedule example</td>
@@ -1089,16 +1129,16 @@ task_scheduled
     <td>Type</td><td>Scheduled Run</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-17-May 18:18:28</td>
+    <td>Created At</td><td>2023-19-May 20:52:44</td>
   </tr>
   <tr>
-    <td>Updated At</td><td>2023-17-May 18:18:28</td>
+    <td>Updated At</td><td>2023-19-May 20:52:45</td>
   </tr>
 </table>
 {{</table>}}
 
 ```python
-time.sleep(90)
+time.sleep(420)
 
 task_end = datetime.datetime.now()
 display(task_end)
@@ -1106,7 +1146,7 @@ display(task_end)
 pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 ```
 
-    datetime.datetime(2023, 5, 17, 12, 19, 59, 485331)
+    datetime.datetime(2023, 5, 19, 14, 59, 45, 925180)
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
@@ -1124,35 +1164,35 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 18:19:17.483</td>
+      <td>2023-05-19 20:55:19.922</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 18:19:17.483</td>
+      <td>2023-05-19 20:55:19.922</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 18:19:17.483</td>
+      <td>2023-05-19 20:55:19.922</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 18:19:17.483</td>
+      <td>2023-05-19 20:55:19.922</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 18:19:17.483</td>
+      <td>2023-05-19 20:55:19.922</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
@@ -1165,44 +1205,44 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
       <td>...</td>
     </tr>
     <tr>
-      <th>512</th>
-      <td>2023-05-17 18:19:17.483</td>
-      <td>[4.0, 2.5, 2740.0, 43101.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2740.0, 0.0, 47.7649, -122.049, 2740.0, 33447.0, 21.0, 0.0, 0.0]</td>
-      <td>[727898.1]</td>
+      <th>501</th>
+      <td>2023-05-19 20:55:19.922</td>
+      <td>[3.0, 2.5, 1570.0, 1433.0, 3.0, 0.0, 0.0, 3.0, 8.0, 1570.0, 0.0, 47.6858, -122.336, 1570.0, 2652.0, 4.0, 0.0, 0.0]</td>
+      <td>[557391.25]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>513</th>
-      <td>2023-05-17 18:19:17.483</td>
-      <td>[4.0, 3.25, 3320.0, 8587.0, 3.0, 0.0, 0.0, 3.0, 11.0, 2950.0, 370.0, 47.691, -122.337, 1860.0, 5668.0, 6.0, 0.0, 0.0]</td>
-      <td>[1130661.0]</td>
+      <th>502</th>
+      <td>2023-05-19 20:55:19.922</td>
+      <td>[3.0, 2.5, 2390.0, 15669.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2390.0, 0.0, 47.7446, -122.193, 2640.0, 12500.0, 24.0, 0.0, 0.0]</td>
+      <td>[741973.6]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>514</th>
-      <td>2023-05-17 18:19:17.483</td>
-      <td>[4.0, 2.5, 3130.0, 13202.0, 2.0, 0.0, 0.0, 3.0, 10.0, 3130.0, 0.0, 47.5878, -121.976, 2840.0, 10470.0, 19.0, 0.0, 0.0]</td>
-      <td>[879083.4]</td>
+      <th>503</th>
+      <td>2023-05-19 20:55:19.922</td>
+      <td>[3.0, 0.75, 920.0, 20412.0, 1.0, 1.0, 2.0, 5.0, 6.0, 920.0, 0.0, 47.4781, -122.49, 1162.0, 54705.0, 64.0, 0.0, 0.0]</td>
+      <td>[338418.8]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>515</th>
-      <td>2023-05-17 18:19:17.483</td>
-      <td>[2.0, 1.75, 1370.0, 5125.0, 1.0, 0.0, 0.0, 5.0, 6.0, 1370.0, 0.0, 47.6926, -122.346, 1200.0, 5100.0, 70.0, 0.0, 0.0]</td>
-      <td>[444933.16]</td>
+      <th>504</th>
+      <td>2023-05-19 20:55:19.922</td>
+      <td>[4.0, 2.5, 2800.0, 246114.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2800.0, 0.0, 47.6586, -121.962, 2750.0, 60351.0, 15.0, 0.0, 0.0]</td>
+      <td>[765468.75]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>516</th>
-      <td>2023-05-17 18:19:17.483</td>
-      <td>[4.0, 2.5, 2040.0, 5508.0, 2.0, 0.0, 0.0, 4.0, 8.0, 2040.0, 0.0, 47.5719, -122.007, 2130.0, 5496.0, 18.0, 0.0, 0.0]</td>
-      <td>[627853.5]</td>
+      <th>505</th>
+      <td>2023-05-19 20:55:19.922</td>
+      <td>[2.0, 1.0, 1120.0, 9912.0, 1.0, 0.0, 0.0, 4.0, 6.0, 1120.0, 0.0, 47.3735, -122.43, 1540.0, 9750.0, 34.0, 0.0, 0.0]</td>
+      <td>[309800.75]</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 {{</table>}}
-<p>517 rows × 4 columns</p>
+<p>506 rows × 4 columns</p>
 
 ### Kill a Task
 
@@ -1232,6 +1272,6 @@ pipeline.undeploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>orchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 17:40:11.391198+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:43:47.579379+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>945c0da9-8967-4f7b-8db5-b6161f86315a, 0e260e71-8b80-4ed3-b23f-209c4eeb4b02, 6964e793-b45d-41b8-9ef7-f773c1dc4fe5</td></tr><tr><th>steps</th> <td>orchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>orchestrationpipelinemrhh</td></tr><tr><th>created</th> <td>2023-05-19 20:50:05.233902+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:27.486572+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b72281d7-e501-4d45-8a79-4c724b639c2f, 9a5c2d59-48da-40ff-b7ae-9f3a529b9aaf, 1382876a-eeb4-4f50-817b-5bf0604f21d4</td></tr><tr><th>steps</th> <td>orchestrationmodelmrhh</td></tr></table>
 {{</table>}}
 
