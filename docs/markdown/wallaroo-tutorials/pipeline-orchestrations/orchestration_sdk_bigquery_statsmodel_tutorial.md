@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial).
 
 ## Wallaroo ML Workload Orchestrations with Statsmodel Tutorial
 
@@ -134,11 +134,11 @@ model_file_name = './models/bike_day_model.pkl'
 
 bigquery_connection_input_name = "bigqueryforecastinputs"
 bigquery_connection_input_type = "BIGQUERY"
-bigquery_connection_input_argument = json.load(open('./resources/bigquery_service_account_input_key.json.example'))
+bigquery_connection_input_argument = json.load(open('./resources/bigquery_service_account_input_key.json'))
 
 bigquery_connection_output_name = "bigqueryforecastoutputs"
 bigquery_connection_output_type = "BIGQUERY"
-bigquery_connection_output_argument = json.load(open('./resources/bigquery_service_account_output_key.json.example'))
+bigquery_connection_output_argument = json.load(open('./resources/bigquery_service_account_output_key.json'))
 ```
 
 ### Helper Methods
