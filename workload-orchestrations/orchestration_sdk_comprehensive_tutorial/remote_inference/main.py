@@ -9,6 +9,9 @@ wl = wallaroo.Client()
 # Setting variables for later steps
 
 <<<<<<< HEAD:workload-orchestrations/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
+<<<<<<< HEAD:workload-orchestrations/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release):pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
 # get the arguments
 arguments = wl.task_args()
 
@@ -27,11 +30,14 @@ if "connection_name" in arguments:
 else:
     connection_name = "houseprice_arrow_table"
 
+<<<<<<< HEAD:workload-orchestrations/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
 =======
 workspace_name = 'orchestrationworkspace'
 pipeline_name = 'orchestrationpipeline'
 connection_name = "houseprice_arrow_table"
 >>>>>>> f98e822 (connection and orchestrations updates.):pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release):pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial/remote_inference/main.py
 
 # helper methods to retrieve workspaces and pipelines
 

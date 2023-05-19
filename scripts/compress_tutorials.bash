@@ -30,6 +30,7 @@ tutorials=(
     ["notebooks_in_prod"]="notebooks_in_prod"
     ["anomaly_detection"]="wallaroo-testing-tutorials/anomaly_detection"
     ["shadow_deploy"]="wallaroo-testing-tutorials/shadow_deploy"
+<<<<<<< HEAD
     ["assay-model-insights"]="wallaroo-features/assay-model-insights"
     ["mlflow-tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial"
     ["connection_api_bigquery_tutorial"]="workload-orchestrations/connection_api_bigquery_tutorial"
@@ -52,6 +53,16 @@ tutorials=(
     ["tensorflow-upload-tutorials"]=model_uploads/tensorflow-upload-tutorials
     ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
     ["pipeline_multiple_replicas_forecast_tutorial"]=wallaroo-features/pipeline_multiple_replicas_forecast_tutorial
+=======
+    ["assays_model_insights"]="wallaroo-features/model_insights"
+    ["mlflow_tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial"
+    ["connection_api_bigquery_tutorial"]="pipeline-orchestrators/connection_api_bigquery_tutorial"
+    ["orchestration_api_simple_tutorial"]="pipeline-orchestrators/orchestration_api_simple_tutorial"
+    ["orchestration_sdk_bigquery_houseprice_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial"
+    ["orchestration_sdk_bigquery_statsmodel_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial"
+    ["orchestration_sdk_comprehensive_tutorial"]="pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial"
+    ["orchestration_sdk_simple_tutorial"]="pipeline-orchestrators/orchestration_sdk_simple_tutorial"
+>>>>>>> 1024d0c (prepared for 2023.2 release)
     )
 
 currentDirectory=$PWD

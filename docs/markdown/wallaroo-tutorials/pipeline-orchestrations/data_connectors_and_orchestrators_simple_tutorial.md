@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/pipeline-orchestrators/orchestration_sdk_simple_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_sdk_simple_tutorial).
 
 ## Pipeline Orchestrations Simple Tutorial
 
@@ -50,7 +50,17 @@ pd.set_option('display.max_colwidth', None)
 import pyarrow as pa
 
 import time
+
+# Used to create unique workspace and pipeline names
+import string
+import random
+
+# make a random 4 character prefix
+suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+display(suffix)
 ```
+
+    'hpwu'
 
 ### Connect to the Wallaroo Instance
 
@@ -69,14 +79,14 @@ wl = wallaroo.Client()
 ```python
 # Setting variables for later steps
 
-workspace_name = 'simpleorchestrationworkspace'
-pipeline_name = 'simpleorchestrationpipeline'
-model_name = 'simpleorchestrationmodel'
+workspace_name = f'simpleorchestrationworkspace{suffix}'
+pipeline_name = f'simpleorchestrationpipeline{suffix}'
+model_name = f'simpleorchestrationmodel{suffix}'
 model_file_name = './models/rf_model.onnx'
 
-inference_connection_name = "external_inference_connection"
+inference_connection_name = f'external_inference_connection{suffix}'
 inference_connection_type = "HTTP"
-inference_connection_argument = {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
+inference_connection_argument = {'host':'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-testing-tutorials/houseprice-saga/data/xtest-1k.arrow?raw=true'}
 ```
 
 ### Helper Methods
@@ -141,7 +151,7 @@ pipeline.add_model_step(housing_model_control)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>simpleorchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 14:02:37.838948+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 14:02:40.594072+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>559c19e7-6921-4d25-ba1d-4f70e76186e8, 966ead9a-4af4-4cb1-bc79-73264c14f5df</td></tr><tr><th>steps</th> <td>simpleorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>simpleorchestrationpipelinehpwu</td></tr><tr><th>created</th> <td>2023-05-19 20:50:26.679972+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:26.679972+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b8994b86-78a8-47cf-8fc0-2d47187e5b79</td></tr><tr><th>steps</th> <td></td></tr></table>
 {{</table>}}
 
 ```python
@@ -150,7 +160,7 @@ pipeline.deploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>simpleorchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 14:02:37.838948+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:11:08.997772+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e3d0254e-411c-46ac-8d03-11e3ce88528c, 559c19e7-6921-4d25-ba1d-4f70e76186e8, 966ead9a-4af4-4cb1-bc79-73264c14f5df</td></tr><tr><th>steps</th> <td>simpleorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>simpleorchestrationpipelinehpwu</td></tr><tr><th>created</th> <td>2023-05-19 20:50:26.679972+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:29.392295+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b4dd01d3-95c0-4c4d-82ed-b1d47c7ca0d9, b8994b86-78a8-47cf-8fc0-2d47187e5b79</td></tr><tr><th>steps</th> <td>simpleorchestrationmodelhpwu</td></tr></table>
 {{</table>}}
 
 ## Create Connections
@@ -182,7 +192,7 @@ get_connection(inference_connection_name, inference_connection_type, inference_c
     <th>Value</th>
   </tr>
   <tr>
-    <td>Name</td><td>external_inference_connection</td>
+    <td>Name</td><td>external_inference_connectionhpwu</td>
   </tr>
   <tr>
     <td>Connection Type</td><td>HTTP</td>
@@ -191,7 +201,10 @@ get_connection(inference_connection_name, inference_connection_type, inference_c
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-17T14:03:08.288200+00:00</td>
+    <td>Created At</td><td>2023-05-19T20:50:51.830127+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
 {{</table>}}
@@ -201,7 +214,7 @@ get_connection(inference_connection_name, inference_connection_type, inference_c
 The Wallaroo client method `get_connection(name)` retrieves the connection that matches the `name` parameter.  We'll retrieve our connection and store it as `inference_source_connection`.
 
 ```python
-inference_source_connection = wl.get_connection(name="external_inference_connection")
+inference_source_connection = wl.get_connection(name=inference_connection_name)
 display(inference_source_connection)
 ```
 
@@ -212,7 +225,7 @@ display(inference_source_connection)
     <th>Value</th>
   </tr>
   <tr>
-    <td>Name</td><td>external_inference_connection</td>
+    <td>Name</td><td>external_inference_connectionhpwu</td>
   </tr>
   <tr>
     <td>Connection Type</td><td>HTTP</td>
@@ -221,7 +234,10 @@ display(inference_source_connection)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-17T14:03:08.288200+00:00</td>
+    <td>Created At</td><td>2023-05-19T20:50:51.830127+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
 {{</table>}}
@@ -237,12 +253,12 @@ The method Workspace [`add_connection(connection_name)`](https://staging.docs.wa
 We'll add both connections to our sample workspace, then list the connections available to the workspace to confirm.
 
 ```python
-workspace.add_connection("external_inference_connection")
+workspace.add_connection(inference_connection_name)
 workspace.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th></tr><tr><td>external_inference_connection</td><td>HTTP</td><td>*****</td><td>2023-05-17T14:03:08.288200+00:00</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>external_inference_connectionhpwu</td><td>HTTP</td><td>*****</td><td>2023-05-19T20:50:51.830127+00:00</td><td>['simpleorchestrationworkspacehpwu']</td></tr></table>
 {{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
@@ -291,6 +307,7 @@ while orchestration.status() != 'ready':
 ```
 
     pending_packaging
+    pending_packaging
     packaging
     packaging
     packaging
@@ -304,7 +321,7 @@ wl.list_orchestrations()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>2c823bf7-8a54-490b-9d8e-b58ff4fe5967</td><td>test</td><td>ready</td><td>remote_inference.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:05:06</td><td>2023-17-May 14:05:56</td></tr><tr><td>546dd685-70f8-46b4-8fac-a6f56c58dc75</td><td>byteupload</td><td>ready</td><td>inference_test.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:10:22</td><td>2023-17-May 14:11:11</td></tr><tr><td>69017c39-df42-4701-b2a2-40753328f9e0</td><td>nofilename</td><td>ready</td><td>_</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:11:41</td><td>2023-17-May 14:12:28</td></tr><tr><td>af5e35d0-aedc-407e-94c2-0886c4cff95d</td><td>uploadedbytesdemo</td><td>ready</td><td>inferencetest.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:13:43</td><td>2023-17-May 14:14:30</td></tr><tr><td>ec0777d0-695c-4f91-8000-53be6ded2ed3</td><td>noarrow</td><td>ready</td><td>remote_inference.zip</td><td>4cfab7...e0bde3</td><td>2023-17-May 14:26:34</td><td>2023-17-May 14:27:19</td></tr><tr><td>75d75d27-d48d-409e-b77c-4dbbf491dda3</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>4cfab7...e0bde3</td><td>2023-17-May 14:28:49</td><td>2023-17-May 14:29:33</td></tr><tr><td>fcd721b5-b080-4632-bbe9-b2f092831787</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>f93de5...34231d</td><td>2023-17-May 14:40:36</td><td>2023-17-May 14:41:19</td></tr><tr><td>096aaae5-d599-47e4-a5fd-6bcb5f8aeaca</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>f93de5...34231d</td><td>2023-17-May 17:11:38</td><td>2023-17-May 17:12:20</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>033040e7-dc57-4839-897f-a7a726e1e509</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>b4593d...d5a86f</td><td>2023-19-May 20:50:54</td><td>2023-19-May 20:51:45</td></tr></table>
 {{</table>}}
 
 ### Upload Orchestration via File Object
@@ -324,7 +341,7 @@ wl.upload_orchestration(bytes_buffer=zipfile, file_name="inferencetest.zip", nam
     <th>Value</th>
   </tr>
   <tr>
-    <td>ID</td><td>ef6da24e-bcf4-4c48-9e1a-fa3363746f2a</td>
+    <td>ID</td><td>3b89d6b1-d13b-43fa-90b6-77b110be65ea</td>
   </tr>
   <tr>
     <td>Name</td><td>uploadedbytesdemo</td>
@@ -333,16 +350,16 @@ wl.upload_orchestration(bytes_buffer=zipfile, file_name="inferencetest.zip", nam
     <td>File Name</td><td>inferencetest.zip</td>
   </tr>
   <tr>
-    <td>SHA</td><td>f93de52bea1868736f673fda2eda667665c5fd760dc182df57bb38547a34231d</td>
+    <td>SHA</td><td>b4593d6084e07e9ad1b57367258ca425d7f290540ab4378b8cba168b91d5a86f</td>
   </tr>
   <tr>
     <td>Status</td><td>pending_packaging</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-17-May 17:12:25</td>
+    <td>Created At</td><td>2023-19-May 20:51:46</td>
   </tr>
   <tr>
-    <td>Updated At</td><td>2023-17-May 17:12:25</td>
+    <td>Updated At</td><td>2023-19-May 20:51:46</td>
   </tr>
 </table>
 {{</table>}}
@@ -352,7 +369,7 @@ wl.list_orchestrations()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>2c823bf7-8a54-490b-9d8e-b58ff4fe5967</td><td>test</td><td>ready</td><td>remote_inference.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:05:06</td><td>2023-17-May 14:05:56</td></tr><tr><td>546dd685-70f8-46b4-8fac-a6f56c58dc75</td><td>byteupload</td><td>ready</td><td>inference_test.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:10:22</td><td>2023-17-May 14:11:11</td></tr><tr><td>69017c39-df42-4701-b2a2-40753328f9e0</td><td>nofilename</td><td>ready</td><td>_</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:11:41</td><td>2023-17-May 14:12:28</td></tr><tr><td>af5e35d0-aedc-407e-94c2-0886c4cff95d</td><td>uploadedbytesdemo</td><td>ready</td><td>inferencetest.zip</td><td>0c4e0e...8ad198</td><td>2023-17-May 14:13:43</td><td>2023-17-May 14:14:30</td></tr><tr><td>ec0777d0-695c-4f91-8000-53be6ded2ed3</td><td>noarrow</td><td>ready</td><td>remote_inference.zip</td><td>4cfab7...e0bde3</td><td>2023-17-May 14:26:34</td><td>2023-17-May 14:27:19</td></tr><tr><td>75d75d27-d48d-409e-b77c-4dbbf491dda3</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>4cfab7...e0bde3</td><td>2023-17-May 14:28:49</td><td>2023-17-May 14:29:33</td></tr><tr><td>fcd721b5-b080-4632-bbe9-b2f092831787</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>f93de5...34231d</td><td>2023-17-May 14:40:36</td><td>2023-17-May 14:41:19</td></tr><tr><td>096aaae5-d599-47e4-a5fd-6bcb5f8aeaca</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>f93de5...34231d</td><td>2023-17-May 17:11:38</td><td>2023-17-May 17:12:20</td></tr><tr><td>ef6da24e-bcf4-4c48-9e1a-fa3363746f2a</td><td>uploadedbytesdemo</td><td>pending_packaging</td><td>inferencetest.zip</td><td>f93de5...34231d</td><td>2023-17-May 17:12:25</td><td>2023-17-May 17:12:25</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>033040e7-dc57-4839-897f-a7a726e1e509</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>b4593d...d5a86f</td><td>2023-19-May 20:50:54</td><td>2023-19-May 20:51:45</td></tr><tr><td>3b89d6b1-d13b-43fa-90b6-77b110be65ea</td><td>uploadedbytesdemo</td><td>pending_packaging</td><td>inferencetest.zip</td><td>b4593d...d5a86f</td><td>2023-19-May 20:51:46</td><td>2023-19-May 20:51:46</td></tr></table>
 {{</table>}}
 
 ## Task Management Tutorial
@@ -371,45 +388,15 @@ We'll do both a Run Once task and generate our Run Once Task from our orchestrat
 Tasks are generated and run once with the Orchestration `run_once(name, json_args, timeout)` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
 ```python
-orchestration
-```
-
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>ID</td><td>096aaae5-d599-47e4-a5fd-6bcb5f8aeaca</td>
-  </tr>
-  <tr>
-    <td>Name</td><td>None</td>
-  </tr>
-  <tr>
-    <td>File Name</td><td>remote_inference.zip</td>
-  </tr>
-  <tr>
-    <td>SHA</td><td>f93de52bea1868736f673fda2eda667665c5fd760dc182df57bb38547a34231d</td>
-  </tr>
-  <tr>
-    <td>Status</td><td>ready</td>
-  </tr>
-  <tr>
-    <td>Created At</td><td>2023-17-May 17:11:38</td>
-  </tr>
-  <tr>
-    <td>Updated At</td><td>2023-17-May 17:12:20</td>
-  </tr>
-</table>
-{{</table>}}
-
-```python
 # Example: run once
 
 import datetime
 task_start = datetime.datetime.now()
-task = orchestration.run_once(name="simpletaskdemo", json_args={})
+task = orchestration.run_once(name="simpletaskdemo", 
+                              json_args={"workspace_name": workspace_name, 
+                                         "pipeline_name": pipeline_name,
+                                         "connection_name": inference_connection_name
+                                            })
 ```
 
 ### Task Status
@@ -436,6 +423,8 @@ while task.status() != "started":
 
     'pending'
 
+    'pending'
+
 ### Task Results
 
 We can view the inferences from our logs and verify that new entries were added from our task.  We can do that with the task `logs()` method.
@@ -451,7 +440,7 @@ display(task_end)
 pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 ```
 
-    datetime.datetime(2023, 5, 17, 11, 13, 42, 202664)
+    datetime.datetime(2023, 5, 19, 14, 53, 5, 949665)
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
@@ -469,35 +458,35 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 17:12:43.208</td>
+      <td>2023-05-19 20:52:02.571</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 17:12:43.208</td>
+      <td>2023-05-19 20:52:02.571</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 17:12:43.208</td>
+      <td>2023-05-19 20:52:02.571</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 17:12:43.208</td>
+      <td>2023-05-19 20:52:02.571</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 17:12:43.208</td>
+      <td>2023-05-19 20:52:02.571</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
@@ -510,44 +499,44 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
       <td>...</td>
     </tr>
     <tr>
-      <th>496</th>
-      <td>2023-05-17 17:12:43.208</td>
-      <td>[4.0, 2.5, 2510.0, 47044.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2510.0, 0.0, 47.7699, -122.085, 2600.0, 42612.0, 27.0, 0.0, 0.0]</td>
-      <td>[721143.6]</td>
+      <th>487</th>
+      <td>2023-05-19 20:52:02.571</td>
+      <td>[3.0, 1.5, 1030.0, 8414.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1030.0, 0.0, 47.7654, -122.297, 1750.0, 8414.0, 47.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>497</th>
-      <td>2023-05-17 17:12:43.208</td>
-      <td>[4.0, 2.5, 4090.0, 11225.0, 2.0, 0.0, 0.0, 3.0, 10.0, 4090.0, 0.0, 47.581, -121.971, 3510.0, 8762.0, 9.0, 0.0, 0.0]</td>
-      <td>[1048372.4]</td>
+      <th>488</th>
+      <td>2023-05-19 20:52:02.571</td>
+      <td>[4.0, 2.75, 2450.0, 15002.0, 1.0, 0.0, 0.0, 5.0, 9.0, 2450.0, 0.0, 47.4268, -122.343, 2650.0, 15055.0, 40.0, 0.0, 0.0]</td>
+      <td>[508746.75]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>498</th>
-      <td>2023-05-17 17:12:43.208</td>
-      <td>[2.0, 1.0, 720.0, 5000.0, 1.0, 0.0, 0.0, 5.0, 6.0, 720.0, 0.0, 47.5195, -122.374, 810.0, 5000.0, 63.0, 0.0, 0.0]</td>
-      <td>[244566.38]</td>
+      <th>489</th>
+      <td>2023-05-19 20:52:02.571</td>
+      <td>[2.0, 1.0, 1010.0, 4000.0, 1.0, 0.0, 0.0, 3.0, 6.0, 1010.0, 0.0, 47.5536, -122.267, 1040.0, 4000.0, 103.0, 0.0, 0.0]</td>
+      <td>[435628.56]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>499</th>
-      <td>2023-05-17 17:12:43.208</td>
-      <td>[4.0, 2.75, 2930.0, 22000.0, 1.0, 0.0, 3.0, 4.0, 9.0, 1580.0, 1350.0, 47.3227, -122.384, 2930.0, 9758.0, 36.0, 0.0, 0.0]</td>
-      <td>[518869.0]</td>
+      <th>490</th>
+      <td>2023-05-19 20:52:02.571</td>
+      <td>[3.0, 2.5, 1330.0, 1200.0, 3.0, 0.0, 0.0, 3.0, 7.0, 1330.0, 0.0, 47.7034, -122.344, 1330.0, 1206.0, 12.0, 0.0, 0.0]</td>
+      <td>[342604.4]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>500</th>
-      <td>2023-05-17 17:12:43.208</td>
-      <td>[2.0, 1.0, 850.0, 5000.0, 1.0, 0.0, 0.0, 3.0, 6.0, 850.0, 0.0, 47.3817, -122.314, 1160.0, 5000.0, 39.0, 0.0, 0.0]</td>
-      <td>[236238.66]</td>
+      <th>491</th>
+      <td>2023-05-19 20:52:02.571</td>
+      <td>[2.0, 1.75, 2770.0, 19700.0, 2.0, 0.0, 0.0, 3.0, 8.0, 1780.0, 990.0, 47.7581, -122.365, 2360.0, 9700.0, 31.0, 0.0, 0.0]</td>
+      <td>[536371.25]</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 {{</table>}}
-<p>501 rows × 4 columns</p>
+<p>492 rows × 4 columns</p>
 
 ## Scheduled Run Task Example
 
@@ -559,7 +548,9 @@ schedule={'42 * * * *'}
 
 Runs on the 42nd minute of every hour.
 
-For our example, we will create a scheduled task to run every 1 minute, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+For our example, we will create a scheduled task to run every 5 minutes, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+
+It is recommended that orchestrations that have pipeline deploy or undeploy commands be spaced out no less than 5 minutes to prevent colliding with other tasks that use the same pipeline.
 
 ```python
 scheduled_task_start = datetime.datetime.now()
@@ -567,7 +558,13 @@ scheduled_task_start = datetime.datetime.now()
 
 ```python
 
-scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/1 * * * *", timeout=120, json_args={})
+scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", 
+                                             schedule="*/5 * * * *", 
+                                             timeout=120, 
+                                             json_args={"workspace_name": workspace_name, 
+                                                        "pipeline_name": pipeline_name,
+                                                        "connection_name": inference_connection_name
+                                            })
 ```
 
 ```python
@@ -577,8 +574,8 @@ while scheduled_task.status() != "started":
 ```
 
 ```python
-#wait 120 seconds to give the scheduled event time to finish
-time.sleep(120)
+#wait 420 seconds to give the scheduled event time to finish
+time.sleep(420)
 scheduled_task_end = datetime.datetime.now()
 
 pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_task_end)
@@ -600,35 +597,35 @@ pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_ta
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 17:14:06.362</td>
+      <td>2023-05-19 20:55:08.967</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-17 17:14:06.362</td>
+      <td>2023-05-19 20:55:08.967</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-17 17:14:06.362</td>
+      <td>2023-05-19 20:55:08.967</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-17 17:14:06.362</td>
+      <td>2023-05-19 20:55:08.967</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-17 17:14:06.362</td>
+      <td>2023-05-19 20:55:08.967</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
@@ -641,44 +638,44 @@ pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_ta
       <td>...</td>
     </tr>
     <tr>
-      <th>496</th>
-      <td>2023-05-17 17:14:06.362</td>
-      <td>[4.0, 2.5, 2510.0, 47044.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2510.0, 0.0, 47.7699, -122.085, 2600.0, 42612.0, 27.0, 0.0, 0.0]</td>
-      <td>[721143.6]</td>
+      <th>487</th>
+      <td>2023-05-19 20:55:08.967</td>
+      <td>[3.0, 1.5, 1030.0, 8414.0, 1.0, 0.0, 0.0, 4.0, 7.0, 1030.0, 0.0, 47.7654, -122.297, 1750.0, 8414.0, 47.0, 0.0, 0.0]</td>
+      <td>[340764.53]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>497</th>
-      <td>2023-05-17 17:14:06.362</td>
-      <td>[4.0, 2.5, 4090.0, 11225.0, 2.0, 0.0, 0.0, 3.0, 10.0, 4090.0, 0.0, 47.581, -121.971, 3510.0, 8762.0, 9.0, 0.0, 0.0]</td>
-      <td>[1048372.4]</td>
+      <th>488</th>
+      <td>2023-05-19 20:55:08.967</td>
+      <td>[4.0, 2.75, 2450.0, 15002.0, 1.0, 0.0, 0.0, 5.0, 9.0, 2450.0, 0.0, 47.4268, -122.343, 2650.0, 15055.0, 40.0, 0.0, 0.0]</td>
+      <td>[508746.75]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>498</th>
-      <td>2023-05-17 17:14:06.362</td>
-      <td>[2.0, 1.0, 720.0, 5000.0, 1.0, 0.0, 0.0, 5.0, 6.0, 720.0, 0.0, 47.5195, -122.374, 810.0, 5000.0, 63.0, 0.0, 0.0]</td>
-      <td>[244566.38]</td>
+      <th>489</th>
+      <td>2023-05-19 20:55:08.967</td>
+      <td>[2.0, 1.0, 1010.0, 4000.0, 1.0, 0.0, 0.0, 3.0, 6.0, 1010.0, 0.0, 47.5536, -122.267, 1040.0, 4000.0, 103.0, 0.0, 0.0]</td>
+      <td>[435628.56]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>499</th>
-      <td>2023-05-17 17:14:06.362</td>
-      <td>[4.0, 2.75, 2930.0, 22000.0, 1.0, 0.0, 3.0, 4.0, 9.0, 1580.0, 1350.0, 47.3227, -122.384, 2930.0, 9758.0, 36.0, 0.0, 0.0]</td>
-      <td>[518869.0]</td>
+      <th>490</th>
+      <td>2023-05-19 20:55:08.967</td>
+      <td>[3.0, 2.5, 1330.0, 1200.0, 3.0, 0.0, 0.0, 3.0, 7.0, 1330.0, 0.0, 47.7034, -122.344, 1330.0, 1206.0, 12.0, 0.0, 0.0]</td>
+      <td>[342604.4]</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>500</th>
-      <td>2023-05-17 17:14:06.362</td>
-      <td>[2.0, 1.0, 850.0, 5000.0, 1.0, 0.0, 0.0, 3.0, 6.0, 850.0, 0.0, 47.3817, -122.314, 1160.0, 5000.0, 39.0, 0.0, 0.0]</td>
-      <td>[236238.66]</td>
+      <th>491</th>
+      <td>2023-05-19 20:55:08.967</td>
+      <td>[2.0, 1.75, 2770.0, 19700.0, 2.0, 0.0, 0.0, 3.0, 8.0, 1780.0, 990.0, 47.7581, -122.365, 2360.0, 9700.0, 31.0, 0.0, 0.0]</td>
+      <td>[536371.25]</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 {{</table>}}
-<p>501 rows × 4 columns</p>
+<p>492 rows × 4 columns</p>
 
 ## Kill Task
 
@@ -689,7 +686,7 @@ wl.list_tasks()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>name</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>433d4539-0abb-4ec9-b1fb-268c1b939041</td><td>testrun</td><td>started</td><td>Temporary Run</td><td>2023-17-May 14:42:32</td><td>2023-17-May 14:42:42</td></tr><tr><td>349f6e06-11e5-4a00-9526-449201367d76</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-17-May 15:05:29</td><td>2023-17-May 15:05:35</td></tr><tr><td>5911cae3-a7ac-4b2f-9894-e1ddb387949f</td><td>simple_inference_schedule</td><td>started</td><td>Scheduled Run</td><td>2023-17-May 17:13:43</td><td>2023-17-May 17:13:44</td></tr><tr><td>a83859b0-ba54-4138-a1b4-3319a9a7321e</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-17-May 17:12:30</td><td>2023-17-May 17:12:41</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>d3aa2d3c-a3f7-4662-857a-466fc57e0c8e</td><td>simple_inference_schedule</td><td>started</td><td>Scheduled Run</td><td>2023-19-May 20:59:27</td><td>2023-19-May 20:59:27</td></tr><tr><td>306a4b9a-c442-47eb-90ed-f83e8cab758b</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-19-May 20:51:48</td><td>2023-19-May 20:52:02</td></tr></table>
 {{</table>}}
 
 ```python
@@ -703,7 +700,7 @@ wl.list_tasks()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>id</th><th>name</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>433d4539-0abb-4ec9-b1fb-268c1b939041</td><td>testrun</td><td>started</td><td>Temporary Run</td><td>2023-17-May 14:42:32</td><td>2023-17-May 14:42:42</td></tr><tr><td>349f6e06-11e5-4a00-9526-449201367d76</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-17-May 15:05:29</td><td>2023-17-May 15:05:35</td></tr><tr><td>a83859b0-ba54-4138-a1b4-3319a9a7321e</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-17-May 17:12:30</td><td>2023-17-May 17:12:41</td></tr></table>
+<table><tr><th>id</th><th>name</th><th>status</th><th>type</th><th>created at</th><th>updated at</th></tr><tr><td>306a4b9a-c442-47eb-90ed-f83e8cab758b</td><td>simpletaskdemo</td><td>started</td><td>Temporary Run</td><td>2023-19-May 20:51:48</td><td>2023-19-May 20:52:02</td></tr></table>
 {{</table>}}
 
 ## Cleanup
@@ -715,6 +712,6 @@ pipeline.undeploy()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>simpleorchestrationpipeline</td></tr><tr><th>created</th> <td>2023-05-17 14:02:37.838948+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 17:11:08.997772+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e3d0254e-411c-46ac-8d03-11e3ce88528c, 559c19e7-6921-4d25-ba1d-4f70e76186e8, 966ead9a-4af4-4cb1-bc79-73264c14f5df</td></tr><tr><th>steps</th> <td>simpleorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>simpleorchestrationpipelinehpwu</td></tr><tr><th>created</th> <td>2023-05-19 20:50:26.679972+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 20:50:29.392295+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b4dd01d3-95c0-4c4d-82ed-b1d47c7ca0d9, b8994b86-78a8-47cf-8fc0-2d47187e5b79</td></tr><tr><th>steps</th> <td>simpleorchestrationmodelhpwu</td></tr></table>
 {{</table>}}
 

@@ -14,10 +14,15 @@ import nbformat
 from traitlets.config import Config
 import re
 <<<<<<< HEAD
+<<<<<<< HEAD
 import shutil
 import glob
 =======
 >>>>>>> 21ff3a8 (updated query and scripts)
+=======
+import shutil
+import glob
+>>>>>>> 1024d0c (prepared for 2023.2 release)
 #import argparse
 
 c = Config()
@@ -28,6 +33,9 @@ docs_directory = "docs/markdown"
 
 fileList = [
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release)
     # {
     #     "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -48,6 +56,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "wallaroo-model-insights-reference.md"
     # },
+<<<<<<< HEAD
 =======
     {
         "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
@@ -70,12 +79,17 @@ fileList = [
         "outputFile": "wallaroo-model-insights-reference.md"
     },
 >>>>>>> 07b717a (pipeline logs and other updates/)
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release)
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-shadow-deployment-tutorial-reference.md"
     # },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release)
     # {
     #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
     #     "outputDir": "/wallaroo-101/",
@@ -246,6 +260,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/tools/",
     #     "outputFile": "convert_wallaroo_data_inference-reference.md"
     # },
+<<<<<<< HEAD
     {
         "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
         "outputDir": "/wallaroo-tutorials/testing-tutorials/",
@@ -666,92 +681,133 @@ def move_images(image_directory):
         "outputFile": "house-price-model-saga.md"
     },
 >>>>>>> 07b717a (pipeline logs and other updates/)
+=======
+    # {
+    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/testing-tutorials/",
+    #     "outputFile": "house-price-model-saga.md"
+    # },
+>>>>>>> 1024d0c (prepared for 2023.2 release)
     {
         "inputFile": "pipeline-orchestrators/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "connection_api_bigquery_tutorial.md"
     },
 >>>>>>> de47173 (updated pipeline tutorial)
     {
         "inputFile": "pipeline-orchestrators/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "data_orchestrators_api_simple_tutorial.md"
     },
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
     },
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
     },
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
     },
     {
         "inputFile": "pipeline-orchestrators/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/pipeline-orchestrations",
+        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     },
-    {
-        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "pipeline_log_tutorial.md"
-    },
-    {
-        "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
-        "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "pipeline_api_log_tutorial.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "pipeline_log_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "pipeline_api_log_tutorial.md"
+    # },
 
 ]
 
-def format(document_file):
+def format(outputdir, document_file):
     # Take the markdown file, remove the extra spaces
-    document = open(document_file, "r").read()
+    document = open(f'{docs_directory}{outputdir}/{document_file}', "r").read()
     result = re.sub
     
     # fix tables for publication
     document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
     document = re.sub('</table>', r'</table>\n{{</table>}}', document)
     # remove any div table sections
-    document = re.sub('<div>', '', document)
+    document = re.sub('<div.*?>', '', document)
     document = re.sub(r'<style.*?>.*?</style>', '', document, flags=re.S)
     document = re.sub('</div>', '', document)
 
     # remove non-public domains
     document = re.sub('wallaroocommunity.ninja', 'wallarooexample.ai', document)
 
+    # fix image directories
+    # ](01_notebooks_in_prod_explore_and_train-reference_files
+    # image_replace = f'![png]({outputdir}'
+    document = re.sub('!\[png\]\(', f'![png](/images/current{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/current', document)
+    # move them all to Docsy figures
+    document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
+
+    # fix github link for final release
+    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/', 
+                      'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
+                      document)
+   # document = re.sub('![png](', 'bob', document)
+
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
     document = re.sub(r'\n[\n]+', r'\n\n', document)
-    
-    
 
-    # save the file for testing
-    newdocument = open(f"{document_file}", "w")
+    # save the file for publishing
+    newdocument = open(f'{docs_directory}{outputdir}/{document_file}', "w")
     newdocument.write(document)
     newdocument.close()
 
+<<<<<<< HEAD
 >>>>>>> 21ff3a8 (updated query and scripts)
+=======
+def move_images(image_directory):
+    source_directory = f"{docs_directory}{image_directory}"
+    target_directory = f"./images{image_directory}"
+    # check the current directory for reference files
+    # reference_directories = os.listdir(image_directory)
+    print(source_directory)
+    reference_directories = [ name for name in os.listdir(source_directory) if os.path.isdir(os.path.join(source_directory, name)) ]
+    # copy only the directories to their image location
+    for reference in reference_directories:
+        print(f"cp -rf ./{source_directory}/{reference} {target_directory}")
+        # print(f"To: {target_directory}/{reference}")
+        os.system(f"cp -rf ./{source_directory}/{reference} {target_directory}")
+
+>>>>>>> 1024d0c (prepared for 2023.2 release)
 def main():
     for currentFile in fileList:
         convert_cmd = f'jupyter nbconvert --to markdown --output-dir {docs_directory}{currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
         print(convert_cmd)
         os.system(convert_cmd)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release)
         # format(f'{docs_directory}{currentFile["outputDir"]}/{currentFile["outputFile"]}')
         format(currentFile["outputDir"],currentFile["outputFile"])
         move_images(currentFile["outputDir"])
     # get rid of any extra markdown files
     os.system("find ./images -name '*.md' -type f -delete")
+<<<<<<< HEAD
 =======
         format(f'{currentFile["outputDir"]}/{currentFile["outputFile"]}')
         # format(f'currentFile["outputDir"]/{currentFile["outputFile"]}')
 >>>>>>> 21ff3a8 (updated query and scripts)
+=======
+>>>>>>> 1024d0c (prepared for 2023.2 release)
 
 if __name__ == '__main__':
     main()

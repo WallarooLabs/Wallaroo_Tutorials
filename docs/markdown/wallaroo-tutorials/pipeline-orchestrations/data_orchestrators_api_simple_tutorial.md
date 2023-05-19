@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/pipeline-orchestrators/orchestration_api_simple_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_api_simple_tutorial).
 
 ## Pipeline Orchestrations API Tutorial
 
@@ -597,7 +597,9 @@ And takes the following parameters.
 * **timeout**(*Integer* *Optional*):  The timeout to complete the task in seconds.
 * **json** (*String* *Required*): The arguments to pass to the task.
 
-For our example, we will create a scheduled task to run every 1 minute, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+For our example, we will create a scheduled task to run every 5 minutes, display the inference results, then use the Orchestration `kill` task to keep the task from running any further.
+
+It is recommended that orchestrations that have pipeline deploy or undeploy commands be spaced out no less than 5 minutes to prevent colliding with other tasks that use the same pipeline.
 
 ```python
 # retrieve the authorization token
@@ -607,7 +609,7 @@ data = {
     "name": "scheduled api task",
     "workspace_id": workspace_id,
     "orch_id": orchestration_id,
-    "schedule": "*/1 * * * *",
+    "schedule": "*/5 * * * *",
     "json": {}
 }
 
@@ -666,8 +668,8 @@ while status != 'started':
 
 ```python
 # show the updated results
-
-time.sleep(60)
+# wait 7 minutes to make sure the task started
+time.sleep(420)
 
 task_end = datetime.datetime.now()
 display(task_end)
@@ -727,28 +729,6 @@ data = {
 response=requests.post(url, headers=headers, json=data).json()
 display(response)
 ```
-
-    {'name': 'scheduled api task',
-     'id': 'e6ea2c20-71f0-4275-87a3-61b5cf561158',
-     'image': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/arbex-orch-deploy',
-     'image_tag': 'v2023.2.0-main-3233',
-     'bind_secrets': ['minio'],
-     'extra_env_vars': {'MINIO_URL': 'http://minio.wallaroo.svc.cluster.local:9000',
-      'ORCH_OWNER_ID': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-      'ORCH_SHA': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-      'TASK_ID': 'e6ea2c20-71f0-4275-87a3-61b5cf561158'},
-     'auth_init': True,
-     'workspace_id': 9,
-     'schedule': '*/1 * * * *',
-     'reap_threshold_secs': 900,
-     'status': 'pending_kill',
-     'input_data': {},
-     'killed': False,
-     'created_at': '2023-05-17T16:30:12.401021+00:00',
-     'updated_at': '2023-05-17T16:30:12.943188+00:00',
-     'last_runs': [{'run_id': 'df20efd9-3be8-4020-bbab-27bee3697062',
-       'status': 'success',
-       'created_at': '2023-05-17T16:31:02.435734+00:00'}]}
 
 ## Close Resources
 
