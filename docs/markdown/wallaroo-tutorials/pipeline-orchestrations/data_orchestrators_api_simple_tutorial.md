@@ -52,7 +52,17 @@ import pyarrow as pa
 import time
 
 import requests
+
+# Used to create unique workspace and pipeline names
+import string
+import random
+
+# make a random 4 character prefix
+suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+display(suffix)
 ```
+
+    'gsze'
 
 ### Connect to the Wallaroo Instance
 
@@ -83,11 +93,12 @@ Set the Wallaroo Prefix and Suffix in the code segment below based on your Walla
 wallarooPrefix = "YOUR PREFIX"
 
 wallarooSuffix = "YOUR SUFFIX"
+
 APIURL = f"https://{wallarooPrefix}.api.{wallarooSuffix}"
 
-workspace_name = 'apiorchestrationworkspace'
-pipeline_name = 'apipipeline'
-model_name = 'apiorchestrationmodel'
+workspace_name = f'apiorchestrationworkspace{suffix}'
+pipeline_name = f'apipipeline{suffix}'
+model_name = f'apiorchestrationmodel{suffix}'
 model_file_name = './models/rf_model.onnx'
 ```
 
@@ -155,7 +166,7 @@ pipeline.add_model_step(housing_model_control)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>apipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:15:51.394406+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:15:54.246572+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0f774337-9a79-46f2-8a33-9580b389383e, b7b14b1a-2e2c-4a2e-b8c7-6f1640b9bb45</td></tr><tr><th>steps</th> <td>apiorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td></td></tr></table>
 {{</table>}}
 
 ```python
@@ -163,8 +174,10 @@ pipeline.add_model_step(housing_model_control)
 pipeline.deploy()
 ```
 
+    Waiting for deployment - this will take up to 45s ......... ok
+
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>apipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:15:51.394406+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:16:10.837047+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a5a7c47a-c42d-41eb-88e1-615608e0a49b, 0f774337-9a79-46f2-8a33-9580b389383e, b7b14b1a-2e2c-4a2e-b8c7-6f1640b9bb45</td></tr><tr><th>steps</th> <td>apiorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:31.357336+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>aac61b5a-e4f4-4ea3-9347-6482c330b5f5, 101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td>apiorchestrationmodelgsze</td></tr></table>
 {{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
@@ -192,14 +205,15 @@ Note that the orchestration assumes the pipeline is already deployed.
 
 Orchestrations are uploaded via POST as a `application/octet-stream` with MLOps API route:
 
-`/v1/api/orchestration/upload`
-
-The following parameters are required:
-
-* The upload is POST as a `multipart/form-data`.
-* Included in the upload is:
-  * The file with Content-Type as `application/octet-stream`.
-  * The metadata specifying the workspace id and Content-Type as `application/json`.
+* **REQUEST**
+  * POST `/v1/api/orchestration/upload`
+  * Content-Type `multipart/form-data`
+* **PARAMETERS**
+  * `file`: The file uploaded as Content-Type as `application/octet-stream`.
+  * `metadata`: Included as Content-Type as `application/json` with:
+    * workspace_id: The numerical id of the workspace to upload the orchestration to.
+    * name:  The name of the orchestration.
+    * The metadata specifying the workspace id and Content-Type as `application/json`.
 
 Once uploaded, the deployment will be prepared and any requirements will be downloaded and installed.
 
@@ -212,6 +226,7 @@ url = f"{APIURL}/v1/api/orchestration/upload"
 fp = open("./api_inference_orchestration.zip", "rb")
 
 metadata = f'{{"workspace_id": {workspace_id},"name": "apiorchestrationsample"}}'
+
 response = requests.post(
     url,
     headers=headers,
@@ -229,17 +244,16 @@ display(response)
 orchestration_id = response['id']
 ```
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339'}
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313'}
 
 ### API List Orchestrations
 
 A list of orchestrations retrieved via POST MLOps API route:
 
-`/v1/api/orchestration/list`
-
-The following parameters are required:
-
-* **workspace_id**:  The numerical identifier of the workspace associated with the orchestration.
+* **REQUEST**
+  * POST `/v1/api/orchestration/list`
+* **PARAMETERS**
+  * **workspace_id**:  The numerical identifier of the workspace associated with the orchestration.
 
 ```python
 # retrieve the authorization token
@@ -256,36 +270,39 @@ display(response.json())
 
 ```
 
-    [{'id': '886a75af-3e14-4120-bfb4-9bf29aa8e33d',
-      'workspace_id': 9,
+    [{'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+      'workspace_id': 8,
       'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
       'name': 'apiorchestrationsample',
       'file_name': 'api_inference_orchestration.zip',
-      'task_id': 'd19ebd7e-9bc3-47c6-b4ca-e0c958df7db2',
-      'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-      'status': 'packaging',
-      'created_at': '2023-05-17T16:25:17.34006+00:00',
-      'updated_at': '2023-05-17T16:25:27.223682+00:00'},
-     {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-      'workspace_id': 9,
-      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-      'name': 'apiorchestrationsample',
-      'file_name': 'api_inference_orchestration.zip',
-      'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-      'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+      'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+      'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
       'status': 'pending_packaging',
-      'created_at': '2023-05-17T16:25:39.614228+00:00',
-      'updated_at': '2023-05-17T16:25:39.614228+00:00'}]
+      'created_at': '2023-05-22T20:48:41.233482+00:00',
+      'updated_at': '2023-05-22T20:48:41.233482+00:00'}]
+
+```python
+
+```
 
 ### API Get Orchestration
 
 A list of orchestrations retrieved via POST MLOps API route:
 
-`/v1/api/orchestration/get_by_id`
-
-The following parameters are required:
-
-* **id**:  The UUID of the orchestration being retrieved.
+* **REQUEST**
+  * POST `/v1/api/orchestration/get_by_id`
+* **PARAMETERS**
+  * **id**:  The UUID of the orchestration being retrieved.
+* **RETURNS**
+  * id: The ID of the orchestration in UUID format.
+  * workspace_id: Numerical value of the workspace the orchestration was uploaded to.
+  * sha: The SHA hash value of the orchestration.
+  * file_name: The file name the orchestration was uploaded as.
+  * task_id: The task id in UUID format for unpacking and preparing the orchestration.
+  * owner_id: The Keycloak ID of the user that uploaded the orchestration.
+  * status: The status of the orchestration.  Status values are:
+    * `packing`: Preparing the orchestration to be used as a task.
+    * `ready`:  The orchestration is ready to be deployed as a task.
 
 ```python
 # retrieve the authorization token
@@ -304,112 +321,81 @@ while status != 'ready':
     response=requests.post(url, headers=headers, json=data).json()
     display(response)
     status = response['status']
-    time.sleep(5)
+    time.sleep(10)
 
+orchestration_sha = response['sha']
 ```
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'packaging'}
 
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
+    {'id': 'b951f7b8-0690-4004-86bf-cc9802359313',
+     'workspace_id': 8,
      'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
      'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-     'status': 'packaging'}
-
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
-     'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-     'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-     'status': 'packaging'}
-
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
-     'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-     'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-     'status': 'packaging'}
-
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
-     'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-     'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
-     'status': 'packaging'}
-
-    {'id': '97fc33e3-ed36-4460-b99c-d8e23cb1e339',
-     'workspace_id': 9,
-     'sha': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-     'file_name': 'api_inference_orchestration.zip',
-     'task_id': '6449f7fc-e123-476e-b872-b7854cc91a3b',
-     'owner_id': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+     'task_id': 'c9622cf8-cbe5-4e3c-b64c-dabd6c5b7fef',
+     'owner_id': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
      'status': 'ready'}
 
 ## Task Management Tutorial
@@ -425,14 +411,13 @@ Once an Orchestration has the status `ready`, it can be run as a task.  Tasks ha
 
 We'll do both a Run Once task and generate our Run Once Task from our orchestration.  Orchestrations are started as a run once task with the following request:
 
-`v1/api//v1/api/orchestration/task/run_once`
-
-The following parameters are required.
-
-* **name** (*String* *Required*): The name to assign to the task.
-* **workspace_id** (*Integer* *Required*):  The numerical identifier of the workspace associated with the orchestration.
-* **orch_id**(*String* *Required*):  The orchestration ID represented by a UUID.
-* **json**(*Dict* *Required*):  The parameters to pass to the task.
+* **REQUEST**
+  * POST `/v1/api/orchestration/task/run_once`
+* **PARAMETERS**
+  * **name** (*String* *Required*): The name to assign to the task.
+  * **workspace_id** (*Integer* *Required*):  The numerical identifier of the workspace associated with the orchestration.
+  * **orch_id**(*String* *Required*):  The orchestration ID represented by a UUID.
+  * **json**(*Dict* *Required*):  The parameters to pass to the task.
 
 Tasks are generated and run once with the Orchestration `run_once` method.  Any arguments for the orchestration are passed in as a `Dict`.  If there are no arguments, then an empty set `{}` is passed.
 
@@ -444,7 +429,10 @@ data = {
     "name": "api run once task",
     "workspace_id": workspace_id,
     "orch_id": orchestration_id,
-    "json": {}
+    "json": {
+        "workspace_name": workspace_name,
+        "pipeline_name": pipeline_name
+    }
 }
 
 import datetime
@@ -457,17 +445,18 @@ display(response)
 task_id = response['id']
 ```
 
-    {'id': '0830ddd0-cdec-44a4-8329-4ee50929cde3'}
+    {'id': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150'}
 
 ### Task Status via API
 
 The list of tasks in the Wallaroo instance is retrieves through the Wallaroo MLOPs API request:
 
-The following parameters are required.
-
-* **task**:  The numerical identifier of the workspace associated with the orchestration.
-* **orch_id**:  The orchestration ID represented by a UUID.
-* **json**:  The parameters to pass to the task.
+* **REQUEST**
+  * POST `/v1/api/task/get_by_id`
+* **PARAMETERS**
+  * **task**:  The numerical identifier of the workspace associated with the orchestration.
+  * **orch_id**:  The orchestration ID represented by a UUID.
+  * **json**:  The parameters to pass to the task.
 
 For this example, the status of the previously created task will be generated, then looped until it has reached status `started`.
 
@@ -487,54 +476,57 @@ while status != 'started':
     response=requests.post(url, headers=headers, json=data).json()
     display(response)
     status = response['status']
-    time.sleep(5)
+    time.sleep(10)
 ```
 
     {'name': 'api run once task',
-     'id': '0830ddd0-cdec-44a4-8329-4ee50929cde3',
+     'id': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150',
      'image': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/arbex-orch-deploy',
-     'image_tag': 'v2023.2.0-main-3233',
+     'image_tag': 'v2023.2.0-main-3271',
      'bind_secrets': ['minio'],
      'extra_env_vars': {'MINIO_URL': 'http://minio.wallaroo.svc.cluster.local:9000',
-      'ORCH_OWNER_ID': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+      'ORCH_OWNER_ID': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
       'ORCH_SHA': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-      'TASK_ID': '0830ddd0-cdec-44a4-8329-4ee50929cde3'},
+      'TASK_DEBUG': 'false',
+      'TASK_ID': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150'},
      'auth_init': True,
-     'workspace_id': 9,
+     'workspace_id': 8,
      'flavor': 'exec_orch_oneshot',
      'reap_threshold_secs': 900,
      'exec_type': 'job',
      'status': 'pending',
-     'input_data': {},
+     'input_data': {'pipeline_name': 'apipipelinegsze',
+      'workspace_name': 'apiorchestrationworkspacegsze'},
      'killed': False,
-     'created_at': '2023-05-17T16:27:34.024513+00:00',
-     'updated_at': '2023-05-17T16:27:34.108342+00:00',
-     'last_runs': [{'run_id': 'cd3bde62-0f0c-433b-94bb-658ce44b09c9',
-       'status': 'running',
-       'created_at': '2023-05-17T16:27:35.825154+00:00'}]}
+     'created_at': '2023-05-22T21:08:31.099447+00:00',
+     'updated_at': '2023-05-22T21:08:31.105312+00:00',
+     'last_runs': []}
 
     {'name': 'api run once task',
-     'id': '0830ddd0-cdec-44a4-8329-4ee50929cde3',
+     'id': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150',
      'image': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/arbex-orch-deploy',
-     'image_tag': 'v2023.2.0-main-3233',
+     'image_tag': 'v2023.2.0-main-3271',
      'bind_secrets': ['minio'],
      'extra_env_vars': {'MINIO_URL': 'http://minio.wallaroo.svc.cluster.local:9000',
-      'ORCH_OWNER_ID': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+      'ORCH_OWNER_ID': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
       'ORCH_SHA': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-      'TASK_ID': '0830ddd0-cdec-44a4-8329-4ee50929cde3'},
+      'TASK_DEBUG': 'false',
+      'TASK_ID': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150'},
      'auth_init': True,
-     'workspace_id': 9,
+     'workspace_id': 8,
      'flavor': 'exec_orch_oneshot',
      'reap_threshold_secs': 900,
      'exec_type': 'job',
      'status': 'started',
-     'input_data': {},
+     'input_data': {'pipeline_name': 'apipipelinegsze',
+      'workspace_name': 'apiorchestrationworkspacegsze'},
      'killed': False,
-     'created_at': '2023-05-17T16:27:34.024513+00:00',
-     'updated_at': '2023-05-17T16:27:39.534322+00:00',
-     'last_runs': [{'run_id': 'cd3bde62-0f0c-433b-94bb-658ce44b09c9',
+     'created_at': '2023-05-22T21:08:31.099447+00:00',
+     'updated_at': '2023-05-22T21:08:36.585775+00:00',
+     'last_runs': [{'run_id': '96a7f85f-e30c-40b5-9185-0dee5bd1a15e',
        'status': 'running',
-       'created_at': '2023-05-17T16:27:35.825154+00:00'}]}
+       'created_at': '2023-05-22T21:08:33.112805+00:00',
+       'updated_at': '2023-05-22T21:08:33.112805+00:00'}]}
 
 ### Task Results
 
@@ -549,7 +541,7 @@ display(task_end)
 pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 ```
 
-    datetime.datetime(2023, 5, 17, 10, 29, 10, 77147)
+    datetime.datetime(2023, 5, 22, 21, 9, 32, 447321)
 
 {{<table "table table-striped table-bordered" >}}
 <table>
@@ -565,7 +557,7 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-17 16:27:40.460</td>
+      <td>2023-05-22 21:08:37.779</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.7]</td>
       <td>0</td>
@@ -573,6 +565,109 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
   </tbody>
 </table>
 {{</table>}}
+
+### Get Tasks by Orchestration SHA
+
+Tasks tied to the same orchestration are retrieved through the following request.
+
+* **REQUEST**
+  * POST `/v1/api/task/get_tasks_by_orch_sha`
+* **PARAMETERS**
+  * **sha**:  The orchestrations SHA hash.
+* **RETURNS**
+  * `ids`: List[string] List of tasks by UUID.
+
+```python
+# retrieve the authorization token
+headers = wl.auth.auth_header()
+
+url=f"{APIURL}/v1/api/task/get_tasks_by_orch_sha"
+
+data = {
+    "sha": orchestration_sha
+}
+
+response=requests.post(url, headers=headers, json=data).json()
+display(response)
+```
+
+    {'ids': ['2424a9a7-2331-42f6-bd84-90643386b130',
+      'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150',
+      'a41fe4ae-b8a4-4e1f-a45a-114df64ae2bc']}
+
+### Task Last Runs History
+
+The history of a task, which each deployment of the task is known as a **task run** is retrieved with the Task `last_runs` method that takes the following arguments.  It returns the reverse chronological order of tasks runs listed by `updated_at`.
+
+* **REQUEST**
+  * POST `/v1/api/task/list_task_runs`
+* **PARAMETERS**
+  * **task_id**:  The numerical identifier of the task.
+  * **status**:  Filters the task history by the `status`.  If `all`, returns all statuses.  Status values are: 
+    * `running`: The task has started.
+    * `failure`: The task failed.
+    * `success`: The task completed.
+  * **limit**:  The number of tasks runs to display.
+* **RETURNS**
+  * ids: List of task runs ids in UUID.
+
+```python
+# retrieve the authorization token
+headers = wl.auth.auth_header()
+
+url=f"{APIURL}/v1/api/task/list_task_runs"
+
+data = {
+    "task_id": task_id
+}
+
+response=requests.post(url, headers=headers, json=data).json()
+task_run_id = response[0]['run_id']
+display(response)
+```
+
+    [{'task': 'c868aa44-f7fe-4e3d-b11d-e1e6af3ec150',
+      'run_id': '96a7f85f-e30c-40b5-9185-0dee5bd1a15e',
+      'status': 'success',
+      'created_at': '2023-05-22T21:08:33.112805+00:00',
+      'updated_at': '2023-05-22T21:08:33.112805+00:00'}]
+
+### Get Task Run Logs
+
+Logs for a task run are retrieved through the following process. 
+
+* **REQUEST**
+  * POST `/v1/api/task/get_logs_for_run`
+* **PARAMETERS**
+  * **id**:  The numerical identifier of the task run associated with the orchestration.
+  * **lines**:  The number of log lines to retrieve starting from the end of the log.
+* **RETURNS**
+  * **logs**: Array of log entries.
+
+```python
+# retrieve the authorization token
+headers = wl.auth.auth_header()
+
+url=f"{APIURL}/v1/api/task/get_logs_for_run"
+
+data = {
+    "id": task_run_id
+}
+
+response=requests.post(url, headers=headers, json=data).json()
+display(response)
+```
+
+    {'logs': ["2023-05-22T21:09:17.683428502Z stdout F {'pipeline_name': 'apipipelinegsze', 'workspace_name': 'apiorchestrationworkspacegsze'}",
+      '2023-05-22T21:09:17.683489102Z stdout F Getting the workspace apiorchestrationworkspacegsze',
+      '2023-05-22T21:09:17.683497403Z stdout F Getting the pipeline apipipelinegsze',
+      '2023-05-22T21:09:17.683504003Z stdout F Deploying the pipeline.',
+      '2023-05-22T21:09:17.683510203Z stdout F Performing sample inference.',
+      '2023-05-22T21:09:17.683516203Z stdout F                      time  ... check_failures',
+      '2023-05-22T21:09:17.683521903Z stdout F 0 2023-05-22 21:08:37.779  ...              0',
+      '2023-05-22T21:09:17.683527803Z stdout F ',
+      '2023-05-22T21:09:17.683533603Z stdout F [1 rows x 4 columns]',
+      '2023-05-22T21:09:17.683540103Z stdout F Undeploying the pipeline']}
 
 ### Run Task Scheduled via API
 
@@ -616,7 +711,10 @@ data = {
     "workspace_id": workspace_id,
     "orch_id": orchestration_id,
     "schedule": "*/5 * * * *",
-    "json": {}
+    "json": {
+        "workspace_name": workspace_name,
+        "pipeline_name": pipeline_name
+    }
 }
 
 import datetime
@@ -629,7 +727,7 @@ display(response)
 scheduled_task_id = response['id']
 ```
 
-    {'id': 'e6ea2c20-71f0-4275-87a3-61b5cf561158'}
+    {'id': '87c2c7c0-e17e-4c00-9407-bfc44d632910'}
 
 ```python
 # loop until the task is started
@@ -649,64 +747,82 @@ while status != 'started':
     response=requests.post(url, headers=headers, json=data).json()
     display(response)
     status = response['status']
-    time.sleep(5)
+    time.sleep(10)
 ```
 
     {'name': 'scheduled api task',
-     'id': 'e6ea2c20-71f0-4275-87a3-61b5cf561158',
+     'id': '87c2c7c0-e17e-4c00-9407-bfc44d632910',
      'image': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/arbex-orch-deploy',
-     'image_tag': 'v2023.2.0-main-3233',
+     'image_tag': 'v2023.2.0-main-3271',
      'bind_secrets': ['minio'],
      'extra_env_vars': {'MINIO_URL': 'http://minio.wallaroo.svc.cluster.local:9000',
-      'ORCH_OWNER_ID': '787453b1-fbd5-4b4e-90a5-8ccbe60778a9',
+      'ORCH_OWNER_ID': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
       'ORCH_SHA': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
-      'TASK_ID': 'e6ea2c20-71f0-4275-87a3-61b5cf561158'},
+      'TASK_DEBUG': 'false',
+      'TASK_ID': '87c2c7c0-e17e-4c00-9407-bfc44d632910'},
      'auth_init': True,
-     'workspace_id': 9,
-     'schedule': '*/1 * * * *',
+     'workspace_id': 8,
+     'schedule': '*/5 * * * *',
      'reap_threshold_secs': 900,
      'status': 'started',
-     'input_data': {},
+     'input_data': {'pipeline_name': 'apipipelinegsze',
+      'workspace_name': 'apiorchestrationworkspacegsze'},
      'killed': False,
-     'created_at': '2023-05-17T16:30:12.401021+00:00',
-     'updated_at': '2023-05-17T16:30:12.943188+00:00',
+     'created_at': '2023-05-22T21:10:22.43957+00:00',
+     'updated_at': '2023-05-22T21:10:22.871615+00:00',
      'last_runs': []}
 
 ```python
-# show the updated results
-# wait 7 minutes to make sure the task started
-time.sleep(420)
+# retrieve the authorization token
+headers = wl.auth.auth_header()
 
-task_end = datetime.datetime.now()
-display(task_end)
+url=f"{APIURL}/v1/api/task/list_task_runs"
 
-pipeline.logs(start_datetime = task_start, end_datetime = task_end)
+data = {
+    "task_id": scheduled_task_id
+}
+
+# loop until we have a single run task
+length = 0
+while length == 0:
+    response=requests.post(url, headers=headers, json=data).json()
+    display(response)
+    length = len(response)
+    time.sleep(10)
+task_run_id = response[0]['run_id']
 ```
 
-    datetime.datetime(2023, 5, 17, 10, 31, 51, 573059)
+    [{'task': '87c2c7c0-e17e-4c00-9407-bfc44d632910',
+      'run_id': 'ad3d427a-3643-4f10-9b94-116688b32355',
+      'status': 'running',
+      'created_at': '2023-05-22T21:15:02.148274+00:00',
+      'updated_at': '2023-05-22T21:15:02.148274+00:00'}]
 
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>time</th>
-      <th>in.tensor</th>
-      <th>out.variable</th>
-      <th>check_failures</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2023-05-17 16:31:15.749</td>
-      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
-      <td>[718013.7]</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-{{</table>}}
+```python
+# retrieve the authorization token
+headers = wl.auth.auth_header()
+
+url=f"{APIURL}/v1/api/task/get_logs_for_run"
+
+data = {
+    "id": task_run_id
+}
+
+# loop until we get a log
+response=requests.post(url, headers=headers, json=data).json()
+display(response)
+```
+
+    {'logs': ["2023-05-22T21:15:55.548754679Z stdout F {'pipeline_name': 'apipipelinegsze', 'workspace_name': 'apiorchestrationworkspacegsze'}",
+      '2023-05-22T21:15:55.54880928Z stdout F Getting the workspace apiorchestrationworkspacegsze',
+      '2023-05-22T21:15:55.54881708Z stdout F Getting the pipeline apipipelinegsze',
+      '2023-05-22T21:15:55.54882328Z stdout F Deploying the pipeline.',
+      '2023-05-22T21:15:55.54883088Z stdout F Performing sample inference.',
+      '2023-05-22T21:15:55.54883628Z stdout F                      time  ... check_failures',
+      '2023-05-22T21:15:55.54884248Z stdout F 0 2023-05-22 21:15:17.420  ...              0',
+      '2023-05-22T21:15:55.54884788Z stdout F ',
+      '2023-05-22T21:15:55.54885348Z stdout F [1 rows x 4 columns]',
+      '2023-05-22T21:15:55.54885938Z stdout F Undeploying the pipeline']}
 
 ## Cleanup
 
@@ -736,6 +852,31 @@ response=requests.post(url, headers=headers, json=data).json()
 display(response)
 ```
 
+    {'name': 'scheduled api task',
+     'id': '87c2c7c0-e17e-4c00-9407-bfc44d632910',
+     'image': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/arbex-orch-deploy',
+     'image_tag': 'v2023.2.0-main-3271',
+     'bind_secrets': ['minio'],
+     'extra_env_vars': {'MINIO_URL': 'http://minio.wallaroo.svc.cluster.local:9000',
+      'ORCH_OWNER_ID': 'a6857628-b0aa-451e-a0a0-bbc1d6eea6e0',
+      'ORCH_SHA': 'd3b93c9f280734106376e684792aa8b4285d527092fe87d89c74ec804f8e169e',
+      'TASK_DEBUG': 'false',
+      'TASK_ID': '87c2c7c0-e17e-4c00-9407-bfc44d632910'},
+     'auth_init': True,
+     'workspace_id': 8,
+     'schedule': '*/5 * * * *',
+     'reap_threshold_secs': 900,
+     'status': 'pending_kill',
+     'input_data': {'pipeline_name': 'apipipelinegsze',
+      'workspace_name': 'apiorchestrationworkspacegsze'},
+     'killed': False,
+     'created_at': '2023-05-22T21:10:22.43957+00:00',
+     'updated_at': '2023-05-22T21:10:22.871615+00:00',
+     'last_runs': [{'run_id': 'ad3d427a-3643-4f10-9b94-116688b32355',
+       'status': 'success',
+       'created_at': '2023-05-22T21:15:02.148274+00:00',
+       'updated_at': '2023-05-22T21:15:02.148274+00:00'}]}
+
 ## Close Resources
 
 With the tutorial complete, we'll verify the pipeline is closed so the resources are assigned back to the Wallaroo instance.
@@ -744,7 +885,9 @@ With the tutorial complete, we'll verify the pipeline is closed so the resources
 pipeline.undeploy()
 ```
 
+     ok
+
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>apipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:15:51.394406+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:16:10.837047+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a5a7c47a-c42d-41eb-88e1-615608e0a49b, 0f774337-9a79-46f2-8a33-9580b389383e, b7b14b1a-2e2c-4a2e-b8c7-6f1640b9bb45</td></tr><tr><th>steps</th> <td>apiorchestrationmodel</td></tr></table>
+<table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:31.357336+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>aac61b5a-e4f4-4ea3-9347-6482c330b5f5, 101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td>apiorchestrationmodelgsze</td></tr></table>
 {{</table>}}
 
