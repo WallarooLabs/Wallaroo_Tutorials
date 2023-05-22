@@ -81,6 +81,7 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 
 wl = wallaroo.Client(auth_type="user_password")
 
+
 # %% [markdown]
 # ## Create the Workspace
 # 
