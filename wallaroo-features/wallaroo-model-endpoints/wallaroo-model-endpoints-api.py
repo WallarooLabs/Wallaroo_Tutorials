@@ -19,8 +19,9 @@
 # 
 # * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
+#   * `os`
+#   * `requests`
 #   * [`pandas`](https://pypi.org/project/pandas/)
-#   * [`polars`](https://pypi.org/project/polars/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
 #   * [`wallaroo`](https://pypi.org/project/wallaroo/) (Installed in the Wallaroo JupyterHub service by default).
 # 
@@ -95,8 +96,9 @@ from requests.auth import HTTPBasicAuth
 import string
 import random
 
-# make a random 4 character prefix to prevent workspace and pipeline name clobbering
+# make a random 4 character prefix
 prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+display(prefix)
 
 import json
 
@@ -169,9 +171,11 @@ workspaceId = response['workspace_id']
 # 
 # Directly after we will use the `/models/list_versions` to retrieve model details used for later steps.
 # 
-# Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://docs.wallaroo.ai/202301/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/#upload-model-to-workspace)
+# Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace]https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/)
 
 # %%
+## upload model
+
 # Retrieve the token
 headers = wl.auth.auth_header()
 
@@ -186,15 +190,35 @@ data = {
 }
 
 files = {
-    "file": ('ccfraud.onnx', open('./ccfraud.onnx','rb'))
-}
+    'file': (model_name, open('./ccfraud.onnx', 'rb'))
+    }
 
-response = requests.post(apiRequest, data=data, headers=headers, files=files, verify=True).json()
+
+response = requests.post(apiRequest, files=files, data=data, headers=headers).json()
 display(response)
-
-modelId=response['insert_models']['returning'][0]['models'][0]['id'] # Stored for later steps.
+modelId=response['insert_models']['returning'][0]['models'][0]['id']
 
 # %%
+# Get the model details
+
+# Retrieve the token
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
+
+apiRequest = f"{APIURL}/v1/api/models/get_by_id"
+
+data = {
+  "id": modelId
+}
+
+response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
+display(response)
+
+# %%
+# Get the model details
+
 # Retrieve the token
 headers = wl.auth.auth_header()
 
@@ -205,16 +229,17 @@ apiRequest = f"{APIURL}/v1/api/models/list_versions"
 
 data = {
   "model_id": model_name,
-  "models_pk_id": modelId
+  "models_pk_id" : modelId
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
 display(response)
 
-# Stored for future examples - get the last model id information
-
-exampleModelVersion = response[-1]['model_version']
-exampleModelSha = response[-1]['sha']
+# %%
+model_version = response[0]['model_version']
+display(model_version)
+model_sha = response[0]['sha']
+display(model_sha)
 
 # %% [markdown]
 # ## Create Pipeline
@@ -225,6 +250,8 @@ exampleModelSha = response[-1]['sha']
 #   * **pipeline_id** - (REQUIRED string): Name of the new pipeline.
 #   * **workspace_id** - (REQUIRED int): Numerical id of the workspace for the new pipeline.  Stored earlier as `workspaceId`.
 #   * **definition** - (REQUIRED string): Pipeline definitions, can be `{}` for none.
+# 
+# For our example, we are setting the pipeline steps through the `definition` field.  This will direct inference requests to the model before output.
 # 
 # Reference: [Wallaroo MLOps API Essentials Guide: Pipeline Management: Create Pipeline in a Workspace](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-pipelines/#create-pipeline-in-a-workspace)
 
@@ -244,7 +271,7 @@ pipeline_name=f"{prefix}apiinferenceexamplepipeline"
 data = {
   "pipeline_id": pipeline_name,
   "workspace_id": workspaceId,
-  "definition": {}
+  "definition": {'steps': [{'ModelInference': {'models': [{'name': f'{model_name}', 'version': model_version, 'sha': model_sha}]}}]}
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
@@ -292,12 +319,8 @@ exampleModelDeployId=pipeline_name
 data = {
     "deploy_id": exampleModelDeployId,
     "pipeline_version_pk_id": pipeline_variant_id,
-    "models": [
-        {
-            "name":model_name,
-            "version":exampleModelVersion,
-            "sha":exampleModelSha
-        }
+    "model_ids": [
+        modelId
     ],
     "pipeline_id": pipeline_id
 }
@@ -306,6 +329,38 @@ data = {
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
 display(response)
 exampleModelDeploymentId=response['id']
+
+# wait 45 seconds for the pipeline to complete deployment
+import time
+time.sleep(45)
+
+# %% [markdown]
+# ### Get Deployment Status
+# 
+# This returns the deployment status - we're waiting until the deployment has the status "Ready."
+# 
+# * **Parameters**
+#   * **name** - (REQUIRED string): The deployment in the format {deployment_name}-{deploymnent-id}.
+#   
+# Example: The deployed empty and model pipelines status will be displayed.
+
+# %%
+# Retrieve the token
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
+
+# Get model pipeline deployment
+
+api_request = f"{APIURL}/v1/api/status/get_deployment"
+
+data = {
+  "name": f"{pipeline_name}-{exampleModelDeploymentId}"
+}
+
+response = requests.post(api_request, json=data, headers=headers, verify=True).json()
+response
 
 # %% [markdown]
 # ## Get External Inference URL
@@ -407,7 +462,7 @@ response = pd.DataFrame.from_records(
         .json()
     )
 
-display(response)
+display(response.loc[:,["time", "out"]])
 
 # %%
 # Retrieve the token
@@ -416,7 +471,7 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/vnd.apache.arrow.file'
 
-# set accept as pandas-records
+# set accept as apache arrow table
 headers['Accept']="application/vnd.apache.arrow.file"
 
 # Submit arrow file
@@ -436,7 +491,7 @@ with pa.ipc.open_file(response.content) as reader:
     arrow_table = reader.read_all()
 
 # convert to Polars DataFrame and display the first 5 rows
-display(arrow_table.to_pandas.head(5).loc[:,["time", "out"]])
+display(arrow_table.to_pandas().head(5).loc[:,["time", "out"]])
 
 # %% [markdown]
 # ### Undeploy the Pipeline
