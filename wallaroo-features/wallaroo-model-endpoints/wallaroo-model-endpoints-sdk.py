@@ -58,10 +58,14 @@ import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
 <<<<<<< HEAD
+<<<<<<< HEAD
 import os
 =======
 import polars as pl
 >>>>>>> 07b717a (pipeline logs and other updates/)
+=======
+import os
+>>>>>>> aef3489 (converted notebook to python script.)
 import pyarrow as pa
 
 # used to display dataframe information without truncating
@@ -86,9 +90,13 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 wl = wallaroo.Client(auth_type="user_password")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> d5e9007 (removed polars and simplified login.)
+=======
+
+>>>>>>> aef3489 (converted notebook to python script.)
 # %% [markdown]
 # ## Create the Workspace
 # 
