@@ -62,7 +62,12 @@ tutorials=(
     ["orchestration_sdk_bigquery_statsmodel_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial"
     ["orchestration_sdk_comprehensive_tutorial"]="pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial"
     ["orchestration_sdk_simple_tutorial"]="pipeline-orchestrators/orchestration_sdk_simple_tutorial"
+<<<<<<< HEAD
 >>>>>>> 1024d0c (prepared for 2023.2 release)
+=======
+    ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
+    ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
+>>>>>>> 33f0a41 (updated logs, etc.)
     )
 
 currentDirectory=$PWD
