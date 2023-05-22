@@ -52,7 +52,7 @@
 # 
 # Replace the `username`, `password`, and `email` fields with the user account connecting to the Wallaroo instance.  This allows a seamless connection to the Wallaroo instance and bypasses the standard browser based confirmation link.  For more information, see the [Wallaroo SDK Essentials Guide:  Client Connection](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 # 
-# If running this example within the internal Wallaroo JupyterHub service, use the `wallaroo.Client(auth_type="user_password")` method. If connecting externally via the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/), use the following to specify the URL of the Wallaroo instance as defined in the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/), replacing `wallarooPrefix` and `wallarooSuffix` with your Wallaroo instance's DNS prefix and suffix.
+# If running this example within the internal Wallaroo JupyterHub service, use the `wallaroo.Client(auth_type="user_password")` method. If connecting externally via the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-local-guide/s/), use the following to specify the URL of the Wallaroo instance as defined in the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/), replacing `wallarooPrefix` and `wallarooSuffix` with your Wallaroo instance's DNS prefix and suffix.
 
 # %%
 import wallaroo
