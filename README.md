@@ -12,6 +12,4 @@ A free community edition of Wallaroo is available from the [Wallaroo Community P
 
 From there each directory contains a self-contained guide to help you understand how to use Wallaroo to deploy pipelines of models and manage the inputs and the outputs.
 
-## LFS Support
-
-The Computer Vision tutorials involved large models.  Verify that [Git Large File Storage (LFS)](https://git-lfs.com) is installed before attempting that tutorial.
+See the releases for individual .zip files for each tutorial.
