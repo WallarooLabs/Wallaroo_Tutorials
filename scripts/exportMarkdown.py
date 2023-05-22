@@ -42,7 +42,7 @@ fileList = [
     #     "outputFile": "wallaroo-quick-start-aloha-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
+    #     "inputFile": "wallaroo-model-cookbookshttps://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-model-cookbooks/demand_curve",
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
     # },
