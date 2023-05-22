@@ -21,7 +21,6 @@
 # * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * [`pandas`](https://pypi.org/project/pandas/)
-#   * [`polars`](https://pypi.org/project/polars/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
 #   * [`wallaroo`](https://pypi.org/project/wallaroo/) (Installed in the Wallaroo JupyterHub service by default).
 # 
@@ -58,7 +57,7 @@
 import wallaroo
 from wallaroo.object import EntityNotFoundError
 import pandas as pd
-import polars as pl
+import os
 import pyarrow as pa
 
 # used to display dataframe information without truncating
@@ -66,6 +65,13 @@ from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 
 import requests
+
+# Used to create unique workspace and pipeline names
+import string
+import random
+
+# make a random 4 character prefix to prevent workspace and pipeline name clobbering
+suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 
 # %%
 # Retrieve the login credentials.
@@ -75,6 +81,7 @@ os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
 
 wl = wallaroo.Client(auth_type="user_password")
 
+
 # %% [markdown]
 # ## Create the Workspace
 # 
@@ -83,9 +90,9 @@ wl = wallaroo.Client(auth_type="user_password")
 # The model to be uploaded and used for inference will be labeled as `ccfraud`.
 
 # %%
-workspace_name = 'sdkinferenceexampleworkspace'
-pipeline_name = 'sdkinferenceexamplepipeline'
-model_name = 'ccfraud'
+workspace_name = f'sdkinferenceexampleworkspace{suffix}'
+pipeline_name = f'sdkinferenceexamplepipeline{suffix}'
+model_name = f'ccfraud{suffix}'
 model_file_name = './ccfraud.onnx'
 
 # %%
@@ -144,7 +151,7 @@ display(wl.list_pipelines()[:5])
 
 # Set the `pipeline` variable to our sample pipeline.
 
-pipeline = wl.pipelines_by_name(name)[0]
+pipeline = wl.pipelines_by_name(pipeline_name)[0]
 display(pipeline)
 
 # %% [markdown]
@@ -163,7 +170,7 @@ display(pipeline)
 # 
 # Now that the pipeline is deployed we'll perform an inference using the Pipeline `infer` method, and submit a pandas DataFrame as our input data.  This will return a pandas DataFrame as the inference output.
 # 
-# For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference through Local Variable](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-through-local-variable).
+# For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference through Local Variable](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/#run-inference-through-local-variable).
 
 # %%
 smoke_test = pd.DataFrame.from_records([
@@ -209,7 +216,7 @@ display(result)
 # 
 # This example uses the Pipeline method `infer_from_file` to submit 10,000 records as a batch using an Apache Arrow table.  The method will return an Apache Arrow table.  For more information, see the [Wallaroo SDK Essentials Guide: Inferencing: Run Inference From A File](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-sdk-inferences/#run-inference-from-a-file)
 # 
-# The results will be converted into a [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), and then for comparison a [polars.DataFrame](https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html).  The results will be filtered by transactions likely to be credit card fraud.  Note that `polars.DataFrame` uses Apache Arrow as its base data type, and may be preferred for faster results.
+# The results will be converted into a [pandas.DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html).  The results will be filtered by transactions likely to be credit card fraud.
 
 # %%
 result = pipeline.infer_from_file('./data/cc_data_10k.arrow')
@@ -227,17 +234,10 @@ filter = [elt[0] > 0.75 for elt in outputs['out.dense_1']]
 outputs = outputs.loc[filter]
 display(outputs)
 
-# %%
-# use polars to convert results to a polars DataFrame and display only the results with > 0.75
-
-outputs =  pl.from_arrow(result)
-
-display(outputs.filter(pl.col("out.dense_1").apply(lambda x: x[0]) > 0.75))
-
 # %% [markdown]
 # ## Inferences via HTTP POST
 # 
-# Each pipeline has its own Inference URL that allows HTTP/S POST submissions of inference requests.  Full details are available from the [Inferencing via the Wallaroo MLOps API](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-inferences/wallaroo-api-inferences/).
+# Each pipeline has its own Inference URL that allows HTTP/S POST submissions of inference requests.  Full details are available from the [Inferencing via the Wallaroo MLOps API](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-inferences/).
 # 
 # This example will demonstrate performing inferences with a DataFrame input and an Apache Arrow input.
 
@@ -254,16 +254,6 @@ display(outputs.filter(pl.col("out.dense_1").apply(lambda x: x[0]) > 0.75))
 # Reference:  [MLOps API Retrieve Token Through Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk)
 
 # %%
-pipeline.deploy()
-
-# %%
-# Retrieve the token
-# connection =wl.mlops().__dict__
-# token = connection['token']
-# display(token)
-
-# trying with headers
-
 headers = wl.auth.auth_header()
 display(headers)
 
@@ -285,11 +275,6 @@ print(deploy_url)
 # The following example performs a HTTP Inference request with a DataFrame input.  The request will be made with first a Python `requests` method, then using `curl`.
 
 # %%
-# Retrieve the token
-connection =wl.mlops().__dict__
-token = connection['token']
-auth_header = wl.auth.auth_header()
-
 # get authorization header
 headers = wl.auth.auth_header()
 
@@ -339,8 +324,6 @@ headers['Content-Type']= 'application/json; format=pandas-records'
 # set accept as pandas-records
 headers['Accept']='application/json; format=pandas-records'
 
-# display(headers)
-
 # submit the request via POST, import as pandas DataFrame
 response = pd.DataFrame.from_records(
                 requests.post(
@@ -373,7 +356,7 @@ data = open(dataFile,'rb').read()
 # set the content type for Arrow table
 headers['Content-Type']= "application/vnd.apache.arrow.file"
 
-# set accept as pandas-records
+# set accept as Apache Arrow
 headers['Accept']="application/vnd.apache.arrow.file"
 
 response = requests.post(
@@ -388,7 +371,7 @@ with pa.ipc.open_file(response.content) as reader:
     arrow_table = reader.read_all()
 
 # convert to Polars DataFrame and display the first 5 rows
-display(pl.from_arrow(arrow_table).head(5)[:,["time", "out"]])
+display(arrow_table.to_pandas().head(5).loc[:,["time", "out"]])
 
 # %%
 !curl -X POST {deploy_url} -H "Authorization: {headers['Authorization']}" -H "Content-Type:{headers['Content-Type']}" -H "Accept:{headers['Accept']}" --data-binary @{dataFile} > curl_response.arrow
