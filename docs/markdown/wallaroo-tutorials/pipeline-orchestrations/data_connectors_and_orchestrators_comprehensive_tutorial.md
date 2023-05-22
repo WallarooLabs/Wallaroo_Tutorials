@@ -988,7 +988,7 @@ taskfail.last_runs()
 
 ### List Tasks
 
-The list of tasks in the Wallaroo instance is retrieves through the Wallaroo Client `list_tasks()` method that accepts the following parameters.
+The list of tasks in the Wallaroo instance is retrieved through the Wallaroo Client `list_tasks()` method that accepts the following parameters.
 
 | Parameter | Type | Description |
 | --- | --- | ---|
@@ -1018,9 +1018,8 @@ wl.list_tasks()
 
 The status of the task is returned with the Task `status()` method that returned the tasks status.  Tasks can have the following status.
 
-* `success`: The task completed 
-
-<ul><li>`unknown`: The task has not been started or is being prepared.</li><li>`ready`: The task is scheduled to execute.</li><li>`running`: The task has started.</li><li>`failure`: The task failed.</li><li>`success`: The task completed.</ul>
+* `pending`: The task has not been started or is being prepared.
+* `started`: The task has started to execute.
 
 ```python
 while task.status() != "started":
