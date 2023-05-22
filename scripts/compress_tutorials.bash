@@ -38,6 +38,8 @@ tutorials=(
     ["orchestration_sdk_bigquery_statsmodel_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial"
     ["orchestration_sdk_comprehensive_tutorial"]="pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial"
     ["orchestration_sdk_simple_tutorial"]="pipeline-orchestrators/orchestration_sdk_simple_tutorial"
+    ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
+    ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
     )
 
 currentDirectory=$PWD
