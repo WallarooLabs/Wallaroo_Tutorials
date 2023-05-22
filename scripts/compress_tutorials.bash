@@ -40,6 +40,7 @@ tutorials=(
     ["orchestration_sdk_simple_tutorial"]="pipeline-orchestrators/orchestration_sdk_simple_tutorial"
     ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
+    ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
     )
 
 currentDirectory=$PWD
