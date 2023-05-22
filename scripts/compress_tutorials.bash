@@ -67,7 +67,11 @@ tutorials=(
 =======
     ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
+<<<<<<< HEAD
 >>>>>>> 33f0a41 (updated logs, etc.)
+=======
+    ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
+>>>>>>> 49d2782 (added computer vision)
     )
 
 currentDirectory=$PWD
