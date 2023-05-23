@@ -268,7 +268,6 @@ display(connection_output)
     <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
-
 <table>
   <tr>
     <th>Field</th>
@@ -323,7 +322,6 @@ display(big_query_output_connection)
     <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
-
 <table>
   <tr>
     <th>Field</th>
@@ -1030,7 +1028,6 @@ while task.status() != "started":
     </tr>
   </tbody>
 </table>
-
 <table>
   <tr>
     <th>Field</th>
