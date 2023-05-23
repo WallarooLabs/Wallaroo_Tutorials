@@ -56,6 +56,7 @@ tutorials=(
 =======
     ["assays_model_insights"]="wallaroo-features/model_insights"
     ["mlflow_tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial"
+<<<<<<< HEAD
     ["connection_api_bigquery_tutorial"]="pipeline-orchestrators/connection_api_bigquery_tutorial"
     ["orchestration_api_simple_tutorial"]="pipeline-orchestrators/orchestration_api_simple_tutorial"
     ["orchestration_sdk_bigquery_houseprice_tutorial"]="pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial"
@@ -65,6 +66,14 @@ tutorials=(
 <<<<<<< HEAD
 >>>>>>> 1024d0c (prepared for 2023.2 release)
 =======
+=======
+    ["connection_api_bigquery_tutorial"]="workload-orchestrations/connection_api_bigquery_tutorial"
+    ["orchestration_api_simple_tutorial"]="workload-orchestrations/orchestration_api_simple_tutorial"
+    ["orchestration_sdk_bigquery_houseprice_tutorial"]="workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial"
+    ["orchestration_sdk_bigquery_statsmodel_tutorial"]="workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial"
+    ["orchestration_sdk_comprehensive_tutorial"]="workload-orchestrations/orchestration_sdk_comprehensive_tutorial"
+    ["orchestration_sdk_simple_tutorial"]="workload-orchestrations/orchestration_sdk_simple_tutorial"
+>>>>>>> 407e1e7 (moved orchestrations directory)
     ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
 <<<<<<< HEAD

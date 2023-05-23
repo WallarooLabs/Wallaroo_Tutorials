@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial).
 
 ## Wallaroo ML Workload Orchestrations with Statsmodel Tutorial
 

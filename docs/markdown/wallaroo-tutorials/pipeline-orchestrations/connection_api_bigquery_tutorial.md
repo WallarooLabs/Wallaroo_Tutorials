@@ -1,4 +1,4 @@
-This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-orchestrators/connection_api_bigquery_tutorial).
+This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/connection_api_bigquery_tutorial).
 
 ## Wallaroo Connection with BigQuery House Price Model Tutorial
 
