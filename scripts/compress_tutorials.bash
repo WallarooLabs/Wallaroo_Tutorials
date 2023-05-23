@@ -41,6 +41,7 @@ tutorials=(
     ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
     ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
+    ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
     )
 
 currentDirectory=$PWD
