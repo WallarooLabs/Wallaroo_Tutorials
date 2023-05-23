@@ -88,6 +88,8 @@ suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 wallaroo.__version__
 ```
 
+    '2023.2.0+dfca0605e'
+
 ### Connect to the Wallaroo Instance
 
 The first step is to connect to Wallaroo through the Wallaroo client.  The Python library is included in the Wallaroo install and available through the Jupyter Hub interface provided with your Wallaroo environment.
@@ -100,12 +102,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-wallarooPrefix = "product-uat-ee"
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ## Variable Declaration
@@ -143,11 +139,11 @@ model_file_name = './models/bike_day_model.pkl'
 
 bigquery_connection_input_name = f'bigqueryforecastinputs{suffix}'
 bigquery_connection_input_type = "BIGQUERY"
-bigquery_connection_input_argument = json.load(open('./resources/bigquery_service_account_input_key.json.example'))
+bigquery_connection_input_argument = json.load(open('./resources/bigquery_service_account_input_key.json'))
 
 bigquery_connection_output_name = f'bigqueryforecastoutputs{suffix}'
 bigquery_connection_output_type = "BIGQUERY"
-bigquery_connection_output_argument = json.load(open('./resources/bigquery_service_account_output_key.json.example'))
+bigquery_connection_output_argument = json.load(open('./resources/bigquery_service_account_output_key.json'))
 ```
 
 ### Helper Methods
@@ -211,10 +207,20 @@ bike_day_model = wl.upload_model(model_name, model_file_name).configure(runtime=
 pipeline.add_model_step(bike_day_model)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipelinegztp</td></tr><tr><th>created</th> <td>2023-05-23 15:19:43.097185+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:19:43.097185+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fa33af33-3cf3-43c9-8e2a-4f0b549d84bf</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
+
 ```python
 #deploy the pipeline
 pipeline.deploy()
 ```
+
+    Waiting for deployment - this will take up to 45s ............. ok
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipelinegztp</td></tr><tr><th>created</th> <td>2023-05-23 15:19:43.097185+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:19:43.390612+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ee07358d-b6d5-46f3-a5bc-f98baae7ddca, fa33af33-3cf3-43c9-8e2a-4f0b549d84bf</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelgztp</td></tr></table>
+{{</table>}}
 
 ### Sample Inferences
 
@@ -227,6 +233,8 @@ results = pipeline.infer_from_file('./data/bike_day_eval.json', data_format="cus
 print(results)
 
 ```
+
+    [{'forecast': [1882.3784555157672, 2130.607915701861, 2340.84005381799, 2895.754978552066, 2163.657515565616, 1509.1792126509536, 2431.1838923957016]}]
 
 ## Create Connections
 
@@ -252,6 +260,54 @@ display(connection_input)
 display(connection_output)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Name</td><td>bigqueryforecastinputsgztp</td>
+  </tr>
+  <tr>
+    <td>Connection Type</td><td>BIGQUERY</td>
+  </tr>
+  <tr>
+    <td>Details</td><td>*****</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-05-23T15:19:58.159691+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
+  </tr>
+</table>
+{{</table>}}
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Name</td><td>bigqueryforecastoutputsgztp</td>
+  </tr>
+  <tr>
+    <td>Connection Type</td><td>BIGQUERY</td>
+  </tr>
+  <tr>
+    <td>Details</td><td>*****</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-05-23T15:19:58.195628+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
+  </tr>
+</table>
+{{</table>}}
+
 ### Get Connection by Name
 
 The Wallaroo client method `get_connection(name)` retrieves the connection that matches the `name` parameter.  We'll retrieve our connection and store it as `inference_source_connection`.
@@ -262,6 +318,54 @@ big_query_output_connection = wl.get_connection(name=bigquery_connection_output_
 display(big_query_input_connection)
 display(big_query_output_connection)
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Name</td><td>bigqueryforecastinputsgztp</td>
+  </tr>
+  <tr>
+    <td>Connection Type</td><td>BIGQUERY</td>
+  </tr>
+  <tr>
+    <td>Details</td><td>*****</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-05-23T15:19:58.159691+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
+  </tr>
+</table>
+{{</table>}}
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>Name</td><td>bigqueryforecastoutputsgztp</td>
+  </tr>
+  <tr>
+    <td>Connection Type</td><td>BIGQUERY</td>
+  </tr>
+  <tr>
+    <td>Details</td><td>*****</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-05-23T15:19:58.195628+00:00</td>
+  </tr>
+  <tr>
+    <td>Linked Workspaces</td><td>[]</td>
+  </tr>
+</table>
+{{</table>}}
 
 ### Add Connection to Workspace
 
@@ -279,6 +383,10 @@ workspace.add_connection(bigquery_connection_output_name)
 
 workspace.list_connections()
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryforecastinputsgztp</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:19:58.159691+00:00</td><td>['bigquerystatsmodelworkspacegztp']</td></tr><tr><td>bigqueryforecastoutputsgztp</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:19:58.195628+00:00</td><td>['bigquerystatsmodelworkspacegztp']</td></tr></table>
+{{</table>}}
 
 ## Big Query Connection Inference Example
 
@@ -333,6 +441,23 @@ inference_dataframe_input = bigqueryinputclient.query(
 display(inference_dataframe_input.to_dict())
 ```
 
+    {'temp': {0: 0.291304,
+      1: 0.243333,
+      2: 0.254167,
+      3: 0.253333,
+      4: 0.253333,
+      5: 0.255833,
+      6: 0.215833},
+     'holiday': {0: 1, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
+     'workingday': {0: 0, 1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 1},
+     'windspeed': {0: 0.168726,
+      1: 0.316546,
+      2: 0.350133,
+      3: 0.155471,
+      4: 0.124383,
+      5: 0.350754,
+      6: 0.154846}}
+
 ### Sample Inference
 
 With our data retrieved, we'll perform an inference and display the results.
@@ -342,10 +467,24 @@ With our data retrieved, we'll perform an inference and display the results.
 pipeline.deploy()
 ```
 
+     ok
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipelinegztp</td></tr><tr><th>created</th> <td>2023-05-23 15:19:43.097185+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:20:00.500498+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f0c22a0a-7e6a-4d49-91ba-e93daf575e6b, ee07358d-b6d5-46f3-a5bc-f98baae7ddca, fa33af33-3cf3-43c9-8e2a-4f0b549d84bf</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelgztp</td></tr></table>
+{{</table>}}
+
 ```python
 results = pipeline.infer(inference_dataframe_input.to_dict())
 display(results[0]['forecast'])
 ```
+
+    [1231.2556997246595,
+     1627.3643469089343,
+     1674.3769827243134,
+     1621.9273295873882,
+     1140.7465817903185,
+     1211.5223974364667,
+     1457.1896450382922]
 
 ### Upload the Results
 
@@ -378,6 +517,45 @@ task_inference_results = bigqueryoutputclient.query(
 
 display(task_inference_results)
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
 
@@ -419,6 +597,12 @@ For this example, the orchestration `./bigquery_remote_inference/bigquery_remote
 pipeline.deploy()
 ```
 
+     ok
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipelinegztp</td></tr><tr><th>created</th> <td>2023-05-23 15:19:43.097185+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:20:13.581488+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>2af13cbf-2dae-4dc9-85fa-ae06c04b6a54, f0c22a0a-7e6a-4d49-91ba-e93daf575e6b, ee07358d-b6d5-46f3-a5bc-f98baae7ddca, fa33af33-3cf3-43c9-8e2a-4f0b549d84bf</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelgztp</td></tr></table>
+{{</table>}}
+
 ```python
 orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
 
@@ -427,9 +611,25 @@ while orchestration.status() != 'ready':
     time.sleep(5)
 ```
 
+    pending_packaging
+    pending_packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+
 ```python
 wl.list_orchestrations()
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>2186543f-f7f6-46b2-8334-63d73ddb0204</td><td>None</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>66945c...e28259</td><td>2023-23-May 15:20:13</td><td>2023-23-May 15:21:06</td></tr></table>
+{{</table>}}
 
 ## Task Management Tutorial
 
@@ -463,11 +663,83 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ```python
 # Example: run once
 task = orchestration.run_once(name="big query statsmodel run once", json_args={})
 task
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>ID</td><td>edf924ae-5a17-4596-adbe-b888b7102d33</td>
+  </tr>
+  <tr>
+    <td>Name</td><td>big query statsmodel run once</td>
+  </tr>
+  <tr>
+    <td>Last Run Status</td><td>unknown</td>
+  </tr>
+  <tr>
+    <td>Type</td><td>Temporary Run</td>
+  </tr>
+  <tr>
+    <td>Active</td><td>True</td>
+  </tr>
+  <tr>
+    <td>Schedule</td><td>-</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-23-May 15:21:11</td>
+  </tr>
+  <tr>
+    <td>Updated At</td><td>2023-23-May 15:21:11</td>
+  </tr>
+</table>
+{{</table>}}
 
 ### Task Status
 
@@ -489,9 +761,17 @@ while task.status() != "started":
     time.sleep(5)
 ```
 
+    'pending'
+
+    'pending'
+
 ```python
 wl.list_tasks()
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>edf924ae-5a17-4596-adbe-b888b7102d33</td><td>big query statsmodel run once</td><td>failure</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-23-May 15:21:11</td><td>2023-23-May 15:21:16</td></tr></table>
+{{</table>}}
 
 ### Task Results
 
@@ -513,6 +793,45 @@ task_inference_results = bigqueryoutputclient.query(
 
 display(task_inference_results)
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 ## Scheduled Run Task Example
 
@@ -547,11 +866,52 @@ display(task_inference_results)
 scheduled_task = orchestration.run_scheduled(name="simple_statsmodel_inference_schedule", schedule="*/1 * * * *", timeout=120, json_args={})
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ```python
 while scheduled_task.status() != "started":
     display(scheduled_task.status())
     time.sleep(5)
 ```
+
+    'pending'
 
 ```python
 #wait 120 seconds to give the scheduled event time to finish
@@ -568,6 +928,45 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ### Kill Task
 
 With our testing complete, we will kill the scheduled task so it will not run again.  First we'll show all the tasks to verify that our task is there, then issue it the kill command.
@@ -575,6 +974,8 @@ With our testing complete, we will kill the scheduled task so it will not run ag
 ```python
 scheduled_task.kill()
 ```
+
+    <ArbexStatus.PENDING_KILL: 'pending_kill'>
 
 ### Running Task with Custom Parameters
 
@@ -601,10 +1002,20 @@ pipeline02.add_model_step(bike_day_model)
 
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-23 15:23:02.136077+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:23:02.136077+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b2c56497-7a50-434a-8973-6d91af80f143</td></tr><tr><th>steps</th> <td></td></tr></table>
+{{</table>}}
+
 ```python
 # required to set the pipeline steps
 pipeline02.deploy()
 ```
+
+    Waiting for deployment - this will take up to 45s ........ ok
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-23 15:23:02.136077+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:24:48.381545+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9dc1f8c5-e9ab-48e7-9b54-290fed5bb28c, 1b44f058-9ab6-44dd-8de6-c52acfdf4fc5, b2c56497-7a50-434a-8973-6d91af80f143</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelgztp</td></tr></table>
+{{</table>}}
 
 ```python
 # Get the last insert to the output table to verify
@@ -630,8 +1041,84 @@ while task.status() != "started":
     time.sleep(5)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>ID</td><td>2fb3cba9-d515-44da-bd9e-59661b4372ef</td>
+  </tr>
+  <tr>
+    <td>Name</td><td>parameter sample</td>
+  </tr>
+  <tr>
+    <td>Last Run Status</td><td>unknown</td>
+  </tr>
+  <tr>
+    <td>Type</td><td>Temporary Run</td>
+  </tr>
+  <tr>
+    <td>Active</td><td>True</td>
+  </tr>
+  <tr>
+    <td>Schedule</td><td>-</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-23-May 15:24:59</td>
+  </tr>
+  <tr>
+    <td>Updated At</td><td>2023-23-May 15:24:59</td>
+  </tr>
+</table>
+{{</table>}}
+
+    'pending'
+
+    'pending'
+
 ```python
-# wait 60 seconds then display the results
+# wait 30 seconds then display the results
 time.sleep(30)
 
 task_inference_results = bigqueryoutputclient.query(
@@ -646,6 +1133,45 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>forecast</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:20:01.622083+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:06:06.678170+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 14:57:00.200596+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-19 22:39:01.932839+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-19 22:33:27.655703+00:00</td>
+      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ## Conclusion
 
 With that, our tutorial is over.  Please feel free to use this tutorial code in your own Wallaroo related projects.  Our last task will be to undeploy our pipelines to restore the resources back to the Wallaroo instance.
@@ -655,6 +1181,10 @@ pipeline.undeploy()
 pipeline02.undeploy()
 ```
 
-```python
+     ok
+    Waiting for undeployment - this will take up to 45s ..................................... ok
 
-```
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerystatsmodelpipeline02</td></tr><tr><th>created</th> <td>2023-05-23 15:23:02.136077+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:24:48.381545+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9dc1f8c5-e9ab-48e7-9b54-290fed5bb28c, 1b44f058-9ab6-44dd-8de6-c52acfdf4fc5, b2c56497-7a50-434a-8973-6d91af80f143</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelgztp</td></tr></table>
+{{</table>}}
+

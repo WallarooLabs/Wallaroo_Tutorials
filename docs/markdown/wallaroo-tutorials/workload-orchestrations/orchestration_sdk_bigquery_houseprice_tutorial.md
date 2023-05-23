@@ -92,7 +92,7 @@ suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 wallaroo.__version__
 ```
 
-    '2023.2.0rc4'
+    '2023.2.0+dfca0605e'
 
 ### Connect to the Wallaroo Instance
 
@@ -106,13 +106,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-
-wallarooPrefix = "product-uat-ee"
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ## Variable Declaration
@@ -150,11 +143,11 @@ model_file_name = './models/rf_model.onnx'
 
 bigquery_connection_input_name = 'bigqueryhouseinputs{suffix}'
 bigquery_connection_input_type = "BIGQUERY"
-bigquery_connection_input_argument = json.load(open("./bigquery_service_account_input_key.json.example"))
+bigquery_connection_input_argument = json.load(open("./bigquery_service_account_input_key.json"))
 
 bigquery_connection_output_name = 'bigqueryhouseoutputs{suffix}'
 bigquery_connection_output_type = "BIGQUERY"
-bigquery_connection_output_argument = json.load(open("./bigquery_service_account_output_key.json.example"))
+bigquery_connection_output_argument = json.load(open("./bigquery_service_account_output_key.json"))
 ```
 
 ### Helper Methods
@@ -219,7 +212,7 @@ pipeline.add_model_step(housing_model_control)
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerypipelineuiyw</td></tr><tr><th>created</th> <td>2023-05-23 15:00:17.273171+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:00:17.273171+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>78e14bc0-81ef-4bbe-bd19-6b09f300bfc2</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td></td></tr></table>
 {{</table>}}
 
 ```python
@@ -227,8 +220,10 @@ pipeline.add_model_step(housing_model_control)
 pipeline.deploy()
 ```
 
+    Waiting for deployment - this will take up to 45s ............ ok
+
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerypipelineuiyw</td></tr><tr><th>created</th> <td>2023-05-23 15:00:17.273171+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:00:20.276559+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6b501dcc-0d56-4dce-abda-9c7700b71ed8, 78e14bc0-81ef-4bbe-bd19-6b09f300bfc2</td></tr><tr><th>steps</th> <td>bigquerymodeluiyw</td></tr></table>
+<table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.428928+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3dd0653a-12b0-4298-b91b-1e0b712716c5, fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td>bigquerymodelchbp</td></tr></table>
 {{</table>}}
 
 ## Create Connections
@@ -252,7 +247,7 @@ wl.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>houseprice_arrow_tabletgiq</td><td>HTTPFILE</td><td>*****</td><td>2023-05-22T19:55:14.252365+00:00</td><td>['orchestrationworkspacetgiq']</td></tr><tr><td>bigqueryhouseinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:52:11.736422+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryhouseoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:52:12.353090+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryforecastinputsxxow</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:56:46.832477+00:00</td><td>['bigquerystatsmodelworkspacexxow']</td></tr><tr><td>bigqueryforecastoutputsxxow</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:56:47.477622+00:00</td><td>['bigquerystatsmodelworkspacexxow']</td></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:00:31.607730+00:00</td><td>[]</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:00:32.211086+00:00</td><td>[]</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryhouseinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:35:26.896064+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryhouseoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:35:26.932685+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryhouseinputs-jcw</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:37:22.103147+00:00</td><td>['bigqueryworkspace-jcw']</td></tr><tr><td>bigqueryhouseoutputs-jcw</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:37:22.141179+00:00</td><td>['bigqueryworkspace-jcw']</td></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:29.850628+00:00</td><td>['bigqueryworkspacekbcy']</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:30.298941+00:00</td><td>['bigqueryworkspacekbcy']</td></tr><tr><td>bigqueryforecastinputsrklr</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:58.206726+00:00</td><td>['bigquerystatsmodelworkspacerklr']</td></tr><tr><td>bigqueryforecastoutputsrklr</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:58.673528+00:00</td><td>['bigquerystatsmodelworkspacerklr']</td></tr></table>
 {{</table>}}
 
 ### Get Connection by Name
@@ -282,10 +277,10 @@ display(big_query_output_connection)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-23T15:00:31.607730+00:00</td>
+    <td>Created At</td><td>2023-05-23T15:05:29.850628+00:00</td>
   </tr>
   <tr>
-    <td>Linked Workspaces</td><td>[]</td>
+    <td>Linked Workspaces</td><td>['bigqueryworkspacekbcy']</td>
   </tr>
 </table>
 {{</table>}}
@@ -306,10 +301,10 @@ display(big_query_output_connection)
     <td>Details</td><td>*****</td>
   </tr>
   <tr>
-    <td>Created At</td><td>2023-05-23T15:00:32.211086+00:00</td>
+    <td>Created At</td><td>2023-05-23T15:05:30.298941+00:00</td>
   </tr>
   <tr>
-    <td>Linked Workspaces</td><td>[]</td>
+    <td>Linked Workspaces</td><td>['bigqueryworkspacekbcy']</td>
   </tr>
 </table>
 {{</table>}}
@@ -332,7 +327,7 @@ workspace.list_connections()
 ```
 
 {{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:00:31.607730+00:00</td><td>['bigqueryworkspaceuiyw']</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:00:32.211086+00:00</td><td>['bigqueryworkspaceuiyw']</td></tr></table>
+<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:29.850628+00:00</td><td>['bigqueryworkspacekbcy', 'bigqueryworkspacechbp']</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:30.298941+00:00</td><td>['bigqueryworkspacekbcy', 'bigqueryworkspacechbp']</td></tr></table>
 {{</table>}}
 
 ## Big Query Connection Inference Example
@@ -438,35 +433,35 @@ display(result.head(5))
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-05-23 15:00:37.997</td>
+      <td>2023-05-23 15:17:47.498</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.75]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-05-23 15:00:37.997</td>
+      <td>2023-05-23 15:17:47.498</td>
       <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
       <td>[615094.56]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-05-23 15:00:37.997</td>
+      <td>2023-05-23 15:17:47.498</td>
       <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
       <td>[448627.72]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-05-23 15:00:37.997</td>
+      <td>2023-05-23 15:17:47.498</td>
       <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
       <td>[758714.2]</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-05-23 15:00:37.997</td>
+      <td>2023-05-23 15:17:47.498</td>
       <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
       <td>[513264.7]</td>
       <td>0</td>
@@ -534,36 +529,25 @@ while orchestration.status() != 'ready':
     time.sleep(5)
 ```
 
-    ---------------------------------------------------------------------------
-
-    OrchestrationUploadFailed                 Traceback (most recent call last)
-
-    /var/folders/jf/_cj0q9d51s365wksymljdz4h0000gn/T/ipykernel_42332/16327239.py in <module>
-    ----> 1 orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
-          2 
-          3 while orchestration.status() != 'ready':
-          4     print(orchestration.status())
-          5     time.sleep(5)
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk202302preview/lib/python3.9/site-packages/wallaroo/client.py in upload_orchestration(self, bytes_buffer, path, name, file_name)
-       2123 
-       2124         """
-    -> 2125         return Orchestration.upload(
-       2126             self, bytes_buffer=bytes_buffer, path=path, name=name, file_name=file_name
-       2127         )
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk202302preview/lib/python3.9/site-packages/wallaroo/orchestration.py in upload(client, name, bytes_buffer, path, file_name)
-        142 
-        143         if ret is None:
-    --> 144             raise OrchestrationUploadFailed("Internal service error")
-        145 
-        146         orch = Orchestration(client, dict({"id": ret.id}))
-
-    OrchestrationUploadFailed: Orchestration upload failed: Internal service error
+    pending_packaging
+    pending_packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
+    packaging
 
 ```python
 wl.list_orchestrations()
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>78ea6222-c102-4eb1-9705-166233a12257</td><td>None</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>582f33...a6957c</td><td>2023-23-May 15:17:48</td><td>2023-23-May 15:18:39</td></tr></table>
+{{</table>}}
 
 ## Task Management Tutorial
 
@@ -595,6 +579,57 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ```python
 # Example: run once
 
@@ -604,6 +639,39 @@ task_start = datetime.datetime.now()
 task = orchestration.run_once(name="big query single run", json_args={})
 task
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <tr>
+    <td>ID</td><td>59b20af0-4f2e-4371-9175-e0b69a94fb91</td>
+  </tr>
+  <tr>
+    <td>Name</td><td>big query single run</td>
+  </tr>
+  <tr>
+    <td>Last Run Status</td><td>unknown</td>
+  </tr>
+  <tr>
+    <td>Type</td><td>Temporary Run</td>
+  </tr>
+  <tr>
+    <td>Active</td><td>True</td>
+  </tr>
+  <tr>
+    <td>Schedule</td><td>-</td>
+  </tr>
+  <tr>
+    <td>Created At</td><td>2023-23-May 15:18:46</td>
+  </tr>
+  <tr>
+    <td>Updated At</td><td>2023-23-May 15:18:46</td>
+  </tr>
+</table>
+{{</table>}}
 
 ### Task Status
 
@@ -626,9 +694,17 @@ while task.status() != "started":
     time.sleep(5)
 ```
 
+    'pending'
+
+    'pending'
+
 ```python
 wl.list_tasks()
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>59b20af0-4f2e-4371-9175-e0b69a94fb91</td><td>big query single run</td><td>failure</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-23-May 15:18:46</td><td>2023-23-May 15:18:51</td></tr></table>
+{{</table>}}
 
 ### Task Results
 
@@ -646,6 +722,57 @@ task_inference_results = bigqueryoutputclient.query(
 
 display(task_inference_results)
 ```
+
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
 
 ## Scheduled Run Task Example
 
@@ -680,11 +807,64 @@ display(task_inference_results.tail(5))
 scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/5 * * * *", timeout=120, json_args={})
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ```python
 while scheduled_task.status() != "started":
     display(scheduled_task.status())
     time.sleep(5)
 ```
+
+    'pending'
 
 ```python
 #wait 420 seconds to give the scheduled event time to finish
@@ -699,6 +879,57 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results.tail(5))
 ```
 
+{{<table "table table-striped table-bordered" >}}
+<table>
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in_tensor</th>
+      <th>out_variable</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2500.0, 8540.0, 2.0, 0.0, 0.0, 3.0, 9.0, 2500.0, 0.0, 47.5759, -121.994, 2560.0, 8475.0, 24.0, 0.0, 0.0]</td>
+      <td>[758714.2]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
+      <td>[718013.75]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[2.0, 2.5, 2170.0, 6361.0, 1.0, 0.0, 2.0, 3.0, 8.0, 2170.0, 0.0, 47.7109, -122.017, 2310.0, 7419.0, 6.0, 0.0, 0.0]</td>
+      <td>[615094.56]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 1.75, 2200.0, 11520.0, 1.0, 0.0, 0.0, 4.0, 7.0, 2200.0, 0.0, 47.7659, -122.341, 1690.0, 8038.0, 62.0, 0.0, 0.0]</td>
+      <td>[513264.7]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-05-23 15:17:47.498</td>
+      <td>[3.0, 2.5, 1300.0, 812.0, 2.0, 0.0, 0.0, 3.0, 8.0, 880.0, 420.0, 47.5893, -122.317, 1300.0, 824.0, 6.0, 0.0, 0.0]</td>
+      <td>[448627.72]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+{{</table>}}
+
 ## Kill Task
 
 With our testing complete, we will kill the scheduled task so it will not run again.  First we'll show all the tasks to verify that our task is there, then issue it the kill command.
@@ -707,6 +938,8 @@ With our testing complete, we will kill the scheduled task so it will not run ag
 scheduled_task.kill()
 ```
 
+    <ArbexStatus.PENDING_KILL: 'pending_kill'>
+
 ## Cleanup
 
 With the tutorial complete, we can undeploy the pipeline and return the resources back to the Wallaroo instance.
@@ -714,3 +947,10 @@ With the tutorial complete, we can undeploy the pipeline and return the resource
 ```python
 pipeline.undeploy()
 ```
+
+    Waiting for undeployment - this will take up to 45s ..................................... ok
+
+{{<table "table table-striped table-bordered" >}}
+<table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.428928+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3dd0653a-12b0-4298-b91b-1e0b712716c5, fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td>bigquerymodelchbp</td></tr></table>
+{{</table>}}
+
