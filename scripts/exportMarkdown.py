@@ -225,33 +225,33 @@ fileList = [
     #     "outputFile": "house-price-model-saga.md"
     # },
     {
-        "inputFile": "pipeline-orchestrators/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "connection_api_bigquery_tutorial.md"
     },
     {
-        "inputFile": "pipeline-orchestrators/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "data_orchestrators_api_simple_tutorial.md"
     },
     {
-        "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
     },
     {
-        "inputFile": "pipeline-orchestrators/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
     },
     {
-        "inputFile": "pipeline-orchestrators/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
     },
     {
-        "inputFile": "pipeline-orchestrators/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-orchestrations",
+        "inputFile": "workload-orchestrations/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     },
     # {

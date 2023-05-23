@@ -100,6 +100,12 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
+wallarooPrefix = "product-uat-ee"
+wallarooSuffix = "wallarooexample.ai"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ## Variable Declaration
@@ -246,54 +252,6 @@ display(connection_input)
 display(connection_output)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Name</td><td>bigqueryforecastinputssxee</td>
-  </tr>
-  <tr>
-    <td>Connection Type</td><td>BIGQUERY</td>
-  </tr>
-  <tr>
-    <td>Details</td><td>*****</td>
-  </tr>
-  <tr>
-    <td>Created At</td><td>2023-05-19T22:31:45.810930+00:00</td>
-  </tr>
-  <tr>
-    <td>Linked Workspaces</td><td>['bigquerystatsmodelworkspacesxee']</td>
-  </tr>
-</table>
-{{</table>}}
-
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Name</td><td>bigqueryforecastoutputssxee</td>
-  </tr>
-  <tr>
-    <td>Connection Type</td><td>BIGQUERY</td>
-  </tr>
-  <tr>
-    <td>Details</td><td>*****</td>
-  </tr>
-  <tr>
-    <td>Created At</td><td>2023-05-19T22:31:46.438522+00:00</td>
-  </tr>
-  <tr>
-    <td>Linked Workspaces</td><td>['bigquerystatsmodelworkspacesxee']</td>
-  </tr>
-</table>
-{{</table>}}
-
 ### Get Connection by Name
 
 The Wallaroo client method `get_connection(name)` retrieves the connection that matches the `name` parameter.  We'll retrieve our connection and store it as `inference_source_connection`.
@@ -304,54 +262,6 @@ big_query_output_connection = wl.get_connection(name=bigquery_connection_output_
 display(big_query_input_connection)
 display(big_query_output_connection)
 ```
-
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Name</td><td>bigqueryforecastinputssxee</td>
-  </tr>
-  <tr>
-    <td>Connection Type</td><td>BIGQUERY</td>
-  </tr>
-  <tr>
-    <td>Details</td><td>*****</td>
-  </tr>
-  <tr>
-    <td>Created At</td><td>2023-05-19T22:31:45.810930+00:00</td>
-  </tr>
-  <tr>
-    <td>Linked Workspaces</td><td>['bigquerystatsmodelworkspacesxee']</td>
-  </tr>
-</table>
-{{</table>}}
-
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <tr>
-    <th>Field</th>
-    <th>Value</th>
-  </tr>
-  <tr>
-    <td>Name</td><td>bigqueryforecastoutputssxee</td>
-  </tr>
-  <tr>
-    <td>Connection Type</td><td>BIGQUERY</td>
-  </tr>
-  <tr>
-    <td>Details</td><td>*****</td>
-  </tr>
-  <tr>
-    <td>Created At</td><td>2023-05-19T22:31:46.438522+00:00</td>
-  </tr>
-  <tr>
-    <td>Linked Workspaces</td><td>['bigquerystatsmodelworkspacesxee']</td>
-  </tr>
-</table>
-{{</table>}}
 
 ### Add Connection to Workspace
 
@@ -369,10 +279,6 @@ workspace.add_connection(bigquery_connection_output_name)
 
 workspace.list_connections()
 ```
-
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryforecastinputssxee</td><td>BIGQUERY</td><td>*****</td><td>2023-05-19T22:31:45.810930+00:00</td><td>['bigquerystatsmodelworkspacesxee']</td></tr><tr><td>bigqueryforecastoutputssxee</td><td>BIGQUERY</td><td>*****</td><td>2023-05-19T22:31:46.438522+00:00</td><td>['bigquerystatsmodelworkspacesxee']</td></tr></table>
-{{</table>}}
 
 ## Big Query Connection Inference Example
 
@@ -427,23 +333,6 @@ inference_dataframe_input = bigqueryinputclient.query(
 display(inference_dataframe_input.to_dict())
 ```
 
-    {'temp': {0: 0.291304,
-      1: 0.243333,
-      2: 0.254167,
-      3: 0.253333,
-      4: 0.253333,
-      5: 0.255833,
-      6: 0.215833},
-     'holiday': {0: 1, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0},
-     'workingday': {0: 0, 1: 1, 2: 1, 3: 1, 4: 0, 5: 0, 6: 1},
-     'windspeed': {0: 0.168726,
-      1: 0.316546,
-      2: 0.350133,
-      3: 0.155471,
-      4: 0.124383,
-      5: 0.350754,
-      6: 0.154846}}
-
 ### Sample Inference
 
 With our data retrieved, we'll perform an inference and display the results.
@@ -453,22 +342,10 @@ With our data retrieved, we'll perform an inference and display the results.
 pipeline.deploy()
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipelinesxee</td></tr><tr><th>created</th> <td>2023-05-19 22:31:29.309549+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 22:33:14.710969+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a54faf95-e6b7-4246-9a40-920ce373919f, 6cb52e7d-4ac0-452a-9bc6-c42aa5c60995, 3ecf0b42-e69d-4ab0-a983-a0f105551523, a795521c-e965-4835-bad4-164cab59ec4a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelsxee</td></tr></table>
-{{</table>}}
-
 ```python
 results = pipeline.infer(inference_dataframe_input.to_dict())
 display(results[0]['forecast'])
 ```
-
-    [1231.2556997246595,
-     1627.3643469089343,
-     1674.3769827243134,
-     1621.9273295873882,
-     1140.7465817903185,
-     1211.5223974364667,
-     1457.1896450382922]
 
 ### Upload the Results
 
@@ -501,45 +378,6 @@ task_inference_results = bigqueryoutputclient.query(
 
 display(task_inference_results)
 ```
-
-{{<table "table table-striped table-bordered" >}}
-<table>
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>forecast</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2023-05-19 22:33:27.655703+00:00</td>
-      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2023-05-17 17:25:05.452843+00:00</td>
-      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2023-05-11 20:13:57.448442+00:00</td>
-      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2023-05-11 20:11:04.519782+00:00</td>
-      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2023-05-11 20:04:49.821907+00:00</td>
-      <td>[1231.2556997246595, 1627.3643469089343, 1674.3769827243134, 1621.9273295873882, 1140.7465817903185, 1211.5223974364667, 1457.1896450382922]</td>
-    </tr>
-  </tbody>
-</table>
-{{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
 
@@ -581,10 +419,6 @@ For this example, the orchestration `./bigquery_remote_inference/bigquery_remote
 pipeline.deploy()
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table><tr><th>name</th> <td>bigquerystatsmodelpipelinesxee</td></tr><tr><th>created</th> <td>2023-05-19 22:31:29.309549+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-19 22:35:42.094232+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>eaa3e50d-f216-422c-86cc-1426b42d8ace, 1ee05b6f-ce95-4dd3-853a-b85c9ab4d2a6, a54faf95-e6b7-4246-9a40-920ce373919f, 6cb52e7d-4ac0-452a-9bc6-c42aa5c60995, 3ecf0b42-e69d-4ab0-a983-a0f105551523, a795521c-e965-4835-bad4-164cab59ec4a</td></tr><tr><th>steps</th> <td>bigquerystatsmodelmodelsxee</td></tr></table>
-{{</table>}}
-
 ```python
 orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
 
@@ -592,33 +426,6 @@ while orchestration.status() != 'ready':
     print(orchestration.status())
     time.sleep(5)
 ```
-
-    ---------------------------------------------------------------------------
-
-    OrchestrationUploadFailed                 Traceback (most recent call last)
-
-    /var/folders/jf/_cj0q9d51s365wksymljdz4h0000gn/T/ipykernel_80766/16327239.py in <module>
-    ----> 1 orchestration = wl.upload_orchestration(path="./bigquery_remote_inference/bigquery_remote_inference.zip")
-          2 
-          3 while orchestration.status() != 'ready':
-          4     print(orchestration.status())
-          5     time.sleep(5)
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk202302preview/lib/python3.9/site-packages/wallaroo/client.py in upload_orchestration(self, bytes_buffer, path, name, file_name)
-       2123 
-       2124         """
-    -> 2125         return Orchestration.upload(
-       2126             self, bytes_buffer=bytes_buffer, path=path, name=name, file_name=file_name
-       2127         )
-
-    /opt/homebrew/anaconda3/envs/wallaroosdk202302preview/lib/python3.9/site-packages/wallaroo/orchestration.py in upload(client, name, bytes_buffer, path, file_name)
-        142 
-        143         if ret is None:
-    --> 144             raise OrchestrationUploadFailed("Internal service error")
-        145 
-        146         orch = Orchestration(client, dict({"id": ret.id}))
-
-    OrchestrationUploadFailed: Orchestration upload failed: Internal service error
 
 ```python
 wl.list_orchestrations()
