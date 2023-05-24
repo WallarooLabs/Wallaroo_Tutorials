@@ -43,6 +43,7 @@ tutorials=(
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
     ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
     ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
+<<<<<<< HEAD
     ["arbitrary-python-upload-tutorials"]=model_uploads/arbitrary-python-upload-tutorials
     ["gpu-deployment"]=wallaroo-features/gpu-deployment
     ["hugging-face-upload-tutorials"]=model_uploads/hugging-face-upload-tutorials
@@ -81,6 +82,8 @@ tutorials=(
 =======
     ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
 >>>>>>> 49d2782 (added computer vision)
+=======
+>>>>>>> a06321e (updated houseprice saga)
     )
 
 currentDirectory=$PWD
