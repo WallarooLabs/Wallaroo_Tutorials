@@ -1,6 +1,6 @@
 This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/orchestration_api_simple_tutorial).
 
-## Pipeline Orchestrations API Tutorial
+## Wallaroo Connection and ML Workload Orchestration API Tutorial
 
 This tutorial provides a quick set of methods and examples regarding Wallaroo Connections and Wallaroo ML Workload Orchestration.  For full details, see the Wallaroo Documentation site.
 
