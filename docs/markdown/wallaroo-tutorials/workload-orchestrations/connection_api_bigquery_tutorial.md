@@ -1,6 +1,6 @@
 This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/connection_api_bigquery_tutorial).
 
-## Wallaroo Connection with BigQuery House Price Model Tutorial
+## Wallaroo Connection and ML Workload Orchestration with BigQuery House Price Model Tutorial
 
 This tutorial provides a quick set of methods and examples regarding Wallaroo Connections.  For full details, see the Wallaroo Documentation site.
 

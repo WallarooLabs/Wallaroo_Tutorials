@@ -1,6 +1,6 @@
 This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/orchestration_sdk_comprehensive_tutorial).
 
-## Pipeline Orchestration Comprehensive Tutorial
+## ML Workload Orchestration Comprehensive Tutorial
 
 This tutorial provides a complete set of methods and examples regarding Wallaroo Connections and Wallaroo ML Workload Orchestration.
 
@@ -96,12 +96,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 wl = wallaroo.Client()
 ```
-
-    Please log into the following URL in a web browser:
-    
-    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=XJMM-APPM
-    
-    Login successful!
 
 ```python
 # Setting variables for later steps
