@@ -102,7 +102,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
 # Login through local Wallaroo instance
@@ -115,7 +115,9 @@ wl = wallaroo.Client()
 The variable `APIURL` is used to specify the connection to the Wallaroo instance's MLOps API URL, and is composed of the Wallaroo DNS prefix and suffix.  For full details, see the [Wallaroo API Connection Guide
 ](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/).
 
-The variables `wallarooPrefix` and `wallarooSuffix` variables will be used to derive the API url.  For example, if the Wallaroo Prefix is `doc-test` and the url is `example.com`, then the MLOps API URL would be `doc-test.api.example.com/v1/api/{request}`.
+The variables `wallarooPrefix` and `wallarooSuffix` variables will be used to derive the API url.  For example, if the Wallaroo Prefix is `doc-test.` and the url is `example.com`, then the MLOps API URL would be `doc-test.api.example.com/v1/api/{request}`.
+
+Note the `.` is part of the prefix.  If there is no prefix, then `wallarooPrefix = ""`
 
 Set the Wallaroo Prefix and Suffix in the code segment below based on your Wallaroo instance.
 
@@ -147,9 +149,9 @@ Not that for the connection arguments, we'll retrieve the information from the f
 ```python
 # Setting variables for later steps
 
-wallarooPrefix = "YOUR PREFIX"
+wallarooPrefix = "YOUR PREFIX."
 wallarooSuffix = "YOUR SUFFIX"
-APIURL = f"https://{wallarooPrefix}.api.{wallarooSuffix}"
+APIURL = f"https://{wallarooPrefix}api.{wallarooSuffix}"
 
 # Setting variables for later steps
 
@@ -230,18 +232,14 @@ housing_model_control = wl.upload_model(model_name, model_file_name).configure()
 pipeline.add_model_step(housing_model_control)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigqueryapipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:06:45.400005+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:06:48.150211+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5e78de4f-51f1-43ce-8c2c-d724a05f856a, d2f03a9c-dfbb-4a03-a014-e70aa80902e3</td></tr><tr><th>steps</th> <td>bigqueryapimodel</td></tr></table>
-{{</table>}}
 
 ```python
 #deploy the pipeline
 pipeline.deploy()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigqueryapipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:06:45.400005+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:11:23.317215+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>153a11e5-7968-450c-aef5-d1be17c6b173, 5e78de4f-51f1-43ce-8c2c-d724a05f856a, d2f03a9c-dfbb-4a03-a014-e70aa80902e3</td></tr><tr><th>steps</th> <td>bigqueryapimodel</td></tr></table>
-{{</table>}}
 
 ## Connection Management via the Wallaroo MLOps API
 
@@ -436,8 +434,7 @@ inference_dataframe_input = bigqueryinputclient.query(
 inference_dataframe_input.head(5)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -467,7 +464,6 @@ inference_dataframe_input.head(5)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Sample Inference
 
@@ -478,8 +474,7 @@ result = pipeline.infer(inference_dataframe_input)
 display(result.head(5))
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -527,7 +522,6 @@ display(result.head(5))
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Upload the Results
 
@@ -561,8 +555,7 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -610,7 +603,6 @@ display(task_inference_results)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ## Cleanup
 
@@ -620,7 +612,5 @@ With the tutorial complete, we can undeploy the pipeline and return the resource
 pipeline.undeploy()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigqueryapipipeline</td></tr><tr><th>created</th> <td>2023-05-17 16:06:45.400005+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-17 16:11:23.317215+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>153a11e5-7968-450c-aef5-d1be17c6b173, 5e78de4f-51f1-43ce-8c2c-d724a05f856a, d2f03a9c-dfbb-4a03-a014-e70aa80902e3</td></tr><tr><th>steps</th> <td>bigqueryapimodel</td></tr></table>
-{{</table>}}
 

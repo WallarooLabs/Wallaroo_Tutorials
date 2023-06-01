@@ -100,7 +100,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
 # Login through local Wallaroo instance
@@ -211,9 +211,7 @@ housing_model_control = wl.upload_model(model_name, model_file_name).configure()
 pipeline.add_model_step(housing_model_control)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
 
 ```python
 #deploy the pipeline to set the pipeline steps
@@ -222,9 +220,7 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ............ ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.428928+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3dd0653a-12b0-4298-b91b-1e0b712716c5, fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td>bigquerymodelchbp</td></tr></table>
-{{</table>}}
 
 ## Create Connections
 
@@ -246,9 +242,7 @@ connection_output = get_connection(bigquery_connection_output_name, bigquery_con
 wl.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryhouseinputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:35:26.896064+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryhouseoutputs</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:35:26.932685+00:00</td><td>['bigqueryworkspace']</td></tr><tr><td>bigqueryhouseinputs-jcw</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:37:22.103147+00:00</td><td>['bigqueryworkspace-jcw']</td></tr><tr><td>bigqueryhouseoutputs-jcw</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T14:37:22.141179+00:00</td><td>['bigqueryworkspace-jcw']</td></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:29.850628+00:00</td><td>['bigqueryworkspacekbcy']</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:30.298941+00:00</td><td>['bigqueryworkspacekbcy']</td></tr><tr><td>bigqueryforecastinputsrklr</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:58.206726+00:00</td><td>['bigquerystatsmodelworkspacerklr']</td></tr><tr><td>bigqueryforecastoutputsrklr</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:58.673528+00:00</td><td>['bigquerystatsmodelworkspacerklr']</td></tr></table>
-{{</table>}}
 
 ### Get Connection by Name
 
@@ -261,7 +255,6 @@ display(big_query_input_connection)
 display(big_query_output_connection)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -283,9 +276,7 @@ display(big_query_output_connection)
     <td>Linked Workspaces</td><td>['bigqueryworkspacekbcy']</td>
   </tr>
 </table>
-{{</table>}}
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -307,7 +298,6 @@ display(big_query_output_connection)
     <td>Linked Workspaces</td><td>['bigqueryworkspacekbcy']</td>
   </tr>
 </table>
-{{</table>}}
 
 ### Add Connection to Workspace
 
@@ -326,9 +316,7 @@ workspace.add_connection(bigquery_connection_output_name)
 workspace.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>bigqueryhouseinputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:29.850628+00:00</td><td>['bigqueryworkspacekbcy', 'bigqueryworkspacechbp']</td></tr><tr><td>bigqueryhouseoutputs{suffix}</td><td>BIGQUERY</td><td>*****</td><td>2023-05-23T15:05:30.298941+00:00</td><td>['bigqueryworkspacekbcy', 'bigqueryworkspacechbp']</td></tr></table>
-{{</table>}}
 
 ## Big Query Connection Inference Example
 
@@ -377,8 +365,7 @@ inference_dataframe_input = bigqueryinputclient.query(
 inference_dataframe_input.head(5)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -408,7 +395,6 @@ inference_dataframe_input.head(5)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Sample Inference
 
@@ -419,8 +405,7 @@ result = pipeline.infer(inference_dataframe_input)
 display(result.head(5))
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -468,7 +453,6 @@ display(result.head(5))
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Upload the Results
 
@@ -545,9 +529,7 @@ while orchestration.status() != 'ready':
 wl.list_orchestrations()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>78ea6222-c102-4eb1-9705-166233a12257</td><td>None</td><td>ready</td><td>bigquery_remote_inference.zip</td><td>582f33...a6957c</td><td>2023-23-May 15:17:48</td><td>2023-23-May 15:18:39</td></tr></table>
-{{</table>}}
 
 ## Task Management Tutorial
 
@@ -579,8 +561,7 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -628,7 +609,6 @@ display(task_inference_results)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ```python
 # Example: run once
@@ -640,7 +620,6 @@ task = orchestration.run_once(name="big query single run", json_args={})
 task
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -671,7 +650,6 @@ task
     <td>Updated At</td><td>2023-23-May 15:18:46</td>
   </tr>
 </table>
-{{</table>}}
 
 ### Task Status
 
@@ -702,9 +680,7 @@ while task.status() != "started":
 wl.list_tasks()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>59b20af0-4f2e-4371-9175-e0b69a94fb91</td><td>big query single run</td><td>failure</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-23-May 15:18:46</td><td>2023-23-May 15:18:51</td></tr></table>
-{{</table>}}
 
 ### Task Results
 
@@ -723,8 +699,7 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results)
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -772,7 +747,6 @@ display(task_inference_results)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ## Scheduled Run Task Example
 
@@ -807,8 +781,7 @@ display(task_inference_results.tail(5))
 scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", schedule="*/5 * * * *", timeout=120, json_args={})
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -856,7 +829,6 @@ scheduled_task = orchestration.run_scheduled(name="simple_inference_schedule", s
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ```python
 while scheduled_task.status() != "started":
@@ -879,8 +851,7 @@ task_inference_results = bigqueryoutputclient.query(
 display(task_inference_results.tail(5))
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -928,7 +899,6 @@ display(task_inference_results.tail(5))
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ## Kill Task
 
@@ -950,7 +920,5 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ..................................... ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>bigquerypipelinechbp</td></tr><tr><th>created</th> <td>2023-05-23 15:17:30.123708+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:17:30.428928+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>3dd0653a-12b0-4298-b91b-1e0b712716c5, fefa4278-04e0-4d1a-8d5b-9cc9c5275832</td></tr><tr><th>steps</th> <td>bigquerymodelchbp</td></tr></table>
-{{</table>}}
 
