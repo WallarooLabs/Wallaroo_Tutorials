@@ -34,6 +34,7 @@ docs_directory = "docs/markdown"
 fileList = [
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1024d0c (prepared for 2023.2 release)
     # {
@@ -61,20 +62,34 @@ fileList = [
     {
         "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+    {
+        "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-quick-start-aloha-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/imdb/imdb_sample.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-quick-start-imdb-reference.md"
     },
     {
         "inputFile": "wallaroo-features/model_insights/model-insights.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
         "outputFile": "wallaroo-model-insights-reference.md"
     },
@@ -508,175 +523,321 @@ def move_images(image_directory):
     {
         "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
         "outputDir": "docs/markdown/wallaroo-101/",
+=======
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "wallaroo-model-insights-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials",
+        "outputFile": "wallaroo-shadow-deployment-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+        "outputDir": "/wallaroo-101/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-101-reference.md"
     },
     {
         "inputFile": "model_conversion/autoconversion-tutorial/auto-convert-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "sklearn-auto-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/keras-to-onnx/autoconvert-keras-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "keras-auto-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/pytorch-to-onnx/pytorch-to-onnx.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "pytorch-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/sklearn-classification-to-onnx/convert-sklearn-classification-to-onnx.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "sklearn-logistic-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/sklearn-regression-to-onnx/convert-sklearn-regression-to-onnx.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "sklearn-regression-to-onnx-reference.md"
     },
     {
         "inputFile": "model_conversion/statsmodels/convert-statsmodel-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "statsmodel-conversion-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-autoconversion/xgboost-autoconversion-classification-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "xgboost-autoconversion-classification-tutorial-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-autoconversion/xgboost-autoconversion-regression-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "xgboost-autoconversion-regression-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-features/simulated_edge/simulated_edge.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-simulated_edge-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+=======
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "_index.md"
     },
     {
         "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+=======
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+=======
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+=======
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
     },
     {
         "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/notebook_in_prod",
+=======
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
     },
     {
         "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-abtesting-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-testing-tutorials/anomaly_detection/wallaroo-anomaly-detection.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-anomaly-detection-reference.md"
     },
     {
         "inputFile": "model_conversion/xgboost-to-onnx/xgboost-to-onnx.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/conversion-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials/conversion-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "xgboost-to-onnx-reference.md"
     },
     {
         "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+=======
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-endpoints",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-model-endpoints",
+=======
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-endpoints",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-model-endpoints-setup-reference.md"
     },
     {
         "inputFile": "development/sdk-install-guides/google-vertex-sdk-install/install-wallaroo-sdk-google-vertex-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "install-wallaroo-sdk-google-vertex-guide-reference.md"
     },
     {
         "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     },
     {
         "inputFile": "wallaroo-features/wallaroo-tag-management/wallaroo-tags-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features/",
+=======
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-tags-guide-reference.md"
     },
     {
         "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-api-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-mlops-tutorial-reference.md"
     },
     {
         "inputFile": "development/sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
     },
     {
         "inputFile": "development/sdk-install-guides/aws-sagemaker-install/install-wallaroo-aws-sagemaker-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "install-wallaroo-sdk-aws-sagemaker-guide-reference.md"
     },
     {
         "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-developer-guides/wallaroo-sdk-guides/",
+=======
+        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials",
+=======
+        "outputDir": "/wallaroo-tutorials",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-mlflow-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-features/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/wallaroo-tutorial-features",
+=======
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "wallaroo-hot-swap-models-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/computer-vision/00_computer_vision_tutorial_intro.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+=======
+        "outputDir": "/wallaroo-tutorials/computer-vision",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "00-computer-vision-tutorial-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/computer-vision/01_computer_vision_tutorial_mobilenet.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+=======
+        "outputDir": "/wallaroo-tutorials/computer-vision",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "01_computer_vision_tutorial_mobilenet-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/computer-vision/02_computer_vision_tutorial_resnet50.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+=======
+        "outputDir": "/wallaroo-tutorials/computer-vision",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "02_computer_vision_tutorial_resnet50-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/computer-vision/03_computer_vision_tutorial_shadow_deploy.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/computer-vision",
+=======
+        "outputDir": "/wallaroo-tutorials/computer-vision",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "03_computer_vision_tutorial_shadow_deploy-reference.md"
     },
     {
         "inputFile": "tools/convert_wallaroo_data_to_pandas_arrow/convert_wallaroo_inference_data.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/tools/",
+=======
+        "outputDir": "/wallaroo-tutorials/tools/",
+>>>>>>> 3087073 (updated prefix)
         "outputFile": "convert_wallaroo_data_inference-reference.md"
     },
     {
         "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
+<<<<<<< HEAD
         "outputDir": "docs/markdown/wallaroo-tutorials/testing-tutorials/",
         "outputFile": "house-price-model-saga.md"
     },
@@ -688,6 +849,11 @@ def move_images(image_directory):
     #     "outputFile": "house-price-model-saga.md"
     # },
 >>>>>>> 1024d0c (prepared for 2023.2 release)
+=======
+        "outputDir": "/wallaroo-tutorials/testing-tutorials/",
+        "outputFile": "house-price-model-saga.md"
+    },
+>>>>>>> 3087073 (updated prefix)
     {
         "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/workload-orchestrations",
@@ -719,16 +885,16 @@ def move_images(image_directory):
         "outputDir": "/wallaroo-tutorials/workload-orchestrations",
         "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "pipeline_log_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "pipeline_api_log_tutorial.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
+    {
+        "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_api_log_tutorial.md"
+    }
 
 ]
 
@@ -738,8 +904,8 @@ def format(outputdir, document_file):
     result = re.sub
     
     # fix tables for publication
-    document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
-    document = re.sub('</table>', r'</table>\n{{</table>}}', document)
+    # document = re.sub(r'<table.*?>', r'{{<table "table table-striped table-bordered" >}}\n<table>', document)
+    # document = re.sub('</table>', r'</table>\n{{</table>}}', document)
     # remove any div table sections
     document = re.sub('<div.*?>', '', document)
     document = re.sub(r'<style.*?>.*?</style>', '', document, flags=re.S)
@@ -757,9 +923,9 @@ def format(outputdir, document_file):
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
     # fix github link for final release
-    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/', 
-                      'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
-                      document)
+    # document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230314_2023.2_updates/', 
+    #                   'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
+    #                   document)
    # document = re.sub('![png](', 'bob', document)
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
