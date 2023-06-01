@@ -76,7 +76,7 @@ import requests
 import string
 import random
 
-# make a random 4 character prefix
+# make a random 4 character suffix
 suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 display(suffix)
 ```
@@ -89,7 +89,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
 # Login through local Wallaroo instance
@@ -158,9 +158,7 @@ housing_model_control = wl.upload_model(model_name, model_file_name).configure()
 pipeline.add_model_step(housing_model_control)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>orchestrationpipelinetgiq</td></tr><tr><th>created</th> <td>2023-05-22 19:54:06.933674+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 19:54:06.933674+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ed5bf4b1-1d5d-4ff9-8a23-2c1e44a8e672</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
 
 ```python
 #deploy the pipeline
@@ -169,9 +167,7 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ........................ ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>orchestrationpipelinetgiq</td></tr><tr><th>created</th> <td>2023-05-22 19:54:06.933674+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 19:54:08.008312+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a7336408-20ef-4b65-8167-c2f80c968a21, ed5bf4b1-1d5d-4ff9-8a23-2c1e44a8e672</td></tr><tr><th>steps</th> <td>orchestrationmodeltgiq</td></tr></table>
-{{</table>}}
 
 ### Sample Inferences
 
@@ -186,8 +182,7 @@ large_inference_result =  batch_inferences.to_pandas()
 display(large_inference_result.head(20))
 ```
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -340,7 +335,6 @@ display(large_inference_result.head(20))
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ## Create Wallaroo Connection
 
@@ -371,7 +365,6 @@ wl.create_connection(connection_name,
                   )
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -393,7 +386,6 @@ wl.create_connection(connection_name,
     <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
-{{</table>}}
 
 ### List Data Connections
 
@@ -403,9 +395,7 @@ The Wallaroo Client [`list_connections()`](https://docs.wallaroo.ai/wallaroo-dev
 wl.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>houseprice_arrow_tabletgiq</td><td>HTTPFILE</td><td>*****</td><td>2023-05-22T19:54:33.723860+00:00</td><td>[]</td></tr></table>
-{{</table>}}
 
 ### Add Connection to Workspace
 
@@ -429,9 +419,7 @@ The method Workspace `list_connections()` displays a list of connections attache
 workspace.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>houseprice_arrow_tabletgiq</td><td>HTTPFILE</td><td>*****</td><td>2023-05-22T19:54:33.723860+00:00</td><td>['orchestrationworkspacetgiq']</td></tr></table>
-{{</table>}}
 
 ### Get Connection
 
@@ -482,8 +470,7 @@ display(result_table.head(20))
 
      ok
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -636,7 +623,6 @@ display(result_table.head(20))
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Remove Connection from Workspace
 
@@ -898,9 +884,7 @@ Orchestrations are listed with the Wallaroo Client `list_orchestrations()` which
 wl.list_orchestrations()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>0f90e606-09f8-409b-a306-cb04ec4c011a</td><td>comprehensive sample</td><td>ready</td><td>remote_inference.zip</td><td>b88e93...2396fb</td><td>2023-22-May 19:55:15</td><td>2023-22-May 19:56:09</td></tr></table>
-{{</table>}}
 
 ## Task Management Tutorial
 
@@ -931,7 +915,6 @@ task = orchestration.run_once(name="house price run once 2", json_args={"workspa
 task
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -962,13 +945,11 @@ task
     <td>Updated At</td><td>2023-22-May 19:58:32</td>
   </tr>
 </table>
-{{</table>}}
 
 ```python
 taskfail.last_runs()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>task id</th><th>pod id</th><th>status</th><th>created at</th><th>updated at</th></tr>
             <tr>
               <td>5ee51c78-a1c6-41e4-86a6-77110ce26161</td>
@@ -978,7 +959,6 @@ taskfail.last_runs()
               <td>2023-22-May 20:15:08</td>
             </tr>
             </table>
-{{</table>}}
 
 ### List Tasks
 
@@ -1004,9 +984,7 @@ This returns an array list of the following in reverse chronological order from 
 wl.list_tasks()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>f0e27d6a-6a98-4d26-b240-266f08560c48</td><td>house price run once 2</td><td>running</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-22-May 19:58:32</td><td>2023-22-May 19:58:38</td></tr><tr><td>36509ef8-98da-42a0-913f-e6e929dedb15</td><td>house price run once</td><td>success</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-22-May 19:56:37</td><td>2023-22-May 19:56:48</td></tr></table>
-{{</table>}}
 
 ### Task Status
 
@@ -1044,7 +1022,6 @@ This returns the following in reverse chronological order by `updated at`.
 task.last_runs()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>task id</th><th>pod id</th><th>status</th><th>created at</th><th>updated at</th></tr>
             <tr>
               <td>f0e27d6a-6a98-4d26-b240-266f08560c48</td>
@@ -1054,7 +1031,6 @@ task.last_runs()
               <td>2023-22-May 19:58:35</td>
             </tr>
             </table>
-{{</table>}}
 
 ### Task Run Logs
 
@@ -1113,7 +1089,6 @@ while taskfail.status() != "started":
     time.sleep(5)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -1144,14 +1119,12 @@ while taskfail.status() != "started":
     <td>Updated At</td><td>2023-22-May 20:17:16</td>
   </tr>
 </table>
-{{</table>}}
 
 ```python
 # time.sleep(60)
 taskfail.last_runs()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>task id</th><th>pod id</th><th>status</th><th>created at</th><th>updated at</th></tr>
             <tr>
               <td>54229bd2-c388-4196-9ce2-f76503a27f99</td>
@@ -1161,7 +1134,6 @@ taskfail.last_runs()
               <td>2023-22-May 20:17:18</td>
             </tr>
             </table>
-{{</table>}}
 
 ```python
 # time.sleep(60)
@@ -1206,8 +1178,7 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1297,7 +1268,6 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>506 rows × 4 columns</p>
 
 ### Scheduled Tasks
@@ -1324,7 +1294,6 @@ task_scheduled
 
     'pending'
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -1355,7 +1324,6 @@ task_scheduled
     <td>Updated At</td><td>2023-22-May 20:08:25</td>
   </tr>
 </table>
-{{</table>}}
 
 ```python
 time.sleep(420)
@@ -1405,9 +1373,7 @@ task_scheduled.kill()
 wl.list_tasks(killed=True)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>4af57c61-dfa9-43eb-944e-559135495df4</td><td>schedule example</td><td>success</td><td>Scheduled Run</td><td>False</td><td>*/5 * * * *</td><td>2023-22-May 20:08:25</td><td>2023-22-May 20:13:12</td></tr><tr><td>dc185e24-cf89-4a97-b6f0-33fc3d67da72</td><td>schedule example</td><td>unknown</td><td>Scheduled Run</td><td>False</td><td>*/5 * * * *</td><td>2023-22-May 20:05:47</td><td>2023-22-May 20:06:22</td></tr><tr><td>f0e27d6a-6a98-4d26-b240-266f08560c48</td><td>house price run once 2</td><td>success</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-22-May 19:58:32</td><td>2023-22-May 19:58:38</td></tr><tr><td>36509ef8-98da-42a0-913f-e6e929dedb15</td><td>house price run once</td><td>success</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-22-May 19:56:37</td><td>2023-22-May 19:56:48</td></tr></table>
-{{</table>}}
 
 ## Cleaning Up
 
