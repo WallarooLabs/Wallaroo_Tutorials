@@ -1,6 +1,6 @@
 This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/orchestration_api_simple_tutorial).
 
-## Pipeline Orchestrations API Tutorial
+## Wallaroo Connection and ML Workload Orchestration API Tutorial
 
 This tutorial provides a quick set of methods and examples regarding Wallaroo Connections and Wallaroo ML Workload Orchestration.  For full details, see the Wallaroo Documentation site.
 
@@ -57,7 +57,7 @@ import requests
 import string
 import random
 
-# make a random 4 character prefix
+# make a random 4 character suffix
 suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 display(suffix)
 ```
@@ -70,7 +70,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
 # Login through local Wallaroo instance
@@ -85,16 +85,18 @@ The variable `APIURL` is used to specify the connection to the Wallaroo instance
 
 The variables `wallarooPrefix` and `wallarooSuffix` variables will be used to derive the API url.  For example, if the Wallaroo Prefix is `doc-test` and the url is `example.com`, then the MLOps API URL would be `doc-test.api.example.com/v1/api/{request}`.
 
+Note the `.` is part of the prefix.  If there is no prefix, then `wallarooPrefix = ""`
+
 Set the Wallaroo Prefix and Suffix in the code segment below based on your Wallaroo instance.
 
 ```python
 # Setting variables for later steps
 
-wallarooPrefix = "YOUR PREFIX"
+wallarooPrefix = "YOUR PREFIX."
 
 wallarooSuffix = "YOUR SUFFIX"
 
-APIURL = f"https://{wallarooPrefix}.api.{wallarooSuffix}"
+APIURL = f"https://{wallarooPrefix}api.{wallarooSuffix}"
 
 workspace_name = f'apiorchestrationworkspace{suffix}'
 pipeline_name = f'apipipeline{suffix}'
@@ -165,9 +167,7 @@ housing_model_control = wl.upload_model(model_name, model_file_name).configure()
 pipeline.add_model_step(housing_model_control)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
 
 ```python
 #deploy the pipeline
@@ -176,9 +176,7 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ......... ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:31.357336+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>aac61b5a-e4f4-4ea3-9347-6482c330b5f5, 101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td>apiorchestrationmodelgsze</td></tr></table>
-{{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
 
@@ -543,8 +541,7 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 
     datetime.datetime(2023, 5, 22, 21, 9, 32, 447321)
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -564,7 +561,6 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 
 ### Get Tasks by Orchestration SHA
 
@@ -887,7 +883,5 @@ pipeline.undeploy()
 
      ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>apipipelinegsze</td></tr><tr><th>created</th> <td>2023-05-22 20:48:30.700499+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-22 20:48:31.357336+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>aac61b5a-e4f4-4ea3-9347-6482c330b5f5, 101b252a-623c-4185-a24d-ec00593dda79</td></tr><tr><th>steps</th> <td>apiorchestrationmodelgsze</td></tr></table>
-{{</table>}}
 

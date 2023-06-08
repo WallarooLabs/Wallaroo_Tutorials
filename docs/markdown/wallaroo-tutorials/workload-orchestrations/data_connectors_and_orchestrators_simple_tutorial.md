@@ -1,6 +1,6 @@
 This can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/workload-orchestrations/orchestration_sdk_simple_tutorial).
 
-## Pipeline Orchestrations Simple Tutorial
+## Wallaroo Connection and ML Workload Orchestration Simple Tutorial
 
 This tutorial provides a quick set of methods and examples regarding Wallaroo Connections and Wallaroo ML Workload Orchestration.  For full details, see the Wallaroo Documentation site.
 
@@ -55,7 +55,7 @@ import time
 import string
 import random
 
-# make a random 4 character prefix
+# make a random 4 character suffix
 suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 display(suffix)
 ```
@@ -68,7 +68,7 @@ The first step is to connect to Wallaroo through the Wallaroo client.  The Pytho
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
-If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
 # Login through local Wallaroo instance
@@ -150,9 +150,7 @@ housing_model_control = wl.upload_model(model_name, model_file_name).configure()
 pipeline.add_model_step(housing_model_control)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>simpleorchestrationpipelinedtzw</td></tr><tr><th>created</th> <td>2023-05-23 15:26:00.268667+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:26:00.268667+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9a5afba3-c664-4d57-8c08-fc072d3f549c</td></tr><tr><th>steps</th> <td></td></tr></table>
-{{</table>}}
 
 ```python
 #deploy the pipeline
@@ -161,9 +159,7 @@ pipeline.deploy()
 
     Waiting for deployment - this will take up to 45s ....................... ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>simpleorchestrationpipelinedtzw</td></tr><tr><th>created</th> <td>2023-05-23 15:26:00.268667+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:26:00.568944+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>24f5d5e9-59fe-4440-9e08-78c0003226df, 9a5afba3-c664-4d57-8c08-fc072d3f549c</td></tr><tr><th>steps</th> <td>simpleorchestrationmodeldtzw</td></tr></table>
-{{</table>}}
 
 ## Create Connections
 
@@ -187,7 +183,6 @@ We'll also create a data connection named `inference_results_connection` with ou
 get_connection(inference_connection_name, inference_connection_type, inference_connection_argument)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -209,7 +204,6 @@ get_connection(inference_connection_name, inference_connection_type, inference_c
     <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
-{{</table>}}
 
 ### Get Connection by Name
 
@@ -220,7 +214,6 @@ inference_source_connection = wl.get_connection(name=inference_connection_name)
 display(inference_source_connection)
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -242,7 +235,6 @@ display(inference_source_connection)
     <td>Linked Workspaces</td><td>[]</td>
   </tr>
 </table>
-{{</table>}}
 
 ### Add Connection to Workspace
 
@@ -259,9 +251,7 @@ workspace.add_connection(inference_connection_name)
 workspace.list_connections()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th><th>connection type</th><th>details</th><th>created at</th><th>linked workspaces</th></tr><tr><td>external_inference_connectiondtzw</td><td>HTTP</td><td>*****</td><td>2023-05-23T15:26:24.613152+00:00</td><td>['simpleorchestrationworkspacedtzw']</td></tr></table>
-{{</table>}}
 
 ## Wallaroo ML Workload Orchestration Example
 
@@ -323,9 +313,7 @@ while orchestration.status() != 'ready':
 wl.list_orchestrations()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>701c991a-a716-4bca-aa69-afd957ff189e</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>b4593d...d5a86f</td><td>2023-23-May 15:26:24</td><td>2023-23-May 15:27:13</td></tr></table>
-{{</table>}}
 
 ### Upload Orchestration via File Object
 
@@ -337,7 +325,6 @@ zipfile = open("./remote_inference/remote_inference.zip", "rb").read()
 wl.upload_orchestration(bytes_buffer=zipfile, file_name="inferencetest.zip", name="uploadedbytesdemo")
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table>
   <tr>
     <th>Field</th>
@@ -365,15 +352,12 @@ wl.upload_orchestration(bytes_buffer=zipfile, file_name="inferencetest.zip", nam
     <td>Updated At</td><td>2023-23-May 15:27:15</td>
   </tr>
 </table>
-{{</table>}}
 
 ```python
 wl.list_orchestrations()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>status</th><th>filename</th><th>sha</th><th>created at</th><th>updated at</th></tr><tr><td>701c991a-a716-4bca-aa69-afd957ff189e</td><td>None</td><td>ready</td><td>remote_inference.zip</td><td>b4593d...d5a86f</td><td>2023-23-May 15:26:24</td><td>2023-23-May 15:27:13</td></tr><tr><td>7683f0f9-13fa-4257-840a-8e1cf8b12089</td><td>uploadedbytesdemo</td><td>pending_packaging</td><td>inferencetest.zip</td><td>b4593d...d5a86f</td><td>2023-23-May 15:27:15</td><td>2023-23-May 15:27:15</td></tr></table>
-{{</table>}}
 
 ## Task Management Tutorial
 
@@ -447,8 +431,7 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -538,7 +521,6 @@ pipeline.logs(start_datetime = task_start, end_datetime = task_end)
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>492 rows × 4 columns</p>
 
 ## Scheduled Run Task Example
@@ -594,8 +576,7 @@ pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_ta
 
     Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
-{{<table "table table-striped table-bordered" >}}
-<table>
+<table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -685,7 +666,6 @@ pipeline.logs(start_datetime = scheduled_task_start, end_datetime = scheduled_ta
     </tr>
   </tbody>
 </table>
-{{</table>}}
 <p>492 rows × 4 columns</p>
 
 ## Kill Task
@@ -696,9 +676,7 @@ With our testing complete, we will kill the scheduled task so it will not run ag
 wl.list_tasks()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>d0b6a83c-a3a1-41f0-98c9-92422d2544c4</td><td>simple_inference_schedule</td><td>success</td><td>Scheduled Run</td><td>True</td><td>*/5 * * * *</td><td>2023-23-May 15:28:30</td><td>2023-23-May 15:28:31</td></tr><tr><td>74046e01-68ab-42a0-bcd2-3493cbc66576</td><td>simpletaskdemo</td><td>success</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-23-May 15:27:15</td><td>2023-23-May 15:27:26</td></tr></table>
-{{</table>}}
 
 ```python
 scheduled_task.kill()
@@ -710,9 +688,7 @@ scheduled_task.kill()
 wl.list_tasks()
 ```
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>id</th><th>name</th><th>last run status</th><th>type</th><th>active</th><th>schedule</th><th>created at</th><th>updated at</th></tr><tr><td>74046e01-68ab-42a0-bcd2-3493cbc66576</td><td>simpletaskdemo</td><td>success</td><td>Temporary Run</td><td>True</td><td>-</td><td>2023-23-May 15:27:15</td><td>2023-23-May 15:27:26</td></tr></table>
-{{</table>}}
 
 ## Cleanup
 
@@ -724,7 +700,5 @@ pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s ..................................... ok
 
-{{<table "table table-striped table-bordered" >}}
 <table><tr><th>name</th> <td>simpleorchestrationpipelinedtzw</td></tr><tr><th>created</th> <td>2023-05-23 15:26:00.268667+00:00</td></tr><tr><th>last_updated</th> <td>2023-05-23 15:26:00.568944+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>24f5d5e9-59fe-4440-9e08-78c0003226df, 9a5afba3-c664-4d57-8c08-fc072d3f549c</td></tr><tr><th>steps</th> <td>simpleorchestrationmodeldtzw</td></tr></table>
-{{</table>}}
 
