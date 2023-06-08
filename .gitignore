@@ -14,3 +14,4 @@ bigquery_service_account_key.json.example
 bigquery_service_account_input_key.json.example
 bigquery_service_account_output_key.json.example
 .vscode/launch.json
+wallaroo-model-cookbooks/computer-vision-mitochondia-imaging/downloaded_patches
