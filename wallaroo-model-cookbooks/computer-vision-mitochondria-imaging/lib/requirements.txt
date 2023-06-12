@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 torchvision==0.15.2
 torch==2.0.1
 opencv-python==4.7.0.72
@@ -11,3 +12,24 @@ tifffile==2023.4.12
 piexif==1.1.3
 keras
 tensorflow
+=======
+#requests
+torchvision
+torch
+opencv-python
+tiffile
+onnx
+onnxruntime
+imutils
+pytz
+ipywidgets
+numpy
+patchify
+piexif
+kafka-python
+pillow
+keras
+tensorflow
+tf2onnx
+gcloud
+>>>>>>> 911b9d5 (mitochondria tutorial updates)
