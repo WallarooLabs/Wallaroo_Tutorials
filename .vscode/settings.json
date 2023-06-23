@@ -9,6 +9,7 @@
         "LSTM",
         "mainpipeline",
         "modularizes",
+        "nodepools",
         "pyarrow",
         "quantile",
         "wallaroosdk"
