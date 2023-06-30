@@ -8,6 +8,7 @@ Each model flavor other than ONNX requires the following:
 * The model framework from the `wallaroo.framework` library.  The following frameworks are supported:
 
     ```python
+    from wallaroo.framework import Framework
     [e.value for e in Framework]
 
     ['onnx',
