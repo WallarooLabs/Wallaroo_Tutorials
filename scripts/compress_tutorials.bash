@@ -43,6 +43,7 @@ tutorials=(
     ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
     ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
     ["arbitrary-python"]=model_uploads/arbitrary-python
+    ["gpu-deployment"]=wallaroo-features/gpu-deployment
     )
 
 currentDirectory=$PWD
