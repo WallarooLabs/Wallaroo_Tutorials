@@ -264,20 +264,106 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "pipeline_api_log_tutorial.md"
     # }
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
+    #     "outputFile": "00_computer-vision-mitochondria-imaging-example.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/01_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
+    #     "outputFile": "01_computer-vision-mitochondria-imaging-example.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/02_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
+    #     "outputFile": "02_computer-vision-mitochondria-imaging-example.md"
+    # },
     {
-        "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
-        "outputFile": "00_computer-vision-mitochondria-imaging-example.md"
+        "inputFile": "model_uploads/arbitrary-python/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+        "outputFile": "00-arbitrary-python-vgg16-model-generation.md"
     },
     {
-        "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/01_computer-vision-mitochondria-imaging-example.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
-        "outputFile": "01_computer-vision-mitochondria-imaging-example.md"
+        "inputFile": "model_uploads/arbitrary-python/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+        "outputFile": "01-arbitrary-python-vgg16-model-deployment.md"
     },
     {
-        "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/02_computer-vision-mitochondria-imaging-example.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
-        "outputFile": "02_computer-vision-mitochondria-imaging-example.md"
+        "inputFile": "model_uploads/hugging_face/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
+        "outputFile": "wallaroo-api-upload-hf-zero_shot_classification.md"
+    },
+    {
+        "inputFile": "model_uploads/hugging_face/wallaroo-sdk-upload-hf-zero_shot_classification.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
+        "outputFile": "wallaroo-sdk-upload-hf-zero_shot_classification.md"
+    },
+    {
+        "inputFile": "model_uploads/keras/wallaroo-upload-keras_sequential_model_single_io.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/keras",
+        "outputFile": "wallaroo-upload-keras_sequential_model_single_io.md"
+    },
+    {
+        "inputFile": "model_uploads/python/python-step-dataframe-output-logging-example-sdk.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/python",
+        "outputFile": "python-step-dataframe-output-logging-example-sdk.md"
+    },
+    {
+        "inputFile": "model_uploads/pytorch/wallaroo-upload-pytorch-multi-input-output.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
+        "outputFile": "wallaroo-upload-pytorch-multi-input-output.md"
+    },
+    {
+        "inputFile": "model_uploads/pytorch/wallaroo-upload-pytorch-single-input-output.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
+        "outputFile": "wallaroo-upload-pytorch-single-input-output.md"
+    },
+    {
+        "inputFile": "model_uploads/sklearn/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
+    },
+    {
+        "inputFile": "model_uploads/sklearn/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
+    },
+    {
+        "inputFile": "model_uploads/sklearn/wallaroo-upload-sklearn-clustering-svm.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
+    },
+    {
+        "inputFile": "model_uploads/sklearn/wallaroo-upload-sklearn-linear-regression.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
+    },
+    {
+        "inputFile": "model_uploads/sklearn/wallaroo-upload-sklearn-logistic-regression.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
+    },
+    {
+        "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-classification.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+        "outputFile": "wallaroo-sdk-upload-xbg-classification.md"
+    },
+    {
+        "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-regressor.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+        "outputFile": "wallaroo-sdk-upload-xbg-regressor.md"
+    },
+    {
+        "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+        "outputFile": "wallaroo-sdk-upload-xbg-rf-classification.md"
+    }
+    ,
+    {
+        "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+        "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor.md"
     }
 
 ]
