@@ -4,4 +4,4 @@ import pandas as pd
 # column as `output`
 def wallaroo_json(data: pd.DataFrame):
     print(data)
-    return [{"output": [data["dense_2"].to_list()[0]]}]
+    return [{"output": [data["dense_2"].to_list()[0][0]]}]

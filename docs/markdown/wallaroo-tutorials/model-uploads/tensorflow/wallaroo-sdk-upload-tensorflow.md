@@ -12,7 +12,6 @@ In this notebook we will walk through uploading a Tensorflow model to a Wallaroo
   * [`wallaroo`](https://pypi.org/project/wallaroo/): The Wallaroo SDK. Included with the Wallaroo JupyterHub service by default.
   * [`pandas`](https://pypi.org/project/pandas/): Pandas, mainly used for Pandas DataFrame
   * [`pyarrow`](https://pypi.org/project/pyarrow/): PyArrow for Apache Arrow support
-  * [`polars`](https://pypi.org/project/polars/): Polars for DataFrame with native Apache Arrow support
 
 ## Tutorial Goals
 
