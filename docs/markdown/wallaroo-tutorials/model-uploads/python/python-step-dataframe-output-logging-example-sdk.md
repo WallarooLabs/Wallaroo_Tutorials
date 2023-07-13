@@ -1,6 +1,6 @@
-This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/python).
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/python-upload-tutorials).
 
-## Python Model Upload to Wallaroo with the Wallaroo SDK
+## Python Model Upload to Wallaroo
 
 Python scripts can be deployed to Wallaroo as Python Models.  These are treated like other models, and are used for:
 
@@ -63,6 +63,13 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
+
+wallarooPrefix = "doc-test"
+wallarooSuffix = "wallarooexample.ai"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ### Set Variables and Helper Functions

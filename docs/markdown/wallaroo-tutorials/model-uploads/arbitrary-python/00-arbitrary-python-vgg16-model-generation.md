@@ -1,4 +1,4 @@
-This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/arbitrary-python).
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/arbitrary-python-upload-tutorials).
 
 ## Wallaroo SDK Upload Arbitrary Python Tutorial: Generate Model
 

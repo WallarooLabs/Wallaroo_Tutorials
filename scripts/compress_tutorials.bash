@@ -30,7 +30,7 @@ tutorials=(
     ["notebooks_in_prod"]="notebooks_in_prod"
     ["anomaly_detection"]="wallaroo-testing-tutorials/anomaly_detection"
     ["shadow_deploy"]="wallaroo-testing-tutorials/shadow_deploy"
-    ["assays_model_insights"]="wallaroo-features/model_insights"
+    ["assay-model-insights"]="wallaroo-features/assay-model-insights"
     ["mlflow-tutorial"]="wallaroo-model-cookbooks/mlflow-tutorial"
     ["connection_api_bigquery_tutorial"]="workload-orchestrations/connection_api_bigquery_tutorial"
     ["orchestration_api_simple_tutorial"]="workload-orchestrations/orchestration_api_simple_tutorial"
@@ -42,8 +42,15 @@ tutorials=(
     ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
     ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
     ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
-    ["arbitrary-python"]=model_uploads/arbitrary-python
+    ["arbitrary-python-upload-tutorials"]=model_uploads/arbitrary-python-upload-tutorials
     ["gpu-deployment"]=wallaroo-features/gpu-deployment
+    ["hugging-face-upload-tutorials"]=model_uploads/hugging-face-upload-tutorials
+    ["keras-upload-tutorials"]=model_uploads/keras-upload-tutorials
+    ["python-shape-step-upload-tutorials"]=model_uploads/python-shape-step-upload-tutorials
+    ["pytorch-upload-tutorials"]=model_uploads/pytorch-upload-tutorials
+    ["sklearn-upload-tutorials"]=model_uploads/sklearn-upload-tutorials
+    ["tensorflow-upload-tutorials"]=model_uploads/tensorflow-upload-tutorials
+    ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
     )
 
 currentDirectory=$PWD
@@ -51,4 +58,3 @@ currentDirectory=$PWD
 for zip in "${!tutorials[@]}"; 
     do (cd ${tutorials[$zip]}/..;zip -r $currentDirectory/compress_tutorials/$zip.zip $zip);
 done
-

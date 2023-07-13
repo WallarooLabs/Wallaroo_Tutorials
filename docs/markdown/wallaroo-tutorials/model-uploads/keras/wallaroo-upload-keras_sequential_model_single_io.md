@@ -1,12 +1,32 @@
-## Keras Sequential Model Single IO
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/keras-upload-tutorials).
 
-The following example will:
+## Wallaroo Model Upload via the Wallaroo SDK: TensorFlow keras Sequential Single IO
 
-* Set the input and output schemas.
-* Upload a SKLearn Logistic Regression model to Wallaroo.
-* Deploy a pipeline with the uploaded SKLearn model as a pipeline step.
-* Perform a test inference.
-* Undeploy the pipeline.
+The following tutorial demonstrates how to upload a TensorFlow keras Sequential Single IO model to a Wallaroo instance.
+
+### Tutorial Goals
+
+Demonstrate the following:
+
+* Upload a TensorFlow keras Sequential Single IO to a Wallaroo instance.
+* Create a pipeline and add the model as a pipeline step.
+* Perform a sample inference.
+
+### Prerequisites
+
+* A Wallaroo version 2023.2.1 or above instance.
+
+### References
+
+* [Wallaroo MLOps API Essentials Guide: Model Upload and Registrations](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essentials-guide-model-uploads/)
+* [Wallaroo API Connection Guide](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/)
+* [DNS Integration Guide](https://staging.docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/)
+
+## Tutorial Steps
+
+### Import Libraries
+
+The first step is to import the libraries we'll be using.  These are included by default in the Wallaroo instance's JupyterHub service.
 
 ```python
 import json
@@ -17,6 +37,10 @@ import wallaroo
 from wallaroo.pipeline   import Pipeline
 from wallaroo.deployment_config import DeploymentConfigBuilder
 from wallaroo.framework import Framework
+from wallaroo.object import EntityNotFoundError
+
+import os
+os.environ["MODELS_ENABLED"] = "true"
 
 import pyarrow as pa
 import numpy as np
@@ -26,15 +50,32 @@ from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
 
 import datetime
-
-wl = wallaroo.Client(auth_type="sso", interactive=True)
 ```
 
-    Please log into the following URL in a web browser:
-    
-    	https://keycloak.autoscale-uat-ee.wallaroo.dev/auth/realms/master/device?user_code=UJEE-FFVG
-    
-    Login successful!
+### Open a Connection to Wallaroo
+
+The next step is connect to Wallaroo through the Wallaroo client.  The Python library is included in the Wallaroo install and available through the Jupyter Hub interface provided with your Wallaroo environment.
+
+This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
+
+If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  If logging in externally, update the `wallarooPrefix` and `wallarooSuffix` variables with the proper DNS information.  For more information on Wallaroo DNS settings, see the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/).
+
+```python
+wl = wallaroo.Client()
+
+wallarooPrefix = ""
+wallarooSuffix = "autoscale-uat-ee.wallaroo.dev"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
+```
+
+### Set Variables and Helper Functions
+
+We'll set the name of our workspace, pipeline, models and files.  Workspace names must be unique across the Wallaroo workspace.  For this, we'll add in a randomly generated 4 characters to the workspace name to prevent collisions with other users' workspaces.  If running this tutorial, we recommend hard coding the workspace name so it will function in the same workspace each time it's run.
+
+We'll set up some helper functions that will either use existing workspaces and pipelines, or create them if they do not already exist.
 
 ```python
 def get_workspace(name):
@@ -46,17 +87,50 @@ def get_workspace(name):
         workspace = wl.create_workspace(name)
     return workspace
 
-prefix = "keras-sequential-model-single-io"
+def get_pipeline(name):
+    try:
+        pipeline = wl.pipelines_by_name(name)[0]
+    except EntityNotFoundError:
+        pipeline = wl.build_pipeline(name)
+    return pipeline
+
+import string
+import random
+
+# make a random 4 character suffix to prevent overwriting other user's workspaces
+suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
+workspace_name = f'keras-sequential-single-io{suffix}'
+pipeline_name = f'keras-sequential-single-io'
+
+model_name = 'keras-sequential-single-io'
+model_file_name = 'models/model-auto-conversion_keras_single_io_keras_sequential_model.h5'
 ```
+
+### Create Workspace and Pipeline
+
+We will now create the Wallaroo workspace to store our model and set it as the current workspace.  Future commands will default to this workspace for pipeline creation, model uploads, etc.  We'll create our Wallaroo pipeline to deploy our model.
 
 ```python
-workspace = get_workspace(f"{prefix}-jch")
+workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
+
+pipeline = get_pipeline(pipeline_name)
 ```
 
-    {'name': 'keras-sequential-model-single-io-jch', 'id': 57, 'archived': False, 'created_by': '3cc9e92a-fa3c-4371-a7a7-487884df059e', 'created_at': '2023-06-20T13:54:12.895611+00:00', 'models': [], 'pipelines': []}
+### Configure Data Schemas
 
-## Data & Model Creation
+The following parameters are required for TensorFlow keras models.  Note that while some fields are considered as **optional** for the `upload_model` method, they are required for proper uploading of a TensorFlow Keras model to Wallaroo.
+
+| Parameter | Type | Description |
+|---|---|---|
+|`name` | `string` (*Required*) | The name of the model.  Model names are unique per workspace.  Models that are uploaded with the same name are assigned as a new **version** of the model. |
+|`path` | `string` (*Required*) | The path to the model file being uploaded. 
+|`framework` |`string` (*Upload Method Optional, TensorFlow keras model Required*) | Set as the `Framework.KERAS`. |
+|`input_schema` | `pyarrow.lib.Schema` (*Upload Method Optional, TensorFlow Keras model Required*) | The input schema in Apache Arrow schema format. |
+|`output_schema` | `pyarrow.lib.Schema` (*Upload Method Optional, TensorFlow Keras model Required*) | The output schema in Apache Arrow schema format. |
+| `convert_wait` | `bool` (*Upload Method Optional, TensorFlow model Optional*) (*Default: True*) | <ul><li>**True**: Waits in the script for the model conversion completion.</li><li>**False**:  Proceeds with the script without waiting for the model conversion process to display complete. |
+
+Once the upload process starts, the model is containerized by the Wallaroo instance.  This process may take up to 10 minutes.
 
 ```python
 input_schema = pa.schema([
@@ -67,32 +141,64 @@ output_schema = pa.schema([
 ])
 ```
 
-## Upload model
+### Upload Model
+
+The model will be uploaded with the framework set as `Framework.KERAS`.
 
 ```python
-model_upload_start = datetime.datetime.now()
+framework=Framework.KERAS
 
-model = wl.upload_model(f"{prefix}", 
-                        'models/model-auto-conversion_keras_single_io_keras_sequential_model.h5', 
-                        framework=Framework.KERAS, 
+model = wl.upload_model(model_name, 
+                        model_file_name, 
+                        framework=framework, 
                         input_schema=input_schema, 
                         output_schema=output_schema)
-model_upload_end = datetime.datetime.now()
 model
 ```
 
     Waiting for model conversion... It may take up to 10.0min.
-    Model is Pending conversion........Converting...................Ready.
+    Model is Pending conversion.Converting..Pending conversion.Converting.............Ready.
 
-    {'name': 'keras-sequential-model-single-io', 'version': 'b4b4b490-fe21-4f3c-8464-d24c9a2c8049', 'file_name': 'model-auto-conversion_keras_single_io_keras_sequential_model.h5', 'image_path': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.3.0-main-3367', 'last_update_time': datetime.datetime(2023, 6, 20, 14, 8, 14, 884034, tzinfo=tzutc())}
+<table>
+        <tr>
+          <td>Name</td>
+          <td>keras-sequential-single-io</td>
+        </tr>
+        <tr>
+          <td>Version</td>
+          <td>79e34aa4-ce71-4c3a-90fc-79bfa0a40052</td>
+        </tr>
+        <tr>
+          <td>File Name</td>
+          <td>model-auto-conversion_keras_single_io_keras_sequential_model.h5</td>
+        </tr>
+        <tr>
+          <td>SHA</td>
+          <td>f7e49538e38bebe066ce8df97bac8be239ae8c7d2733e500c8cd633706ae95a8</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>ready</td>
+        </tr>
+        <tr>
+          <td>Image Path</td>
+          <td>proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.3.0-main-3509</td>
+        </tr>
+        <tr>
+          <td>Updated At</td>
+          <td>2023-13-Jul 17:50:07</td>
+        </tr>
+      </table>
 
 ```python
-display(model_upload_end - model_upload_start)
+model.config().runtime()
 ```
 
-    datetime.timedelta(seconds=135, microseconds=652975)
+    'mlflow'
 
-## Configure model and pipeline
+### Deploy Pipeline
+
+The model is uploaded and ready for use.  We'll add it as a step in our pipeline, then deploy the pipeline.  For this example we're allocated 0.25 cpu and 4 Gi RAM to the pipeline through the pipeline's deployment configuration.
 
 ```python
 deployment_config = DeploymentConfigBuilder() \
@@ -101,22 +207,43 @@ deployment_config = DeploymentConfigBuilder() \
 ```
 
 ```python
-pipeline_name = f"{prefix}-pipeline"
-pipeline = wl.build_pipeline(pipeline_name)
+# clear the pipeline if used in a previous tutorial
+pipeline.undeploy()
+pipeline.clear()
 pipeline.add_model_step(model)
-```
 
-<table><tr><th>name</th> <td>keras-sequential-model-single-io-pipeline</td></tr><tr><th>created</th> <td>2023-06-20 13:56:53.710879+00:00</td></tr><tr><th>last_updated</th> <td>2023-06-20 14:09:33.632124+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e5c2a9d0-9420-4fba-be63-581b37984c40, c425ae54-fe4a-4ec5-9b57-93ab4545d58b, 38ec1b19-372d-4ca1-87bc-fcc218d93701, 8d7093fa-6d25-4194-bfa0-4e3e62f79494, 648c6b38-2452-4177-b073-6c040a9c897f, 900ce28e-a2f6-4397-88ad-05a22ebee388</td></tr><tr><th>steps</th> <td>keras-sequential-model-single-io</td></tr></table>
-
-```python
 pipeline.deploy(deployment_config=deployment_config)
+pipeline.status()
 ```
 
-    Waiting for deployment - this will take up to 90s .......................... ok
+    {'status': 'Running',
+     'details': [],
+     'engines': [{'ip': '10.244.9.178',
+       'name': 'engine-75cb64bc94-lc74f',
+       'status': 'Running',
+       'reason': None,
+       'details': [],
+       'pipeline_statuses': {'pipelines': [{'id': 'keras-sequential-single-io',
+          'status': 'Running'}]},
+       'model_statuses': {'models': [{'name': 'keras-sequential-single-io',
+          'version': '79e34aa4-ce71-4c3a-90fc-79bfa0a40052',
+          'sha': 'f7e49538e38bebe066ce8df97bac8be239ae8c7d2733e500c8cd633706ae95a8',
+          'status': 'Running'}]}}],
+     'engine_lbs': [{'ip': '10.244.9.179',
+       'name': 'engine-lb-584f54c899-96vb6',
+       'status': 'Running',
+       'reason': None,
+       'details': []}],
+     'sidekicks': [{'ip': '10.244.9.180',
+       'name': 'engine-sidekick-keras-sequential-single-io-268-84cff895cf-bm2tl',
+       'status': 'Running',
+       'reason': None,
+       'details': [],
+       'statuses': '\n'}]}
 
-<table><tr><th>name</th> <td>keras-sequential-model-single-io-pipeline</td></tr><tr><th>created</th> <td>2023-06-20 13:56:53.710879+00:00</td></tr><tr><th>last_updated</th> <td>2023-06-20 14:09:35.178169+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>77cd8df4-1794-4485-b9f4-9e3926db0422, e5c2a9d0-9420-4fba-be63-581b37984c40, c425ae54-fe4a-4ec5-9b57-93ab4545d58b, 38ec1b19-372d-4ca1-87bc-fcc218d93701, 8d7093fa-6d25-4194-bfa0-4e3e62f79494, 648c6b38-2452-4177-b073-6c040a9c897f, 900ce28e-a2f6-4397-88ad-05a22ebee388</td></tr><tr><th>steps</th> <td>keras-sequential-model-single-io</td></tr></table>
+### Run Inference
 
-## Inference
+A sample inference will be run.  First the pandas DataFrame used for the inference is created, then the inference run through the pipeline's `infer` method.
 
 ```python
 input_data = np.random.rand(10, 10)
@@ -136,43 +263,43 @@ mock_dataframe
   <tbody>
     <tr>
       <th>0</th>
-      <td>[0.8948402037930523, 0.8236923767258912, 0.669...</td>
+      <td>[0.5809853116232783, 0.14701285145269583, 0.58...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[0.2889161093430169, 0.02527054036324672, 0.95...</td>
+      <td>[0.7257919427827948, 0.7589800713851653, 0.297...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[0.8060020370068443, 0.8821186682883927, 0.559...</td>
+      <td>[0.3764542634917982, 0.5494748793973108, 0.485...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[0.8883645451955529, 0.19204670320917383, 0.09...</td>
+      <td>[0.5025570851921953, 0.8837007217828465, 0.406...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>[0.05892172677764429, 0.8634608360310956, 0.44...</td>
+      <td>[0.0866396068940275, 0.10670979528669655, 0.09...</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>[0.4010007936827573, 0.7701734803672011, 0.033...</td>
+      <td>[0.8860315511881905, 0.6706861365257704, 0.412...</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>[0.6251592472839257, 0.8087976037612621, 0.866...</td>
+      <td>[0.37994954016981175, 0.7429705751348403, 0.12...</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>[0.14250389929667917, 0.18866998852295247, 0.8...</td>
+      <td>[0.49027013691203447, 0.7105289734919781, 0.99...</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>[0.2247017624310551, 0.7870476471329036, 0.932...</td>
+      <td>[0.4446469438043267, 0.09139454740740094, 0.24...</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>[0.07932631109734134, 0.9855873946298688, 0.99...</td>
+      <td>[0.932824358657356, 0.3388034065847041, 0.0416...</td>
     </tr>
   </tbody>
 </table>
@@ -194,85 +321,84 @@ pipeline.infer(mock_dataframe)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.8948402038, 0.8236923767, 0.6692281767, 0.6...</td>
-      <td>[0.022978410124778748, 0.023622576147317886, 0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.5809853116, 0.1470128515, 0.5859677386, 0.2...</td>
+      <td>[0.025315184146165848, 0.023196307942271233, 0...</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.2889161093, 0.0252705404, 0.9563431751, 0.3...</td>
-      <td>[0.018787803128361702, 0.03189399093389511, 0....</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.7257919428, 0.7589800714, 0.297258173, 0.39...</td>
+      <td>[0.022579584270715714, 0.026824792847037315, 0...</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.806002037, 0.8821186683, 0.5597011509, 0.29...</td>
-      <td>[0.028999775648117065, 0.020044947043061256, 0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.3764542635, 0.5494748794, 0.4852001553, 0.8...</td>
+      <td>[0.02744304947555065, 0.03327963128685951, 0.0...</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.8883645452, 0.1920467032, 0.0982324665, 0.6...</td>
-      <td>[0.024776356294751167, 0.02724037691950798, 0....</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.5025570852, 0.8837007218, 0.4064710644, 0.5...</td>
+      <td>[0.03851581737399101, 0.021599330008029938, 0....</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.0589217268, 0.863460836, 0.4416552874, 0.70...</td>
-      <td>[0.02560083381831646, 0.025948569178581238, 0....</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.0866396069, 0.1067097953, 0.0918865633, 0.2...</td>
+      <td>[0.020835522562265396, 0.034067943692207336, 0...</td>
       <td>0</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.4010007937, 0.7701734804, 0.0330423197, 0.7...</td>
-      <td>[0.018146220594644547, 0.031117431819438934, 0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.8860315512, 0.6706861365, 0.4123840879, 0.2...</td>
+      <td>[0.034137945622205734, 0.01922944001853466, 0....</td>
       <td>0</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.6251592473, 0.8087976038, 0.8664463129, 0.5...</td>
-      <td>[0.02749345824122429, 0.03163997083902359, 0.0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.3799495402, 0.7429705751, 0.1207460912, 0.3...</td>
+      <td>[0.03986137732863426, 0.019290560856461525, 0....</td>
       <td>0</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.1425038993, 0.1886699885, 0.8979911291, 0.2...</td>
-      <td>[0.030713597312569618, 0.030822383239865303, 0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.4902701369, 0.7105289735, 0.9948842471, 0.2...</td>
+      <td>[0.026285773143172264, 0.02646280638873577, 0....</td>
       <td>0</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.2247017624, 0.7870476471, 0.932017211, 0.66...</td>
-      <td>[0.033133771270513535, 0.02262025512754917, 0....</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.4446469438, 0.0913945474, 0.24660973, 0.456...</td>
+      <td>[0.023244783282279968, 0.033836156129837036, 0...</td>
       <td>0</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>2023-06-20 14:17:18.475</td>
-      <td>[0.0793263111, 0.9855873946, 0.9910993908, 0.0...</td>
-      <td>[0.036864764988422394, 0.021373195573687553, 0...</td>
+      <td>2023-07-13 17:50:42.609</td>
+      <td>[0.9328243587, 0.3388034066, 0.0416730168, 0.4...</td>
+      <td>[0.02200852520763874, 0.027223799377679825, 0....</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
 
+### Undeploy Pipelines
+
+With the tutorial complete, the pipeline is undeployed to return the resources back to the cluster.
+
 ```python
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s ...................................... ok
+<table><tr><th>name</th> <td>keras-sequential-single-io</td></tr><tr><th>created</th> <td>2023-07-13 17:50:13.553180+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 17:50:13.553180+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>e04712da-19d6-40d1-88d3-2dab8ab950e1</td></tr><tr><th>steps</th> <td>keras-sequential-single-io</td></tr></table>
 
-<table><tr><th>name</th> <td>keras-sequential-model-single-io-pipeline</td></tr><tr><th>created</th> <td>2023-06-20 13:56:53.710879+00:00</td></tr><tr><th>last_updated</th> <td>2023-06-20 14:09:35.178169+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>77cd8df4-1794-4485-b9f4-9e3926db0422, e5c2a9d0-9420-4fba-be63-581b37984c40, c425ae54-fe4a-4ec5-9b57-93ab4545d58b, 38ec1b19-372d-4ca1-87bc-fcc218d93701, 8d7093fa-6d25-4194-bfa0-4e3e62f79494, 648c6b38-2452-4177-b073-6c040a9c897f, 900ce28e-a2f6-4397-88ad-05a22ebee388</td></tr><tr><th>steps</th> <td>keras-sequential-model-single-io</td></tr></table>
-
-```python
-
-```

@@ -1,4 +1,4 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/tensorflow).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/tensorflow-upload-tutorials).
 
 ## Wallaroo SDK Upload Tutorial: Tensorflow
 
@@ -40,6 +40,10 @@ from wallaroo.framework import Framework
 # to display dataframe tables
 from IPython.display import display
 # used to display dataframe information without truncating
+
+import os
+os.environ["MODELS_ENABLED"] = "true"
+
 import pandas as pd
 pd.set_option('display.max_colwidth', None)
 import pyarrow as pa
@@ -49,6 +53,13 @@ import pyarrow as pa
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
+
+wallarooPrefix = ""
+wallarooSuffix = "autoscale-uat-ee.wallaroo.dev"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ## Create the Workspace
@@ -66,7 +77,7 @@ suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 workspace_name = f'tensorflowuploadexampleworkspace{suffix}'
 pipeline_name = f'tensorflowuploadexample{suffix}'
 model_name = f'tensorflowuploadexample{suffix}'
-model_file_name = './alohacnnlstm.zip'
+model_file_name = './models/alohacnnlstm.zip'
 ```
 
 ```python
@@ -96,7 +107,7 @@ aloha_pipeline = get_pipeline(pipeline_name)
 aloha_pipeline
 ```
 
-<table><tr><th>name</th> <td>tensorflowuploadexamplelbxx</td></tr><tr><th>created</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>8aa516af-51a2-4f45-ac47-93d40bb0df10</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>tensorflowuploadexampletxdg</td></tr><tr><th>created</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>755813ea-cb7f-4e9e-9075-2f5eea0f883f</td></tr><tr><th>steps</th> <td></td></tr></table>
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
 
@@ -104,7 +115,7 @@ We can verify the workspace is created the current default workspace with the `g
 wl.get_current_workspace()
 ```
 
-    {'name': 'tensorflowuploadexampleworkspacelbxx', 'id': 396, 'archived': False, 'created_by': 'd9a72bd9-2a1c-44dd-989f-3c7c15130885', 'created_at': '2023-07-12T16:27:48.123906+00:00', 'models': [], 'pipelines': [{'name': 'tensorflowuploadexamplelbxx', 'create_time': datetime.datetime(2023, 7, 12, 16, 27, 49, 32073, tzinfo=tzutc()), 'definition': '[]'}]}
+    {'name': 'tensorflowuploadexampleworkspacetxdg', 'id': 435, 'archived': False, 'created_by': 'd9a72bd9-2a1c-44dd-989f-3c7c15130885', 'created_at': '2023-07-13T18:29:15.359159+00:00', 'models': [], 'pipelines': [{'name': 'tensorflowuploadexampletxdg', 'create_time': datetime.datetime(2023, 7, 13, 18, 29, 16, 306846, tzinfo=tzutc()), 'definition': '[]'}]}
 
 # Upload the Models
 
@@ -121,6 +132,24 @@ The following parameters are required for TensorFlow models.  Tensorflow models 
 |`output_schema` | `pyarrow.lib.Schema` (*Optional*) | The output schema in Apache Arrow schema format. |
 | `convert_wait` | `bool` (*Optional*) (*Default: True*) | Not required for native runtimes. <ul><li>**True**: Waits in the script for the model conversion completion.</li><li>**False**:  Proceeds with the script without waiting for the model conversion process to display complete. |
 
+### TensorFlow File Format
+
+TensorFlow models are .zip file of the SavedModel format.  For example, the Aloha sample TensorFlow model is stored in the directory `alohacnnlstm`:
+
+```bash
+├── saved_model.pb
+└── variables
+    ├── variables.data-00000-of-00002
+    ├── variables.data-00001-of-00002
+    └── variables.index
+```
+
+This is compressed into the .zip file `alohacnnlstm.zip` with the following command:
+
+```python
+zip -r alohacnnlstm.zip alohacnnlstm/
+```
+
 ```python
 model = wl.upload_model(model_name, model_file_name, Framework.TENSORFLOW).configure("tensorflow")
 ```
@@ -135,13 +164,13 @@ We will tell the deployment we are using a tensorflow model and give the deploym
 aloha_pipeline.add_model_step(model)
 ```
 
-<table><tr><th>name</th> <td>tensorflowuploadexamplelbxx</td></tr><tr><th>created</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>8aa516af-51a2-4f45-ac47-93d40bb0df10</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>tensorflowuploadexampletxdg</td></tr><tr><th>created</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>755813ea-cb7f-4e9e-9075-2f5eea0f883f</td></tr><tr><th>steps</th> <td></td></tr></table>
 
 ```python
 aloha_pipeline.deploy()
 ```
 
-<table><tr><th>name</th> <td>tensorflowuploadexamplelbxx</td></tr><tr><th>created</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-12 16:27:58.518207+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1f7969ff-b735-4e9f-a1ed-1b5e0c362596, 8aa516af-51a2-4f45-ac47-93d40bb0df10</td></tr><tr><th>steps</th> <td>tensorflowuploadexamplelbxx</td></tr></table>
+<table><tr><th>name</th> <td>tensorflowuploadexampletxdg</td></tr><tr><th>created</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 18:29:21.045528+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ea2f9aba-a21f-46c1-8dc6-677147af6e1e, 755813ea-cb7f-4e9e-9075-2f5eea0f883f</td></tr><tr><th>steps</th> <td>tensorflowuploadexampletxdg</td></tr></table>
 
 We can verify that the pipeline is running and list what models are associated with it.
 
@@ -151,19 +180,19 @@ aloha_pipeline.status()
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.9.38',
-       'name': 'engine-595f7f54d4-x22pj',
+     'engines': [{'ip': '10.244.9.216',
+       'name': 'engine-57fb6bd474-tm9xr',
        'status': 'Running',
        'reason': None,
        'details': [],
-       'pipeline_statuses': {'pipelines': [{'id': 'tensorflowuploadexamplelbxx',
+       'pipeline_statuses': {'pipelines': [{'id': 'tensorflowuploadexampletxdg',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'tensorflowuploadexamplelbxx',
-          'version': '96703b6a-c7da-4c78-8fa1-109f6d65f9c7',
+       'model_statuses': {'models': [{'name': 'tensorflowuploadexampletxdg',
+          'version': 'd3e73b1e-31d0-4f27-89d0-a135814c4cfe',
           'sha': 'd71d9ffc61aaac58c2b1ed70a2db13d1416fb9d3f5b891e5e4e2e97180fe22f8',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.9.37',
-       'name': 'engine-lb-584f54c899-qq6wt',
+     'engine_lbs': [{'ip': '10.244.9.217',
+       'name': 'engine-lb-584f54c899-9bf5d',
        'status': 'Running',
        'reason': None,
        'details': []}],
@@ -252,7 +281,7 @@ display(result.loc[:, ["time","out.main"]])
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-12 16:28:12.843</td>
+      <td>2023-07-13 18:29:32.824</td>
       <td>[0.997564]</td>
     </tr>
   </tbody>
@@ -266,5 +295,5 @@ When finished with our tests, we will undeploy the pipeline so we have the Kuber
 aloha_pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>tensorflowuploadexamplelbxx</td></tr><tr><th>created</th> <td>2023-07-12 16:27:49.032073+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-12 16:27:58.518207+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1f7969ff-b735-4e9f-a1ed-1b5e0c362596, 8aa516af-51a2-4f45-ac47-93d40bb0df10</td></tr><tr><th>steps</th> <td>tensorflowuploadexamplelbxx</td></tr></table>
+<table><tr><th>name</th> <td>tensorflowuploadexampletxdg</td></tr><tr><th>created</th> <td>2023-07-13 18:29:16.306846+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 18:29:21.045528+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ea2f9aba-a21f-46c1-8dc6-677147af6e1e, 755813ea-cb7f-4e9e-9075-2f5eea0f883f</td></tr><tr><th>steps</th> <td>tensorflowuploadexampletxdg</td></tr></table>
 
