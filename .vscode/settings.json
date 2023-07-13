@@ -5,6 +5,7 @@
         "DBFS",
         "iopath",
         "ipykernel",
+        "Keras",
         "Keycloak",
         "LSTM",
         "mainpipeline",
