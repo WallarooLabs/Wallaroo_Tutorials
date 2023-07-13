@@ -358,12 +358,16 @@ fileList = [
         "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
         "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
         "outputFile": "wallaroo-sdk-upload-xbg-rf-classification.md"
-    }
-    ,
+    },
     {
         "inputFile": "model_uploads/xgboost/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
         "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
         "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor.md"
+    },
+    {
+        "inputFile": "model_uploads/tensorflow/wallaroo-upload-tensorflow.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/tensorflow",
+        "outputFile": "wallaroo-sdk-upload-tensorflow.md"
     }
 
 ]
