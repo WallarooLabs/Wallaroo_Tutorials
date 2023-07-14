@@ -224,36 +224,36 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/testing-tutorials/",
     #     "outputFile": "house-price-model-saga.md"
     # },
-    # {
-    #     "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "connection_api_bigquery_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "workload-orchestrations/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "data_orchestrators_api_simple_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "workload-orchestrations/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
-    # },
-    # {
-    #     "inputFile": "workload-orchestrations/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-    #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
-    # },
+    {
+        "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "connection_api_bigquery_tutorial.md"
+    },
+    {
+        "inputFile": "workload-orchestrations/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "data_orchestrators_api_simple_tutorial.md"
+    },
+    {
+        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
+    },
+    {
+        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
+    },
+    {
+        "inputFile": "workload-orchestrations/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
+    },
+    {
+        "inputFile": "workload-orchestrations/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+        "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -374,31 +374,31 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "wallaroo-llm-with-gpu-demonstration.md"
     # },
-    {
-        "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-        "outputFile": "00_multiple_replicas_forecast.md"
-    },
-    {
-        "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-        "outputFile": "01_multiple_replicas_forecast.md"
-    },
-    {
-        "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-        "outputFile": "02_multiple_replicas_forecast.md"
-    },
-    {
-        "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/03_multiple_replicas_forecast.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-        "outputFile": "03_multiple_replicas_forecast.md"
-    },
-    {
-        "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/04_multiple_replicas_forecast.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-        "outputFile": "04_multiple_replicas_forecast.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
+    #     "outputFile": "00_multiple_replicas_forecast.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
+    #     "outputFile": "01_multiple_replicas_forecast.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
+    #     "outputFile": "02_multiple_replicas_forecast.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/03_multiple_replicas_forecast.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
+    #     "outputFile": "03_multiple_replicas_forecast.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/04_multiple_replicas_forecast.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
+    #     "outputFile": "04_multiple_replicas_forecast.md"
+    # },
 
 ]
 
