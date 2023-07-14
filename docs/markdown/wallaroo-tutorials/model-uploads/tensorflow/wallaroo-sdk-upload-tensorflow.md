@@ -1,4 +1,4 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/tensorflow-upload-tutorials).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_uploads/tensorflow-upload-tutorials).
 
 ## Wallaroo SDK Upload Tutorial: Tensorflow
 
@@ -53,12 +53,6 @@ import pyarrow as pa
 
 wl = wallaroo.Client()
 
-wallarooPrefix = ""
-wallarooSuffix = "autoscale-uat-ee.wallaroo.dev"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ## Create the Workspace

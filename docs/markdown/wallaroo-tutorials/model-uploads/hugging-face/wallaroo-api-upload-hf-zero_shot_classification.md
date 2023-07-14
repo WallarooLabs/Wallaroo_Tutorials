@@ -1,4 +1,4 @@
-The Wallaroo 101 tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/hugging-face-upload-tutorials).
+The Wallaroo 101 tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_uploads/hugging-face-upload-tutorials).
 
 ## Wallaroo Model Upload via MLops API: Hugging Face Zero Shot Classification
 
@@ -18,9 +18,9 @@ Demonstrate the following:
 
 ### References
 
-* [Wallaroo MLOps API Essentials Guide: Model Upload and Registrations](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essentials-guide-model-uploads/)
-* [Wallaroo API Connection Guide](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/)
-* [DNS Integration Guide](https://staging.docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/)
+* [Wallaroo MLOps API Essentials Guide: Model Upload and Registrations](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essentials-guide-model-uploads/)
+* [Wallaroo API Connection Guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/)
+* [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/)
 
 ## Tutorial Steps
 
@@ -44,7 +44,7 @@ import pandas as pd
 
 ### Connect to Wallaroo
 
-To perform the various Wallaroo MLOps API requests, we will use the Wallaroo SDK to generate the necessary tokens.  For details on other methods of requesting and using authentication tokens with the Wallaroo MLOps API, see the [Wallaroo API Connection Guide](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/).
+To perform the various Wallaroo MLOps API requests, we will use the Wallaroo SDK to generate the necessary tokens.  For details on other methods of requesting and using authentication tokens with the Wallaroo MLOps API, see the [Wallaroo API Connection Guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-connection-guide/).
 
 This is accomplished using the `wallaroo.Client()` command, which provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Store the connection into a variable that can be referenced later.
 
@@ -66,7 +66,7 @@ The following variables will be set for the rest of the tutorial to set the foll
 
 To allow this tutorial to be run multiple times or by multiple users in the same Wallaroo instance, a random 4 character prefix will be added to the workspace, pipeline, and model.
 
-Verify that the DNS prefix and suffix match the Wallaroo instance used for this tutorial.  See the [DNS Integration Guide](https://staging.docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/) for more details.
+Verify that the DNS prefix and suffix match the Wallaroo instance used for this tutorial.  See the [DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/) for more details.
 
 ```python
 import string
@@ -141,7 +141,7 @@ workspaceId = response['workspace_id']
 
 #### Set the Schemas
 
-The input and output schemas will be defined according to the [Wallaroo Hugging Face schema requirements](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-hugging-face/).  The inputs are then base64 encoded for attachment in the API request.
+The input and output schemas will be defined according to the [Wallaroo Hugging Face schema requirements](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-hugging-face/).  The inputs are then base64 encoded for attachment in the API request.
 
 ```python
 input_schema = pa.schema([

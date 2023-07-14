@@ -1,4 +1,4 @@
-This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/arbitrary-python-upload-tutorials).
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_uploads/arbitrary-python-upload-tutorials).
 
 ## Arbitrary Python Tutorial Deploy Model in Wallaroo Upload and Deploy
 
@@ -35,7 +35,7 @@ All other methods used for the functioning of these classes are optional, as lon
 
 ### References
 
-* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
+* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
 
 ## Tutorial Steps
 
@@ -77,11 +77,7 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 wl = wallaroo.Client()
 ```
 
-    Please log into the following URL in a web browser:
-    
-    	https://keycloak.autoscale-uat-ee.wallaroo.dev/auth/realms/master/device?user_code=CCCB-KZYC
-    
-    Login successful!
+
 
 ### Set Variables and Helper Functions
 

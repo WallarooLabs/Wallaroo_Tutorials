@@ -1,4 +1,4 @@
-This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/arbitrary-python-upload-tutorials).
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_uploads/arbitrary-python-upload-tutorials).
 
 ## Wallaroo SDK Upload Arbitrary Python Tutorial: Generate Model
 
@@ -35,7 +35,7 @@ All other methods used for the functioning of these classes are optional, as lon
 
 ### References
 
-* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
+* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
 
 ## VGG16 Model Training Steps
 
@@ -271,7 +271,7 @@ class ImageClusteringBuilder(InferenceBuilder):
 
 As a last step we need to create a `requirements.txt` file and save it under our `vgg_clustering/`. The file should contain all the necessary pip requirements needed to run the inference. It will have this data inside.
 
-* **IMPORTANT NOTE**:  Verify that the library versions match the [required model versions and libraries for Wallaroo](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/).  Otherwise the deployed models 
+* **IMPORTANT NOTE**:  Verify that the library versions match the [required model versions and libraries for Wallaroo](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/).  Otherwise the deployed models 
 
 ```txt
 tensorflow==2.8.0

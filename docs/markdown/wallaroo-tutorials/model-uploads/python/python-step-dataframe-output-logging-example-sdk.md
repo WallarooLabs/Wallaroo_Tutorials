@@ -1,4 +1,4 @@
-This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/model_uploads/python-upload-tutorials).
+This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/model_uploads/python-upload-tutorials).
 
 ## Python Model Upload to Wallaroo
 
@@ -25,8 +25,8 @@ This tutorial will:
 
 ### References
 
-* [Wallaroo SDK Essentials Guide: Pipeline Management](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/)
-* [Python Models](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-python/)
+* [Wallaroo SDK Essentials Guide: Pipeline Management](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/)
+* [Python Models](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-python/)
 
 ## Tutorial Steps
 
@@ -63,13 +63,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-
-wallarooPrefix = "doc-test"
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}.api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}.keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ### Set Variables and Helper Functions
@@ -117,8 +110,8 @@ For our tutorial, we'll create the workspace, set it as the current workspace, t
 
 #### Create New Workspace References
 
-* [Wallaroo SDK Essentials Guide: Workspace Management](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-workspace/)
-* [Wallaroo SDK Essentials Guide: Pipeline Management](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/)
+* [Wallaroo SDK Essentials Guide: Workspace Management](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-workspace/)
+* [Wallaroo SDK Essentials Guide: Pipeline Management](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/)
 
 ```python
 workspace = get_workspace(workspace_name)
@@ -129,7 +122,7 @@ pipeline = get_pipeline(pipeline_name)
 pipeline
 ```
 
-<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-06 20:04:06.867667+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-06 20:12:17.869364+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>4947555a-048c-4eaf-8231-67c992378b9d, 3511dd65-7ce8-4f5d-b6ba-7dd6a8fc2362, f1638150-e065-486d-99f3-7bbc312329b6, 84373e6e-3a4d-4f36-a764-d1a1bd6efff3, 30bd9f70-f61e-4dfc-ae99-842ca7afad4f, 25a64e98-29be-4121-991a-eece36e54447</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
+<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-13 17:24:56.476527+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 17:27:07.599003+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>58a293f0-30ab-43f4-a22a-be2d98ae6850, bbc3f22f-a2de-4f33-bc7a-0470db060b0e, 0d5be505-57dd-4098-ba81-896083633364, dbd52766-9448-4f1c-938f-2e38e7b7ce1c</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
 
 ### Model Descriptions
 
@@ -145,7 +138,7 @@ For the Python step, it contains the method `wallaroo_json` as the entry point u
 # column as `output`
 def wallaroo_json(data: pd.DataFrame):
     print(data)
-    return [{"output": [data["dense_2"].to_list()[0]]}]
+    return [{"output": [data["dense_2"].to_list()[0][0]]}]
 ```
 
 As seen from the description, all those function will do it take the DataFrame output of the house price model, and output a DataFrame replacing the first element in the list from column `dense_2` with `output`.
@@ -159,8 +152,8 @@ Both of these models will be uploaded to our current workspace using the method 
 
 #### Upload Model References
 
-* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: ONNX](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-onnx/)
-* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Python Models](https://staging.docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-python/)
+* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: ONNX](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-onnx/)
+* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Python Models](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-upload-python/)
 
 ```python
 house_price_model = (wl.upload_model(onnx_model_name, 
@@ -210,7 +203,7 @@ pipeline.add_model_step(house_price_model)
 pipeline.deploy(deployment_config=deployment_config)
 ```
 
-<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-06 20:16:21.940611+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-06 20:16:21.940611+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>c66aae0f-2ead-421c-87a2-9de2d97bd371</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
+<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-13 21:58:10.584660+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 21:58:10.584660+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a4b11320-1867-4801-94bb-66ca5c625502</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
 
 ```python
 ## sample inference data
@@ -250,7 +243,7 @@ display(results)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-06 20:16:33.526</td>
+      <td>2023-07-13 21:58:21.397</td>
       <td>[0.6878518042, 0.1760734021, -0.869514083, 0.3...</td>
       <td>[12.886651]</td>
       <td>0</td>
@@ -267,8 +260,12 @@ pipeline.clear()
 pipeline.add_model_step(step)
 
 pipeline.deploy(deployment_config=deployment_config)
+```
 
-data = pd.DataFrame.from_dict({"dense_2": [[12.886651]]})
+<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-13 21:58:10.584660+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 21:59:47.248922+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>1b0969ac-d0cb-42f0-96ff-a5b4a1cb5702, a75268c3-7a5d-4c27-b3e9-3ae79ad46363, a4b11320-1867-4801-94bb-66ca5c625502</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
+
+```python
+data = pd.DataFrame.from_dict({"dense_2": [12.886651]})
 python_result = pipeline.infer(data)
 display(python_result)
 ```
@@ -286,8 +283,8 @@ display(python_result)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-06 20:16:36.709</td>
-      <td>[12.886651]</td>
+      <td>2023-07-13 21:59:53.065</td>
+      <td>12.886651</td>
       <td>[12.886651]</td>
       <td>0</td>
     </tr>
@@ -304,6 +301,7 @@ Now we'll do one last pipeline deployment with 2 steps:
 ```python
 import datetime
 inference_start = datetime.datetime.now()
+
 pipeline.undeploy()
 pipeline.clear()
 pipeline.add_model_step(house_price_model)
@@ -331,7 +329,6 @@ data = pd.DataFrame.from_dict({"tensor": [[0.6878518042239091,
 
 results = pipeline.infer(data)
 display(results)
-inference_end = datetime.datetime.now()
 ```
 
 <table border="1" class="dataframe">
@@ -347,7 +344,7 @@ inference_end = datetime.datetime.now()
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-06 20:17:40.155</td>
+      <td>2023-07-13 22:05:58.341</td>
       <td>[0.6878518042, 0.1760734021, -0.869514083, 0.3...</td>
       <td>[12.886651039123535]</td>
       <td>0</td>
@@ -360,17 +357,17 @@ inference_end = datetime.datetime.now()
 As the data was exported by the pipeline step as a pandas DataFrame, it will be reflected in the pipeline logs.  We'll retrieve the most recent log from our most recent inference.
 
 ```python
-pipeline.logs()
-```
+inference_end = datetime.datetime.now()
 
-    Pipeline log schema has changed over the logs requested 1 newest records retrieved successfully, newest record seen was at <datetime>. Please request additional records separately
+pipeline.logs(start_datetime=inference_start, end_datetime=inference_end)
+```
 
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
       <th>time</th>
-      <th>in.dense_2</th>
+      <th>in.tensor</th>
       <th>out.output</th>
       <th>check_failures</th>
     </tr>
@@ -378,9 +375,9 @@ pipeline.logs()
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-06 20:16:36.709</td>
-      <td>[12.886651]</td>
-      <td>[12.886651]</td>
+      <td>2023-07-13 22:05:58.341</td>
+      <td>[0.6878518042, 0.1760734021, -0.869514083, 0.3...</td>
+      <td>[12.886651039123535]</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -396,5 +393,5 @@ This process demonstrated how to structure a postprocessing Python script as a W
 pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-06 20:16:21.940611+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-06 20:17:24.393552+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>109c9b04-692d-4027-a9b1-0b2c151de2d1, bd8e6576-39e3-4c25-8b08-684eec16e912, c66aae0f-2ead-421c-87a2-9de2d97bd371</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
+<table><tr><th>name</th> <td>python-step-demo-pipeline</td></tr><tr><th>created</th> <td>2023-07-13 21:58:10.584660+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-13 22:05:41.759261+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>a232bd5a-bdcc-4c33-a0fe-515508c7405f, e7012369-90b5-4127-bd25-70f7c7aa65ba, 6a84493f-cae6-458a-be7c-8160517e7b18, 1b0969ac-d0cb-42f0-96ff-a5b4a1cb5702, a75268c3-7a5d-4c27-b3e9-3ae79ad46363, a4b11320-1867-4801-94bb-66ca5c625502</td></tr><tr><th>steps</th> <td>house-price-sample</td></tr></table>
 
