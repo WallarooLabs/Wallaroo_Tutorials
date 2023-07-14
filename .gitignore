@@ -15,4 +15,4 @@ bigquery_service_account_input_key.json.example
 bigquery_service_account_output_key.json.example
 .vscode/launch.json
 *.example
-wallaroo-model-cookbooks/computer-vision/models/resnet_v1.onnx
+wallaroo-model-cookbooks/computer-vision/models/resnet50_v1.onnx
