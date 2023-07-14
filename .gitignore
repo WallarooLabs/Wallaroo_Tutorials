@@ -16,3 +16,5 @@ bigquery_service_account_output_key.json.example
 .vscode/launch.json
 *.example
 wallaroo-model-cookbooks/computer-vision/models/resnet50_v1.onnx
+wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/downloaded_patches/ms-01-atl-3-22-23_9-50/ms-01-atl-3-22-23_9-50-masks.tiff
+wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/downloaded_patches/ms-01-atl-3-22-23_9-50/ms-01-atl-3-22-23_9-50.tiff
