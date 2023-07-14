@@ -224,36 +224,36 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/testing-tutorials/",
     #     "outputFile": "house-price-model-saga.md"
     # },
-    {
-        "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "connection_api_bigquery_tutorial.md"
-    },
-    {
-        "inputFile": "workload-orchestrations/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "data_orchestrators_api_simple_tutorial.md"
-    },
-    {
-        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
-    },
-    {
-        "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
-    },
-    {
-        "inputFile": "workload-orchestrations/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
-    },
-    {
-        "inputFile": "workload-orchestrations/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/workload-orchestrations",
-        "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
-    },
+    # {
+    #     "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "connection_api_bigquery_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "workload-orchestrations/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "data_orchestrators_api_simple_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "workload-orchestrations/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial.md"
+    # },
+    # {
+    #     "inputFile": "workload-orchestrations/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
+    #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -399,6 +399,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
     #     "outputFile": "04_multiple_replicas_forecast.md"
     # },
+    {
+        "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
+        "outputFile": "wallaroo-model-registry-demonstration.md"
+    },
 
 ]
 
