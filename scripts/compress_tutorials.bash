@@ -51,6 +51,7 @@ tutorials=(
     ["sklearn-upload-tutorials"]=model_uploads/sklearn-upload-tutorials
     ["tensorflow-upload-tutorials"]=model_uploads/tensorflow-upload-tutorials
     ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
+    ["pipeline_multiple_replicas_forecast_tutorial"]=wallaroo-features/pipeline_multiple_replicas_forecast_tutorial
     )
 
 currentDirectory=$PWD
