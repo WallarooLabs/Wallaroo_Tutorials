@@ -431,9 +431,18 @@ def format(outputdir, document_file):
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
+    # remove gib
+    document = re.sub('gib.bhojraj@wallaroo.ai	', 
+                      'sample.user@wallaroo.ai', 
+                      document)
     # fix github link for final release
     document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
                       'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
+                      document)
+    
+     # obfuscate databricks url
+    document = re.sub('https://adb-5939996465837398.18.azuredatabricks.net', 
+                      'https://sample.registry.service.azuredatabricks.net', 
                       document)
    # document = re.sub('![png](', 'bob', document)
 
