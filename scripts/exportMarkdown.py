@@ -219,11 +219,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/tools/",
     #     "outputFile": "convert_wallaroo_data_inference-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/testing-tutorials/",
-    #     "outputFile": "house-price-model-saga.md"
-    # },
+    {
+        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
+        "outputDir": "/wallaroo-tutorials/testing-tutorials/",
+        "outputFile": "house-price-model-saga.md"
+    },
     # {
     #     "inputFile": "workload-orchestrations/connection_api_bigquery_tutorial/connection_api_bigquery_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
@@ -399,11 +399,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
     #     "outputFile": "04_multiple_replicas_forecast.md"
     # },
-    {
-        "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
-        "outputFile": "wallaroo-model-registry-demonstration.md"
-    },
+    # {
+    #     "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
+    #     "outputFile": "wallaroo-model-registry-demonstration.md"
+    # },
 
 ]
 
@@ -426,8 +426,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/current{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/current', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.2.1{outputdir}', document)
+    document = re.sub('\(./images', '(/images/2023.2.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
