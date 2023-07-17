@@ -16,3 +16,4 @@ bigquery_service_account_output_key.json.example
 .vscode/launch.json
 wallaroo-model-cookbooks/computer-vision-mitochondia-imaging/downloaded_patches
 *.example
+wallaroo-model-cookbooks/computer-vision/models/resnet50_v1.onnx
