@@ -399,10 +399,25 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
     #     "outputFile": "04_multiple_replicas_forecast.md"
     # },
+    # {
+    #     "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
+    #     "outputFile": "wallaroo-model-registry-demonstration.md"
+    # },
     {
-        "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
-        "outputFile": "wallaroo-model-registry-demonstration.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-cybersecurity-reference.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-finserv-reference.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-cv-demonstration/arm-computer-vision-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-computer-vision-reference.md"
     },
 
 ]
@@ -426,8 +441,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/current{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/current', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.3.0{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2023.3.0', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
