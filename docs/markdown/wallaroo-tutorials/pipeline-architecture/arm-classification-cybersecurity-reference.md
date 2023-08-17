@@ -1,4 +1,4 @@
-This tutorial is available on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-architecture/wallaroo-arm-classification-cybersecurity).
+This tutorial is available on the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.3.0-updates/pipeline-architecture/wallaroo-arm-classification-cybersecurity).
 
 ## Classification Cybersecurity with Arm Architecture
 
@@ -69,6 +69,8 @@ import random
 # make a random 4 character suffix to verify uniqueness in tutorials
 suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
 
+suffix='john'
+
 workspace_name = f'arm-classification-security{suffix}'
 pipeline_name = 'alohapipeline'
 model_name = 'alohamodel'
@@ -99,7 +101,7 @@ workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 ```
 
-    {'name': 'arm-classification-securityjohn', 'id': 24, 'archived': False, 'created_by': '0e5060a5-218c-47c1-9678-e83337494184', 'created_at': '2023-09-08T21:32:35.381464+00:00', 'models': [], 'pipelines': []}
+    {'name': 'arm-classification-securityjohn', 'id': 31, 'archived': False, 'created_by': '26a792cb-25d0-470a-aba2-9b4c4ba373ac', 'created_at': '2023-08-15T20:56:52.658573+00:00', 'models': [{'name': 'alohamodel', 'versions': 4, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 8, 16, 16, 23, 6, 709123, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 8, 15, 20, 57, 8, 117141, tzinfo=tzutc())}], 'pipelines': [{'name': 'alohapipeline', 'create_time': datetime.datetime(2023, 8, 15, 20, 56, 52, 700421, tzinfo=tzutc()), 'definition': '[]'}]}
 
 We can verify the workspace is created the current default workspace with the `get_current_workspace()` command.
 
@@ -107,29 +109,19 @@ We can verify the workspace is created the current default workspace with the `g
 wl.get_current_workspace()
 ```
 
-    {'name': 'arm-classification-securityjohn', 'id': 24, 'archived': False, 'created_by': '0e5060a5-218c-47c1-9678-e83337494184', 'created_at': '2023-09-08T21:32:35.381464+00:00', 'models': [], 'pipelines': []}
+    {'name': 'arm-classification-securityjohn', 'id': 31, 'archived': False, 'created_by': '26a792cb-25d0-470a-aba2-9b4c4ba373ac', 'created_at': '2023-08-15T20:56:52.658573+00:00', 'models': [{'name': 'alohamodel', 'versions': 4, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 8, 16, 16, 23, 6, 709123, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 8, 15, 20, 57, 8, 117141, tzinfo=tzutc())}], 'pipelines': [{'name': 'alohapipeline', 'create_time': datetime.datetime(2023, 8, 15, 20, 56, 52, 700421, tzinfo=tzutc()), 'definition': '[]'}]}
 
 # Upload the Models
 
 Now we will upload our models.  Note that for this example we are applying the model from a .ZIP file.  The Aloha model is a [protobuf](https://developers.google.com/protocol-buffers) file that has been defined for evaluating web pages, and we will configure it to use data in the `tensorflow` format.
 
-We will create two versions of the model:  one that defaults to the x86 architecture, the other that will use the ARM architecture.
-
 For more information, see the [Wallaroo SDK Essentials Guide: Model Uploads and Registrations](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/).
 
 ```python
-from wallaroo.engine_config import Architecture
-
-x86_model = wl.upload_model(model_name, 
-                            model_file_name, 
-                            framework=Framework.TENSORFLOW).configure("tensorflow")
-arm_model = wl.upload_model(model_name, 
-                            model_file_name, 
-                            framework=Framework.TENSORFLOW,
-                            arch=Architecture.ARM).configure("tensorflow")
+model = wl.upload_model(model_name, model_file_name, framework=Framework.TENSORFLOW).configure("tensorflow")
 ```
 
-## Deploy a model For x86
+## Deploy a model
 
 Now that we have a model that we want to use we will create a deployment for it.  We will create a pipeline, then add the model to the pipeline as a pipeline step.
 
@@ -139,16 +131,18 @@ For more information, see the [Wallaroo SDK Essentials Guide: Pipeline Managemen
 aloha_pipeline = get_pipeline(pipeline_name)
 aloha_pipeline
 
-# clear the steps if used before
-aloha_pipeline.clear()
-aloha_pipeline.add_model_step(x86_model)
+aloha_pipeline.add_model_step(model)
 ```
 
-<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-09-08 21:32:58.216028+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-08 21:32:58.216028+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fcde3598-c68d-4310-aea6-b3e98d4a4fb7</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-08-15 21:45:11.378943+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-15 23:02:01.114999+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6f2e0f93-03de-40f9-9921-2d75a5acbd81, 64fa00ca-bf81-46d0-b319-cdf219bd7ae4, f9af8905-33dd-40c4-b5b6-7ac58b727b20, 25e95e10-7191-490f-a36b-d2041e218d5e, 16f7f894-ec4c-40eb-8604-8496d867c329, 7f029018-8b6a-4fe8-bb50-d65d0fdd3b00, 60c072a8-2493-451b-b174-a026869b8efd, a9bb9165-ef77-4368-84c3-0f255e66215f</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
 
-### Deploy Pipeline for x86
+### Set Standard Pipeline Deployment Architecture
 
-We will now deploy the pipeline.  The x86 version of our model will be auto-applied in this pipeline configuration for x86 based architectures.
+Now we can set our pipeline deployment architecture with the `arch(wallaroo.engine_config.Architecture)` parameter.  By default, the deployment configuration architecture default to `wallaroo.engine_config.Architecture.X86`.
+
+For this example, we will create a pipeline deployment and leave the `arch` out so it will default to `X86`.
+
+This deployment will be applied to the pipeline deployment.
 
 For more information, see the [Wallaroo SDK Essentials Guide: Pipeline Deployment Configuration](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline-deployment-config/).
 
@@ -172,7 +166,7 @@ aloha_pipeline.deploy(deployment_config=deployment_config)
 
     Waiting for deployment - this will take up to 45s ........ ok
 
-<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-09-08 21:32:58.216028+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-08 21:33:00.111664+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>21218bd6-8ce8-4315-9683-b5a7542a0a94, fcde3598-c68d-4310-aea6-b3e98d4a4fb7</td></tr><tr><th>steps</th> <td>alohamodel</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-08-15 20:56:52.700421+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-16 16:30:42.841855+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>5f6f1123-b371-40ba-ac44-b1ebb45598f7, 7d331276-d17b-4d54-bd5f-d65b11f2148e, 88f3dc23-41b3-407d-9852-ad6c797c16aa, 996d1e65-dfa3-424c-a996-cb8e88e2087c, 0a5efd20-1b75-4695-be5d-d5f2ed48810d, 18c6c824-1003-45e0-89cd-0e09e8c829f1, 8e367dac-1980-4e72-9fea-620b8120ee3d, e0a49f43-b43e-4251-9d30-ad245b27c1aa, d55825d3-1c47-465d-ab6a-543f271d5a5b, 1d54f862-9404-4aa9-8eea-b7aa77e3f919</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
 
 We can verify that the pipeline is running and list what models are associated with it.
 
@@ -182,19 +176,19 @@ aloha_pipeline.status()
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.3.42',
-       'name': 'engine-5bc7d8697f-6klln',
+     'engines': [{'ip': '10.244.3.18',
+       'name': 'engine-79487c4ccb-s85gt',
        'status': 'Running',
        'reason': None,
        'details': [],
        'pipeline_statuses': {'pipelines': [{'id': 'alohapipeline',
           'status': 'Running'}]},
        'model_statuses': {'models': [{'name': 'alohamodel',
-          'version': '49530373-9ecc-4fab-8d32-918caa240101',
+          'version': 'a4f4560d-72ad-46c3-82d4-9c331c4d3aba',
           'sha': 'd71d9ffc61aaac58c2b1ed70a2db13d1416fb9d3f5b891e5e4e2e97180fe22f8',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.3.41',
-       'name': 'engine-lb-584f54c899-k7h8s',
+     'engine_lbs': [{'ip': '10.244.2.10',
+       'name': 'engine-lb-584f54c899-m9gjl',
        'status': 'Running',
        'reason': None,
        'details': []}],
@@ -210,7 +204,7 @@ For more information, see the [Wallaroo SDK Essentials Guide: Inference Manageme
 startTime = time.time()
 result = aloha_pipeline.infer_from_file('./data/data_25k.arrow')
 endTime = time.time()
-x86_time = endTime-startTime
+x64_time = endTime-startTime
 display(result.to_pandas().loc[:, ["time","out.main"]])
 ```
 
@@ -225,27 +219,27 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.997564]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.99999994]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[1.0]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.9999997]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.9999989]</td>
     </tr>
     <tr>
@@ -255,27 +249,27 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
     </tr>
     <tr>
       <th>24949</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.9996881]</td>
     </tr>
     <tr>
       <th>24950</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.99981505]</td>
     </tr>
     <tr>
       <th>24951</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.9999919]</td>
     </tr>
     <tr>
       <th>24952</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[1.0]</td>
     </tr>
     <tr>
       <th>24953</th>
-      <td>2023-09-08 21:33:08.904</td>
+      <td>2023-08-16 16:30:55.891</td>
       <td>[0.99999803]</td>
     </tr>
   </tbody>
@@ -284,20 +278,32 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
 
 ### Deploy with ARM
 
-We have demonstrated performing our sample inference using a standard pipeline deployment.  Now we will redeploy the same pipeline with the ARM architecture version of the model.
+We have demonstrated performing our sample inference using a standard pipeline deployment.  Now we will redeploy the same pipeline with the ARM architecture with the Wallaroo deployment setting `wallaroo.engine_config.Architecture.ARM` setting and applying it to the deployment configurations `arch` parameter.
 
 ```python
-aloha_pipeline.undeploy()
-# clear the steps if used before
-aloha_pipeline.clear()
-aloha_pipeline.add_model_step(arm_model)
-aloha_pipeline.deploy(deployment_config = deployment_config)
+from wallaroo.engine_config import Architecture
+deployment_config_arm = (wallaroo.deployment_config
+                         .DeploymentConfigBuilder()
+                         .cpus(4)
+                         .memory('8Gi')
+                         .arch(Architecture.ARM)
+                         .build()
+                        )
+display(deployment_config_arm)
+aloha_pipeline.deploy(deployment_config = deployment_config_arm)
 ```
 
-     ok
-    Waiting for deployment - this will take up to 45s .................................. ok
+    {'engine': {'cpu': 4,
+      'resources': {'limits': {'cpu': 4, 'memory': '8Gi'},
+       'requests': {'cpu': 4, 'memory': '8Gi'}},
+      'arch': 'arm'},
+     'enginelb': {},
+     'engineAux': {'images': {}},
+     'node_selector': {}}
 
-<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-09-08 21:32:58.216028+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-08 21:35:11.663764+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9c61af33-2934-4552-bf45-42d03441a64b, 9c51cf24-9fcc-40c1-82ab-297972ce488d, 21218bd6-8ce8-4315-9683-b5a7542a0a94, fcde3598-c68d-4310-aea6-b3e98d4a4fb7</td></tr><tr><th>steps</th> <td>alohamodel</td></tr><tr><th>published</th> <td>False</td></tr></table>
+     ok
+
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-08-15 20:56:52.700421+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-16 16:31:01.773252+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7aab9fa8-730a-4fc5-abfe-78c4489a012f, 5f6f1123-b371-40ba-ac44-b1ebb45598f7, 7d331276-d17b-4d54-bd5f-d65b11f2148e, 88f3dc23-41b3-407d-9852-ad6c797c16aa, 996d1e65-dfa3-424c-a996-cb8e88e2087c, 0a5efd20-1b75-4695-be5d-d5f2ed48810d, 18c6c824-1003-45e0-89cd-0e09e8c829f1, 8e367dac-1980-4e72-9fea-620b8120ee3d, e0a49f43-b43e-4251-9d30-ad245b27c1aa, d55825d3-1c47-465d-ab6a-543f271d5a5b, 1d54f862-9404-4aa9-8eea-b7aa77e3f919</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
 
 ### Infer with ARM
 
@@ -322,27 +328,27 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.997564]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.99999994]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[1.0]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.9999997]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.9999989]</td>
     </tr>
     <tr>
@@ -352,27 +358,27 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
     </tr>
     <tr>
       <th>24949</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.9996881]</td>
     </tr>
     <tr>
       <th>24950</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.99981505]</td>
     </tr>
     <tr>
       <th>24951</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.9999919]</td>
     </tr>
     <tr>
       <th>24952</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[1.0]</td>
     </tr>
     <tr>
       <th>24953</th>
-      <td>2023-09-08 21:36:22.500</td>
+      <td>2023-08-16 16:31:14.151</td>
       <td>[0.99999803]</td>
     </tr>
   </tbody>
@@ -384,13 +390,13 @@ display(result.to_pandas().loc[:, ["time","out.main"]])
 With the two inferences complete, we'll compare the standard deployment architecture time against the ARM architecture.
 
 ```python
-display(f"Standard architecture: {x86_time}")
+display(f"Standard architecture: {x64_time}")
 display(f"ARM architecture: {arm_time}")
 ```
 
-    'Standard architecture: 2.8868443965911865'
+    'Standard architecture: 5.773933172225952'
 
-    'ARM architecture: 2.5103814601898193'
+    'ARM architecture: 5.696603536605835'
 
 ## Undeploy Pipeline
 
@@ -402,5 +408,5 @@ aloha_pipeline.undeploy()
 
     Waiting for undeployment - this will take up to 45s .................................... ok
 
-<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-09-08 21:32:58.216028+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-08 21:35:11.663764+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>9c61af33-2934-4552-bf45-42d03441a64b, 9c51cf24-9fcc-40c1-82ab-297972ce488d, 21218bd6-8ce8-4315-9683-b5a7542a0a94, fcde3598-c68d-4310-aea6-b3e98d4a4fb7</td></tr><tr><th>steps</th> <td>alohamodel</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>alohapipeline</td></tr><tr><th>created</th> <td>2023-08-15 20:56:52.700421+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-16 16:31:01.773252+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7aab9fa8-730a-4fc5-abfe-78c4489a012f, 5f6f1123-b371-40ba-ac44-b1ebb45598f7, 7d331276-d17b-4d54-bd5f-d65b11f2148e, 88f3dc23-41b3-407d-9852-ad6c797c16aa, 996d1e65-dfa3-424c-a996-cb8e88e2087c, 0a5efd20-1b75-4695-be5d-d5f2ed48810d, 18c6c824-1003-45e0-89cd-0e09e8c829f1, 8e367dac-1980-4e72-9fea-620b8120ee3d, e0a49f43-b43e-4251-9d30-ad245b27c1aa, d55825d3-1c47-465d-ab6a-543f271d5a5b, 1d54f862-9404-4aa9-8eea-b7aa77e3f919</td></tr><tr><th>steps</th> <td>alohamodel</td></tr></table>
 
