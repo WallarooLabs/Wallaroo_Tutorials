@@ -1,12 +1,8 @@
 ### Models for Wallaroo Computer Vision Tutorials
 
-In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.
+In order for the wallaroo tutorial notebooks to run properly, the videos directory must contain these models in the models directory.  This is available from the Wallaroo Google Public Data and is available through the following `gcloud` command:
 
-1. Go to https://github.com/WallarooLabs/Wallaroo_Tutorials/releases.
-1. Select the most recent release.
-1. Download the file `computer_vision.zip`.
-
-This contains the entire tutorial, plus the model files.
+gcloud storage cp "gs://wallaroo-public-data/cv-demo-models/*" .
 
 # Directory contents
 
