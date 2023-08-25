@@ -21,3 +21,4 @@ frcnn-resnet.pt
 mobilenet.pt.onnx
 frcnn-resnet.pt.onnx
 mobilenet.pt
+model-auto-conversion_hugging-face_complex-pipelines_hf-summarisation-bart-large-samsun.zip
