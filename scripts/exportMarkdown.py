@@ -400,19 +400,39 @@ fileList = [
         "outputFile": "04_multiple_replicas_forecast.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-cybersecurity-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-finserv-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-cv-demonstration/arm-computer-vision-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-computer-vision-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/00_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-retail/00-edge-cv-retail-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "00-edge-cv-retail-demonstration-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-retail/01-edge-cv-retail-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "01-edge-cv-retail-demonstration-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-llm-summarization/edge-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-hf-summarization-reference.md"
     },
     {
         "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
