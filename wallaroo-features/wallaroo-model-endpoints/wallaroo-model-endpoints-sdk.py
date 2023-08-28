@@ -135,7 +135,7 @@ ccfraudpipeline = get_pipeline(pipeline_name)
 
 # Add ccfraud model as the pipeline step
 
-ccfraud_model = wl.upload_model(model_name, model_file_name).configure()
+ccfraud_model = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX).configure()
 
 ccfraudpipeline.add_model_step(ccfraud_model).deploy()
 
