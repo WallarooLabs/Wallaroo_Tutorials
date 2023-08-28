@@ -191,7 +191,7 @@ We'll upload our model into our sample workspace, then add it as a pipeline step
 ```python
 # Upload the model
 
-bike_day_model = wl.upload_model(model_name, model_file_name).configure(runtime="python")
+bike_day_model = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX).configure(runtime="python")
 
 # Add the model as a pipeline step
 

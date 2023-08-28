@@ -1,3 +1,5 @@
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/2023.2.1_prerelease/wallaroo-features/pipeline_multiple_replicas_forecast_tutorial).
+
 ## Statsmodel Forecast with Wallaroo Features: Data Connection
 
 This tutorial series demonstrates how to use Wallaroo to create a Statsmodel forecasting model based on bike rentals.  This tutorial series is broken down into the following:

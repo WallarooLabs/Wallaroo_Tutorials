@@ -60,6 +60,12 @@ wl = wallaroo.Client()
 
 wl = wallaroo.Client()
 
+wallarooPrefix = ""
+wallarooSuffix = "autoscale-uat-ee.wallaroo.dev"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ### Set Variables and Helper Functions

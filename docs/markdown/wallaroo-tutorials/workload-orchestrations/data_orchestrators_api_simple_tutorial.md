@@ -160,7 +160,7 @@ We'll upload our model into our sample workspace, then add it as a pipeline step
 ```python
 # Upload the model
 
-housing_model_control = wl.upload_model(model_name, model_file_name).configure()
+housing_model_control = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX).configure()
 
 # Add the model as a pipeline step
 

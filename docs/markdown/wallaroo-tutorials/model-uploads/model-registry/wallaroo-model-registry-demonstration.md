@@ -49,7 +49,22 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 ```python
 wl=wallaroo.Client()
+
+wl = wallaroo.Client()
+
+wallarooPrefix = "doc-test."
+wallarooSuffix = "wallarooexample.ai"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
+
+    Please log into the following URL in a web browser:
+    
+    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=YOSQ-MZCY
+    
+    Login successful!
 
 ### Connect to Model Registry
 
@@ -57,7 +72,7 @@ The Wallaroo Registry stores the URL and authentication token to the Model Regis
 
 ```python
 registry = wl.create_model_registry(name="JeffRegistry45", 
-                                    token="abcdefg", 
+                                    token="dapi67c8c0b04606f730e78b7ae5e3221015-3", 
                                     url="https://sample.registry.service.azuredatabricks.net")
 registry
 ```
@@ -77,10 +92,10 @@ registry
             <td>Workspaces</td><td>john.hummel@wallaroo.ai - Default Workspace</td>
           </tr>
           <tr>
-              <td>Created At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Created At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
           <tr>
-              <td>Updated At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Updated At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
         </table>
 
@@ -94,7 +109,7 @@ registries = wl.list_model_registries()
 registries
 ```
 
-<table><tr><th>name</th><th>registry url</th><th>created at</th><th>updated at</th></tr><tr><td>JeffRegistry45</td><td>https://sample.registry.service.azuredatabricks.net</td><td>2023-17-Jul 17:56:52</td><td>2023-17-Jul 17:56:52</td></tr></table>
+<table><tr><th>name</th><th>registry url</th><th>created at</th><th>updated at</th></tr><tr><td>JeffRegistry45</td><td>https://sample.registry.service.azuredatabricks.net</td><td>2023-17-Jul 17:56:52</td><td>2023-17-Jul 17:56:52</td></tr><tr><td>JeffRegistry45</td><td>https://sample.registry.service.azuredatabricks.net</td><td>2023-17-Jul 19:54:49</td><td>2023-17-Jul 19:54:49</td></tr></table>
 
 ### Create Workspace
 
@@ -132,13 +147,13 @@ registry.add_registry_to_workspace(workspace_id=workspace_id)
             <td>URL</td><td>https://sample.registry.service.azuredatabricks.net</td>
           </tr>
           <tr>
-            <td>Workspaces</td><td>test348, john.hummel@wallaroo.ai - Default Workspace</td>
+            <td>Workspaces</td><td>test68, john.hummel@wallaroo.ai - Default Workspace</td>
           </tr>
           <tr>
-              <td>Created At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Created At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
           <tr>
-              <td>Updated At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Updated At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
         </table>
 
@@ -171,10 +186,10 @@ registry.remove_registry_from_workspace(workspace_id=workspace_id)
             <td>Workspaces</td><td>john.hummel@wallaroo.ai - Default Workspace</td>
           </tr>
           <tr>
-              <td>Created At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Created At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
           <tr>
-              <td>Updated At</td><td>2023-17-Jul 17:56:52</td>
+              <td>Updated At</td><td>2023-17-Jul 19:54:49</td>
           </tr>
         </table>
 
@@ -283,7 +298,7 @@ single_registry_model
 The Registry Model attribute `versions` shows the complete list of versions for the particular model.
 
 ```python
-single_registry_model.versions
+single_registry_model.versions()
 ```
 
 <table>

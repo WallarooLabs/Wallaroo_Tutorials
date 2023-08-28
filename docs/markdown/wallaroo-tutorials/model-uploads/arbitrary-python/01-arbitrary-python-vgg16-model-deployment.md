@@ -77,7 +77,11 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 wl = wallaroo.Client()
 ```
 
-
+    Please log into the following URL in a web browser:
+    
+    	https://keycloak.autoscale-uat-ee.wallaroo.dev/auth/realms/master/device?user_code=CCCB-KZYC
+    
+    Login successful!
 
 ### Set Variables and Helper Functions
 

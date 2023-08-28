@@ -53,6 +53,12 @@ import pyarrow as pa
 
 wl = wallaroo.Client()
 
+wallarooPrefix = ""
+wallarooSuffix = "autoscale-uat-ee.wallaroo.dev"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
 ## Create the Workspace
