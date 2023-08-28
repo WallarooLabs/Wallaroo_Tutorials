@@ -1,3 +1,5 @@
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-classification-finserv-api).
+
 ## Classification Financial Services Edge Deployment Demonstration via API
 
 This notebook will walk through building Wallaroo pipeline with a a Classification model deployed to detect the likelihood of credit card fraud, then publishing that pipeline to an Open Container Initiative (OCI) Registry where it can be deployed in other Docker and Kubernetes environments.  This example focuses on using the Wallaroo MLOps API to publish the pipeline and retrieve the relevant information.
@@ -45,11 +47,18 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 ```python
 wl = wallaroo.Client()
+
+wallarooPrefix = "doc-test."
+wallarooSuffix = "wallarooexample.ai"
+
+wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
+                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
+                    auth_type="sso")
 ```
 
     Please log into the following URL in a web browser:
     
-    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=QHMK-HCLH
+    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=SURN-VOHA
     
     Login successful!
 
@@ -98,7 +107,7 @@ workspace = get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 ```
 
-    {'name': 'edge-publish-demojohn', 'id': 5, 'archived': False, 'created_by': 'db364f8c-b866-4865-96b7-0b65662cb384', 'created_at': '2023-08-24T16:57:29.048825+00:00', 'models': [], 'pipelines': []}
+    {'name': 'edge-publish-api-demojohn', 'id': 10, 'archived': False, 'created_by': 'db364f8c-b866-4865-96b7-0b65662cb384', 'created_at': '2023-08-28T14:47:03.525465+00:00', 'models': [], 'pipelines': []}
 
 ### Upload the Model
 
@@ -142,11 +151,9 @@ pipeline.add_model_step(edge_demo_model)
 pipeline.deploy(deployment_config = deploy_config)
 ```
 
-<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-24 16:57:29.486951+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-24 16:57:29.486951+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d0a55f2b-0938-45a0-ae58-7d78b9b590d6</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-24 16:57:29.486951+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-24 17:05:01.060493+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>710aad65-1437-487b-b6db-0f732b5d2d73, 44c71e77-d8fa-4015-aeee-1cdbccfeb0ef, 7c4383d2-b79d-4179-91a1-b592803e1373, d0a55f2b-0938-45a0-ae58-7d78b9b590d6</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>True</td></tr></table>
 
-    Waiting for deployment - this will take up to 45s ......................... ok
-
-<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-24 16:57:29.486951+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-24 16:57:40.183869+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7c4383d2-b79d-4179-91a1-b592803e1373, d0a55f2b-0938-45a0-ae58-7d78b9b590d6</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-28 14:47:11.316072+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-28 14:47:11.316072+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ab7ab48f-9aab-4c3d-9f66-097477bd34bf</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Run Single Image Inference
 
@@ -166,7 +173,17 @@ elapsed = results['metadata.elapsed'][0].as_py()[1] / 1000000.0
 print(f"Elapsed: {elapsed} ms")
 ```
 
-    Elapsed: 8.292807 ms
+    Elapsed: 9.757419 ms
+
+### Undeploy the Pipeline
+
+With the testing complete, we can undeploy the pipeline.  Note that deploying and undeploying a pipeline is not required for publishing a pipeline to the Edge Registry - this is done just for this demonstration.
+
+```python
+pipeline.undeploy()
+```
+
+<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-28 14:47:11.316072+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-28 14:47:11.316072+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>ab7ab48f-9aab-4c3d-9f66-097477bd34bf</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Publish the Pipeline for Edge Deployment
 
@@ -178,7 +195,7 @@ See [Edge Deployment Registry Guide](https://staging.docs.wallaroo.ai/wallaroo-o
 
 This is done through the SDK command `wallaroo.pipeline.publish(deployment_config)` which has the following parameters and returns.
 
-#### Publish a Pipeline Endpoint
+### Publish a Pipeline Endpoint
 
 Pipelines are published as images to the edge registry set in the [Enable Wallaroo Edge Registry](#enable-wallaroo-edge-registry) through the following endpoint.
 
@@ -202,81 +219,186 @@ Pipelines are published as images to the edge registry set in the [Enable Wallar
   * helm:  ???
   * engine_config (*`wallaroo.deployment_config.DeploymentConfig`) | The pipeline configuration included with the published pipeline.
 
-### Publish Example
+#### Publish Example
 
-We will now publish the pipeline to our Edge Deployment Registry with the `pipeline.publish(deployment_config)` command.  `deployment_config` is an optional field that specifies the pipeline deployment.  This can be overridden by the DevOps engineer during deployment.
+We will now publish the pipeline to our Edge Deployment Registry with the `pipeline.publish(deployment_config)` command.  `deployment_config` is an optional field that specifies the pipeline deployment.  This can be overridden by the DevOps engineer during deployment.  For this demonstration, we will be retrieving the most recent pipeline version.
+
+For this, we will require the pipeline version id, the workspace id, and the model config ids (which will be empty as not required).
 
 ```python
 # get the pipeline version
-pipeline_version=pipeline.versions()
+pipeline_version_id = pipeline.versions()[-1].id()
+display(pipeline_version_id)
+
+pipeline_id = pipeline.id()
+display(pipeline_id)
+headers = {
+    "Authorization": wl.auth._bearer_token_str(),
+    "Content-Type": "application/json",
+}
+
+url = f"{wl.api_endpoint}/v1/api/pipelines/publish"
+response = requests.post(
+    url,
+    headers=headers,
+    json={"pipeline_id": 1, 
+          "pipeline_version_id": pipeline_version, 
+          "model_config_ids": []
+          }
+    )
+display(response.json())
 ```
+
+    30
+
+    30
+
+    {'id': 10,
+     'pipeline_version_id': 30,
+     'pipeline_version_name': 'ab7ab48f-9aab-4c3d-9f66-097477bd34bf',
+     'status': 'PendingPublish',
+     'created_at': '2023-08-28T14:54:54.14098+00:00',
+     'updated_at': '2023-08-28T14:54:54.14098+00:00',
+     'created_by': 'db364f8c-b866-4865-96b7-0b65662cb384',
+     'pipeline_url': None,
+     'engine_url': None,
+     'helm': None,
+     'engine_config': {'engine': {'resources': {'limits': {'cpu': 4.0,
+         'memory': '3Gi'},
+        'requests': {'cpu': 4.0, 'memory': '3Gi'}}},
+      'enginelb': {'resources': {'limits': {'cpu': 1.0, 'memory': '512Mi'},
+        'requests': {'cpu': 0.2, 'memory': '512Mi'}}},
+      'engineAux': {}}}
 
 ```python
-pub=pipeline.publish(deploy_config)
-pub
+publish_id = response.json()['id']
+display(publish_id)
 ```
 
-    Waiting for pipeline publish... It may take up to 600 sec.
-    Pipeline is Publishing...Published.
+    10
 
-<table>
-    <tr><td>ID</td><td>2</td></tr>
-    <tr><td>Pipeline Version</td><td>710aad65-1437-487b-b6db-0f732b5d2d73</td></tr>
-    <tr><td>Status</td><td>Published</td></tr>
-    <tr><td>Engine URL</td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731'>ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731</a></td></tr>
-    <tr><td>Pipeline URL</td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73'>ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73</a></td></tr>
-    <tr><td>Helm Chart URL</td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/charts/edge-pipeline'>ghcr.io/wallaroolabs/doc-samples/charts/edge-pipeline</a></td></tr>
-    <tr><td>Helm Chart Reference</td><td>ghcr.io/wallaroolabs/doc-samples/charts@sha256:02f46e1f2abe5797b35f666a1cef9c61fe884aead61e400ce3dae11611a30404</td></tr>
-    <tr><td>Helm Chart Version</td><td>0.0.1-710aad65-1437-487b-b6db-0f732b5d2d73</td></tr>
-    <tr><td>Engine Config</td><td>{'engine': {'resources': {'limits': {'cpu': 0.5, 'memory': '900Mi'}, 'requests': {'cpu': 0.5, 'memory': '900Mi'}}}, 'engineAux': {'images': {}}, 'enginelb': {}}</td></tr>
-    <tr><td>Created By</td><td>john.hummel@wallaroo.ai</td></tr>
-    <tr><td>Created At</td><td>2023-08-24 17:05:01.156123+00:00</td></tr>
-    <tr><td>Updated At</td><td>2023-08-24 17:05:01.156123+00:00</td></tr>
-</table>
+### Get Publish Status
+
+The status of a created Wallaroo pipeline publish is available through the following endpoint.
+
+* Endpoint:
+  * `/v1/api/pipelines/get_publish_status`
+* Parameters
+  * **publish_id** (*Integer* *Required*): The numerical id of the pipeline **publish** to retrieve.
+* Returns
+  * id (*Integer*): Numerical Wallaroo id of the published pipeline.
+  * pipeline_version_id (*Integer*): Numerical Wallaroo id of the pipeline version published.
+  * status: The status of the pipeline publish.  Values include:
+    * PendingPublish: The pipeline publication is about to be uploaded or is in the process of being uploaded.
+    * Published:  The pipeline is published and ready for use.
+  * created_at (*String*): When the published pipeline was created.
+  * updated_at (*String*): When the published pipeline was updated.
+  * created_by (*String*): The email address of the Wallaroo user that created the pipeline publish.
+  * pipeline_url (*String*): The URL of the published pipeline in the edge registry.  May be `null` until the status is `Published`)
+  * engine_url (*String*): The URL of the published pipeline engine in the edge registry.  May be `null` until the status is `Published`.
+  * helm:  ???
+  * engine_config (*`wallaroo.deployment_config.DeploymentConfig`) | The pipeline configuration included with the published pipeline.
+
+#### Get Publish Status Example
+
+The following example shows retrieving the status of a recently created pipeline publish.  Once the published status is `Published` we know the pipeline is ready for deployment.
 
 ```python
-display(pipeline)
+headers = {
+    "Authorization": wl.auth._bearer_token_str(),
+    "Content-Type": "application/json",
+}
+url = f"{wl.api_endpoint}/v1/api/pipelines/get_publish_status"
+response = requests.post(
+    url,
+    headers=headers,
+    json={
+        "id": publish_id
+        },
+)
+display(response.json())
 ```
 
-<table><tr><th>name</th> <td>edge-pipeline</td></tr><tr><th>created</th> <td>2023-08-24 16:57:29.486951+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-24 17:05:01.060493+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>710aad65-1437-487b-b6db-0f732b5d2d73, 44c71e77-d8fa-4015-aeee-1cdbccfeb0ef, 7c4383d2-b79d-4179-91a1-b592803e1373, d0a55f2b-0938-45a0-ae58-7d78b9b590d6</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>True</td></tr></table>
+    {'id': 10,
+     'pipeline_version_id': 30,
+     'pipeline_version_name': 'ab7ab48f-9aab-4c3d-9f66-097477bd34bf',
+     'status': 'Published',
+     'created_at': '2023-08-28T14:54:54.14098+00:00',
+     'updated_at': '2023-08-28T14:54:54.14098+00:00',
+     'created_by': 'db364f8c-b866-4865-96b7-0b65662cb384',
+     'pipeline_url': 'ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:ab7ab48f-9aab-4c3d-9f66-097477bd34bf',
+     'engine_url': 'ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731',
+     'helm': {'reference': 'ghcr.io/wallaroolabs/doc-samples/charts@sha256:dbb46f807dbd75840cf1433daee51f4cc272791da5836366bfb8b2b863abf63b',
+      'chart': 'ghcr.io/wallaroolabs/doc-samples/charts/edge-pipeline',
+      'version': '0.0.1-ab7ab48f-9aab-4c3d-9f66-097477bd34bf'},
+     'engine_config': {'engine': {'resources': {'limits': {'cpu': 4.0,
+         'memory': '3Gi'},
+        'requests': {'cpu': 4.0, 'memory': '3Gi'}}},
+      'enginelb': {'resources': {'limits': {'cpu': 1.0, 'memory': '512Mi'},
+        'requests': {'cpu': 0.2, 'memory': '512Mi'}}},
+      'engineAux': {}}}
 
-### List Published Pipeline
+### List Publishes for a Pipeline
 
-The method `wallaroo.client.list_pipelines()` shows a list of all pipelines in the Wallaroo instance, and includes the `published` field that indicates whether the pipeline was published to the registry (`True`), or has not yet been published (`False`).
+A list of publishes created for a specific pipeline is retrieved through the following endpoint.
+
+* Endpoint:
+  * `/v1/api/pipelines/list_publishes_for_pipeline`
+* Parameters
+  * **publish_id** (*Integer* *Required*): The numerical id of the pipeline to retrieve all publishes for.
+* Returns a List of pipeline publishes with the following fields:
+  * **id** (*Integer*): Numerical Wallaroo id of the published pipeline.
+  * **pipeline_version_id** (*Integer*): Numerical Wallaroo id of the pipeline version published.
+  * **status**: The status of the pipeline publish.  Values include:
+    * `PendingPublish`: The pipeline publication is about to be uploaded or is in the process of being uploaded.
+    * `Published`:  The pipeline is published and ready for use.
+  * **created_at** (*String*): When the published pipeline was created.
+  * **updated_at** (*String*): When the published pipeline was updated.
+  * **created_by** (*String*): The email address of the Wallaroo user that created the pipeline publish.
+  * **pipeline_url** (*String*): The URL of the published pipeline in the edge registry.  May be `null` until the status is `Published`)
+  * **engine_url** (*String*): The URL of the published pipeline engine in the edge registry.  May be `null` until the status is `Published`.
+  * **helm**:  The Helm chart information including the following fields:
+    * **reference** (*String*): The Helm reference.
+    * **chart** (*String*): The Helm chart URL.
+    * **version** (*String*): The Helm chart version.
+  * **engine_config** (*`wallaroo.deployment_config.DeploymentConfig`) | The pipeline configuration included with the published pipeline.
+
+#### List Publishes for a Pipeline Example
 
 ```python
-wl.list_pipelines()
+headers = {
+    "Authorization": wl.auth._bearer_token_str(),
+    "Content-Type": "application/json",
+}
+
+url = f"{wl.api_endpoint}/v1/api/pipelines/list_publishes_for_pipeline"
+
+response = requests.post(
+    url,
+    headers=headers,
+    json={"pipeline_id": pipeline_id},
+)
+display(response.json())
 ```
 
-<table><tr><th>name</th><th>created</th><th>last_updated</th><th>deployed</th><th>tags</th><th>versions</th><th>steps</th><th>published</th></tr><tr><td>edge-pipeline</td><td>2023-24-Aug 16:57:29</td><td>2023-24-Aug 17:05:01</td><td>True</td><td></td><td>710aad65-1437-487b-b6db-0f732b5d2d73, 44c71e77-d8fa-4015-aeee-1cdbccfeb0ef, 7c4383d2-b79d-4179-91a1-b592803e1373, d0a55f2b-0938-45a0-ae58-7d78b9b590d6</td><td>ccfraud</td><td>True</td></tr></table>
-
-### List Publishes from a Pipeline
-
-All publishes created from a pipeline are displayed with the `wallaroo.pipeline.publishes` method.  The `pipeline_version_id` is used to know what version of the pipeline was used in that specific publish.  This allows for pipelines to be updated over time, and newer versions to be sent and tracked to the Edge Deployment Registry service.
-
-#### List Publishes Parameters
-
-N/A
-
-#### List Publishes Returns
-
-A List of the following fields:
-
-| Field | Type | Description |
-|---|---|---|
-| id | integer | Numerical Wallaroo id of the published pipeline. |
-| pipeline_version_id | integer | Numerical Wallaroo id of the pipeline version published. |
-| engine_url | string | The URL of the published pipeline engine in the edge registry. |
-| pipeline_url | string | The URL of the published pipeline in the edge registry. |
-| created_by | string | The email address of the user that published the pipeline.
-| Created At | DateTime | When the published pipeline was created. |
-| Updated At | DateTime | When the published pipeline was updated. |
-
-```python
-pipeline.publishes()
-```
-
-<table><tr><th>id</th><th>pipeline_version_name</th><th>engine_url</th><th>pipeline_url</th><th>created_by</th><th>created_at</th><th>updated_at</th></tr><tr><td>1</td><td>44c71e77-d8fa-4015-aeee-1cdbccfeb0ef</td><td>None</td><td>None</td><td>john.hummel@wallaroo.ai</td><td>2023-24-Aug 16:59:07</td><td>2023-24-Aug 16:59:07</td></tr><tr><td>2</td><td>710aad65-1437-487b-b6db-0f732b5d2d73</td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731'>ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731</a></td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73'>ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73</a></td><td>john.hummel@wallaroo.ai</td><td>2023-24-Aug 17:05:01</td><td>2023-24-Aug 17:05:01</td></tr></table>
+    {'pipelines': [{'id': 10,
+       'pipeline_version_id': 30,
+       'pipeline_version_name': 'ab7ab48f-9aab-4c3d-9f66-097477bd34bf',
+       'status': 'Published',
+       'created_at': '2023-08-28T14:54:54.14098+00:00',
+       'updated_at': '2023-08-28T14:54:54.14098+00:00',
+       'created_by': 'db364f8c-b866-4865-96b7-0b65662cb384',
+       'pipeline_url': 'ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:ab7ab48f-9aab-4c3d-9f66-097477bd34bf',
+       'engine_url': 'ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731',
+       'helm': {'reference': 'ghcr.io/wallaroolabs/doc-samples/charts@sha256:dbb46f807dbd75840cf1433daee51f4cc272791da5836366bfb8b2b863abf63b',
+        'chart': 'ghcr.io/wallaroolabs/doc-samples/charts/edge-pipeline',
+        'version': '0.0.1-ab7ab48f-9aab-4c3d-9f66-097477bd34bf'},
+       'engine_config': {'engine': {'resources': {'limits': {'cpu': 4.0,
+           'memory': '3Gi'},
+          'requests': {'cpu': 4.0, 'memory': '3Gi'}}},
+        'enginelb': {'resources': {'limits': {'cpu': 1.0, 'memory': '512Mi'},
+          'requests': {'cpu': 0.2, 'memory': '512Mi'}}},
+        'engineAux': {}}}]}
 
 ## DevOps Deployment
 

@@ -1,4 +1,4 @@
-This tutorial can be found on the [Wallaroo Tutorials Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/main/wallaroo-model-cookbooks/computer-vision-mitochondria-imaging).
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-cv-healthcare-images).
 
 ## Image Detection for Health Care Computer Vision Tutorial Part 00: Prerequisites
 

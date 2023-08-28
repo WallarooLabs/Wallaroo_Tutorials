@@ -1,3 +1,5 @@
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-cv-retail).
+
 ## Step 00: Introduction and Setup
 
 This tutorial demonstrates how to use the Wallaroo to deploy computer vision models to edge devices.

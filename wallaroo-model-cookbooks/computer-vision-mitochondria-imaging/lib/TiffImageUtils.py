@@ -16,7 +16,7 @@ import io
 import urllib.parse
 import cv2
 import requests
-from tensorflow.keras.utils import normalize
+from keras.utils import normalize
 import random
 
 #
