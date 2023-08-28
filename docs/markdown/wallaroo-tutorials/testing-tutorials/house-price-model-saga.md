@@ -390,7 +390,7 @@ control_model_end = datetime.datetime.now()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_19_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_19_0.png" width="800" label="png">}}
     
 
 ### Pipeline Logs
@@ -855,7 +855,7 @@ _ = plt.title('Distribution of predicted home sales price')
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_30_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_30_0.png" width="800" label="png">}}
     
 
 ## Assays
@@ -1082,7 +1082,7 @@ assay_results.chart_scores()
     Generated 8 analyses
 
     
-{{<figure src="/images/current/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_40_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/testing-tutorials/house-price-model-saga_files/house-price-model-saga_40_1.png" width="800" label="png">}}
     
 
 ```python
@@ -1175,7 +1175,7 @@ assay_builder.upload()
 
 The assay is now visible through the Wallaroo UI by selecting the workspace, then the pipeline, then **Insights**.
 
-{{<figure src="/images/current/housepricesaga-sample-assay.png" width="800" label="Sample assay in the UI">}}
+{{<figure src="/images/2023.3.0/housepricesaga-sample-assay.png" width="800" label="Sample assay in the UI">}}
 
 ## Shadow Deploy
 

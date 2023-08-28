@@ -247,7 +247,7 @@ cvDemo.drawAndDisplayDetectedObjectsWithClassification(results)
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/computer-vision/03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_23_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/computer-vision/03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_23_0.png" width="800" label="png">}}
     
 
 ### Display the Control Results
@@ -697,7 +697,7 @@ cvDemo.drawAndDisplayDetectedObjectsWithClassification(results)
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/computer-vision/03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_27_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/computer-vision/03_computer_vision_tutorial_shadow_deploy-reference_files/03_computer_vision_tutorial_shadow_deploy-reference_27_0.png" width="800" label="png">}}
     
 
 ### Display Challenger Results

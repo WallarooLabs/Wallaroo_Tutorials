@@ -111,9 +111,9 @@ If the there is no prefix, then the address would simply be:
 
 Then select the client, in this case **api-client**, then **Credentials**.
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-service.png" width="800" label="Wallaroo Keycloak Service">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-service.png" width="800" label="Wallaroo Keycloak Service">}}
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-credentials.png" width="800" label="Wallaroo Components">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-api/wallaroo-api-keycloak-credentials.png" width="800" label="Wallaroo Components">}}
 
 By default, tokens issued for api-client are valid for up to 60 minutes. Refresh tokens are supported.
 

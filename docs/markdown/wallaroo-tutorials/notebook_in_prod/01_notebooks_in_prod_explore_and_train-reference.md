@@ -455,7 +455,7 @@ plt.show()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png" width="800" label="png">}}
     
 
 ```python
@@ -581,7 +581,7 @@ plt.show()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png" width="800" label="png">}}
     
 
 ```python

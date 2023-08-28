@@ -67,22 +67,22 @@ The following instructions can be used to upload this tutorial and it's files in
 1. From the Azure Databricks dashboard, select **Repos**.
 1. Select where to place the repo, then select **Add Repo**.
  
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-select-add-repo.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-select-add-repo.png" width="800" label="">}}
 
 1. Set the following:
  
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-add-repo-settings.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-add-repo-settings.png" width="800" label="">}}
 
     1. **Create repo by cloning a Git repository**:  Uncheck
     1. **Repository name**:  Set any name based on the Databricks standard (no spaces, etc).
     1. Select **Create Repo**.
 1. Select the new tutorial, then from the repo menu dropdown, select **Import**.
  
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-select-import.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-select-import.png" width="800" label="">}}
 
 1. Select the files to upload.  For this example, the following files are uploaded:
 
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-import-files.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-databricks-repo-import-files.png" width="800" label="">}}
 
     1. `ccfraud.onnx`:  A pretrained model from the Machine Learning Group's demonstration on [Credit Card Fraud detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
     1. Sample inference test data:
@@ -102,15 +102,15 @@ To upload model files to Azure Databricks using DBFS:
 1. From the Azure Databricks dashboard, select **Data**.
 1. Select **Add->Add data**.
 
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_add_data.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_add_data.png" width="800" label="">}}
  
 1. Select **DBFS**.
 
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_dbfs.png" width="800" label="">}}
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_select_dbfs.png" width="800" label="">}}
 
 1. Select **Upload File** and enter the following:
  
-    {{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_upload_files.png" width="800" label="">}} 
+    {{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure_databricks_upload_files.png" width="800" label="">}} 
 
     1. **DBFS Target Directory** (*Optional*): Optional step:  Set the directory where the files will be uploaded.
 1. Select the files to upload.  Note that each file will be given a location and they can be access with `/dbfs/PATH`.  For example, the file `alohacnnlstm.zip` uploaded to the directory `aloha` would be referenced with `/dbfs/FileStore/tables/aloha/alohacnnlstm.zip
@@ -137,11 +137,11 @@ Once run, the `wallaroo.Client` command provides a URL to grant the SDK permissi
 
 Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png" width="800" label="Wallaroo Login">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/databricks-azure-sdk-guide/azure-initial-login.png" width="800" label="Wallaroo Login">}}
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png" width="800" label="Device Registration">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png" width="800" label="Device Registration">}}
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
 

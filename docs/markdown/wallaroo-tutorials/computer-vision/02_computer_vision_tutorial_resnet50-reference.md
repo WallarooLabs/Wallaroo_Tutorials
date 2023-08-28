@@ -207,7 +207,7 @@ image = cvDemo.drawAndDisplayDetectedObjectsWithClassification(infResults)
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/computer-vision/02_computer_vision_tutorial_resnet50-reference_files/02_computer_vision_tutorial_resnet50-reference_21_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/computer-vision/02_computer_vision_tutorial_resnet50-reference_files/02_computer_vision_tutorial_resnet50-reference_21_0.png" width="800" label="png">}}
     
 
 ### Extract the Inference Information

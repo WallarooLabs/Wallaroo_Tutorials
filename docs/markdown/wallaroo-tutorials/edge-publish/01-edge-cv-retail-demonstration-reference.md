@@ -1,3 +1,5 @@
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-cv-retail).
+
 ## Computer Vision Edge Deployment Demonstration
 
 This notebook will walk through building a computer vision (CV) pipeline in Wallaroo, deploying it to the local cluster for testing, and then publishing it for edge deployment.

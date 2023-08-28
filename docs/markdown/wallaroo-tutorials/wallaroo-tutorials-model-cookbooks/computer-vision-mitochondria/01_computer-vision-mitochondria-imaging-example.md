@@ -234,43 +234,43 @@ for x in range(10):
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_0.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_1.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_2.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_3.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_3.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_4.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_4.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_5.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_5.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_6.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_6.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_7.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_7.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_8.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_8.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_9.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria/01_computer-vision-mitochondria-imaging-example_files/01_computer-vision-mitochondria-imaging-example_18_9.png" width="800" label="png">}}
     
 
 ### Complete Tutorial

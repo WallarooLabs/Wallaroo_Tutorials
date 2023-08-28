@@ -29,7 +29,7 @@ The examples will focus on the four pillars of Wallaroo:
 * Observe
 * Optimize
 
-{{<figure src="/images/current/wallaroo-101/wallaroo_circle.png" width="800" label="Wallaroo Pillars">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo_circle.png" width="800" label="Wallaroo Pillars">}}
 
 ### References
 
@@ -194,17 +194,17 @@ The method we'll introduce below will either **create** a new workspace if it do
 
 The first part is to return to your Wallaroo Dashboard.  In the top navigation panel next to your user name there's a drop down with your workspaces.  In this example it just has `My Workspace`.  Select **View Workspaces**.
 
-{{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png" width="800" label="Select View Workspaces">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-select-view-workspaces.png" width="800" label="Select View Workspaces">}}
 
 From here, enter the name of our new workspace as `ccfraud-workspace`.  If it already exists, you can skip this step.
 
 * **IMPORTANT NOTE**:  Workspaces do not have forced unique names.  It is highly recommended to use an existing workspace when possible, or establish a naming convention for your workspaces to keep their names unique to remove confusion with teams.
 
-{{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png" width="800" label="Create ccfraud-workspace">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-create-workspace-ccfraud.png" width="800" label="Create ccfraud-workspace">}}
 
 Once complete, you'll be able to select the workspace from the drop down list in your dashboard.
 
-{{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png" width="800" label="ccfraud-workspace exists">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-ccfraud-workspace-exists.png" width="800" label="ccfraud-workspace exists">}}
 
 ## Upload a model
 
@@ -230,7 +230,7 @@ Uploading a model can only be done through the [Wallaroo SDK](https://docs.walla
 
 The model can be viewed through the Wallaroo Dashboard by selecting the workspace, then selecting the model.  From this display, the model name, version(s), and associates pipeline(s) are displayed.
 
-{{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-display-model.png" width="800" label="Wallaroo Dashboard display model">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-display-model.png" width="800" label="Wallaroo Dashboard display model">}}
 
 ## Create a Pipeline
 
@@ -294,19 +294,19 @@ Pipelines can be created and deployed through the user interface through the fol
 1. Select the workspace from the Wallaroo Dashboard.
 1. Select **View Pipelines**.
 
-    {{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-display-pipeline.png" width="800" label="Pipeline Dashboard Select View Pipelines">}}
+    {{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-display-pipeline.png" width="800" label="Pipeline Dashboard Select View Pipelines">}}
 
 1. Select **Create Pipeline**.
 
-    {{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-select-create-pipeline.png" width="800" label="Pipeline Dashboard Select Create Pipeline">}}
+    {{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-select-create-pipeline.png" width="800" label="Pipeline Dashboard Select Create Pipeline">}}
 
 1. Set the name, then select the model for the pipeline step.  Select **Next**.
 
-    {{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-set-pipeline-step.png" width="800" label="Pipeline Dashboard Set Pipeline Step">}}
+    {{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-set-pipeline-step.png" width="800" label="Pipeline Dashboard Set Pipeline Step">}}
 
 1. With all of the pipeline steps added, select **Build**.  The pipeline will now be available for use.
 
-    {{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-select-build-pipeline.png" width="800" label="Pipeline Dashboard Build Pipeline">}}
+    {{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-select-build-pipeline.png" width="800" label="Pipeline Dashboard Build Pipeline">}}
 
 To deploy the pipeline, select **Deploy**.
 
@@ -631,7 +631,7 @@ display(predictions)
 
 The pipeline metrics are displayed by selecting the pipeline through the Wallaroo Dashboard, then selecting **Metrics**.  This provides a quick visual on how the pipeline is performing with the resources allocated to it.
 
-{{<figure src="/images/current/wallaroo-101/wallaroo-dashboard-pipeline-metrics.png" width="800" label="Pipeline Dashboard View Pipeline Metrics">}}
+{{<figure src="/images/2023.3.0/wallaroo-101/wallaroo-dashboard-pipeline-metrics.png" width="800" label="Pipeline Dashboard View Pipeline Metrics">}}
 
 ## Batch Deployment through a Pipeline Deployment URL
 

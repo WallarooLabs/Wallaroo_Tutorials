@@ -87,7 +87,7 @@ To set up the Python virtual environment for use of the Wallaroo SDK:
 
 For organizations who will be using the Wallaroo SDK with Jupyter or similar services, the conda virtual environment has been installed, it can either be selected as a new Jupyter Notebook kernel, or the Notebook's kernel can be set to an existing Jupyter notebook.
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png" width="800" label="">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-select-kernel.png" width="800" label="">}}
 
 To use a new Notebook:
 
@@ -119,11 +119,11 @@ The URLs are based on the Wallaroo Prefix and Wallaroo Suffix for the Wallaroo i
 
 Once run, the `wallaroo.Client` command provides a URL to grant the SDK permission to your specific Wallaroo environment.  When displayed, enter the URL into a browser and confirm permissions.  Depending on the configuration of the Wallaroo instance, the user will either be presented with a login request to the Wallaroo instance or be authenticated through a broker such as Google, Github, etc.  To use the broker, select it from the list under the username/password login forms.  For more information on Wallaroo authentication configurations, see the [Wallaroo Authentication Configuration Guides](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-sso-authentication/).
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png" width="800" label="Wallaroo Login">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-login.png" width="800" label="Wallaroo Login">}}
 
 Once authenticated, the user will verify adding the device the user is establishing the connection from.  Once both steps are complete, then the connection is granted.
 
-{{<figure src="/images/current/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png" width="800" label="Device Registration">}}
+{{<figure src="/images/2023.3.0/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-device-access.png" width="800" label="Device Registration">}}
 
 The connection is stored in the variable `wl` for use in all other Wallaroo calls.
 

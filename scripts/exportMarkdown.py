@@ -400,6 +400,26 @@ fileList = [
         "outputFile": "04_multiple_replicas_forecast.md"
     },
     {
+        "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
+        "outputFile": "wallaroo-model-registry-demonstration.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-cybersecurity-reference.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-finserv-reference.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-cv-demonstration/arm-computer-vision-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-computer-vision-reference.md"
+    },
+    {
         "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
         "outputDir": "/wallaroo-tutorials/edge-publish",
         "outputFile": "edge-classification-finserv-deployment-reference.md"

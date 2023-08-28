@@ -306,7 +306,7 @@ assay_builder.baseline_histogram()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_18_0.png" width="800" label="png">}}
     
 
 ```python
@@ -314,7 +314,7 @@ assay_builder.baseline_kde()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_19_0.png" width="800" label="png">}}
     
 
 ```python
@@ -322,7 +322,7 @@ assay_builder.baseline_ecdf()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_20_0.png" width="800" label="png">}}
     
 
 ## List Assays
@@ -350,7 +350,7 @@ baseline_run.chart()
     weighted = False
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_24_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_24_1.png" width="800" label="png">}}
     
 
 We can also get a dataframe with the bin/edge information.
@@ -439,7 +439,7 @@ equal_baseline.chart()
     weighted = False
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_28_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_28_1.png" width="800" label="png">}}
     
 
 We now see very different bin edges and sample percentages per bin.
@@ -917,7 +917,7 @@ assay_results.chart_scores()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_35_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_35_0.png" width="800" label="png">}}
     
 
 We see that the difference scores are low for a while and then jump up to indicate there is an issue. We can examine that particular window to help us decide if that threshold is set correctly or not.
@@ -943,7 +943,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_37_1.png" width="800" label="png">}}
     
 
 Other days, however are significantly different.
@@ -965,7 +965,7 @@ assay_results[12].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_39_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_39_1.png" width="800" label="png">}}
     
 
 ```python
@@ -985,7 +985,7 @@ assay_results[13].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_40_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_40_1.png" width="800" label="png">}}
     
 
 If we want to investigate further, we can run interactive assays on each of the inputs to see if any of them show anything abnormal. In this example we'll provide the feature labels to create more understandable titles.
@@ -1185,15 +1185,15 @@ assay_results.chart_iopaths(labels=labels, selected_labels=['bedrooms', 'lat', '
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_0.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_1.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_44_2.png" width="800" label="png">}}
     
 
 When we are comfortable with what alert threshold should be for our specific purposes we can create and save an assay that will be automatically run on a daily basis.
@@ -1251,7 +1251,7 @@ assay_results.chart_scores()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_51_0.png" width="800" label="png">}}
     
 
 To start a weekly analysis of the previous week on a specific day, set the start date (taking care to specify the desired timezone), and the width and interval to 1 week and of course an analysis won't be generated till a window is complete.
@@ -1277,7 +1277,7 @@ assay_results.chart_scores()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_54_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_54_0.png" width="800" label="png">}}
     
 
 ## Advanced Configuration
@@ -1551,7 +1551,7 @@ ar.chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_62_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_62_1.png" width="800" label="png">}}
     
 
 ## Binning Mode
@@ -1671,7 +1671,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_64_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_64_2.png" width="800" label="png">}}
     
 
 ## User Provided Bin Edges
@@ -1788,7 +1788,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_66_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_66_2.png" width="800" label="png">}}
     
 
 ## Number of Bins
@@ -1954,7 +1954,7 @@ assay_results[1].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_68_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_68_2.png" width="800" label="png">}}
     
 
 ## Bin Weights
@@ -2129,7 +2129,7 @@ assay_results[1].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_3.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_70_3.png" width="800" label="png">}}
     
 
 ## Metrics
@@ -2158,7 +2158,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_72_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_72_1.png" width="800" label="png">}}
     
 
 ```python
@@ -2181,7 +2181,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_73_1.png" width="800" label="png">}}
     
 
 ```python
@@ -2204,7 +2204,7 @@ assay_results[0].chart()
     index = 3
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_74_1.png" width="800" label="png">}}
     
 
 ## Aggregation Options
@@ -2231,7 +2231,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_76_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_76_1.png" width="800" label="png">}}
     
 
 ```python
@@ -2254,6 +2254,6 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/current/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_77_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-insights-reference_files/wallaroo-model-insights-reference_77_1.png" width="800" label="png">}}
     
 
