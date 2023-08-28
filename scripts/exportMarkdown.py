@@ -400,14 +400,14 @@ fileList = [
         "outputFile": "04_multiple_replicas_forecast.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-cybersecurity-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-finserv-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
     },
     {
         "inputFile": "pipeline-architecture/wallaroo-arm-llm-summarization/wallaroo-arm-llm-summarization-demonstration.ipynb",
