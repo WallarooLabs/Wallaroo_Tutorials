@@ -1,3 +1,5 @@
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-llm-summarization).
+
 ## Summarization Text Edge Deployment Demonstration
 
 This notebook will walk through building a summarization text pipeline in Wallaroo, deploying it to the local cluster for testing, and then publishing it for edge deployment.
