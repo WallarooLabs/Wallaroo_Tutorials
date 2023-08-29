@@ -1197,11 +1197,55 @@ response
 Deploy a an existing pipeline.  Note that for any pipeline that has model steps, they must be included either in `model_configs`, `model_ids` or `models`.
 
 * **Parameters**
-  * **deploy_id** (*REQUIRED string*): The name for the pipeline deployment.  This **must** match the name of the pipeline being deployed.
-  * **engine_config** (*OPTIONAL string*): Additional configuration options for the pipeline.
+  * **deploy_id** (*REQUIRED string*): The name for the pipeline deployment.
+  * **engine_config** (*OPTIONAL string*): Additional configuration options for the pipeline.  These set the memory, replicas, and other settings.  For example: `{"cpus": 1, "replica_count": 1, "memory": "999Mi"}` Available parameters include the following.
+    * `cpus`: The number of CPUs to apply to the native runtime models in the pipeline.  `cpus` can be a fraction of a cpu, for example `"cpus": 0.25`.
+    * `gpus`:  The number of GPUs to apply to the native runtime models.  GPUs can only be allocated in whole numbers.  Organizations should monitor how many GPUs are allocated to a pipelines to verify they have enough GPUs for all pipelines.
+    * `arch`: The architecture to use.  The available values are:
+      * `x64` (**Default**): x86 architecture.
+      * `arm`: ARM based architecture such as Ampere® Altra® Arm-based processor included with the following Azure virtual machines:
+        * [Dpsv5 and Dpdsv5-series](https://learn.microsoft.com/en-us/azure/virtual-machines/dpsv5-dpdsv5-series)
+        * [Epsv5 and Epdsv5-series](https://learn.microsoft.com/en-us/azure/virtual-machines/epsv5-epdsv5-series)
+    * `replica_count`: The number of replicas of the pipeline to deploy. This allows for multiple deployments of the same models to be deployed to increase inferences through parallelization.
+    * `replica_autoscale_min_max`: Provides replicas to be scaled from 0 to some maximum number of replicas. This allows pipelines to spin up additional replicas as more resources are required, then spin them back down to save on resources and costs.  For example:  `"replica_autoscale_min_max": {"maximum": 2, "minimum":0}`
+    * `autoscale_cpu_utilization`: Sets the average CPU percentage metric for when to load or unload another replica.
+    * `disable_autoscale`: Disables autoscaling in the deployment configuration.
+    * `memory`: Sets the amount of RAM to allocate the pipeline. The memory_spec string is in the format “{size as number}{unit value}”. The accepted unit values are:
+      * `KiB` (for KiloBytes)
+      * `MiB` (for MegaBytes)
+      * `GiB` (for GigaBytes)
+      * `TiB` (for TeraBytes)
+    * `lb_cpus`: Sets the number or fraction of CPUs to use for the pipeline’s load balancer, for example: 0.25, 1, 1.5, etc. The units, similar to the Kubernetes CPU definitions.
+    * `lb_memory`: Sets the amount of RAM to allocate the pipeline’s load balancer. The memory_spec string is in the format “{size as number}{unit value}”. The accepted unit values are:
+      * `KiB` (for KiloBytes)
+      * `MiB` (for MegaBytes)
+      * `GiB` (for GigaBytes)
+      * `TiB` (for TeraBytes)
+    * `deployment_label`: Label used for Kubernetes labels.
+    * `sidekick_cpus`:  Sets the number of CPUs to be used for the model’s sidekick container. Only affects image-based models (e.g. MLFlow models) in a deployment. The parameters are as follows:
+      * `model`: The sidekick model to configure.
+      * `core_count`: Sets the number or fraction of CPUs to use.
+    * `sidekick_memory`: Sets the memory available to for the model’s sidekick container. Only affects image-based models (e.g. MLFlow models) in a deployment. The parameters are as follows:
+      * `model`: The sidekick model to configure.
+      * `memory_spec`: The amount of memory to allocated as memory unit values. The accepted unit values are:
+        * `KiB` (for KiloBytes)
+        * `MiB` (for MegaBytes)
+        * `GiB` (for GigaBytes)
+        * `TiB` (for TeraBytes)
+    * `sidekick_env`: Environment variables submitted to the model’s sidekick container. Only affects image-based models (e.g. MLFlow models) in a deployment. These are used specifically for containerized models that have environment variables that effect their performance.  This takes the following parameters:
+      * `model`: The sidekick model to configure.
+      * `environment`: Dictionary inputs
+    * `sidekick_gpus`: Sets the number of GPUs to allocate for containerized runtimes. GPUs are only allocated in whole units, not as fractions. Organizations should be aware of the total number of GPUs available to the cluster, and monitor which pipeline deployment configurations have GPUs allocated to ensure they do not run out. If there are not enough GPUs to allocate to a pipeline deployment configuration, and error message will be deployed when the pipeline is deployed.  This takes the following parameters:
+      * `model`: The sidekick model to configure.
+      * `core_count`: The number of GPUs to allocate.
+    * `sidekick_arch`: The architecture to use for containerized runtimes.  The available values are:
+      * `x64` (**Default**): x86 architecture.
+      * `arm`: ARM based architecture such as Ampere® Altra® Arm-based processor included with the following Azure virtual machines:
+        * [Dpsv5 and Dpdsv5-series](https://learn.microsoft.com/en-us/azure/virtual-machines/dpsv5-dpdsv5-series)
+        * [Epsv5 and Epdsv5-series](https://learn.microsoft.com/en-us/azure/virtual-machines/epsv5-epdsv5-series)
   * **pipeline_version_pk_id** (*REQUIRED int*): Pipeline version id.
-  * **model_configs** (*OPTIONAL Array int*): Ids of model configs to apply.
-  * **model_ids** (*OPTIONAL Array int*): Ids of models to apply to the pipeline.  If passed in, model_configs will be created automatically.
+  * **model_configs** (*OPTIONALArray int*): Ids of model configs to apply.
+  * **model_ids** (*OPTIONALArray int*): Ids of models to apply to the pipeline.  If passed in, model_configs will be created automatically.
   * **models** (*OPTIONAL Array models*):  If the model ids are not available as a pipeline step, the models' data can be passed to it through this method.  The options below are only required if `models` are provided as a parameter.
     * **name** (*REQUIRED string*): Name of the uploaded model that is in the same workspace as the pipeline.
     * **version** (*REQUIRED string*): Version of the model to use.

@@ -189,7 +189,7 @@ With our inference results, we can take them and use the Wallaroo CVDemo class a
 
 ```python
 elapsed = 1.0
-elasped = x86_time
+elapsed = x86_time
 sample = {
     'model_name' : mobilenet_model_name ,
     'pipeline_name' : pipeline_name,
@@ -243,7 +243,7 @@ arm_time = endTime-startTime
 
 ```python
 elapsed = 1.0
-elasped = arm_time
+elapsed = arm_time
 sample = {
     'model_name' : mobilenet_model_name ,
     'pipeline_name' : pipeline_name,

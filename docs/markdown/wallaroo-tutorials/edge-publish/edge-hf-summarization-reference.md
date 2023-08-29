@@ -46,13 +46,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 ```python
 wl = wallaroo.Client()
-
-wallarooPrefix = "doc-test."
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ### Create a New Workspace
@@ -419,27 +412,180 @@ pipeline.publishes()
 
 <table><tr><th>id</th><th>pipeline_version_name</th><th>engine_url</th><th>pipeline_url</th><th>created_by</th><th>created_at</th><th>updated_at</th></tr><tr><td>5</td><td>af77957c-6af6-4332-aeeb-a4d9e1a22963</td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731'>ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731</a></td><td><a href='https://ghcr.io/wallaroolabs/doc-samples/pipelines/edge-hf-summarization:af77957c-6af6-4332-aeeb-a4d9e1a22963'>ghcr.io/wallaroolabs/doc-samples/pipelines/edge-hf-summarization:af77957c-6af6-4332-aeeb-a4d9e1a22963</a></td><td>john.hummel@wallaroo.ai</td><td>2023-25-Aug 18:54:50</td><td>2023-25-Aug 18:54:50</td></tr></table>
 
-## DevOps Deployment
+## DevOps - Pipeline Edge Deployment
 
-We now have our pipeline published to our Edge Registry service.  We can deploy this in a x86 environment running Docker that is logged into the same registry service that we deployed to.
+Once a pipeline is deployed to the Edge Registry service, it can be deployed in environments such as Docker, Kubernetes, or similar container running services by a DevOps engineer.
+
+### Docker Deployment
+
+First, the DevOps engineer must authenticate to the same OCI Registry service used for the Wallaroo Edge Deployment registry.
 
 For more details, check with the documentation on your artifact service.  The following are provided for the three major cloud services:
 
-* [Google: Set up authentication for Docker](https://cloud.google.com/artifact-registry/docs/docker/authentication)
-* [Azure: Authenticate with an Azure container registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?tabs=azure-cli)
-* [AWS: Authenticating Amazon ECR Repositories for Docker CLI with Credential Helper](https://aws.amazon.com/blogs/compute/authenticating-amazon-ecr-repositories-for-docker-cli-with-credential-helper/)
+* [Set up authentication for Docker](https://cloud.google.com/artifact-registry/docs/docker/authentication)
+* [Authenticate with an Azure container registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?tabs=azure-cli)
+* [Authenticating Amazon ECR Repositories for Docker CLI with Credential Helper](https://aws.amazon.com/blogs/compute/authenticating-amazon-ecr-repositories-for-docker-cli-with-credential-helper/)
 
-Using our sample environment, here's sample deployment using Docker.
+For the deployment, the engine URL is specified with the following environmental variables:
+
+```bash
+{published engine url}
+-e DEBUG=true -e OCI_REGISTRY={your registry server} \
+-e CONFIG_CPUS=4 \ # optional number of CPUs to use
+-e OCI_USERNAME={registry username} \
+-e OCI_PASSWORD={registry token here} \
+-e PIPELINE_URL={published pipeline url}
+```
+
+#### Docker Deployment Example
+
+Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
 
 ```bash
 docker run -p 8080:8080 \
     -e DEBUG=true -e OCI_REGISTRY={your registry server} \
     -e CONFIG_CPUS=4 \
-    -e OCI_USERNAME={registry username here} \
+    -e OCI_USERNAME=oauth2accesstoken \
     -e OCI_PASSWORD={registry token here} \
-    -e PIPELINE_URL={your registry server}/pipelines/edge-hf-summarization:af77957c-6af6-4332-aeeb-a4d9e1a22963 \
+    -e PIPELINE_URL={your registry server}/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555 \
     {your registry server}/engine:v2023.3.0-main-3707
 ```
+
+### Docker Compose Deployment
+
+For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
+
+```yml
+services:
+  engine:
+    image: {Your Engine URL}
+    ports:
+      - 8080:8080
+    environment:
+      PIPELINE_URL: {Your Pipeline URL}
+      OCI_REGISTRY: {Your Edge Registry URL}
+      OCI_USERNAME:  {Your Registry Username}
+      OCI_PASSWORD: {Your Token or Password}
+      CONFIG_CPUS: 4
+```
+
+For example:
+
+```yml
+services:
+  engine:
+    image: sample-registry.com/engine:v2023.3.0-main-3707
+    ports:
+      - 8080:8080
+    environment:
+      PIPELINE_URL: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
+      OCI_REGISTRY: sample-registry.com
+      OCI_USERNAME:  _json_key_base64
+      OCI_PASSWORD: abc123
+      CONFIG_CPUS: 4
+```
+
+#### Docker Compose Deployment Example
+
+The deployment and undeployment is then just a simple `docker compose up` and `docker compose down`.  The following shows an example of deploying the Wallaroo edge pipeline using `docker compose`.
+
+```bash
+docker compose up
+[+] Running 1/1
+ ✔ Container cv_data-engine-1  Recreated                                                                                                                                                                 0.5s
+Attaching to cv_data-engine-1
+cv_data-engine-1  | Wallaroo Engine - Standalone mode
+cv_data-engine-1  | Login Succeeded
+cv_data-engine-1  | Fetching manifest and config for pipeline: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
+cv_data-engine-1  | Fetching model layers
+cv_data-engine-1  | digest: sha256:c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
+cv_data-engine-1  |   filename: c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
+cv_data-engine-1  |   name: resnet-50
+cv_data-engine-1  |   type: model
+cv_data-engine-1  |   runtime: onnx
+cv_data-engine-1  |   version: 693e19b5-0dc7-4afb-9922-e3f7feefe66d
+cv_data-engine-1  |
+cv_data-engine-1  | Fetched
+cv_data-engine-1  | Starting engine
+cv_data-engine-1  | Looking for preexisting `yaml` files in //modelconfigs
+cv_data-engine-1  | Looking for preexisting `yaml` files in //pipelines
+```
+
+### Helm Deployment
+
+Published pipelines can be deployed through the use of helm charts.
+
+Helm deployments take up to two steps - the first step is in retrieving the required `values.yaml` and making updates to override.
+
+1. Pull the helm charts from the published pipeline.  The two fields are the Helm Chart URL and the Helm Chart version to specify the OCI .    This typically takes the format of:
+
+  ```bash
+  helm pull oci://{published.helm_chart_url} --version {published.helm_chart_version}
+  ```
+
+1. Extract the `tgz` file and copy the `values.yaml` and copy the values used to edit engine allocations, etc.  The following are **required** for the deployment to run:
+
+  ```yml
+  ociRegistry:
+    registry: {your registry service}
+    username:  {registry username here}
+    password: {registry token here}
+  ```
+
+  Store this into another file, suc as `local-values.yaml`.
+
+1. Create the namespace to deploy the pipeline to.  For example, the namespace `wallaroo-edge-pipeline` would be:
+
+  ```bash
+  kubectl create -n wallaroo-edge-pipeline
+  ```
+
+1. Deploy the `helm` installation with `helm install` through one of the following options:
+    1. Specify the `tgz` file that was downloaded and the local values file.  For example:
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} {tgz path}
+        ```
+
+    1. Specify the expended directory from the downloaded `tgz` file.
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} {helm directory path}
+        ```
+
+    1. Specify the Helm Pipeline Helm Chart and the Pipeline Helm Version.
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} oci://{published.helm_chart_url} --version {published.helm_chart_version}
+        ```
+
+1. Once deployed, the DevOps engineer will have to forward the appropriate ports to the `svc/engine-svc` service in the specific pipeline.  For example, using `kubectl port-forward` to the namespace `ccfraud` that would be:
+
+    ```bash
+    kubectl port-forward svc/engine-svc -n ccfraud01 8080 --address 0.0.0.0`
+    ```
+
+The following code segment generates a `docker compose` template based on the previously published pipeline.
+
+```python
+docker_compose = f'''
+services:
+  engine:
+    image: {pub.engine_url}
+    ports:
+      - 8080:8080
+    environment:
+      PIPELINE_URL: {pub.pipeline_url}
+      OCI_USERNAME: YOUR USERNAME 
+      OCI_PASSWORD: YOUR PASSWORD OR TOKEN
+      OCI_REGISTRY: ghcr.io
+      CONFIG_CPUS: 4
+'''
+
+print(docker_compose)
+```
+
+## Edge Deployed Pipeline API Endpoints
 
 Once deployed, we can check the pipelines and models available.  We'll use a `curl` command, but any HTTP based request will work the same way.
 
@@ -476,6 +622,37 @@ curl localhost:8080/models
 ```
 
     [{"check_failures":[],"elapsed":[257863,2939529889],"model_name":"hf-summarization","model_version":"88025146-7eae-4299-a8e2-f30cf6bef103","original_data":null,"outputs":[{"String":{"data":["LinkedIn is a business and employment-focused social media platform that works through websites and mobile apps. It launched on May 5, 2003. LinkedIn allows members (both workers and employers) to create profiles and connect with each other in an online social network which may represent real-world professional relationships."],"dim":[1,1],"v":1}}],"pipeline_name":"edge-hf-summarization","shadow_data":{},"time":1692990188043}]
+
+### Edge Deployed Inference
+
+The inference endpoint takes the following pattern:
+
+* `/pipelines/{pipeline-name}`:  The `pipeline-name` is the same as returned from the [`/pipelines`](#list-pipelines) endpoint as `id`.
+
+Wallaroo inference endpoint URLs accept the following data inputs through the `Content-Type` header:
+
+* `Content-Type: application/vnd.apache.arrow.file`: For Apache Arrow tables.
+* `Content-Type: application/json; format=pandas-records`: For pandas DataFrame in record format.
+* `Content-Type: application/json`: JSON.
+
+The `Accept` header will determine what kind format of the data is returned.
+  * `Accept: application/json` Returns a JSON object in the following format.
+
+* **check_failures** (*List[Integer]*): Any Validations that failed.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing](https://staging.docs.wallaroo.ai/20230201/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/#anomaly-testing)
+* **elapsed** (*List[Integer]*): A List of time in nanoseconds for:
+  * [0]: The time to serialize the input.
+  * [1...n]: How long each step took.
+* **model_name** (*String*): The name of the model.
+* **model_version** (*String*): The UUID identifier of the model version from Wallaroo.
+* **original_data** (*List*): The original submitted data.
+* **outputs** (*List*): A List of outputs with each output field corresponding to the input.  This is in the format for each data type returned:
+  * **{data-type}**: The data type being returned.
+    * **data** (*List*): The data from this data type.
+    * **dim** (*List*): The shape of the data for this data type.
+* **dim** (*List*): The shape of the data received.
+* **pipeline_name** (*String*): The name of the pipeline.
+* **shadow_data** (*List*): Any data returned from a shadow deployed model.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Shadow Deployments](https://staging.docs.wallaroo.ai/20230201/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/#pipeline-shadow-deployments).
+* **time** (*Integer*): The Epoch time of the inference.
 
 ```python
 import json

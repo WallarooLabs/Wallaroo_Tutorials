@@ -85,13 +85,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 ```python
 wl = wallaroo.Client()
-
-wallarooPrefix = "doc-test."
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ### Create Workspace and Pipeline
@@ -443,9 +436,13 @@ pipeline.undeploy()
 
 <table><tr><th>name</th> <td>edgebiolabspipeline</td></tr><tr><th>created</th> <td>2023-08-27 19:29:38.135888+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-27 21:43:20.662091+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d73b969e-7327-4e1c-b756-ae2fd044deb2, e051c3ff-8729-4c22-8939-51b3213c32fa, abe60490-b086-4043-9313-b5564159359c, 3679df28-cf72-4e1f-bee7-7cf3af29a68c, 2a85eb39-b920-4b79-91e0-e11b40ec2324, 8d65156f-3528-49da-8a8a-291fe5d7678e, e4707610-281c-4930-a3d2-338443e567c0, cb23d16b-5812-4401-9fda-fcfaa4ecf4f3, e45f7703-105f-4b6f-a4b0-33905be1bffd, d73c9e45-fed4-4c6b-8d53-e2fd509a043b, bcf8db22-378f-4ebf-bba6-3dc76e3e2d17, 83d3865f-e0e0-4907-9fd9-ef753e7a7c72, ebf39d16-bba6-46fc-b164-b56ac2a06a9f, cc1657d8-9cb8-4ea4-8c6a-9175ccba5c97</td></tr><tr><th>steps</th> <td>edgebiolabsmodel</td></tr><tr><th>published</th> <td>True</td></tr></table>
 
-## DevOps Deployment
+## DevOps - Pipeline Edge Deployment
 
-We now have our pipeline published to our Edge Registry service.  We can deploy this in a x86 environment running Docker that is logged into the same registry service that we deployed to.
+Once a pipeline is deployed to the Edge Registry service, it can be deployed in environments such as Docker, Kubernetes, or similar container running services by a DevOps engineer.
+
+### Docker Deployment
+
+First, the DevOps engineer must authenticate to the same OCI Registry service used for the Wallaroo Edge Deployment registry.
 
 For more details, check with the documentation on your artifact service.  The following are provided for the three major cloud services:
 
@@ -453,51 +450,146 @@ For more details, check with the documentation on your artifact service.  The fo
 * [Authenticate with an Azure container registry](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-authentication?tabs=azure-cli)
 * [Authenticating Amazon ECR Repositories for Docker CLI with Credential Helper](https://aws.amazon.com/blogs/compute/authenticating-amazon-ecr-repositories-for-docker-cli-with-credential-helper/)
 
-### Docker Deployment
-
-Using our sample environment, here's sample deployment of our pipeline using Docker.  The standard format is the following:
+For the deployment, the engine URL is specified with the following environmental variables:
 
 ```bash
-docker run -p 8080:8080 \
-    -e DEBUG=true -e OCI_REGISTRY={your registry service} \
-    -e CONFIG_CPUS=4 \
-    -e OCI_USERNAME={registry username here} \
-    -e OCI_PASSWORD={registry token here} \
-    -e PIPELINE_URL={your pipeline deployment url} \
-    {your engine url}
+{published engine url}
+-e DEBUG=true -e OCI_REGISTRY={your registry server} \
+-e CONFIG_CPUS=4 \ # optional number of CPUs to use
+-e OCI_USERNAME={registry username} \
+-e OCI_PASSWORD={registry token here} \
+-e PIPELINE_URL={published pipeline url}
 ```
 
-For example, our sample docker run is:
+#### Docker Deployment Example
+
+Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
 
 ```bash
 docker run -p 8080:8080 \
-    -e DEBUG=true -e OCI_REGISTRY=ghcr.io \
+    -e DEBUG=true -e OCI_REGISTRY={your registry server} \
     -e CONFIG_CPUS=4 \
-    -e OCI_USERNAME={registry username here} \
+    -e OCI_USERNAME=oauth2accesstoken \
     -e OCI_PASSWORD={registry token here} \
-    -e PIPELINE_URL=ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73 \
-    ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731
+    -e PIPELINE_URL={your registry server}/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555 \
+    {your registry server}/engine:v2023.3.0-main-3707
 ```
 
 ### Docker Compose Deployment
 
-A `docker compose` example would look like the following:
+For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
 
-```yaml
+```yml
 services:
   engine:
-    image: ghcr.io/wallaroolabs/doc-samples/engine:v2023.3.0-main-3731
+    image: {Your Engine URL}
     ports:
       - 8080:8080
     environment:
-      PIPELINE_URL: ghcr.io/wallaroolabs/doc-samples/pipelines/edge-pipeline:710aad65-1437-487b-b6db-0f732b5d2d73
-      OCI_USERNAME: {registry username here}
-      OCI_PASSWORD: {registry token here}
-      OCI_REGISTRY: ghcr.io
+      PIPELINE_URL: {Your Pipeline URL}
+      OCI_REGISTRY: {Your Edge Registry URL}
+      OCI_USERNAME:  {Your Registry Username}
+      OCI_PASSWORD: {Your Token or Password}
       CONFIG_CPUS: 4
 ```
 
-Here's a short code block to print it out.
+For example:
+
+```yml
+services:
+  engine:
+    image: sample-registry.com/engine:v2023.3.0-main-3707
+    ports:
+      - 8080:8080
+    environment:
+      PIPELINE_URL: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
+      OCI_REGISTRY: sample-registry.com
+      OCI_USERNAME:  _json_key_base64
+      OCI_PASSWORD: abc123
+      CONFIG_CPUS: 4
+```
+
+#### Docker Compose Deployment Example
+
+The deployment and undeployment is then just a simple `docker compose up` and `docker compose down`.  The following shows an example of deploying the Wallaroo edge pipeline using `docker compose`.
+
+```bash
+docker compose up
+[+] Running 1/1
+ ✔ Container cv_data-engine-1  Recreated                                                                                                                                                                 0.5s
+Attaching to cv_data-engine-1
+cv_data-engine-1  | Wallaroo Engine - Standalone mode
+cv_data-engine-1  | Login Succeeded
+cv_data-engine-1  | Fetching manifest and config for pipeline: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
+cv_data-engine-1  | Fetching model layers
+cv_data-engine-1  | digest: sha256:c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
+cv_data-engine-1  |   filename: c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
+cv_data-engine-1  |   name: resnet-50
+cv_data-engine-1  |   type: model
+cv_data-engine-1  |   runtime: onnx
+cv_data-engine-1  |   version: 693e19b5-0dc7-4afb-9922-e3f7feefe66d
+cv_data-engine-1  |
+cv_data-engine-1  | Fetched
+cv_data-engine-1  | Starting engine
+cv_data-engine-1  | Looking for preexisting `yaml` files in //modelconfigs
+cv_data-engine-1  | Looking for preexisting `yaml` files in //pipelines
+```
+
+### Helm Deployment
+
+Published pipelines can be deployed through the use of helm charts.
+
+Helm deployments take up to two steps - the first step is in retrieving the required `values.yaml` and making updates to override.
+
+1. Pull the helm charts from the published pipeline.  The two fields are the Helm Chart URL and the Helm Chart version to specify the OCI .    This typically takes the format of:
+
+  ```bash
+  helm pull oci://{published.helm_chart_url} --version {published.helm_chart_version}
+  ```
+
+1. Extract the `tgz` file and copy the `values.yaml` and copy the values used to edit engine allocations, etc.  The following are **required** for the deployment to run:
+
+  ```yml
+  ociRegistry:
+    registry: {your registry service}
+    username:  {registry username here}
+    password: {registry token here}
+  ```
+
+  Store this into another file, suc as `local-values.yaml`.
+
+1. Create the namespace to deploy the pipeline to.  For example, the namespace `wallaroo-edge-pipeline` would be:
+
+  ```bash
+  kubectl create -n wallaroo-edge-pipeline
+  ```
+
+1. Deploy the `helm` installation with `helm install` through one of the following options:
+    1. Specify the `tgz` file that was downloaded and the local values file.  For example:
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} {tgz path}
+        ```
+
+    1. Specify the expended directory from the downloaded `tgz` file.
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} {helm directory path}
+        ```
+
+    1. Specify the Helm Pipeline Helm Chart and the Pipeline Helm Version.
+
+        ```bash
+        helm install --namespace {namespace} --values {local values file} {helm install name} oci://{published.helm_chart_url} --version {published.helm_chart_version}
+        ```
+
+1. Once deployed, the DevOps engineer will have to forward the appropriate ports to the `svc/engine-svc` service in the specific pipeline.  For example, using `kubectl port-forward` to the namespace `ccfraud` that would be:
+
+    ```bash
+    kubectl port-forward svc/engine-svc -n ccfraud01 8080 --address 0.0.0.0`
+    ```
+
+The following code segment generates a `docker compose` template based on the previously published pipeline.
 
 ```python
 docker_compose = f'''
@@ -578,7 +670,7 @@ The `Accept` header will determine what kind format of the data is returned.
 * `Accept: application/json`: Returns a JSON object in the following format.
 
 * **check_failures** (*List[Integer]*): Any Validations that failed.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing](https://staging.docs.wallaroo.ai/20230201/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/#anomaly-testing)
-* **elasped** (*List[Integer]*): A List of time in nanoseconds for:
+* **elapsed** (*List[Integer]*): A List of time in nanoseconds for:
   * [0]: The time to serialize the input.
   * [1...n]: How long each step took.
 * **model_name** (*String*): The name of the model.
@@ -687,42 +779,42 @@ for random_patch in random_patches:
 ```
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_0.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_1.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_2.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_3.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_3.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_4.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_4.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_5.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_5.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_6.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_6.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_7.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_7.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_8.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_8.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_40_9.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_39_9.png" width="800" label="png">}}
     
 
