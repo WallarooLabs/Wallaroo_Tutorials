@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 import datetime
 
-_datafile = "./day.csv"
+_datafile = "./data/test_data.csv"
 tablename = "bikerentals"
 
 # return a simulated database connection that is backed by datafile
