@@ -254,11 +254,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "pipeline_log_tutorial.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -414,11 +414,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
     #     "outputFile": "arm-classification-finserv-reference.md"
     # },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv-api/arm-classification-finserv-api.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-finserv-api-reference.md"
-    },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv-api/arm-classification-finserv-api.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "arm-classification-finserv-api-reference.md"
+    # },
     # {
     #     "inputFile": "pipeline-architecture/wallaroo-arm-cv-demonstration/arm-computer-vision-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",

@@ -18,15 +18,27 @@ def actual_postprocess(predictions):
 # with the fields 'data' - native array of outputs
 #                 'dim' - of data
 #                 'v' 
-def wallaroo_json(data):
-    obj = json.loads(data)
+def wallaroo_json(data:pandas.DataFrame):
+    # obj = json.loads(data)
 
-    outputs = numpy.array(obj['outputs'][0]['Double']['data'])
-    
-    
-    prediction = actual_postprocess(outputs).tolist()
-    result = {
-        'original': obj,
-        'prediction': prediction
-    }
-    return(result)
+    # outputs = numpy.array(obj['outputs'][0]['Double']['data'])
+
+    outputs = numpy.array(data['variable'].to_list())
+
+    predictions = actual_postprocess(outputs).tolist()
+
+    columns = ['prediction']
+
+    df = pd.DataFrame({
+        'prediction': predictions
+    })
+
+    df['prediction'] = df['prediction'].map(lambda x: [x])
+
+    return df.to_dict(orient="records")
+
+    # return [
+    #     {
+    #         "prediction": actual_postprocess(outputs)
+    #     }
+    # ]

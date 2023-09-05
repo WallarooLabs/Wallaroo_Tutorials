@@ -17,14 +17,14 @@ def actual_preprocess(pdata):
 # a dictionary with fields 'colnames', 'data'
 
 # test that the code works here
-def wallaroo_json(data):
-    obj = json.loads(data)
-    pdata = pandas.DataFrame(obj['query'],
-                             columns=obj['colnames'])
-    pprocessed = actual_preprocess(pdata)
+def wallaroo_json(data:pandas.DataFrame):
+    # obj = json.loads(data)
+    # pdata = pandas.DataFrame(obj['query'],
+    #                          columns=obj['colnames'])
+    pprocessed = actual_preprocess(data)
     
    # return a dictionary, with the fields the model expect
-    return {
+    return [{
        'tensor_fields': ['model_input'],
        'tensor': pprocessed.to_numpy().tolist()
-    }
+    }]
