@@ -55,6 +55,14 @@ tutorials=(
     ["wallaroo-arm-cv-arrow"]=pipeline-architecture/wallaroo-arm-cv-arrow
     ["wallaroo-arm-cv-retail-demonstration"]=pipeline-architecture/wallaroo-arm-cv-retail-demonstration
     ["wallaroo-arm-classification-finserv"]=pipeline-architecture/wallaroo-arm-classification-finserv
+    ["wallaroo-arm-llm-summarization"]=pipeline-architecture/wallaroo-arm-llm-summarization
+    ["edge-arbitrary-python"]=pipeline-edge-publish/edge-arbitrary-python
+    ["edge-classification-cybersecurity"]=pipeline-edge-publish/edge-classification-cybersecurity
+    ["edge-classification-finserv"]=pipeline-edge-publish/edge-classification-finserv
+    ["edge-classification-finserv-api"]=pipeline-edge-publish/edge-classification-finserv-api
+    ["edge-cv"]=pipeline-edge-publish/edge-cv
+    ["edge-cv-healthcare-images"]=pipeline-edge-publish/edge-cv-healthcare-images
+    ["edge-llm-summarization"]=pipeline-edge-publish/edge-llm-summarization
     )
 
 currentDirectory=$PWD
