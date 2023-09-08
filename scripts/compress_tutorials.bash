@@ -52,6 +52,9 @@ tutorials=(
     ["tensorflow-upload-tutorials"]=model_uploads/tensorflow-upload-tutorials
     ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
     ["pipeline_multiple_replicas_forecast_tutorial"]=wallaroo-features/pipeline_multiple_replicas_forecast_tutorial
+    ["wallaroo-arm-cv-arrow"]=pipeline-architecture/wallaroo-arm-cv-arrow
+    ["wallaroo-arm-cv-retail-demonstration"]=pipeline-architecture/wallaroo-arm-cv-retail-demonstration
+    ["wallaroo-arm-classification-finserv"]=pipeline-architecture/wallaroo-arm-classification-finserv
     )
 
 currentDirectory=$PWD
