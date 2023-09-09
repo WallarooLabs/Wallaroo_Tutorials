@@ -1,0 +1,1 @@
+This demo requires the model [`hf-summarization-bart-large-samsun.zip` (1.4 G)](https://storage.googleapis.com/wallaroo-public-data/llm-models/model-auto-conversion_hugging-face_complex-pipelines_hf-summarisation-bart-large-samsun.zip) has been downloaded to the `./models` folder.

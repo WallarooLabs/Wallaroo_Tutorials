@@ -16,12 +16,15 @@ Assumes incoming data in frame with at least columns:
  
  Creates the features 'house_age', 'renovated', 'yrs_since_reno'
 '''
-def create_features(housing_data):
+def create_features(housing_data:pd.DataFrame):
     thisyear = datetime.datetime.now().year
     housing_data['house_age'] = thisyear - housing_data['yr_built']
     housing_data['renovated'] =  np.where((housing_data['yr_renovated'] > 0), 1, 0) 
     housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_data['yr_renovated'] - housing_data['yr_built'], 0)
-    return housing_data.loc[:, _vars]
+    return pd.DataFrame({
+        "tensor": housing_data.loc[:, _vars].to_numpy().tolist()
+        }
+    )
 
 # If the data is a json string, call this wrapper instead
 # Expected input:
@@ -40,14 +43,8 @@ output_dict = {
 }
 We don't need to re-convert it to pandas because the model takes numpy arrays as input.
 '''
-def wallaroo_json(data):
-    obj = json.loads(data)
-    pdata = pd.read_json(obj['query'])
-
+def wallaroo_json(data:pd.DataFrame):
     
-    pprocessed = create_features(pdata)
-    
-   # return a dictionary, with the fields the model expect
-    return {
-       'tensor': pprocessed.to_numpy().tolist()
-    }
+    value = create_features(data).to_dict(orient="records")
+    print(value)
+    return value
