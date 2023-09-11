@@ -3,30 +3,24 @@ import pandas
 
 import json
 
+
+def remove_zero(x):
+    if x[0] < 0:
+        x[0] = 0
+        return x
+    else:
+        x[0] = x[0]
+        return x
+
 # Check for negative predictions, and zero them out
-def actual_postprocess(predictions):
-    # turn the results of predictions into a vector
-    # sklearn predictions are already a vector, so this is idempotent
-    rows = predictions.shape[0]
-    predictions = predictions.reshape((rows, ))
-    
-    return numpy.where(predictions < 0, 0, predictions)
+def actual_postprocess(data:pandas.DataFrame):
 
-# Expected input:
-# A Dictionary with fields 'outputs',
-# which contains a list with an element that is a dictionary
-# with the fields 'data' - native array of outputs
-#                 'dim' - of data
-#                 'v' 
-def wallaroo_json(data):
-    obj = json.loads(data)
+    # if variables[x] < 0, replace with [0]
+    data.variable.apply(remove_zero)
 
-    outputs = numpy.array(obj['outputs'][0]['Double']['data'])
-    
-    
-    prediction = actual_postprocess(outputs).tolist()
-    result = {
-        'original': obj,
-        'prediction': prediction
-    }
-    return(result)
+    # rename 'variable' to 'prediction'
+    prediction = data.rename(columns={'variable':'prediction'})
+    return prediction
+
+def wallaroo_json(data:pandas.DataFrame):
+    return actual_postprocess(data).to_dict(orient="records")
