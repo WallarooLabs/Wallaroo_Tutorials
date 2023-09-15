@@ -23,11 +23,16 @@ import pandas
 import numpy
 import conversion
 from wallaroo.object import EntityNotFoundError
+import pyarrow as pa
 
 # used to display dataframe information without truncating
 from IPython.display import display
 import pandas as pd
 pd.set_option('display.max_colwidth', None)
+
+# ignoring warnings for demonstration
+import warnings
+warnings.filterwarnings('ignore')
 ```
 
 ### Connect to the Wallaroo Instance
@@ -82,54 +87,83 @@ demandcurve_pipeline = get_pipeline(pipeline_name)
 demandcurve_pipeline
 ```
 
-<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>353922e2-f63d-49fc-8254-ce493925db31</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6e7452b9-1464-488b-9a28-85ff765f18d6</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
 
-With our workspace established, we'll upload three models:
+With our workspace established, we'll upload two models:
 
 * `demand_curve_v1.onnx`: Our demand_curve model.  We'll store the upload configuration into `demand_curve_model`.
-* `preprocess`:  Takes the data and prepares it for the demand curve model.  We'll store the upload configuration into `module_pre`.
-* `postprocess`:  Takes the results from our demand curve model and prepares it for our display.  We'll store the upload configuration into `module_post`.
+* `postprocess.py`: A Python step that will zero out any negative values and return the output variable as "prediction".
 
 Note that the order we upload our models isn't important - we'll be establishing the actual process of moving data from one model to the next when we set up our pipeline.
 
 ```python
-# upload to wallaroo
-demand_curve_model = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX).configure()
-```
+demand_curve_model = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX)
 
-```python
-# load the preprocess module
-module_pre = wl.upload_model("preprocess", "./preprocess.py", framework=wallaroo.framework.Framework.PYTHON).configure('python')
-```
+preprocess_input_schema = pa.schema([
+    pa.field('Date', pa.string()),
+    pa.field('cust_known', pa.bool_()),
+    pa.field('StockCode', pa.int32()),
+    pa.field('UnitPrice', pa.float32()),
+    pa.field('UnitsSold', pa.int32())
+])
 
-```python
-# load the postprocess module
-module_post = wl.upload_model("postprocess", "./postprocess.py", framework=wallaroo.framework.Framework.PYTHON).configure('python')
+preprocess_input_output = pa.schema([
+    pa.field('tensor', pa.list_(pa.float64()))
+])
+
+preprocess_step = (wl.upload_model('curve-preprocess', 
+                        './preprocess.py', 
+                        framework=wallaroo.framework.Framework.PYTHON)
+                        .configure(
+                            'python', 
+                            input_schema=preprocess_input_schema, 
+                            output_schema=preprocess_input_output
+                        )
+        )
+
+input_schema = pa.schema([
+    pa.field('variable', pa.list_(pa.float64()))
+])
+
+output_schema = pa.schema([
+    pa.field('prediction', pa.list_(pa.float64()))
+])
+
+step = (wl.upload_model('curve-postprocess', 
+                        './postprocess.py', 
+                        framework=wallaroo.framework.Framework.PYTHON)
+                        .configure(
+                            'python', 
+                            input_schema=input_schema, 
+                            output_schema=output_schema
+                        )
+        )
 ```
 
 With our models uploaded, we're going to create our own pipeline and give it three steps:
 
-* First, start with the preprocess module we called `module_pre` to prepare the data.
-* Second, we apply the data to our `demand_curve_model`.
+* First, we apply the data to our `demand_curve_model`.
 * And finally, we prepare our data for output with the `module_post`.
 
 ```python
 # now make a pipeline
+demandcurve_pipeline.undeploy()
 demandcurve_pipeline.clear()
-demandcurve_pipeline.add_model_step(module_pre)
+demandcurve_pipeline.add_model_step(preprocess_step)
 demandcurve_pipeline.add_model_step(demand_curve_model)
-demandcurve_pipeline.add_model_step(module_post)
+demandcurve_pipeline.add_model_step(step)
 ```
 
-<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>353922e2-f63d-49fc-8254-ce493925db31</td></tr><tr><th>steps</th> <td></td></tr></table>
+<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6e7452b9-1464-488b-9a28-85ff765f18d6</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 And with that - let's deploy our model pipeline.  This usually takes about 45 seconds for the deployment to finish.
 
 ```python
-demandcurve_pipeline.deploy()
+deploy_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(1).memory("1Gi").build()
+demandcurve_pipeline.deploy(deployment_config=deploy_config)
 ```
 
-<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-14 15:20:10.591689+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0c42cacb-4f17-49d6-8110-207c27457508, 353922e2-f63d-49fc-8254-ce493925db31</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
+<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-11 18:28:14.101496+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>cf1e4357-c98c-490d-822f-8c252a43ff99, 6e7452b9-1464-488b-9a28-85ff765f18d6</td></tr><tr><th>steps</th> <td>curve-preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 We can check the status of our pipeline to make sure everything was set up correctly:
 
@@ -139,27 +173,27 @@ demandcurve_pipeline.status()
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.0.67',
-       'name': 'engine-7fd7d65b49-w5gxm',
+     'engines': [{'ip': '10.244.3.164',
+       'name': 'engine-68597cfb4-6fxxd',
        'status': 'Running',
        'reason': None,
        'details': [],
        'pipeline_statuses': {'pipelines': [{'id': 'demandcurvepipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'preprocess',
-          'version': '81fb47ea-8f9c-436b-ad1c-4ffbd50d59cf',
-          'sha': '1d0090808e807ccb20422e77e59d4d38e3cc39fae5ce115032e68a855a5a62c0',
+       'model_statuses': {'models': [{'name': 'curve-preprocess',
+          'version': '15ea1ce0-2091-4f18-8759-266d113cfa86',
+          'sha': '3b2b32fb6408ccee5a1886ef5cdb493692080ff6699f49de518b20d9a6f6a133',
           'status': 'Running'},
          {'name': 'demandcurvemodel',
-          'version': '6aa8f202-0295-4b6a-a1ca-8fa74492a42d',
+          'version': 'c9a1b515-8302-49f2-a772-3a32a182bad3',
           'sha': '2820b42c9e778ae259918315f25afc8685ecab9967bad0a3d241e6191b414a0d',
           'status': 'Running'},
-         {'name': 'postprocess',
-          'version': '50d5168c-6957-494e-b09f-6971eb54f950',
-          'sha': '882d47c2fa94e2d2cc7cbdc350a86706d32a98ad1ad9fe55d878c0727444d488',
+         {'name': 'curve-postprocess',
+          'version': '76f7f617-8e29-4aa8-a06e-563228581d79',
+          'sha': 'ecf1a555bb27bcf62bfa42922cf69db23e7188f456015fe8299f02867c3167b2',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.4.183',
-       'name': 'engine-lb-584f54c899-8mwln',
+     'engine_lbs': [{'ip': '10.244.4.200',
+       'name': 'engine-lb-584f54c899-lqm67',
        'status': 'Running',
        'reason': None,
        'details': []}],
@@ -174,28 +208,69 @@ purchases = pandas.read_csv('daily_purchases.csv')
 # start with a one-row data frame for testing
 subsamp_raw = purchases.iloc[0:1,: ]
 subsamp_raw
-
-# create the input dictionary from the original one-line dataframe
-input_dict = conversion.pandas_to_dict(subsamp_raw)
 ```
 
-```python
-result = demandcurve_pipeline.infer(input_dict)
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>cust_known</th>
+      <th>StockCode</th>
+      <th>UnitPrice</th>
+      <th>UnitsSold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2010-12-01</td>
+      <td>False</td>
+      <td>21928</td>
+      <td>4.21</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
 
 ```python
+result = demandcurve_pipeline.infer(subsamp_raw)
 display(result)
 ```
 
-    [{'original': {'outputs': [{'Double': {'v': 1,
-          'dim': [1, 1],
-          'data': [6.68025518653071]}}]},
-      'prediction': [6.68025518653071]}]
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.Date</th>
+      <th>in.StockCode</th>
+      <th>in.UnitPrice</th>
+      <th>in.UnitsSold</th>
+      <th>in.cust_known</th>
+      <th>out.prediction</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-09-11 18:28:28.627</td>
+      <td>2010-12-01</td>
+      <td>21928</td>
+      <td>4.21</td>
+      <td>1</td>
+      <td>False</td>
+      <td>[6.68025518653071]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
-We can see from the `prediction` field that the demand curve has a predicted slope of 6.68 from our sample data.  We can isolate that by specifying just the data output below.
+We can see from the `out.prediction` field that the demand curve has a predicted slope of 6.68 from our sample data.  We can isolate that by specifying just the data output below.
 
 ```python
-display(result[0]['prediction'])
+display(result.loc[0, ['out.prediction']][0])
 ```
 
     [6.68025518653071]
@@ -205,25 +280,237 @@ display(result[0]['prediction'])
 The initial test went perfectly.  Now let's throw some more data into our pipeline.  We'll draw 10 random rows from our spreadsheet, perform an inference from that, and then display the results and the logs showing the pipeline's actions.
 
 ```python
-# Let's do 10 rows at once (drawn randomly)
 ix = numpy.random.choice(purchases.shape[0], size=10, replace=False)
-output = demandcurve_pipeline.infer(conversion.pandas_to_dict(purchases.iloc[ix,: ]))
+converted = conversion.pandas_to_dict(purchases.iloc[ix,: ])
+test_df = pd.DataFrame(converted['query'], columns=converted['colnames'])
+display(test_df)
+
+output = demandcurve_pipeline.infer(test_df)
+display(output)
 ```
 
-```python
-display(output[0]['prediction'])
-```
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>cust_known</th>
+      <th>StockCode</th>
+      <th>UnitPrice</th>
+      <th>UnitsSold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2011-09-15</td>
+      <td>False</td>
+      <td>20713</td>
+      <td>4.13</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2011-11-30</td>
+      <td>True</td>
+      <td>85099C</td>
+      <td>2.08</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2011-10-13</td>
+      <td>False</td>
+      <td>85099B</td>
+      <td>4.13</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2011-08-11</td>
+      <td>True</td>
+      <td>22411</td>
+      <td>2.08</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2011-08-10</td>
+      <td>False</td>
+      <td>23200</td>
+      <td>4.13</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2011-11-03</td>
+      <td>False</td>
+      <td>22385</td>
+      <td>4.13</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2011-09-19</td>
+      <td>True</td>
+      <td>85099B</td>
+      <td>1.79</td>
+      <td>400</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2011-09-18</td>
+      <td>True</td>
+      <td>20712</td>
+      <td>2.08</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2011-05-09</td>
+      <td>False</td>
+      <td>23201</td>
+      <td>4.13</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2011-11-17</td>
+      <td>False</td>
+      <td>85099B</td>
+      <td>4.13</td>
+      <td>6</td>
+    </tr>
+  </tbody>
+</table>
 
-    [40.57067889202563,
-     33.125323160373426,
-     33.125323160373426,
-     33.125323160373426,
-     40.57067889202563,
-     33.125323160373426,
-     6.771545926800889,
-     40.57067889202563,
-     33.125323160373426,
-     6.771545926800889]
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>in.Date</th>
+      <th>in.StockCode</th>
+      <th>in.UnitPrice</th>
+      <th>in.UnitsSold</th>
+      <th>in.cust_known</th>
+      <th>out.prediction</th>
+      <th>check_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-09-15</td>
+      <td>20713</td>
+      <td>4.13</td>
+      <td>17</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-11-30</td>
+      <td>85099C</td>
+      <td>2.08</td>
+      <td>12</td>
+      <td>True</td>
+      <td>[33.125323160373426]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-10-13</td>
+      <td>85099B</td>
+      <td>4.13</td>
+      <td>15</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-08-11</td>
+      <td>22411</td>
+      <td>2.08</td>
+      <td>30</td>
+      <td>True</td>
+      <td>[33.125323160373426]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-08-10</td>
+      <td>23200</td>
+      <td>4.13</td>
+      <td>4</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-11-03</td>
+      <td>22385</td>
+      <td>4.13</td>
+      <td>3</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-09-19</td>
+      <td>85099B</td>
+      <td>1.79</td>
+      <td>400</td>
+      <td>True</td>
+      <td>[49.73419363867448]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-09-18</td>
+      <td>20712</td>
+      <td>2.08</td>
+      <td>2</td>
+      <td>True</td>
+      <td>[33.125323160373426]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-05-09</td>
+      <td>23201</td>
+      <td>4.13</td>
+      <td>6</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2023-09-11 18:28:29.105</td>
+      <td>2011-11-17</td>
+      <td>85099B</td>
+      <td>4.13</td>
+      <td>6</td>
+      <td>False</td>
+      <td>[6.771545926800889]</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Undeploy the Pipeline
 
@@ -233,6 +520,6 @@ Once we've finished with our demand curve demo, we'll undeploy the pipeline and 
 demandcurve_pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-07-14 15:20:05.296215+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-14 15:20:10.591689+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>0c42cacb-4f17-49d6-8110-207c27457508, 353922e2-f63d-49fc-8254-ce493925db31</td></tr><tr><th>steps</th> <td>preprocess</td></tr></table>
+<table><tr><th>name</th> <td>demandcurvepipeline</td></tr><tr><th>created</th> <td>2023-09-11 18:28:08.036841+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-11 18:28:14.101496+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>cf1e4357-c98c-490d-822f-8c252a43ff99, 6e7452b9-1464-488b-9a28-85ff765f18d6</td></tr><tr><th>steps</th> <td>curve-preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 Thank you for being a part of this demonstration.  If you have additional questions, please feel free to contact us at Wallaroo.

@@ -319,7 +319,7 @@ plt.show()
 ```
 
     
-{{<figure src="/images/current/wallaroo-tutorials/notebook_in_prod/02_notebooks_in_prod_automated_training_process-reference_files/02_notebooks_in_prod_automated_training_process-reference_10_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.3.0/wallaroo-tutorials/notebook_in_prod/02_notebooks_in_prod_automated_training_process-reference_files/02_notebooks_in_prod_automated_training_process-reference_10_0.png" width="800" label="png">}}
     
 
 ```python

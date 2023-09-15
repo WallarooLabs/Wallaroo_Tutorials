@@ -19,7 +19,6 @@ The following resources are used as part of this tutorial:
   * `data/seattle_housing.csv`: Sample data of the Seattle, Washington housing market between 2014 and 2015.
 * **code**
   * `postprocess.py`: Formats the data after inference by the model is complete.
-  * `preprocess.py`: Formats the incoming data for the model.
   * `simdb.py`: A simulated database to demonstrate sending and receiving queries.
   * `wallaroo_client.py`: Additional methods used with the Wallaroo instance to create workspaces, etc.
 * **models**
@@ -45,6 +44,7 @@ import wallaroo
 import pandas as pd
 import numpy as np
 import pyarrow as pa
+import datetime
 
 import simdb # module for the purpose of this demo to simulate pulling data from a database
 
@@ -54,9 +54,6 @@ from wallaroo_client import get_workspace
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 
-import preprocess
-
-import postprocess
 ```
 
 ### Connect to the Wallaroo Instance
@@ -112,7 +109,7 @@ pipeline = get_pipeline(pipeline_name)
 pipeline.deploy()
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-08-28 16:53:31.473346+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-28 16:54:44.168700+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fede64f0-2a46-4a7f-8a52-59acfbaf7678, 63da191e-93f5-4933-afe5-1c552121d8a0, 45768a6d-0115-4b71-870f-865d479f1b5c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:37:27.074611+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Read In New House Listings
 
@@ -126,38 +123,173 @@ query = f"select * from {simdb.tablename} where date > DATE(DATE(), '-1 month') 
 print(query)
 
 # read in the data
+# can't have null values - turn them into 0
 newbatch = pd.read_sql_query(query, conn)
-newbatch.shape
+newbatch['sale_price'] = newbatch.sale_price.apply(lambda x: 0)
+display(newbatch.shape)
+display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_living", "sqft_lot"]])
 ```
 
     select * from house_listings where date > DATE(DATE(), '-1 month') AND sale_price is NULL
 
     (1090, 22)
 
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>date</th>
+      <th>list_price</th>
+      <th>bedrooms</th>
+      <th>bathrooms</th>
+      <th>sqft_living</th>
+      <th>sqft_lot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9215400105</td>
+      <td>2023-08-14</td>
+      <td>450000.0</td>
+      <td>3</td>
+      <td>1.75</td>
+      <td>1250</td>
+      <td>5963</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1695900060</td>
+      <td>2023-08-27</td>
+      <td>535000.0</td>
+      <td>4</td>
+      <td>1.00</td>
+      <td>1610</td>
+      <td>2982</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9545240070</td>
+      <td>2023-08-14</td>
+      <td>660500.0</td>
+      <td>4</td>
+      <td>2.25</td>
+      <td>2010</td>
+      <td>9603</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1432900240</td>
+      <td>2023-08-24</td>
+      <td>205000.0</td>
+      <td>3</td>
+      <td>1.00</td>
+      <td>1610</td>
+      <td>8579</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6131600075</td>
+      <td>2023-08-13</td>
+      <td>225000.0</td>
+      <td>3</td>
+      <td>1.00</td>
+      <td>1300</td>
+      <td>8316</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1400300055</td>
+      <td>2023-08-14</td>
+      <td>425000.0</td>
+      <td>2</td>
+      <td>1.00</td>
+      <td>770</td>
+      <td>5040</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7960900060</td>
+      <td>2023-08-20</td>
+      <td>2900000.0</td>
+      <td>4</td>
+      <td>3.25</td>
+      <td>5050</td>
+      <td>20100</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>6378500125</td>
+      <td>2023-08-17</td>
+      <td>436000.0</td>
+      <td>2</td>
+      <td>1.00</td>
+      <td>1040</td>
+      <td>7538</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2022069200</td>
+      <td>2023-08-21</td>
+      <td>455000.0</td>
+      <td>4</td>
+      <td>2.50</td>
+      <td>2210</td>
+      <td>49375</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>9412900055</td>
+      <td>2023-08-21</td>
+      <td>405000.0</td>
+      <td>3</td>
+      <td>1.75</td>
+      <td>2390</td>
+      <td>6000</td>
+    </tr>
+  </tbody>
+</table>
+
 ```python
-query = {'query': newbatch.to_json()}
-result = pipeline.infer(query)
-#display(result)
-predicted_prices = result[0]['prediction']
+# query = {'query': newbatch.to_json()}
+
+result = pipeline.infer(newbatch)
+# display(result)
+predicted_prices = pd.DataFrame(result['out.variable'].apply(lambda x: x[0])).rename(columns={'out.variable':'prediction'})
 display(predicted_prices[0:5])
 ```
 
-    [508255.0, 500198.0, 539598.0, 270739.0, 191304.0]
-
-```python
-display(result[0]['prediction'][0:10])
-```
-
-    [508255.0,
-     500198.0,
-     539598.0,
-     270739.0,
-     191304.0,
-     346586.0,
-     3067263.0,
-     378917.0,
-     496464.0,
-     424550.0]
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prediction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>508255.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>500198.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>539598.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>270739.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>191304.0</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Send Predictions to Results Staging Table
 
@@ -168,11 +300,81 @@ Once complete, undeploy the pipeline to return the resources back to the Kuberne
 ```python
 result_table = pd.DataFrame({
     'id': newbatch['id'],
-    'saleprice_estimate': result[0]['prediction']
+    'saleprice_estimate': predicted_prices['prediction']
 })
+
+display(result_table)
 
 result_table.to_sql('results_table', conn, index=False, if_exists='append')
 ```
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>saleprice_estimate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9215400105</td>
+      <td>508255.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1695900060</td>
+      <td>500198.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>9545240070</td>
+      <td>539598.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1432900240</td>
+      <td>270739.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>6131600075</td>
+      <td>191304.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1085</th>
+      <td>3304300300</td>
+      <td>577492.0</td>
+    </tr>
+    <tr>
+      <th>1086</th>
+      <td>6453550090</td>
+      <td>882930.0</td>
+    </tr>
+    <tr>
+      <th>1087</th>
+      <td>1760650820</td>
+      <td>271484.0</td>
+    </tr>
+    <tr>
+      <th>1088</th>
+      <td>3345700207</td>
+      <td>537434.0</td>
+    </tr>
+    <tr>
+      <th>1089</th>
+      <td>7853420110</td>
+      <td>634226.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>1090 rows × 2 columns</p>
 
 ```python
 # Display the top of the table for confirmation
@@ -221,6 +423,6 @@ conn.close()
 pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-08-28 16:53:31.473346+00:00</td></tr><tr><th>last_updated</th> <td>2023-08-28 16:54:44.168700+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>fede64f0-2a46-4a7f-8a52-59acfbaf7678, 63da191e-93f5-4933-afe5-1c552121d8a0, 45768a6d-0115-4b71-870f-865d479f1b5c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:37:27.074611+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 From here, organizations can automate this process.  Other features could be used such as data analysis using Wallaroo assays, or other features such as shadow deployments to test champion and challenger models to find which models provide the best results.

@@ -21,7 +21,6 @@ The following resources are provided as part of this tutorial:
   * `data/seattle_housing_col_description.txt`: Describes the columns used as part data analysis.
   * `data/seattle_housing.csv`: Sample data of the Seattle, Washington housing market between 2014 and 2015.
 * **code**
-  * `postprocess.py`: Formats the data after inference by the model is complete.
   * `preprocess.py`: Formats the incoming data for the model.
   * `simdb.py`: A simulated database to demonstrate sending and receiving queries.
   * `wallaroo_client.py`: Additional methods used with the Wallaroo instance to create workspaces, etc.
