@@ -29,11 +29,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-quick-start-aloha-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
-        "outputDir": "/wallaroo-tutorials",
-        "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
+    #     "outputDir": "/wallaroo-tutorials",
+    #     "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-model-cookbooks/imdb/imdb_sample.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -99,31 +99,31 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-simulated_edge-reference.md"
     # },
-    {
-        "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "_index.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
-    },
+    # {
+    #     "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "_index.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -404,6 +404,46 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
     #     "outputFile": "wallaroo-model-registry-demonstration.md"
     # },
+    {
+        "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-arbitrary-python-demonstration-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-cybersecurity-deployment.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv/edge-cv-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-cv-demonstration.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/00_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-llm-summarization/edge-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-hf-summarization-reference.md"
+    },
 
 ]
 
