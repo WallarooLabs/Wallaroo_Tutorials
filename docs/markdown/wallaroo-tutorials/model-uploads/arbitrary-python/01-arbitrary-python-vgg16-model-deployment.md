@@ -4,13 +4,13 @@ This tutorial can be downloaded as part of the [Wallaroo Tutorials repository](h
 
 This tutorial demonstrates how to use arbitrary python as a ML Model in Wallaroo.  Arbitrary Python allows organizations to use Python scripts that require specific libraries and artifacts as models in the Wallaroo engine.  This allows for highly flexible use of ML models with supporting scripts.
 
-### Tutorial Prerequisites
+### Tutorial Goals
 
-* A Wallaroo version 2023.2.1 or above instance.
+This tutorial is split into two parts:
 
-### References
-
-* [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
+* **Wallaroo SDK Upload Arbitrary Python Tutorial: Generate Model**: Train a dummy `KMeans` model for clustering images using a pre-trained `VGG16` model on `cifar10` as a feature extractor.  The Python entry points used for Wallaroo deployment will be added and described.
+  * A copy of the arbitrary Python model `models/model-auto-conversion-BYOP-vgg16-clustering.zip` is included in this tutorial, so this step can be skipped.
+* **Arbitrary Python Tutorial Deploy Model in Wallaroo Upload and Deploy**: Deploys the `KMeans` model in an arbitrary Python package in Wallaroo, and perform sample inferences.  The file `models/model-auto-conversion-BYOP-vgg16-clustering.zip` is provided so users can go right to testing deployment.
 
 Arbitrary Python models, also known as Bring Your Own Predict (BYOP) allow for custom model deployments with supporting scripts and artifacts.  These are used with pre-trained models (PyTorch, Tensorflow, etc) along with whatever supporting artifacts they require.  Supporting artifacts can include other Python modules, model files, etc.  These are zipped with all scripts, artifacts, and a `requirements.txt` file that indicates what other Python models need to be imported that are outside of the typical Wallaroo platform.
 
@@ -123,7 +123,6 @@ import pickle
 import pyarrow as pa
 import tensorflow as tf
 import wallaroo
-from wallaroo.object import EntityNotFoundError
 
 from sklearn.cluster import KMeans
 from tensorflow.keras.datasets import cifar10
@@ -134,8 +133,8 @@ from wallaroo.deployment_config import DeploymentConfigBuilder
 from wallaroo.framework import Framework
 ```
 
-    2023-09-18 14:57:12.681704: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
-    2023-09-18 14:57:12.681746: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+    2023-07-07 16:18:13.974516: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+    2023-07-07 16:18:13.974543: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
 
 ### Open a Connection to Wallaroo
 
@@ -147,7 +146,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 
 ```python
 wl = wallaroo.Client()
-
 ```
 
 ### Set Variables and Helper Functions
@@ -162,12 +160,11 @@ import random
 
 # make a random 4 character suffix to prevent overwriting other user's workspaces
 suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
-
 workspace_name = f'vgg16-clustering-workspace{suffix}'
 pipeline_name = f'vgg16-clustering-pipeline'
 
-model_name = 'arm-vgg16-clustering'
-model_file_name = './models/model-auto-conversion-BYOP-vgg16-clustering_arm.zip'
+model_name = 'vgg16-clustering'
+model_file_name = './models/model-auto-conversion-BYOP-vgg16-clustering.zip'
 ```
 
 ```python
@@ -255,55 +252,35 @@ output_schema = pa.schema([
 
 Now we'll upload our model.  The framework is `Framework.CUSTOM` for arbitrary Python models, and we'll specify the input and output schemas for the upload.
 
-An important note for the ARM version of the VGG16 model is verifying that the Python modules used will operate in an ARM environment.  For example, the x86 model has the following as its `requirements.txt`:
-
 ```python
-tensorflow==2.8.0
-scikit-learn==1.2.2
-```
-
-The ARM version replaces the `tensorflow` module with the `tensorflow-aarch64` that runs in the ARM archtecture.  Otherwise, the model and Python script is the same.
-
-```python
-tensorflow-aarch64==2.8.4
-scikit-learn==1.2.2
-```
-
-```python
-from wallaroo.engine_config import Architecture
-
 model = wl.upload_model(model_name, 
                         model_file_name, 
                         framework=Framework.CUSTOM, 
                         input_schema=input_schema, 
-                        output_schema=output_schema,
-                        arch=Architecture.ARM, 
+                        output_schema=output_schema, 
                         convert_wait=True)
 model
 ```
 
-    Waiting for model loading - this will take up to 10.0min.
-    Model is pending loading to a container runtime..
-    Model is attempting loading to a container runtime.......................successful
-    
-    Ready
+    Waiting for model conversion... It may take up to 10.0min.
+    Model is Pending conversion..Converting..................Ready.
 
 <table>
         <tr>
           <td>Name</td>
-          <td>arm-vgg16-clustering</td>
+          <td>vgg16-clustering</td>
         </tr>
         <tr>
           <td>Version</td>
-          <td>14f9929d-cb37-4e44-aacd-2120b349ef31</td>
+          <td>86eaa743-f659-4eac-9544-23893ea0101c</td>
         </tr>
         <tr>
           <td>File Name</td>
-          <td>model-auto-conversion-BYOP-vgg16-clustering_arm.zip</td>
+          <td>model-auto-conversion-BYOP-vgg16-clustering.zip</td>
         </tr>
         <tr>
           <td>SHA</td>
-          <td>e53d1775766567eda5fd7ecb1618ea073fc18ffd6298c75da67be3b704029f15</td>
+          <td>9701562daa747b15846ce6e5eb20ba5d8b6ac77c38b62e58298da56252aa493f</td>
         </tr>
         <tr>
           <td>Status</td>
@@ -311,19 +288,13 @@ model
         </tr>
         <tr>
           <td>Image Path</td>
-          <td>proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.4.0-main-3827</td>
+          <td>proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.3.0-main-3481</td>
         </tr>
         <tr>
           <td>Updated At</td>
-          <td>2023-18-Sep 14:59:39</td>
+          <td>2023-07-Jul 16:20:20</td>
         </tr>
       </table>
-
-```python
-print(model)
-```
-
-    {'name': 'arm-vgg16-clustering', 'version': '14f9929d-cb37-4e44-aacd-2120b349ef31', 'file_name': 'model-auto-conversion-BYOP-vgg16-clustering_arm.zip', 'image_path': 'proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.4.0-main-3827', 'last_update_time': datetime.datetime(2023, 9, 18, 14, 59, 39, 729445, tzinfo=tzutc())}
 
 ### Deploy Pipeline
 
@@ -333,39 +304,39 @@ The model is uploaded and ready for use.  We'll add it as a step in our pipeline
 pipeline.add_model_step(model)
 ```
 
-<table><tr><th>name</th> <td>vgg16-clustering-pipeline</td></tr><tr><th>created</th> <td>2023-09-18 14:57:31.537378+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-18 14:57:31.537378+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d42d5272-86dd-414b-8928-6dea07c866c1</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>vgg16-clustering-pipeline</td></tr><tr><th>created</th> <td>2023-06-28 16:37:14.436166+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-07 02:09:17.095252+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>21fb5777-f32d-4b86-99c1-3b099f0f671d, 610afdf4-850d-48f6-aad9-3115f389ee78, 13ed3d22-a82b-4a45-9b1d-5d668e9b2452, 9049c924-146f-4f7a-9e16-0b2565491547</td></tr><tr><th>steps</th> <td>vgg16-clustering</td></tr></table>
 
 ```python
 deployment_config = DeploymentConfigBuilder() \
-    .cpus(1).memory('4Gi') \
+    .cpus(0.25).memory('4Gi') \
     .build()
 
 pipeline.deploy(deployment_config=deployment_config)
 pipeline.status()
 ```
 
-    Waiting for deployment - this will take up to 90s ........................ ok
+    Waiting for deployment - this will take up to 90s ....................... ok
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.2.13',
-       'name': 'engine-d665b9c7d-jhr7s',
+     'engines': [{'ip': '10.244.17.211',
+       'name': 'engine-85bd45d44b-dstdp',
        'status': 'Running',
        'reason': None,
        'details': [],
        'pipeline_statuses': {'pipelines': [{'id': 'vgg16-clustering-pipeline',
           'status': 'Running'}]},
-       'model_statuses': {'models': [{'name': 'arm-vgg16-clustering',
-          'version': '14f9929d-cb37-4e44-aacd-2120b349ef31',
-          'sha': 'e53d1775766567eda5fd7ecb1618ea073fc18ffd6298c75da67be3b704029f15',
+       'model_statuses': {'models': [{'name': 'vgg16-clustering',
+          'version': '86eaa743-f659-4eac-9544-23893ea0101c',
+          'sha': '9701562daa747b15846ce6e5eb20ba5d8b6ac77c38b62e58298da56252aa493f',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.3.39',
-       'name': 'engine-lb-584f54c899-ksj6c',
+     'engine_lbs': [{'ip': '10.244.17.212',
+       'name': 'engine-lb-584f54c899-8mmpl',
        'status': 'Running',
        'reason': None,
        'details': []}],
-     'sidekicks': [{'ip': '10.244.0.40',
-       'name': 'engine-sidekick-arm-vgg16-clustering-2-6f5975c9f6-6dgct',
+     'sidekicks': [{'ip': '10.244.17.210',
+       'name': 'engine-sidekick-vgg16-clustering-174-79f64f7cb4-25wqf',
        'status': 'Running',
        'reason': None,
        'details': [],
@@ -393,11 +364,11 @@ dataframe
   <tbody>
     <tr>
       <th>0</th>
-      <td>[[[142, 30, 10], [182, 46, 219], [233, 142, 22...</td>
+      <td>[[[10, 214, 168], [50, 238, 47], [189, 15, 55]...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[[[142, 30, 10], [182, 46, 219], [233, 142, 22...</td>
+      <td>[[[10, 214, 168], [50, 238, 47], [189, 15, 55]...</td>
     </tr>
   </tbody>
 </table>
@@ -419,15 +390,15 @@ pipeline.infer(dataframe, timeout=10000)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-09-18 15:00:07.019</td>
-      <td>[142, 30, 10, 182, 46, 219, 233, 142, 223, 94,...</td>
+      <td>2023-07-07 16:20:48.450</td>
+      <td>[10, 214, 168, 50, 238, 47, 189, 15, 55, 218, ...</td>
       <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-09-18 15:00:07.019</td>
-      <td>[142, 30, 10, 182, 46, 219, 233, 142, 223, 94,...</td>
+      <td>2023-07-07 16:20:48.450</td>
+      <td>[10, 214, 168, 50, 238, 47, 189, 15, 55, 218, ...</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -442,7 +413,7 @@ The inference is successful, so we will undeploy the pipeline and return the res
 pipeline.undeploy()
 ```
 
-    Waiting for undeployment - this will take up to 45s .................................... ok
+    Waiting for undeployment - this will take up to 45s ..................................... ok
 
-<table><tr><th>name</th> <td>vgg16-clustering-pipeline</td></tr><tr><th>created</th> <td>2023-09-18 14:57:31.537378+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-18 14:59:40.816423+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>65299c7d-79dd-477e-b54e-adb0239f60eb, d42d5272-86dd-414b-8928-6dea07c866c1</td></tr><tr><th>steps</th> <td>arm-vgg16-clustering</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>vgg16-clustering-pipeline</td></tr><tr><th>created</th> <td>2023-07-07 16:20:23.354098+00:00</td></tr><tr><th>last_updated</th> <td>2023-07-07 16:20:23.354098+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>62f3b65c-91e7-4057-a645-6ff5e62e3b21</td></tr><tr><th>steps</th> <td>vgg16-clustering</td></tr></table>
 

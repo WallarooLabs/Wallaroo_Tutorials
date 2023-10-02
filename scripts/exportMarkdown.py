@@ -279,16 +279,26 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
     #     "outputFile": "02_computer-vision-mitochondria-imaging-example.md"
     # },
-    # {
-    #     "inputFile": "model_uploads/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
-    #     "outputFile": "00-arbitrary-python-vgg16-model-generation.md"
-    # },
-    # {
-    #     "inputFile": "model_uploads/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
-    #     "outputFile": "01-arbitrary-python-vgg16-model-deployment.md"
-    # },
+    {
+        "inputFile": "model_uploads/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+        "outputFile": "00-arbitrary-python-vgg16-model-generation.md"
+    },
+    {
+        "inputFile": "model_uploads/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+        "outputFile": "01-arbitrary-python-vgg16-model-deployment.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-arbitrary-python-demonstration-reference.md"
+    },
     # {
     #     "inputFile": "model_uploads/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
     #     "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
@@ -444,11 +454,6 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "edge-hf-summarization-reference.md"
     # },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
-    },
 
 ]
 
@@ -481,7 +486,7 @@ def format(outputdir, document_file):
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release
-    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20230926_arm_edge/', 
+    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
                       'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
                       document)
     
@@ -489,6 +494,17 @@ def format(outputdir, document_file):
     document = re.sub('https://adb-5939996465837398.18.azuredatabricks.net', 
                       'https://sample.registry.service.azuredatabricks.net', 
                       document)
+    # remove markdown includes
+    markdown_includes = '```python\nfrom IPython.display import Markdown, display'
+    document = re.sub(markdown_includes, 
+                      '', 
+                      document,
+                      re.MULTILINE)
+    markdown_includes = 'display\(Markdown\("./includes/model_uploads/byop_requirements.md"\)\)\n```'
+    document = re.sub(markdown_includes, 
+                      '', 
+                      document,
+                      re.MULTILINE)
    # document = re.sub('![png](', 'bob', document)
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
