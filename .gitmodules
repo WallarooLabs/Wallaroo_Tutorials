@@ -1,0 +1,3 @@
+[submodule "Workshops"]
+	path = Workshops
+	url = https://github.com/WallarooLabs/Workshops.git
