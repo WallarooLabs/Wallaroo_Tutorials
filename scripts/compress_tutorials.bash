@@ -53,6 +53,7 @@ tutorials=(
     # ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
     # ["pipeline_multiple_replicas_forecast_tutorial"]=wallaroo-features/pipeline_multiple_replicas_forecast_tutorial
     ["wallaroo-arm-classification-finserv"]=pipeline-architecture/wallaroo-arm-classification-finserv
+    ["wallaroo-arm-computer-vision-yolov8"]=pipeline-architecture/wallaroo-arm-computer-vision-yolov8
     )
 
 currentDirectory=$PWD

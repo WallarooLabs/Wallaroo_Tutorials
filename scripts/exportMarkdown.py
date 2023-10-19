@@ -445,30 +445,61 @@ fileList = [
     #     "outputFile": "edge-hf-summarization-reference.md"
     # },
     # wallaroo inference server section
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-cv-frcnn-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-cv-yolov8-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-hf-summarizer/wallaroo-inference-server-hf-summarization.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-hf-summarization-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-llama2/wallaroo-inference-server-llama2.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-llama2-reference.md"
+    # },
+    # arm architecture section
     {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-cv-frcnn-reference.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
     },
     {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-cybersecurity-reference.md"
     },
     {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-cv-yolov8-reference.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-classification-finserv-reference.md"
     },
     {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-hf-summarizer/wallaroo-inference-server-hf-summarization.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-hf-summarization-reference.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
     },
     {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-llama2/wallaroo-inference-server-llama2.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-llama2-reference.md"
+        "inputFile": "pipeline-architecture/wallaroo-arm-cv-arrow/arm-computer-vision-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "arm-computer-vision-demonstration-reference.md"
+    },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-llm-summarization/wallaroo-arm-llm-summarization-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
     },
 
 ]
@@ -492,8 +523,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2023.3.0{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2023.3.0', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.0{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2023.4.0', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
@@ -502,7 +533,7 @@ def format(outputdir, document_file):
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release
-    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
+    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20231011-2023.4.0-testing/', 
                       'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
                       document)
     
