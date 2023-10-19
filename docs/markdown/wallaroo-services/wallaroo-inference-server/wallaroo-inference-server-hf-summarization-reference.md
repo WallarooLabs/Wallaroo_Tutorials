@@ -12,6 +12,25 @@ This notebook is used in conjunction with the [Wallaroo Inference Server Free Ed
   * **Wallaroo.AI HF Summarizer Standard - GPU x64**
 * Access via port 8080 to the Wallaroo Inference Server Free Edition.
 
+## Hugging Face LLM Summarizer Model Schemas
+
+### Inputs
+
+The Hugging Face LLM Summarizer Model takes the following inputs.
+
+| Field | Type | Description |
+|---|---|---|
+| `inputs` | String (*Required*) | One or more articles to summarize. |
+| `return_text` | Bool (*Optional*) | Whether or not to include the decoded texts in the outputs. |
+| `return_tensor` | Bool (*Optional*) | Whether or not to include the tensors of predictions (as token indices) in the outputs. |
+| `clean_up_tokenization_spaces` | Bool (*Optional*) | Whether or not to clean up the potential extra spaces in the text output. |
+
+### Outputs
+
+| Field | Type | Description |
+|---|---|---|
+| `summary_text` | String | The summary of the corresponding input. |
+
 ## Wallaroo Inference Server API Endpoints
 
 The following HTTPS API endpoints are available for Wallaroo Inference Server.
@@ -29,7 +48,7 @@ The following HTTPS API endpoints are available for Wallaroo Inference Server.
 The following demonstrates using `curl` to retrieve the Pipelines endpoint.  Replace the HOSTNAME with the address of your Wallaroo Inference Server.
 
 ```python
-!curl HOSTNAME:8080/pipelines
+!curl mb-freemium-hfstd86.eastus.cloudapp.azure.com:8080/pipelines
 ```
 
     {"pipelines":[{"id":"hf-summarizer-standard","status":"Running"}]}
@@ -56,33 +75,34 @@ The following demonstrates using `curl` to retrieve the Models endpoint.  Replac
 
 ### Inference Endpoint
 
-The inference endpoint takes the following pattern:
-
-* `/pipelines/{pipeline-name}`:  The `pipeline-name` is the same as returned from the [`/pipelines`](#list-pipelines) endpoint as `id`.
-
-Wallaroo inference endpoint URLs accept the following data inputs through the `Content-Type` header:
-
-* `Content-Type: application/vnd.apache.arrow.file`: For Apache Arrow tables.
-* `Content-Type: application/json; format=pandas-records`: For pandas DataFrame in record format.
-
-Once deployed, we can perform an inference through the deployment URL.
-
-The endpoint returns `Content-Type: application/json; format=pandas-records` by default with the following fields:
-
-* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
-* **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
-  * [0] The time to serialize the input.
-  * [1...n] How long each step took.
-* **model_name** (*String*): The name of the model used.
-* **model_version** (*String*): The version of the model in UUID format.
-* **original_data**: The original input data.  Returns `null` if the input may be too long for a proper return.
-* **outputs** (*List*): The outputs of the inference result separated by data type, where each data type includes:
-  * **data**: The returned values.
-  * **dim** (*List[Integer]*): The dimension shape returned.
-  * **v** (*Integer*): The vector shape of the data.
-* **pipeline_name**  (*String*): The name of the pipeline.
-* **shadow_data**: Any shadow deployed data inferences in the same format as **outputs**.
-* **time** (*Integer*): The time since UNIX epoch.
+* Endpoint: HTTPS POST `/pipelines/hf-summarizer-standard`
+* Headers:
+  * `Content-Type: application/vnd.apache.arrow.file`: For Apache Arrow tables.
+  * `Content-Type: application/json; format=pandas-records`: For pandas DataFrame in record format.
+* Input Parameters: DataFrame in `/pipelines/hf-summarizer-standard` **OR** Apache Arrow table in `application/vnd.apache.arrow.file` with the following inputs:
+  * **inputs** (*String* *Required*): One or several articles to summarize.
+  * **return_text** (*Bool* *Optional*): Whether or not to include the decoded texts in the outputs.
+  * **return_tensor** (*Bool* *Optional*): Whether or not to include the tensors of predictions (as token indices) in the outputs.
+  * **clean_up_tokenization_spaces**(*Bool* *Optional*): Whether or not to clean up the potential extra spaces in the text output.
+* Returns:
+  * Headers
+    * `Content-Type: application/json; format=pandas-records`: pandas DataFrame in record format.
+  * Data
+    * **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
+    * **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
+    * [0] The time to serialize the input.
+    * [1...n] How long each step took.
+    * **model_name** (*String*): The name of the model used.
+    * **model_version** (*String*): The version of the model in UUID format.
+    * **original_data**: The original input data.  Returns `null` if the input may be too long for a proper return.
+    * **outputs** (*List*): The outputs of the inference result separated by data type.
+    * **String**: The string outputs for the inference.
+      * **data** (*List[String]*): The summarized text string.
+        * **dim** (*List[Integer]*): The dimension shape returned, always returned as `[1,1]` for this model deployment.
+        * **v** (*Integer*): The vector shape of the data, always returned as `1` for this mnodel deployment.
+    * **pipeline_name**  (*String*): The name of the pipeline.
+    * **shadow_data**: Any shadow deployed data inferences in the same format as **outputs**.
+    * **time** (*Integer*): The time since UNIX epoch.
 
 ### Inference Endpoint Example
 

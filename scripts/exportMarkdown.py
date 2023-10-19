@@ -465,6 +465,11 @@ fileList = [
         "outputDir": "/wallaroo-services/wallaroo-inference-server",
         "outputFile": "wallaroo-inference-server-hf-summarization-reference.md"
     },
+    {
+        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-llama2/wallaroo-inference-server-llama2.ipynb",
+        "outputDir": "/wallaroo-services/wallaroo-inference-server",
+        "outputFile": "wallaroo-inference-server-llama2-reference.md"
+    },
 
 ]
 

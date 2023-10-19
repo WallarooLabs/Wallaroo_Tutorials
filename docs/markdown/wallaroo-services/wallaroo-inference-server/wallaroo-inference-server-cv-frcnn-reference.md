@@ -1,4 +1,4 @@
-The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20231004-wallaroo-inference-server/wallaroo-inference-server-tutorials/wallaroo-inference-server-hf-summarizer).
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20231011-2023.4.0-testing/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn).
 
 ## Wallaroo Inference Server:  Faster R-CNN
 
@@ -9,6 +9,24 @@ This notebook is used in conjunction with the [Wallaroo Inference Server Free Ed
 * A deployed Wallaroo Inference Server Free Edition with one of the following options:
   * **Wallaroo.AI HF ResNet50 Inference Server - x64**
 * Access via port 8080 to the Wallaroo Inference Server Free Edition.
+
+## Computer Vision Faster R-CNN Model Schemas
+
+### Inputs
+
+The Faster R-CNN Model takes the following inputs.
+
+| Field | Type | Description |
+|---|---|---|
+| `tensor` | Float | Tensor in the shape (n, 3, 480, 640) float.  This is the normalized pixel values of the 640x480 color image.
+
+### Outputs
+
+| Field | Type | Description |
+|---|---|---|
+| `boxes` | Variable length *List[Float]* | The bounding boxes of detected objects with each 4 number sequence representing (x_coordinate, y_coordinate, width, height). List length is `4*n` where n is the number of detected objects. |
+| `classes` | Variable length *List[Int]* | Integer values representing the categorical classes that are predicted by the model. List length is `n` where `n` is the number of detected objects. |
+| `confidences` | Variable length *List[Float]* | The confidence of detected classes. List length is `n` where `n` is the number of detected objects. |
 
 ## Wallaroo Inference Server API Endpoints
 
@@ -27,7 +45,7 @@ The following HTTPS API endpoints are available for Wallaroo Inference Server.
 The following demonstrates using `curl` to retrieve the Pipelines endpoint.  Replace the HOSTNAME with the address of your Wallaroo Inference Server.
 
 ```python
-!curl doc-example-cv-frcnn.westus2.cloudapp.azure.com:8080/pipelines
+!curl HOSTNAME:8080/pipelines
 ```
 
     {"pipelines":[{"id":"frcnn","status":"Running"}]}
@@ -47,47 +65,103 @@ The following demonstrates using `curl` to retrieve the Pipelines endpoint.  Rep
 The following demonstrates using `curl` to retrieve the Models endpoint.  Replace the HOSTNAME with the address of your Wallaroo Inference Server.
 
 ```python
-!curl doc-example-cv-frcnn.westus2.cloudapp.azure.com:8080/models
+!curl HOSTNAME:8080/models
 ```
 
     {"models":[{"name":"frcnn","sha":"ee606dc9776a1029420b3adf59b6d29395c89d1d9460d75045a1f2f152d288e7","status":"Running","version":"0762d591-7d31-4738-8394-2a148d00fbdc"}]}
 
 ### Inference Endpoint
 
-The inference endpoint takes the following pattern:
+* Endpoint: HTTPS POST `/pipelines/frcnn`
+* Headers:
+  * `Content-Type: application/vnd.apache.arrow.file`: For Apache Arrow tables.
+  * `Content-Type: application/json; format=pandas-records`: For pandas DataFrame in record format.
+* Input Parameters: DataFrame in `/pipelines/hf-summarizer-standard` **OR** Apache Arrow table in `application/vnd.apache.arrow.file` with the following inputs:
+  * **tensor** (*Float* *Required*): The tensor shape is a variable array in the shape (3, {picture width}, {picture height}) float of the the normalized pixel values of the 640x480 color image.  For example, a 1x1 image renders:
 
-* `/pipelines/{pipeline-name}`:  The `pipeline-name` is the same as returned from the [`/pipelines`](#list-pipelines) endpoint as `id`.
+    ```json
+    [
+      {
+        "tensor": [
+            [
+                [
+                    [0.9372549057]
+                ], 
+                [
+                    [0.9372549057]
+                ], 
+                [
+                    [0.8666666746]
+                ]
+            ]
+        ]
+      }
+    ]
+    ```
 
-Wallaroo inference endpoint URLs accept the following data inputs through the `Content-Type` header:
+    The following code is used to convert an image into a 640x480 DataFrame with the appropriate shape for the model:
 
-* `Content-Type: application/vnd.apache.arrow.file`: For Apache Arrow tables.
-* `Content-Type: application/json; format=pandas-records`: For pandas DataFrame in record format.
+    ```python
+    import cv2
+    import torch
+    import numpy as np
 
-Once deployed, we can perform an inference through the deployment URL.
+    def imageResize(image, width, height):
 
-The endpoint returns `Content-Type: application/json; format=pandas-records` by default with the following fields:
+        im_pillow = np.array(image)
+        image = cv2.cvtColor(im_pillow, cv2.COLOR_RGB2BGR)
 
-* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
-* **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
-  * [0] The time to serialize the input.
-  * [1...n] How long each step took.
-* **model_name** (*String*): The name of the model used.
-* **model_version** (*String*): The version of the model in UUID format.
-* **original_data**: The original input data.  Returns `null` if the input may be too long for a proper return.
-* **outputs** (*List*): The outputs of the inference result separated by data type, where each data type includes:
-  * **data**: The returned values.
-  * **dim** (*List[Integer]*): The dimension shape returned.
-  * **v** (*Integer*): The vector shape of the data.
-* **pipeline_name**  (*String*): The name of the pipeline.
-* **shadow_data**: Any shadow deployed data inferences in the same format as **outputs**.
-* **time** (*Integer*): The time since UNIX epoch.
+        self.debug("Resizing to w:"+str(width) + " height:"+str(height))
+        image = cv2.resize(image, (width, height)) 
+        resizedImage = image.copy()
+
+        # convert the image from BGR to RGB channel ordering and change the
+        # image from channels last to channels first ordering
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        image = image.transpose((2, 0, 1))
+
+        # add the batch dimension, scale the raw pixel intensities to the
+        # range [0, 1], and convert the image to a floating point tensor
+        image = np.expand_dims(image, axis=0)
+        image = image / 255.0
+        tensor = torch.FloatTensor(image)
+        return tensor, resizedImage
+    ```
+
+* Returns: 
+  * Headers
+    * `Content-Type: application/json; format=pandas-records`: pandas DataFrame in record format.
+  * Data
+    * **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
+    * **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
+      * [0] The time to serialize the input.
+      * [1...n] How long each step took.
+    * **model_name** (*String*): The name of the model used.
+    * **model_version** (*String*): The version of the model in UUID format.
+    * **original_data**: The original input data.  Returns `null` if the input may be too long for a proper return.
+    * **outputs** (*List*): The outputs of the inference result separated by data type.  The number of arrays for each field is determined by the number of detected objects.
+      * **Float**: The bounding boxes for each detected object.
+        * **data** (*List[Float]*): The bounding boxes data in the shape returned in the `dim` field.
+        * **dim** (*List[Integer]*): The dimension shape returned in the format `[number of objects, 4]`.
+        * **v** (*Integer*): The vector shape of the data.
+      * **Int64**: The class of each detected object.
+        * **data** (*List[Integer]*): The class results in the shape of the `dim` field.
+        * **dim** (*List[Integer]*): The dimension shape returned in the format `[number of objects]`.
+        * **v** (*Integer*): The vector shape of the data.
+      * **Float**: The confidences of each detected object.
+        * **data** (*List[Float]*): The confidence values in the shape of the `dim` field.
+        * **dim** (*List[Integer]*): The dimension shape returned in the format `[number of objects]`.
+        * **v** (*Integer*): The vector shape of the data.
+    * **pipeline_name**  (*String*): The name of the pipeline.
+    * **shadow_data**: Any shadow deployed data inferences in the same format as **outputs**.
+    * **time** (*Integer*): The time since UNIX epoch.
 
 ### Inference Endpoint Example
 
 The following example performs an inference using the Apache Arrow table input `./data/image_224x224.arrow` from an image converted into a `tensor` for inferencing.
 
 ```python
-!curl -X POST doc-example-cv-frcnn.westus2.cloudapp.azure.com:8080/pipelines/frcnn \
+!curl -X POST HOSTNAME:8080/pipelines/frcnn \
     -H "Content-Type:application/vnd.apache.arrow.file" \
     --data-binary @./data/test_table.arrow
 ```
