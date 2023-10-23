@@ -184,11 +184,11 @@ fileList = [
         "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
         "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
     },
-    # {
-    #     "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials",
-    #     "outputFile": "wallaroo-mlflow-tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials",
+        "outputFile": "wallaroo-mlflow-tutorial-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
