@@ -471,36 +471,47 @@ fileList = [
     #     "outputFile": "wallaroo-inference-server-llama2-reference.md"
     # },
     # arm architecture section
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
+    # },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "arm-classification-cybersecurity-reference.md"
+    # },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "arm-classification-finserv-reference.md"
+    # },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
+    # },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-cv-arrow/arm-computer-vision-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "arm-computer-vision-demonstration-reference.md"
+    # },
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-arm-llm-summarization/wallaroo-arm-llm-summarization-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
+    # },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
+        "inputFile": "wallaroo-model-cookbooks/computer-vision-yolov8/computer-vision-yolov8-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/computer-vision/yolov8",
+        "outputFile": "computer-vision-yolov8-demonstration-reference.md"
     },
     {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-cybersecurity-reference.md"
+        "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
     },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-classification-finserv-reference.md"
-    },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
-    },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-cv-arrow/arm-computer-vision-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "arm-computer-vision-demonstration-reference.md"
-    },
-    {
-        "inputFile": "pipeline-architecture/wallaroo-arm-llm-summarization/wallaroo-arm-llm-summarization-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
-    },
+
 
 ]
 
