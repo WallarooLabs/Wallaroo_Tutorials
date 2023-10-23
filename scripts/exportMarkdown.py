@@ -486,11 +486,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
     #     "outputFile": "arm-classification-finserv-reference.md"
     # },
-    # {
-    #     "inputFile": "pipeline-architecture/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-    #     "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
-    # },
+    {
+        "inputFile": "pipeline-architecture/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
+    },
     # {
     #     "inputFile": "pipeline-architecture/wallaroo-arm-cv-arrow/arm-computer-vision-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",

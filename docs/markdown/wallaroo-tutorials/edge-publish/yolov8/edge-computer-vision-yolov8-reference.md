@@ -1,4 +1,4 @@
-The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20231004-wallaroo-inference-server/wallaroo-model-cookbooks/computer-vision-yolov8).
+The following tutorial is available on the [Wallaroo Github Repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/pipeline-edge-publish/edge-computer-vision-yolov8).
 
 ## Computer Vision Yolov8n Deployment in Wallaroo
 
@@ -447,7 +447,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      PIPELINE_URL: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
+      PIPELINE_URL: sample-registry.com/pipelines/yolo8demonstration:bf70eaf7-8c11-4b46-b751-916a43b1a555
       OCI_REGISTRY: sample-registry.com
       OCI_USERNAME:  _json_key_base64
       OCI_PASSWORD: abc123
@@ -469,7 +469,7 @@ cv_data-engine-1  | Fetching manifest and config for pipeline: sample-registry.c
 cv_data-engine-1  | Fetching model layers
 cv_data-engine-1  | digest: sha256:c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
 cv_data-engine-1  |   filename: c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984
-cv_data-engine-1  |   name: resnet-50
+cv_data-engine-1  |   name: yolov8n
 cv_data-engine-1  |   type: model
 cv_data-engine-1  |   runtime: onnx
 cv_data-engine-1  |   version: 693e19b5-0dc7-4afb-9922-e3f7feefe66d
@@ -571,7 +571,7 @@ The endpoint `/pipelines` returns:
 
 ```bash
 curl localhost:8080/pipelines
-{"pipelines":[{"id":"edge-cv-retail","status":"Running"}]}
+{"pipelines":[{"id":"yolo8demonstration","status":"Running"}]}
 ```
 
 The following example uses the host `localhost`.  Replace with your own host name of your Edge deployed pipeline.
@@ -590,8 +590,7 @@ The endpoint `/models` returns a List of models with the following fields:
 * **version** (*String*):  The model version.  This matches the version designation used by Wallaroo to track model versions in UUID format.
 
 ```bash
-curl localhost:8080/models
-{"models":[{"name":"resnet-50","sha":"c6c8869645962e7711132a7e17aced2ac0f60dcdc2c7faa79b2de73847a87984","status":"Running","version":"693e19b5-0dc7-4afb-9922-e3f7feefe66d"}]}
+{"models":[{"name":"yolov8n","sha":"3ed5cd199e0e6e419bd3d474cf74f2e378aacbf586e40f24d1f8c89c2c476a08","status":"Running","version":"7af40d06-d18f-4b3f-9dd3-0a15248f01c8"}]}
 ```
 
 The following example uses the host `localhost`.  Replace with your own host name of your Edge deployed pipeline.
