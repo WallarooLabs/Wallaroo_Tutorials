@@ -18,3 +18,4 @@ wallaroo-model-cookbooks/computer-vision-mitochondia-imaging/downloaded_patches
 *.example
 wallaroo-model-cookbooks/computer-vision/models/resnet50_v1.onnx
 model-auto-conversion_hugging-face_complex-pipelines_hf-summarisation-bart-large-samsun.zip
+wallaroo-model-cookbooks/llm-llama2/models/raw-models_llama-text-generation-pipe.zip
