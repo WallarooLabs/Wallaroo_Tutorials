@@ -99,31 +99,31 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-simulated_edge-reference.md"
     # },
-    {
-        "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "_index.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
-    },
-    {
-        "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
-        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-        "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
-    },
+    # {
+    #     "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "_index.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
+    # },
+    # {
+    #     "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+    #     "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -169,26 +169,26 @@ fileList = [
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides/",
     #     "outputFile": "wallaroo-mlops-tutorial-reference.md"
     # },
-    {
-        "inputFile": "development/sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
-    },
-    {
-        "inputFile": "development/sdk-install-guides/aws-sagemaker-install/install-wallaroo-aws-sagemaker-guide.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-aws-sagemaker-guide-reference.md"
-    },
-    {
-        "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
-        "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials",
-        "outputFile": "wallaroo-mlflow-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "development/sdk-install-guides/azure-ml-sdk-install/install-wallaroo-sdk-azureml-guide.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+    #     "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
+    # },
+    # {
+    #     "inputFile": "development/sdk-install-guides/aws-sagemaker-install/install-wallaroo-aws-sagemaker-guide.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+    #     "outputFile": "install-wallaroo-sdk-aws-sagemaker-guide-reference.md"
+    # },
+    # {
+    #     "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-sdk-guides/",
+    #     "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/mlflow-tutorial/wallaroo-mlflow-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials",
+    #     "outputFile": "wallaroo-mlflow-tutorial-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -279,96 +279,96 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
     #     "outputFile": "02_computer-vision-mitochondria-imaging-example.md"
     # },
-    {
-        "inputFile": "model_uploads/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
-        "outputFile": "00-arbitrary-python-vgg16-model-generation.md"
-    },
-    {
-        "inputFile": "model_uploads/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
-        "outputFile": "01-arbitrary-python-vgg16-model-deployment.md"
-    },
-    {
-        "inputFile": "model_uploads/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
-        "outputFile": "wallaroo-api-upload-hf-zero_shot_classification.md"
-    },
-    {
-        "inputFile": "model_uploads/hugging-face-upload-tutorials/wallaroo-sdk-upload-hf-zero_shot_classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
-        "outputFile": "wallaroo-sdk-upload-hf-zero_shot_classification.md"
-    },
-    {
-        "inputFile": "model_uploads/keras-upload-tutorials/wallaroo-upload-keras_sequential_model_single_io.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/keras",
-        "outputFile": "wallaroo-upload-keras_sequential_model_single_io.md"
-    },
-    {
-        "inputFile": "model_uploads/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/python",
-        "outputFile": "python-step-dataframe-output-logging-example-sdk.md"
-    },
-    {
-        "inputFile": "model_uploads/pytorch-upload-tutorials/wallaroo-upload-pytorch-multi-input-output.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
-        "outputFile": "wallaroo-upload-pytorch-multi-input-output.md"
-    },
-    {
-        "inputFile": "model_uploads/pytorch-upload-tutorials/wallaroo-upload-pytorch-single-input-output.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
-        "outputFile": "wallaroo-upload-pytorch-single-input-output.md"
-    },
-    {
-        "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
-    },
-    {
-        "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
-    },
-    {
-        "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
-    },
-    {
-        "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
-    },
-    {
-        "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
-    },
-    {
-        "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
-        "outputFile": "wallaroo-sdk-upload-xbg-classification.md"
-    },
-    {
-        "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-regressor.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
-        "outputFile": "wallaroo-sdk-upload-xbg-regressor.md"
-    },
-    {
-        "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
-        "outputFile": "wallaroo-sdk-upload-xbg-rf-classification.md"
-    },
-    {
-        "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
-        "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor.md"
-    },
-    {
-        "inputFile": "model_uploads/tensorflow-upload-tutorials/wallaroo-upload-tensorflow.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/tensorflow",
-        "outputFile": "wallaroo-sdk-upload-tensorflow.md"
-    },
+    # {
+    #     "inputFile": "model_uploads/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+    #     "outputFile": "00-arbitrary-python-vgg16-model-generation.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/arbitrary-python",
+    #     "outputFile": "01-arbitrary-python-vgg16-model-deployment.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
+    #     "outputFile": "wallaroo-api-upload-hf-zero_shot_classification.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/hugging-face-upload-tutorials/wallaroo-sdk-upload-hf-zero_shot_classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/hugging-face",
+    #     "outputFile": "wallaroo-sdk-upload-hf-zero_shot_classification.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/keras-upload-tutorials/wallaroo-upload-keras_sequential_model_single_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/keras",
+    #     "outputFile": "wallaroo-upload-keras_sequential_model_single_io.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/python",
+    #     "outputFile": "python-step-dataframe-output-logging-example-sdk.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/pytorch-upload-tutorials/wallaroo-upload-pytorch-multi-input-output.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
+    #     "outputFile": "wallaroo-upload-pytorch-multi-input-output.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/pytorch-upload-tutorials/wallaroo-upload-pytorch-single-input-output.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/pytorch",
+    #     "outputFile": "wallaroo-upload-pytorch-single-input-output.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-classification.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-regressor.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-regressor.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-rf-classification.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/xgboost",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor.md"
+    # },
+    # {
+    #     "inputFile": "model_uploads/tensorflow-upload-tutorials/wallaroo-upload-tensorflow.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/tensorflow",
+    #     "outputFile": "wallaroo-sdk-upload-tensorflow.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/gpu-deployment/wallaroo-llm-with-gpu-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -399,11 +399,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
     #     "outputFile": "04_multiple_replicas_forecast.md"
     # },
-    {
-        "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
-        "outputFile": "wallaroo-model-registry-demonstration.md"
-    },
+    # {
+    #     "inputFile": "model_uploads/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
+    #     "outputFile": "wallaroo-model-registry-demonstration.md"
+    # },
     # {
     #     "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
@@ -450,11 +450,11 @@ fileList = [
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
     #     "outputFile": "wallaroo-inference-server-cv-frcnn-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
-    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
-    #     "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
+        "outputDir": "/wallaroo-services/wallaroo-inference-server",
+        "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
