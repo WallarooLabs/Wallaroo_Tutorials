@@ -147,7 +147,7 @@ tensor1.flatten()
 
 # add the tensor to a DataFrame and save the DataFrame in pandas record format
 df = util.convert_data(tensor1,'images')
-df.to_json("data.json", orient = 'records')
+df.to_json("dogbike.df.json", orient = 'records')
 ```
 
 ```python
@@ -160,7 +160,7 @@ tensor1.flatten()
 
 # add the tensor to a DataFrame and save the DataFrame in pandas record format
 df = util.convert_data(tensor1,'images')
-df.to_json("data.json", orient = 'records')
+df.to_json("dogbike.df.json", orient = 'records')
 ```
 
 ### Inference Request
