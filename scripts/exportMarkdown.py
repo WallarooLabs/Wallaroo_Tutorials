@@ -254,11 +254,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "pipeline_log_tutorial.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_log_tutorial.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -450,11 +450,11 @@ fileList = [
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
     #     "outputFile": "wallaroo-inference-server-cv-frcnn-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
