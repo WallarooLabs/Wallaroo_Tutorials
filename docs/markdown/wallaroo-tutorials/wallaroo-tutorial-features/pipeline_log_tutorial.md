@@ -1297,10 +1297,118 @@ These must be paired with specific columns.  `*` is **not** available when paire
 The following example retrieves the logs from a pipeline with shadow deployed models, and displays the specific shadow deployed model outputs and the `metadata.elasped` field.
 
 ```python
-metadatalogs = mainpipeline.logs(dataset=["out_logcontrolchallenger01.variable", 
+# display logs with shadow deployed steps
+
+display(mainpipeline.logs(start_datetime=shadow_date_start, end_datetime=shadow_date_end).loc[:, ["time", 
+                                                                                                  "out.variable", 
+                                                                                                  "out_logcontrolchallenger01.variable", 
+                                                                                                  "out_logcontrolchallenger02.variable"
+                                                                                                  ]
+                                                                                        ])
+```
+
+    Warning: Pipeline log size limit exceeded. Please request logs using export_logs
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>out.variable</th>
+      <th>out_logcontrolchallenger01.variable</th>
+      <th>out_logcontrolchallenger02.variable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[718013.75]</td>
+      <td>[659806.0]</td>
+      <td>[704901.9]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[615094.56]</td>
+      <td>[732883.5]</td>
+      <td>[695994.44]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[448627.72]</td>
+      <td>[419508.84]</td>
+      <td>[416164.8]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[758714.2]</td>
+      <td>[634028.8]</td>
+      <td>[655277.2]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[513264.7]</td>
+      <td>[427209.44]</td>
+      <td>[426854.66]</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>663</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[642519.75]</td>
+      <td>[390891.06]</td>
+      <td>[481425.8]</td>
+    </tr>
+    <tr>
+      <th>664</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[301714.75]</td>
+      <td>[406503.62]</td>
+      <td>[374509.53]</td>
+    </tr>
+    <tr>
+      <th>665</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[448627.72]</td>
+      <td>[473771.0]</td>
+      <td>[478128.03]</td>
+    </tr>
+    <tr>
+      <th>666</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[544392.1]</td>
+      <td>[428174.9]</td>
+      <td>[442408.25]</td>
+    </tr>
+    <tr>
+      <th>667</th>
+      <td>2023-10-26 17:07:56.576</td>
+      <td>[944006.75]</td>
+      <td>[902058.6]</td>
+      <td>[866622.25]</td>
+    </tr>
+  </tbody>
+</table>
+<p>668 rows × 4 columns</p>
+
+```python
+metadatalogs = mainpipeline.logs(dataset=["time",
+                                          "out_logcontrolchallenger01.variable", 
                                           "out_logcontrolchallenger02.variable", 
                                           "metadata"
-                                          ]
+                                          ],
+                                start_datetime=shadow_date_start, 
+                                end_datetime=shadow_date_end
                                 )
 
 display(metadatalogs.loc[:, ['out_logcontrolchallenger01.variable',	
@@ -1310,7 +1418,7 @@ display(metadatalogs.loc[:, ['out_logcontrolchallenger01.variable',
                         ])
 ```
 
-    Warning: There are more logs available. Please set a larger limit or request a file using export_logs.
+    Warning: Pipeline log size limit exceeded. Please request logs using export_logs
 
 <table border="1" class="dataframe">
   <thead>
@@ -1324,32 +1432,32 @@ display(metadatalogs.loc[:, ['out_logcontrolchallenger01.variable',
   <tbody>
     <tr>
       <th>0</th>
-      <td>[573391.1]</td>
-      <td>[596933.5]</td>
+      <td>[659806.0]</td>
+      <td>[704901.9]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[663008.75]</td>
-      <td>[594914.2]</td>
+      <td>[732883.5]</td>
+      <td>[695994.44]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[1520770.0]</td>
-      <td>[1491293.8]</td>
+      <td>[419508.84]</td>
+      <td>[416164.8]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>[381577.16]</td>
-      <td>[411258.3]</td>
+      <td>[634028.8]</td>
+      <td>[655277.2]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>[743487.94]</td>
-      <td>[787589.25]</td>
+      <td>[427209.44]</td>
+      <td>[426854.66]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
@@ -1359,38 +1467,38 @@ display(metadatalogs.loc[:, ['out_logcontrolchallenger01.variable',
       <td>...</td>
     </tr>
     <tr>
-      <th>95</th>
-      <td>[391048.06]</td>
-      <td>[359483.9]</td>
+      <th>663</th>
+      <td>[390891.06]</td>
+      <td>[481425.8]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
-      <th>96</th>
-      <td>[873592.25]</td>
-      <td>[917436.4]</td>
+      <th>664</th>
+      <td>[406503.62]</td>
+      <td>[374509.53]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
-      <th>97</th>
-      <td>[421732.38]</td>
-      <td>[403378.1]</td>
+      <th>665</th>
+      <td>[473771.0]</td>
+      <td>[478128.03]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
-      <th>98</th>
-      <td>[1103661.8]</td>
-      <td>[1126173.8]</td>
+      <th>666</th>
+      <td>[428174.9]</td>
+      <td>[442408.25]</td>
       <td>[302804, 26900]</td>
     </tr>
     <tr>
-      <th>99</th>
-      <td>[445568.9]</td>
-      <td>[461039.66]</td>
+      <th>667</th>
+      <td>[902058.6]</td>
+      <td>[866622.25]</td>
       <td>[302804, 26900]</td>
     </tr>
   </tbody>
 </table>
-<p>100 rows × 3 columns</p>
+<p>668 rows × 3 columns</p>
 
 The following demonstrates exporting the shadow deployed logs to the directory `shadow`.
 
