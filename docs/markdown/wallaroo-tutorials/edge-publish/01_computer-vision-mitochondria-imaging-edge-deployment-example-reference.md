@@ -293,43 +293,43 @@ for random_patch in random_patches:
 ```
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_0.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_1.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_2.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_3.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_3.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_4.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_4.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_5.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_5.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_6.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_6.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_7.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_7.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_8.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_8.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_9.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_22_9.png" width="800" label="png">}}
     
 
 ### Undeploy Pipeline
@@ -358,7 +358,7 @@ The `publish` method takes the following parameters.  The containerized pipeline
 
 | Parameter | Type | Description |
 |---|---|---|
-| `deployment_config` | `wallaroo.deployment_config.DeploymentConfig` (*Optional*) | Sets the pipeline deployment configuration.  For example:    For more information on pipeline deployment configuration, see the [Wallaroo SDK Essentials Guide: Pipeline Deployment Configuration]({{<ref "wallaroo-sdk-essentials-pipeline-deployment-config">}}).
+| `deployment_config` | `wallaroo.deployment_config.DeploymentConfig` (*Optional*) | Sets the pipeline deployment configuration.  For example:    For more information on pipeline deployment configuration, see the [Wallaroo SDK Essentials Guide: Pipeline Deployment Configuration](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline-deployment-config/).
 
 #### Publish a Pipeline Returns
 
@@ -479,7 +479,7 @@ For the deployment, the engine URL is specified with the following environmental
 
 #### Docker Deployment Example
 
-Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
+Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail](https://docs.wallaroo.ai/wallaroo-use-case-tutorials/wallaroo-use-case-computer-vision/use-case-computer-vision-retail/) tutorials.
 
 ```bash
 docker run -p 8080:8080 \
@@ -493,7 +493,7 @@ docker run -p 8080:8080 \
 
 ### Docker Compose Deployment
 
-For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
+For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail](https://docs.wallaroo.ai/wallaroo-use-case-tutorials/wallaroo-use-case-computer-vision/use-case-computer-vision-retail/) tutorials.
 
 ```yml
 services:
@@ -684,7 +684,7 @@ Once deployed, we can perform an inference through the deployment URL.
 
 The endpoint returns `Content-Type: application/json; format=pandas-records` by default with the following fields:
 
-* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
+* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/#anomaly-testing).
 * **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
   * [0] The time to serialize the input.
   * [1...n] How long each step took.
@@ -796,42 +796,42 @@ for random_patch in random_patches:
 ```
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_0.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_1.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_1.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_2.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_2.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_3.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_3.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_4.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_4.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_5.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_5.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_6.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_6.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_7.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_7.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_8.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_8.png" width="800" label="png">}}
     
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_9.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/edge-publish/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_files/01_computer-vision-mitochondria-imaging-edge-deployment-example-reference_42_9.png" width="800" label="png">}}
     
 

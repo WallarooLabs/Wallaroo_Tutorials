@@ -1,0 +1,269 @@
+docker run -p 8080:8080 \
+    -e DEBUG=true \=$REGISTRYURL \
+    -e OCI_REGISTRY=$REGISTRYURL \MRV9WRVJTSU9OPTEKZXhwb3J0IEVER0VfTkFNRT1lZGdlLWNjZnJhdWQtb2JzZXJ2YWJpbGl0eS0wMQpleHBvcn
+    -e EDGE_BUNDLE=ZXhwb3J0IEJVTkRMRV9WRVJTSU9OPTEKZXhwb3J0IEVER0VfTkFNRT1lZGdlLWNjZnJhdWQtb2JzZXJ2YWJpbGl0eS0wMQpleHBvcnQgSk9JTl9UT0tFTj1iMWJkMzE3MS05MzM0LTQzYWYtOTlkYS02ZGRmNzViNWE4OGEKZXhwb3J0IE9QU0NFTlRFUl9IT1NUPWRvYy10ZXN0LmVkZ2Uud2FsbGFyb29jb21tdW5pdHkubmluamEKZXhwb3J0IFBJUEVMSU5FX1VSTD1naGNyLmlvL3dhbGxhcm9vbGFicy9kb2Mtc2FtcGxlcy9waXBlbGluZXMvZWRnZS1vYnNlcnZhYmlsaXR5LXBpcGVsaW5lOjgyNWRmZjU5LTE0OGItNDgyOC1hMzYwLWU3NThkMjBiMGE0ZApleHBvcnQgV09SS1NQQUNFX0lEPTc= \
+    -e CONFIG_CPUS=1 \EGISTRYUSERNAME \
+    -e OCI_USERNAME=$REGISTRYUSERNAME \
+    -e OCI_PASSWORD=$REGISTRYPASSWORD \s/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d2
+    -e PIPELINE_URL=ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d \.io/wallaroolabs/doc-samples/engines/proxy/wallaroo/ghcr.io/wallaroolabs/standalone-mini:v2023.4.0-main-4079
+    ghcr.io/wallaroolabs/doc-samples/engines/proxy/wallaroo/ghcr.io/wallaroolabs/standalone-mini:v2023.4.0-main-4079
+++ echo ZXhwb3J0IEJVTkRMRV9WRVJTSU9OPTEKZXhwb3J0IEVER0VfTkFNRT1lZGdlLWNjZnJhdWQtb2JzZXJ2YWJpbGl0eS0wMQpleHBvcnQgSk9JTl9UT0tFTj1iMWJkMzE3MS05MzM0LTQzYWYtOTlkYS02ZGRmNzViNWE4OGEKZXhwb3J0IE9QU0NFTlRFUl9IT1NUPWRvYy10ZXN0LmVkZ2Uud2FsbGFyb29jb21tdW5pdHkubmluamEKZXhwb3J0IFBJUEVMSU5FX1VSTD1naGNyLmlvL3dhbGxhcm9vbGFicy9kb2Mtc2FtcGxlcy9waXBlbGluZXMvZWRnZS1vYnNlcnZhYmlsaXR5LXBpcGVsaW5lOjgyNWRmZjU5LTE0OGItNDgyOC1hMzYwLWU3NThkMjBiMGE0ZApleHBvcnQgV09SS1NQQUNFX0lEPTc=
+++ base64 -d
++ export BUNDLE_VERSION=1 export EDGE_NAME=edge-ccfraud-observability-01 export JOIN_TOKEN=b1bd3171-9334-43af-99da-6ddf75b5a88a export OPSCENTER_HOST=doc-test.edge.wallaroocommunity.ninja export PIPELINE_URL=ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d export WORKSPACE_ID=7
++ BUNDLE_VERSION=1
++ EDGE_NAME=edge-ccfraud-observability-01
++ JOIN_TOKEN=b1bd3171-9334-43af-99da-6ddf75b5a88a
++ OPSCENTER_HOST=doc-test.edge.wallaroocommunity.ninja
++ PIPELINE_URL=ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d
++ WORKSPACE_ID=7
+++ arch
++ '[' x86_64 = x86_64 ']'
++ export LD_LIBRARY_PATH=/usr/lib:/lib/x86_64-linux-gnu
++ LD_LIBRARY_PATH=/usr/lib:/lib/x86_64-linux-gnu
++ REQUIRED_VARS='PIPELINE_URL OCI_USERNAME OCI_PASSWORD OCI_REGISTRY CONFIG_CPUS WORKSPACE_ID'
++ OPSCENTER_MTLS_PORT=8443
++ OPSCENTER_SPIRE_PORT=8081
++ SPIRE_DATA_DIR=/persist/spire_data
++ '[' -d /persist/spire_data ']'
++ mkdir -p /persist/spire_data
++ echo 'Wallaroo Engine - Standalone mode'
++ for rv in $REQUIRED_VARS
++ eval '[[' -v PIPELINE_URL ']]'
+++ [[ -v PIPELINE_URL ]]
++ for rv in $REQUIRED_VARS
+Wallaroo Engine - Standalone mode
++ eval '[[' -v OCI_USERNAME ']]'
+++ [[ -v OCI_USERNAME ]]
++ for rv in $REQUIRED_VARS
++ eval '[[' -v OCI_PASSWORD ']]'
+++ [[ -v OCI_PASSWORD ]]
++ for rv in $REQUIRED_VARS
++ eval '[[' -v OCI_REGISTRY ']]'
+++ [[ -v OCI_REGISTRY ]]
++ for rv in $REQUIRED_VARS
++ eval '[[' -v CONFIG_CPUS ']]'
+++ [[ -v CONFIG_CPUS ]]
++ for rv in $REQUIRED_VARS
++ eval '[[' -v WORKSPACE_ID ']]'
+++ [[ -v WORKSPACE_ID ]]
++ [[ -v JOIN_TOKEN ]]
++ [[ -v OPSCENTER_HOST ]]
++ sed -e s/@OPSCENTER_HOST@/doc-test.edge.wallaroocommunity.ninja/ -e s/@OPSCENTER_MTLS_PORT@/8443/ -e s/@OPSCENTER_SPIRE_PORT@/8081/ /envoy-config.yaml.tpl
++ echo 'This session will securely connect to doc-test.edge.wallaroocommunity.ninja, port 8443 and 8081'
++ mkdir -p /persist/spire_data
+This session will securely connect to doc-test.edge.wallaroocommunity.ninja, port 8443 and 8081
++ ROOT=/
++ MODELS_DIR=//models
++ PIPELINE_DIR=//pipelines
++ MODELCONFIGS_DIR=//modelconfigs
++ VENVS_DIR=//venvs
++ mkdir -p //fitzroy //modelconfigs //pipelines //models //venvs
++ cat
++ pipeline_repo=ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline
++ echo 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
++ oras login -u johnhansarickWallaroo --password-stdin ghcr.io
+Login Succeeded
++ echo 'Fetching manifest and config for pipeline: ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d'
++ oras manifest fetch ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d
+Fetching manifest and config for pipeline: ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d
++ oras manifest fetch-config ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline:825dff59-148b-4828-a360-e758d20b0a4d
++ cat
+++ jq -r .id pipeline_config.json
++ jq -r '.steps | .[] | .ModelInference.models | .[0] | [.name,.version,.sha] | @sh' pipeline_config.json
++ tr -d \'
++ read name version sha
++ echo '  - ModelInference:
+      models:
+        - Model:
+          name: ccfraud-xgboost
+          sha: 054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52
+          version: 05bbce2f-a258-403c-9262-43f4e8816843'
++ read name version sha
++ echo Fetching model layers
++ parse_manifest '!=' pull_objects_no_mlflow
+Fetching model layers
++ jq -r '.layers | .[] | select( .annotations.runtime != "mlflow" ) |
+       [ .digest, .annotations.filename, .annotations.name, .annotations.wallaroo_file_type, .annotations.runtime, .annotations.version ]
+       | @sh' pipeline_manifest.json
++ tr -d \'
++ read digest filename name type runtime version
++ printf 'digest: %s\n  filename: %s\n  name: %s\n  type: %s\n  runtime: %s\n  version: %s\n  ' sha256:054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52 054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52 ccfraud-xgboost model onnx 05bbce2f-a258-403c-9262-43f4e8816843
++ pull_objects_no_mlflow
++ case "$type" in
++ path=//models/054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52/05bbce2f-a258-403c-9262-43f4e8816843/ccfraud-xgboost
++ '[' -f //models/054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52/05bbce2f-a258-403c-9262-43f4e8816843/ccfraud-xgboost ']'
++ mkdir -p //models/054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52/05bbce2f-a258-403c-9262-43f4e8816843
+digest: sha256:054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52
+  filename: 054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52
+  name: ccfraud-xgboost
+  type: model
+  runtime: onnx
+  version: 05bbce2f-a258-403c-9262-43f4e8816843
+  + oras blob fetch ghcr.io/wallaroolabs/doc-samples/pipelines/edge-observability-pipeline@sha256:054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52 --output //models/054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52/05bbce2f-a258-403c-9262-43f4e8816843/ccfraud-xgboost
++ echo Fetched
++ read digest filename name type runtime version
+Fetched
++ parse_manifest == pull_objects_only_mlflow
++ jq -r '.layers | .[] | select( .annotations.runtime == "mlflow" ) |
+       [ .digest, .annotations.filename, .annotations.name, .annotations.wallaroo_file_type, .annotations.runtime, .annotations.version ]
+       | @sh' pipeline_manifest.json
++ tr -d \'
++ read digest filename name type runtime version
++ port=32100
+++ jq -c '.models[]' pipeline_config.json
++ for model_json in $(jq -c '.models[]' pipeline_config.json)
+++ echo '{"name":"ccfraud-xgboost","version":"05bbce2f-a258-403c-9262-43f4e8816843","sha":"054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52","runtime":"onnx","tensor_fields":["tensor"]}'
+++ jq -r '.name, .version, .sha, .runtime, .sidekick_uri'
+++ tr '\n' ' '
++ vars='ccfraud-xgboost 05bbce2f-a258-403c-9262-43f4e8816843 054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52 onnx null '
++ read -r name version sha runtime sidekick_uri
++ output=//modelconfigs/ccfraud-xgboost-05bbce2f-a258-403c-9262-43f4e8816843.yaml
++ '[' onnx = tensorflow ']'
++ test -L //models/ccfraud-xgboost
++ ln -s //models/054810e3e3ebbdd34438d9c1a08ed6a6680ef10bf97b9223f78ebf38e14b3b52 //models/ccfraud-xgboost
++ yq -P
++ grep -v '^sidekick_uri'
++ echo 'model_id: ccfraud-xgboost'
++ echo 'model_version: 05bbce2f-a258-403c-9262-43f4e8816843'
++ '[' onnx = mlflow ']'
++ for venv in "$VENVS_DIR"/*
++ test -d '//venvs/*'
++ continue
++ [[ -v JOIN_TOKEN ]]
++ [[ -v OPSCENTER_HOST ]]
++ echo Starting envoy
+Starting envoy
++ echo Starting spire-agent
++ envoy --config-path /envoy-config.yaml
+Starting spire-agent
++ echo Starting engine
+Starting engine
++ spire-agent run -joinToken b1bd3171-9334-43af-99da-6ddf75b5a88a -serverAddress doc-test.edge.wallaroocommunity.ninja -serverPort 8081 -dataDir /persist/spire_data -config /spire-agent.conf
++ wait -n
++ LD_LIBRARY_PATH=/fitzlibs
++ /bin/fitzroy
+time="2023-10-30T16:35:57Z" level=info msg="Creating spire agent UDS directory" dir=/tmp/spire-agent/public
+time="2023-10-30T16:35:57Z" level=warning msg="Current umask 0022 is too permissive; setting umask 0027"
+time="2023-10-30T16:35:57Z" level=info msg="Starting agent with data directory: \"/persist/spire_data\""
+time="2023-10-30T16:35:57Z" level=info msg="Plugin loaded" external=false plugin_name=join_token plugin_type=NodeAttestor subsystem_name=catalog
+time="2023-10-30T16:35:57Z" level=info msg="Plugin loaded" external=false plugin_name=disk plugin_type=KeyManager subsystem_name=catalog
+time="2023-10-30T16:35:57Z" level=info msg="Plugin loaded" external=false plugin_name=unix plugin_type=WorkloadAttestor subsystem_name=catalog
+time="2023-10-30T16:35:57Z" level=info msg="Bundle is not found" subsystem_name=attestor
+time="2023-10-30T16:35:57Z" level=debug msg="No pre-existing agent SVID found. Will perform node attestation" subsystem_name=attestor
+[2023-10-30 16:35:57.951][90][info][main] [source/server/server.cc:413] initializing epoch 0 (base id=0, hot restart version=11.104)
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:415] statically linked extensions:
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.health_checkers: envoy.health_checkers.grpc, envoy.health_checkers.http, envoy.health_checkers.redis, envoy.health_checkers.tcp, envoy.health_checkers.thrift
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.http.custom_matchers: envoy.matching.custom_matchers.trie_matcher
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.config_mux: envoy.config_mux.delta_grpc_mux_factory, envoy.config_mux.grpc_mux_factory, envoy.config_mux.new_grpc_mux_factory, envoy.config_mux.sotw_grpc_mux_factory
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.transport_sockets.downstream: envoy.transport_sockets.alts, envoy.transport_sockets.quic, envoy.transport_sockets.raw_buffer, envoy.transport_sockets.starttls, envoy.transport_sockets.tap, envoy.transport_sockets.tcp_stats, envoy.transport_sockets.tls, raw_buffer, starttls, tls
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.internal_redirect_predicates: envoy.internal_redirect_predicates.allow_listed_routes, envoy.internal_redirect_predicates.previous_routes, envoy.internal_redirect_predicates.safe_cross_scheme
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.stateful_header_formatters: envoy.http.stateful_header_formatters.preserve_case, preserve_case
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   quic.http_server_connection: quic.http_server_connection.default
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.dubbo_proxy.filters: envoy.filters.dubbo.router
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.resource_monitors: envoy.resource_monitors.fixed_heap, envoy.resource_monitors.injected_resource
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   network.connection.client: default, envoy_internal
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.connection_handler: envoy.connection_handler.default
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.access_loggers: envoy.access_loggers.file, envoy.access_loggers.http_grpc, envoy.access_loggers.open_telemetry, envoy.access_loggers.stderr, envoy.access_loggers.stdout, envoy.access_loggers.tcp_grpc, envoy.access_loggers.wasm, envoy.file_access_log, envoy.http_grpc_access_log, envoy.open_telemetry_access_log, envoy.stderr_access_log, envoy.stdout_access_log, envoy.tcp_grpc_access_log, envoy.wasm_access_log
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.stats_sinks: envoy.dog_statsd, envoy.graphite_statsd, envoy.metrics_service, envoy.open_telemetry_stat_sink, envoy.stat_sinks.dog_statsd, envoy.stat_sinks.graphite_statsd, envoy.stat_sinks.hystrix, envoy.stat_sinks.metrics_service, envoy.stat_sinks.open_telemetry, envoy.stat_sinks.statsd, envoy.stat_sinks.wasm, envoy.statsd
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.thrift_proxy.transports: auto, framed, header, unframed
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.load_balancing_policies: envoy.load_balancing_policies.cluster_provided, envoy.load_balancing_policies.least_request, envoy.load_balancing_policies.maglev, envoy.load_balancing_policies.random, envoy.load_balancing_policies.ring_hash, envoy.load_balancing_policies.round_robin, envoy.load_balancing_policies.subset
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.rate_limit_descriptors: envoy.rate_limit_descriptors.expr
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.request_id: envoy.request_id.uuid
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.dubbo_proxy.protocols: dubbo
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.stateful_session: envoy.http.stateful_session.cookie, envoy.http.stateful_session.header
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.common.key_value: envoy.key_value.file_based
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.filters.listener: envoy.filters.listener.http_inspector, envoy.filters.listener.local_ratelimit, envoy.filters.listener.original_dst, envoy.filters.listener.original_src, envoy.filters.listener.proxy_protocol, envoy.filters.listener.tls_inspector, envoy.listener.http_inspector, envoy.listener.original_dst, envoy.listener.original_src, envoy.listener.proxy_protocol, envoy.listener.tls_inspector
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.header_validators: envoy.http.header_validators.envoy_default
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.guarddog_actions: envoy.watchdog.abort_action, envoy.watchdog.profile_action
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.compression.compressor: envoy.compression.brotli.compressor, envoy.compression.gzip.compressor, envoy.compression.zstd.compressor
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.config.validators: envoy.config.validators.minimum_clusters, envoy.config.validators.minimum_clusters_validator
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.compression.decompressor: envoy.compression.brotli.decompressor, envoy.compression.gzip.decompressor, envoy.compression.zstd.decompressor
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.action: envoy.matching.actions.format_string, filter-chain-name
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.path.match: envoy.path.match.uri_template.uri_template_matcher
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.wasm.runtime: envoy.wasm.runtime.null, envoy.wasm.runtime.v8
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.early_header_mutation: envoy.http.early_header_mutation.header_mutation
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.grpc_credentials: envoy.grpc_credentials.aws_iam, envoy.grpc_credentials.default, envoy.grpc_credentials.file_based_metadata
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.network.dns_resolver: envoy.network.dns_resolver.cares, envoy.network.dns_resolver.getaddrinfo
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.filters.http: envoy.bandwidth_limit, envoy.buffer, envoy.cors, envoy.csrf, envoy.ext_authz, envoy.ext_proc, envoy.fault, envoy.filters.http.adaptive_concurrency, envoy.filters.http.admission_control, envoy.filters.http.alternate_protocols_cache, envoy.filters.http.aws_lambda, envoy.filters.http.aws_request_signing, envoy.filters.http.bandwidth_limit, envoy.filters.http.buffer, envoy.filters.http.cache, envoy.filters.http.cdn_loop, envoy.filters.http.composite, envoy.filters.http.compressor, envoy.filters.http.connect_grpc_bridge, envoy.filters.http.cors, envoy.filters.http.csrf, envoy.filters.http.custom_response, envoy.filters.http.decompressor, envoy.filters.http.dynamic_forward_proxy, envoy.filters.http.ext_authz, envoy.filters.http.ext_proc, envoy.filters.http.fault, envoy.filters.http.file_system_buffer, envoy.filters.http.gcp_authn, envoy.filters.http.geoip, envoy.filters.http.grpc_field_extraction, envoy.filters.http.grpc_http1_bridge, envoy.filters.http.grpc_http1_reverse_bridge, envoy.filters.http.grpc_json_transcoder, envoy.filters.http.grpc_stats, envoy.filters.http.grpc_web, envoy.filters.http.header_mutation, envoy.filters.http.header_to_metadata, envoy.filters.http.health_check, envoy.filters.http.ip_tagging, envoy.filters.http.jwt_authn, envoy.filters.http.local_ratelimit, envoy.filters.http.lua, envoy.filters.http.match_delegate, envoy.filters.http.oauth2, envoy.filters.http.on_demand, envoy.filters.http.original_src, envoy.filters.http.rate_limit_quota, envoy.filters.http.ratelimit, envoy.filters.http.rbac, envoy.filters.http.router, envoy.filters.http.set_metadata, envoy.filters.http.stateful_session, envoy.filters.http.tap, envoy.filters.http.wasm, envoy.geoip, envoy.grpc_http1_bridge, envoy.grpc_json_transcoder, envoy.grpc_web, envoy.health_check, envoy.ip_tagging, envoy.local_rate_limit, envoy.lua, envoy.rate_limit, envoy.router
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.filters.http.upstream: envoy.buffer, envoy.filters.http.admission_control, envoy.filters.http.buffer, envoy.filters.http.header_mutation, envoy.filters.http.upstream_codec
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.quic.server_preferred_address: quic.server_preferred_address.fixed
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.path.rewrite: envoy.path.rewrite.uri_template.uri_template_rewriter
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.formatter: envoy.formatter.cel, envoy.formatter.metadata, envoy.formatter.req_without_query
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.resolvers: envoy.ip
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.rbac.matchers: envoy.rbac.matchers.upstream_ip_port
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.listener_manager_impl: envoy.listener_manager_impl.default, envoy.listener_manager_impl.validation
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.thrift_proxy.protocols: auto, binary, binary/non-strict, compact, twitter
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.quic.proof_source: envoy.quic.proof_source.filter_chain
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.clusters: envoy.cluster.eds, envoy.cluster.logical_dns, envoy.cluster.original_dst, envoy.cluster.static, envoy.cluster.strict_dns, envoy.clusters.aggregate, envoy.clusters.dynamic_forward_proxy, envoy.clusters.redis
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.bootstrap: envoy.bootstrap.internal_listener, envoy.bootstrap.wasm, envoy.extensions.network.socket_interface.default_socket_interface
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.network.input: envoy.matching.inputs.application_protocol, envoy.matching.inputs.destination_ip, envoy.matching.inputs.destination_port, envoy.matching.inputs.direct_source_ip, envoy.matching.inputs.dns_san, envoy.matching.inputs.filter_state, envoy.matching.inputs.server_name, envoy.matching.inputs.source_ip, envoy.matching.inputs.source_port, envoy.matching.inputs.source_type, envoy.matching.inputs.subject, envoy.matching.inputs.transport_protocol, envoy.matching.inputs.uri_san
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.regex_engines: envoy.regex_engines.google_re2
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.upstream_options: envoy.extensions.upstreams.http.v3.HttpProtocolOptions, envoy.extensions.upstreams.tcp.v3.TcpProtocolOptions, envoy.upstreams.http.http_protocol_options, envoy.upstreams.tcp.tcp_protocol_options
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.dubbo_proxy.serializers: dubbo.hessian2
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.cache: envoy.extensions.http.cache.file_system_http_cache, envoy.extensions.http.cache.simple
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.udp_packet_writer: envoy.udp_packet_writer.default, envoy.udp_packet_writer.gso
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.tracers: envoy.dynamic.ot, envoy.tracers.datadog, envoy.tracers.dynamic_ot, envoy.tracers.opencensus, envoy.tracers.opentelemetry, envoy.tracers.skywalking, envoy.tracers.xray, envoy.tracers.zipkin, envoy.zipkin
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.health_check.event_sinks: envoy.health_check.event_sink.file
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.filters.network: envoy.echo, envoy.ext_authz, envoy.filters.network.connection_limit, envoy.filters.network.direct_response, envoy.filters.network.dubbo_proxy, envoy.filters.network.echo, envoy.filters.network.ext_authz, envoy.filters.network.http_connection_manager, envoy.filters.network.local_ratelimit, envoy.filters.network.mongo_proxy, envoy.filters.network.ratelimit, envoy.filters.network.rbac, envoy.filters.network.redis_proxy, envoy.filters.network.sni_cluster, envoy.filters.network.sni_dynamic_forward_proxy, envoy.filters.network.tcp_proxy, envoy.filters.network.thrift_proxy, envoy.filters.network.wasm, envoy.filters.network.zookeeper_proxy, envoy.http_connection_manager, envoy.mongo_proxy, envoy.ratelimit, envoy.redis_proxy, envoy.tcp_proxy
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.thrift_proxy.filters: envoy.filters.thrift.header_to_metadata, envoy.filters.thrift.payload_to_metadata, envoy.filters.thrift.rate_limit, envoy.filters.thrift.router
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.input_matchers: envoy.matching.matchers.cel_matcher, envoy.matching.matchers.consistent_hashing, envoy.matching.matchers.ip, envoy.matching.matchers.runtime_fraction
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.custom_response: envoy.extensions.http.custom_response.local_response_policy, envoy.extensions.http.custom_response.redirect_policy
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.http.original_ip_detection: envoy.http.original_ip_detection.custom_header, envoy.http.original_ip_detection.xff
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.quic.connection_id_generator: envoy.quic.deterministic_connection_id_generator
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.quic.server.crypto_stream: envoy.quic.crypto_stream.server.quiche
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.filters.udp_listener: envoy.filters.udp.dns_filter, envoy.filters.udp_listener.udp_proxy
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.config_subscription: envoy.config_subscription.ads, envoy.config_subscription.ads_collection, envoy.config_subscription.aggregated_grpc_collection, envoy.config_subscription.delta_grpc, envoy.config_subscription.delta_grpc_collection, envoy.config_subscription.filesystem, envoy.config_subscription.filesystem_collection, envoy.config_subscription.grpc, envoy.config_subscription.rest
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.network.custom_matchers: envoy.matching.custom_matchers.trie_matcher
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.retry_host_predicates: envoy.retry_host_predicates.omit_canary_hosts, envoy.retry_host_predicates.omit_host_metadata, envoy.retry_host_predicates.previous_hosts
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.tls.cert_validator: envoy.tls.cert_validator.default, envoy.tls.cert_validator.spiffe
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.http.input: envoy.matching.inputs.cel_data_input, envoy.matching.inputs.destination_ip, envoy.matching.inputs.destination_port, envoy.matching.inputs.direct_source_ip, envoy.matching.inputs.dns_san, envoy.matching.inputs.request_headers, envoy.matching.inputs.request_trailers, envoy.matching.inputs.response_headers, envoy.matching.inputs.response_trailers, envoy.matching.inputs.server_name, envoy.matching.inputs.source_ip, envoy.matching.inputs.source_port, envoy.matching.inputs.source_type, envoy.matching.inputs.status_code_class_input, envoy.matching.inputs.status_code_input, envoy.matching.inputs.subject, envoy.matching.inputs.uri_san, query_params
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.matching.common_inputs: envoy.matching.common_inputs.environment_variable
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.retry_priorities: envoy.retry_priorities.previous_priorities
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.route.early_data_policy: envoy.route.early_data_policy.default
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.transport_sockets.upstream: envoy.transport_sockets.alts, envoy.transport_sockets.http_11_proxy, envoy.transport_sockets.internal_upstream, envoy.transport_sockets.quic, envoy.transport_sockets.raw_buffer, envoy.transport_sockets.starttls, envoy.transport_sockets.tap, envoy.transport_sockets.tcp_stats, envoy.transport_sockets.tls, envoy.transport_sockets.upstream_proxy_protocol, raw_buffer, starttls, tls
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.access_loggers.extension_filters: envoy.access_loggers.extension_filters.cel
+[2023-10-30 16:35:57.952][90][info][main] [source/server/server.cc:417]   envoy.upstreams: envoy.filters.connection_pools.tcp.generic
+[2023-10-30 16:35:57.956][90][warning][misc] [source/common/protobuf/message_validator_impl.cc:21] Deprecated field: type envoy.config.cluster.v3.Cluster Using deprecated option 'envoy.config.cluster.v3.Cluster.http2_protocol_options' from file cluster.proto. This configuration will be removed from Envoy soon. Please see https://www.envoyproxy.io/docs/envoy/latest/version_history/version_history for details. If continued use of this field is absolutely necessary, see https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/runtime#using-runtime-overrides-for-deprecated-features for how to apply a temporary and highly discouraged override.
+[2023-10-30 16:35:57.957][90][info][main] [source/server/server.cc:470] HTTP header map info:
+[2023-10-30 16:35:57.959][90][info][main] [source/server/server.cc:473]   request header map: 680 bytes: :authority,:method,:path,:protocol,:scheme,accept,accept-encoding,access-control-request-headers,access-control-request-method,access-control-request-private-network,authentication,authorization,cache-control,cdn-loop,connection,content-encoding,content-length,content-type,expect,grpc-accept-encoding,grpc-timeout,if-match,if-modified-since,if-none-match,if-range,if-unmodified-since,keep-alive,origin,pragma,proxy-connection,proxy-status,referer,te,transfer-encoding,upgrade,user-agent,via,x-client-trace-id,x-envoy-attempt-count,x-envoy-decorator-operation,x-envoy-downstream-service-cluster,x-envoy-downstream-service-node,x-envoy-expected-rq-timeout-ms,x-envoy-external-address,x-envoy-force-trace,x-envoy-hedge-on-per-try-timeout,x-envoy-internal,x-envoy-ip-tags,x-envoy-is-timeout-retry,x-envoy-max-retries,x-envoy-original-path,x-envoy-original-url,x-envoy-retriable-header-names,x-envoy-retriable-status-codes,x-envoy-retry-grpc-on,x-envoy-retry-on,x-envoy-upstream-alt-stat-name,x-envoy-upstream-rq-per-try-timeout-ms,x-envoy-upstream-rq-timeout-alt-response,x-envoy-upstream-rq-timeout-ms,x-envoy-upstream-stream-duration-ms,x-forwarded-client-cert,x-forwarded-for,x-forwarded-host,x-forwarded-port,x-forwarded-proto,x-ot-span-context,x-request-id
+[2023-10-30 16:35:57.959][90][info][main] [source/server/server.cc:473]   request trailer map: 128 bytes: 
+[2023-10-30 16:35:57.959][90][info][main] [source/server/server.cc:473]   response header map: 440 bytes: :status,access-control-allow-credentials,access-control-allow-headers,access-control-allow-methods,access-control-allow-origin,access-control-allow-private-network,access-control-expose-headers,access-control-max-age,age,cache-control,connection,content-encoding,content-length,content-type,date,etag,expires,grpc-message,grpc-status,keep-alive,last-modified,location,proxy-connection,proxy-status,server,transfer-encoding,upgrade,vary,via,x-envoy-attempt-count,x-envoy-decorator-operation,x-envoy-degraded,x-envoy-immediate-health-check-fail,x-envoy-ratelimited,x-envoy-upstream-canary,x-envoy-upstream-healthchecked-cluster,x-envoy-upstream-service-time,x-request-id
+[2023-10-30 16:35:57.959][90][info][main] [source/server/server.cc:473]   response trailer map: 152 bytes: grpc-message,grpc-status
+[2023-10-30 16:35:57.966][90][info][main] [source/server/server.cc:840] runtime: {}
+[2023-10-30 16:35:57.966][90][warning][main] [source/server/server.cc:704] No admin address given, so no admin HTTP server started.
+[2023-10-30 16:35:57.966][90][info][config] [source/server/configuration_impl.cc:144] loading tracing configuration
+[2023-10-30 16:35:57.966][90][info][config] [source/server/configuration_impl.cc:103] loading 0 static secret(s)
+[2023-10-30 16:35:57.966][90][info][config] [source/server/configuration_impl.cc:109] loading 2 cluster(s)
+[2023-10-30 16:35:57.967][90][warning][misc] [source/common/protobuf/message_validator_impl.cc:21] Deprecated field: type envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext Using deprecated option 'envoy.extensions.transport_sockets.tls.v3.CertificateValidationContext.match_subject_alt_names' from file common.proto. This configuration will be removed from Envoy soon. Please see https://www.envoyproxy.io/docs/envoy/latest/version_history/version_history for details. If continued use of this field is absolutely necessary, see https://www.envoyproxy.io/docs/envoy/latest/configuration/operations/runtime#using-runtime-overrides-for-deprecated-features for how to apply a temporary and highly discouraged override.
+[2023-10-30 16:35:57.968][90][info][config] [source/server/configuration_impl.cc:113] loading 1 listener(s)
+[2023-10-30 16:35:57.971][90][info][config] [source/server/configuration_impl.cc:130] loading stats configuration
+[2023-10-30 16:35:57.971][90][info][main] [source/server/server.cc:937] starting main dispatch loop
+Looking for preexisting `yaml` files in //modelconfigs
+Looking for preexisting `yaml` files in //pipelines
+time="2023-10-30T16:35:58Z" level=info msg="SVID is not found. Starting node attestation" subsystem_name=attestor
+time="2023-10-30T16:35:58Z" level=warning msg="Insecure bootstrap enabled; skipping server certificate verification" subsystem_name=attestor
+time="2023-10-30T16:35:58Z" level=info msg="Node attestation was successful" rettestable=false spiffe_id="spiffe://wallaroo.ai/spire/agent/join_token/b1bd3171-9334-43af-99da-6ddf75b5a88a" subsystem_name=attestor
+time="2023-10-30T16:35:59Z" level=debug msg="Entry created" entry=d5ba66d8-ceb7-4ccb-8bb5-6e9229aef31e selectors_added=1 spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge/b3483894-7623-41a8-91c8-c15248572b1e" subsystem_name=cache_manager
+time="2023-10-30T16:35:59Z" level=debug msg="Entry created" entry=907e6a7e-320c-4a6d-a0cd-5f64f7949396 selectors_added=1 spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge" subsystem_name=cache_manager
+time="2023-10-30T16:35:59Z" level=debug msg="Renewing stale entries" cache_type=workload count=2 limit=500 subsystem_name=manager
+time="2023-10-30T16:35:59Z" level=info msg="Renewing X509-SVID" entry_id=d5ba66d8-ceb7-4ccb-8bb5-6e9229aef31e spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge/b3483894-7623-41a8-91c8-c15248572b1e" subsystem_name=manager
+time="2023-10-30T16:35:59Z" level=info msg="Renewing X509-SVID" entry_id=907e6a7e-320c-4a6d-a0cd-5f64f7949396 spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge" subsystem_name=manager
+time="2023-10-30T16:35:59Z" level=debug msg="SVID updated" entry=d5ba66d8-ceb7-4ccb-8bb5-6e9229aef31e spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge/b3483894-7623-41a8-91c8-c15248572b1e" subsystem_name=cache_manager
+time="2023-10-30T16:35:59Z" level=debug msg="SVID updated" entry=907e6a7e-320c-4a6d-a0cd-5f64f7949396 spiffe_id="spiffe://wallaroo.ai/ns/deployments/edge" subsystem_name=cache_manager
+time="2023-10-30T16:35:59Z" level=debug msg="Bundle added" subsystem_name=svid_store_cache trust_domain_id=wallaroo.ai
+time="2023-10-30T16:35:59Z" level=info msg="Starting Workload and SDS APIs" address=/tmp/spire-agent/public/api.sock network=unix subsystem_name=endpoints
+time="2023-10-30T16:35:59Z" level=debug msg="Initializing health checkers" subsystem_name=health
+time="2023-10-30T16:36:00Z" level=debug msg="PID attested to have selectors" pid=90 selectors="[type:\"unix\"  value:\"uid:0\" type:\"unix\"  value:\"user:root\" type:\"unix\"  value:\"gid:0\" type:\"unix\"  value:\"group:root\" type:\"unix\"  value:\"supplementary_gid:0\" type:\"unix\"  value:\"supplementary_group:root\" type:\"unix\"  value:\"path:/usr/bin/envoy\" type:\"unix\"  value:\"sha256:471b610631c1a4629d5d39ea74622e82ea73735c8e968a9d3b76c63ecb69595a\"]" subsystem_name=workload_attestor
+time="2023-10-30T16:36:00Z" level=debug msg="Received StreamSecrets request" method=StreamSecrets nonce= pid=90 resource_names="[spiffe://wallaroo.ai/ns/deployments/edge]" service=SDS.v3 subsystem_name=endpoints version_info=
+time="2023-10-30T16:36:00Z" level=debug msg="Sending StreamSecrets response" count=1 method=StreamSecrets nonce=223ae2b4 pid=90 service=SDS.v3 subsystem_name=endpoints version_info=1
+time="2023-10-30T16:36:00Z" level=debug msg="Received StreamSecrets request" method=StreamSecrets nonce=223ae2b4 pid=90 resource_names="[spiffe://wallaroo.ai/ns/deployments/edge]" service=SDS.v3 subsystem_name=endpoints version_info=1
+time="2023-10-30T16:36:01Z" level=debug msg="PID attested to have selectors" pid=90 selectors="[type:\"unix\"  value:\"uid:0\" type:\"unix\"  value:\"user:root\" type:\"unix\"  value:\"gid:0\" type:\"unix\"  value:\"group:root\" type:\"unix\"  value:\"supplementary_gid:0\" type:\"unix\"  value:\"supplementary_group:root\" type:\"unix\"  value:\"path:/usr/bin/envoy\" type:\"unix\"  value:\"sha256:471b610631c1a4629d5d39ea74622e82ea73735c8e968a9d3b76c63ecb69595a\"]" subsystem_name=workload_attestor
+time="2023-10-30T16:36:01Z" level=debug msg="Received StreamSecrets request" method=StreamSecrets nonce= pid=90 resource_names="[spiffe://wallaroo.ai]" service=SDS.v3 subsystem_name=endpoints version_info=
+time="2023-10-30T16:36:01Z" level=debug msg="Sending StreamSecrets response" count=1 method=StreamSecrets nonce=06968df1 pid=90 service=SDS.v3 subsystem_name=endpoints version_info=1
+[2023-10-30 16:36:01.866][90][info][runtime] [source/common/runtime/runtime_impl.cc:577] RTDS has finished initialization
+[2023-10-30 16:36:01.866][90][info][upstream] [source/common/upstream/cluster_manager_impl.cc:226] cm init: all clusters initialized
+[2023-10-30 16:36:01.866][90][info][main] [source/server/server.cc:918] all clusters initialized. initializing init manager
+[2023-10-30 16:36:01.866][90][info][config] [source/extensions/listener_managers/listener_manager/listener_manager_impl.cc:858] all dependencies initialized. starting workers
+[2023-10-30 16:36:01.871][90][warning][main] [source/server/server.cc:814] there is no configured limit to the number of allowed active connections. Set a limit via the runtime key overload.global_downstream_max_connections
+time="2023-10-30T16:36:01Z" level=debug msg="Received StreamSecrets request" method=StreamSecrets nonce=06968df1 pid=90 resource_names="[spiffe://wallaroo.ai]" service=SDS.v3 subsystem_name=endpoints version_info=1
+[2023-10-30 16:51:01.865][90][info][main] [source/server/drain_manager_impl.cc:175] shutting down parent after drain

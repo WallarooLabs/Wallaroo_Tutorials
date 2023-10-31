@@ -105,10 +105,10 @@ edge_demo_model = wl.upload_model(
     model_name,
     model_file_name,
     framework=wallaroo.framework.Framework.ONNX,
-)
+).configure(tensor_fields=["tensor"])
 ```
 
-edge_demo_model.id()### Reserve Pipeline Resources
+### Reserve Pipeline Resources
 
 Before deploying an inference engine we need to tell wallaroo what resources it will need.
 To do this we will use the wallaroo DeploymentConfigBuilder() and fill in the options listed below to determine what the properties of our inference engine will be.
@@ -524,7 +524,7 @@ For the deployment, the engine URL is specified with the following environmental
 
 #### Docker Deployment Example
 
-Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
+Using our sample environment, here's sample deployment using Docker with a computer vision ML model, the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail](https://docs.wallaroo.ai/wallaroo-use-case-tutorials/wallaroo-use-case-computer-vision/use-case-computer-vision-retail/) tutorials.
 
 ```bash
 docker run -p 8080:8080 \
@@ -538,7 +538,7 @@ docker run -p 8080:8080 \
 
 ### Docker Compose Deployment
 
-For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail]({{<ref "use-case-computer-vision-retail">}}) tutorials.
+For users who prefer to use `docker compose`, the following sample `compose.yaml` file is used to launch the Wallaroo Edge pipeline.  This is the same used in the [Wallaroo Use Case Tutorials Computer Vision: Retail](https://docs.wallaroo.ai/wallaroo-use-case-tutorials/wallaroo-use-case-computer-vision/use-case-computer-vision-retail/) tutorials.
 
 ```yml
 services:
@@ -727,7 +727,7 @@ Once deployed, we can perform an inference through the deployment URL.
 
 The endpoint returns `Content-Type: application/json; format=pandas-records` by default with the following fields:
 
-* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing]({{<ref "wallaroo-sdk-essentials-pipeline#anomaly-testing">}}).
+* **check_failures** (*List[Integer]*): Whether any validation checks were triggered.  For more information, see [Wallaroo SDK Essentials Guide: Pipeline Management: Anomaly Testing](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/#anomaly-testing).
 * **elapsed** (*List[Integer]*): A list of time in nanoseconds for:
   * [0] The time to serialize the input.
   * [1...n] How long each step took.

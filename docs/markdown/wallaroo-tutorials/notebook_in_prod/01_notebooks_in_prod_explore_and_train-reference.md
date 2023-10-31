@@ -89,7 +89,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>0</th>
       <td>7129300520</td>
-      <td>2022-10-05</td>
+      <td>2023-03-14</td>
       <td>221900.0</td>
       <td>3</td>
       <td>1.00</td>
@@ -99,7 +99,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>1</th>
       <td>6414100192</td>
-      <td>2022-12-01</td>
+      <td>2023-05-10</td>
       <td>538000.0</td>
       <td>3</td>
       <td>2.25</td>
@@ -109,7 +109,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>2</th>
       <td>5631500400</td>
-      <td>2023-02-17</td>
+      <td>2023-07-27</td>
       <td>180000.0</td>
       <td>2</td>
       <td>1.00</td>
@@ -119,7 +119,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>3</th>
       <td>2487200875</td>
-      <td>2022-12-01</td>
+      <td>2023-05-10</td>
       <td>604000.0</td>
       <td>4</td>
       <td>3.00</td>
@@ -129,7 +129,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>4</th>
       <td>1954400510</td>
-      <td>2023-02-10</td>
+      <td>2023-07-20</td>
       <td>510000.0</td>
       <td>3</td>
       <td>2.00</td>
@@ -149,7 +149,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>20518</th>
       <td>263000018</td>
-      <td>2022-05-13</td>
+      <td>2022-10-20</td>
       <td>360000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -159,7 +159,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>20519</th>
       <td>6600060120</td>
-      <td>2023-02-15</td>
+      <td>2023-07-25</td>
       <td>400000.0</td>
       <td>4</td>
       <td>2.50</td>
@@ -169,7 +169,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>20520</th>
       <td>1523300141</td>
-      <td>2022-06-15</td>
+      <td>2022-11-22</td>
       <td>402101.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -179,7 +179,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>20521</th>
       <td>291310100</td>
-      <td>2023-01-08</td>
+      <td>2023-06-17</td>
       <td>400000.0</td>
       <td>3</td>
       <td>2.50</td>
@@ -189,7 +189,7 @@ housing_data.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "sqft_
     <tr>
       <th>20522</th>
       <td>1523300157</td>
-      <td>2022-10-07</td>
+      <td>2023-03-16</td>
       <td>325000.0</td>
       <td>2</td>
       <td>0.75</td>
@@ -400,25 +400,27 @@ xgb_model.fit(
 
 ```
 
-<pre>XGBRegressor(base_score=5.666446833601829, booster=&#x27;gbtree&#x27;, callbacks=None,
-             colsample_bylevel=1, colsample_bynode=1, colsample_bytree=1,
-             early_stopping_rounds=None, enable_categorical=False,
-             eval_metric=None, gamma=0, gpu_id=-1, grow_policy=&#x27;depthwise&#x27;,
-             importance_type=None, interaction_constraints=&#x27;&#x27;,
-             learning_rate=0.300000012, max_bin=256, max_cat_to_onehot=4,
-             max_delta_step=0, max_depth=5, max_leaves=0, min_child_weight=1,
-             missing=nan, monotone_constraints=&#x27;()&#x27;, n_estimators=100, n_jobs=0,
-             num_parallel_tree=1, predictor=&#x27;auto&#x27;, random_state=0, reg_alpha=0,
-             reg_lambda=1, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" checked><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">XGBRegressor</label><pre>XGBRegressor(base_score=5.666446833601829, booster=&#x27;gbtree&#x27;, callbacks=None,
-             colsample_bylevel=1, colsample_bynode=1, colsample_bytree=1,
-             early_stopping_rounds=None, enable_categorical=False,
-             eval_metric=None, gamma=0, gpu_id=-1, grow_policy=&#x27;depthwise&#x27;,
-             importance_type=None, interaction_constraints=&#x27;&#x27;,
-             learning_rate=0.300000012, max_bin=256, max_cat_to_onehot=4,
-             max_delta_step=0, max_depth=5, max_leaves=0, min_child_weight=1,
-             missing=nan, monotone_constraints=&#x27;()&#x27;, n_estimators=100, n_jobs=0,
-             num_parallel_tree=1, predictor=&#x27;auto&#x27;, random_state=0, reg_alpha=0,
-             reg_lambda=1, ...)</pre>
+<pre>XGBRegressor(base_score=5.666446833601829, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=5, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             n_estimators=100, n_jobs=None, num_parallel_tree=None,
+             predictor=None, random_state=None, ...)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">XGBRegressor</label><pre>XGBRegressor(base_score=5.666446833601829, booster=None, callbacks=None,
+             colsample_bylevel=None, colsample_bynode=None,
+             colsample_bytree=None, early_stopping_rounds=None,
+             enable_categorical=False, eval_metric=None, feature_types=None,
+             gamma=None, gpu_id=None, grow_policy=None, importance_type=None,
+             interaction_constraints=None, learning_rate=None, max_bin=None,
+             max_cat_threshold=None, max_cat_to_onehot=None,
+             max_delta_step=None, max_depth=5, max_leaves=None,
+             min_child_weight=None, missing=nan, monotone_constraints=None,
+             n_estimators=100, n_jobs=None, num_parallel_tree=None,
+             predictor=None, random_state=None, ...)</pre>
 
 ```python
 print(xgb_model.best_score)
@@ -455,7 +457,7 @@ plt.show()
 ```
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_18_0.png" width="800" label="png">}}
     
 
 ```python
@@ -557,7 +559,7 @@ train_labels = np.array(hd_train.loc[:, outcome])
 model_rf.fit(train_features, train_labels)
 ```
 
-<pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" checked><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestRegressor</label><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre>
+<pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestRegressor</label><pre>RandomForestRegressor(max_depth=5, max_samples=0.8, n_jobs=2)</pre>
 
 #### Random Forest Evaluate on holdout
 
@@ -581,7 +583,7 @@ plt.show()
 ```
 
     
-{{<figure src="/images/2023.3.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.0/wallaroo-tutorials/notebook_in_prod/01_notebooks_in_prod_explore_and_train-reference_files/01_notebooks_in_prod_explore_and_train-reference_24_0.png" width="800" label="png">}}
     
 
 ```python
@@ -611,52 +613,52 @@ pframe.describe()
     </tr>
     <tr>
       <th>mean</th>
-      <td>5.194535e+05</td>
+      <td>5.197776e+05</td>
       <td>5.396937e+05</td>
-      <td>3.875433e+10</td>
-      <td>18.188652</td>
+      <td>3.906991e+10</td>
+      <td>18.217681</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>2.797001e+05</td>
+      <td>2.801594e+05</td>
       <td>3.761666e+05</td>
-      <td>4.054895e+11</td>
-      <td>17.634478</td>
+      <td>4.173308e+11</td>
+      <td>17.610039</td>
     </tr>
     <tr>
       <th>min</th>
-      <td>2.039200e+05</td>
+      <td>2.058090e+05</td>
       <td>8.200000e+04</td>
-      <td>1.444000e+03</td>
-      <td>0.014729</td>
+      <td>1.690000e+02</td>
+      <td>0.003338</td>
     </tr>
     <tr>
       <th>25%</th>
-      <td>3.291252e+05</td>
+      <td>3.295665e+05</td>
       <td>3.200000e+05</td>
-      <td>6.686879e+08</td>
-      <td>6.156760</td>
+      <td>6.943358e+08</td>
+      <td>6.166114</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>4.621880e+05</td>
+      <td>4.622230e+05</td>
       <td>4.500000e+05</td>
-      <td>3.321332e+09</td>
-      <td>13.148593</td>
+      <td>3.405598e+09</td>
+      <td>13.356854</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>5.851052e+05</td>
+      <td>5.908840e+05</td>
       <td>6.355250e+05</td>
-      <td>1.367023e+10</td>
-      <td>24.630187</td>
+      <td>1.376932e+10</td>
+      <td>24.598396</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>2.888692e+06</td>
+      <td>2.822289e+06</td>
       <td>7.700000e+06</td>
-      <td>2.314868e+13</td>
-      <td>175.444819</td>
+      <td>2.398309e+13</td>
+      <td>180.616000</td>
     </tr>
   </tbody>
 </table>
@@ -668,7 +670,7 @@ mape = np.mean(pframe.pct_err)
 print(f'rmse = {rmse}, mape = {mape}')
 ```
 
-    rmse = 196861.19318381665, mape = 18.188652142429135
+    rmse = 197661.1070696707, mape = 18.217681127148758
 
 ### Final Decision
 

@@ -110,7 +110,7 @@ new_workspace = get_workspace(workspace_name)
 new_workspace
 ```
 
-    {'name': 'housepricing', 'id': 16, 'archived': False, 'created_by': 'aa707604-ec80-495a-a9a1-87774c8086d5', 'created_at': '2023-09-12T17:35:46.994384+00:00', 'models': [{'name': 'housepricemodel', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 9, 12, 17, 35, 49, 181499, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 9, 12, 17, 35, 49, 181499, tzinfo=tzutc())}, {'name': 'preprocess', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 9, 12, 17, 35, 50, 150472, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 9, 12, 17, 35, 50, 150472, tzinfo=tzutc())}, {'name': 'postprocess', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2023, 9, 12, 17, 35, 51, 80789, tzinfo=tzutc()), 'created_at': datetime.datetime(2023, 9, 12, 17, 35, 51, 80789, tzinfo=tzutc())}], 'pipelines': [{'name': 'housing-pipe', 'create_time': datetime.datetime(2023, 9, 12, 17, 35, 52, 273091, tzinfo=tzutc()), 'definition': '[]'}]}
+    {'name': 'housepricing', 'id': 6, 'archived': False, 'created_by': '218d4494-6ef6-4781-be30-9cbea0aa1695', 'created_at': '2023-10-26T16:18:29.559817+00:00', 'models': [], 'pipelines': []}
 
 ```python
 _ = wl.set_current_workspace(new_workspace)
@@ -120,8 +120,15 @@ _ = wl.set_current_workspace(new_workspace)
 
 With the connection set and workspace prepared, upload the model created in `02_automated_training_process.ipynb` into the current workspace.
 
+To ensure the model input contract matches the provided input, the configuration `tensor_fields=["tensor"]` is used so regardless of what the model input type is, Wallaroo will ensure inputs of type `tensor` are accepted.
+
 ```python
-hpmodel = wl.upload_model(model_name, model_file, framework=wallaroo.framework.Framework.ONNX).configure()
+hpmodel = (wl.upload_model(model_name, 
+                           model_file, 
+                           framework=wallaroo.framework.Framework.ONNX)
+                           .configure(tensor_fields=["tensor"]
+                                    )
+            )
 ```
 
 ## Upload the Processing Modules
@@ -202,10 +209,11 @@ pipeline.add_model_step(module_pre)
 pipeline.add_model_step(hpmodel)
 pipeline.add_model_step(module_post)
 
-pipeline.deploy()
+deploy_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(0.5).memory("1Gi").build()
+pipeline.deploy(deployment_config=deploy_config)
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:40:44.630596+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>05d941bb-6547-4608-be5d-4515388d205c, d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-10-26 16:18:34.784680+00:00</td></tr><tr><th>last_updated</th> <td>2023-10-26 16:18:36.307899+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f5c2a6d8-2d10-4d89-8755-fac05a99634b, 933ec7f5-2612-497c-a571-a4bfa113d967</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Test the Pipeline
 
@@ -244,7 +252,7 @@ display(singleton.loc[:, ["id", "date", "list_price", "bedrooms", "bathrooms", "
     <tr>
       <th>0</th>
       <td>7129300520</td>
-      <td>2023-01-29</td>
+      <td>2023-03-14</td>
       <td>221900.0</td>
       <td>3</td>
       <td>1.0</td>
@@ -270,7 +278,7 @@ display(result.loc[:, ['time', 'out.variable']])
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-09-12 17:41:00.319</td>
+      <td>2023-10-26 16:19:00.357</td>
       <td>[224852.0]</td>
     </tr>
   </tbody>
@@ -282,6 +290,6 @@ When finished, we undeploy the pipeline to return the resources back to the envi
 pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:40:44.630596+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>05d941bb-6547-4608-be5d-4515388d205c, d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-10-26 16:18:34.784680+00:00</td></tr><tr><th>last_updated</th> <td>2023-10-26 16:18:36.307899+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f5c2a6d8-2d10-4d89-8755-fac05a99634b, 933ec7f5-2612-497c-a571-a4bfa113d967</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 With this stage complete, we can proceed to Stage 4: Regular Batch Inference.

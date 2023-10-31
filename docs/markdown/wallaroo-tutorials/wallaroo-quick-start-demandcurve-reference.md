@@ -97,7 +97,11 @@ With our workspace established, we'll upload two models:
 Note that the order we upload our models isn't important - we'll be establishing the actual process of moving data from one model to the next when we set up our pipeline.
 
 ```python
-demand_curve_model = wl.upload_model(model_name, model_file_name, framework=wallaroo.framework.Framework.ONNX)
+demand_curve_model = (wl.upload_model(model_name, 
+                                      model_file_name, 
+                                      framework=wallaroo.framework.Framework.ONNX)
+                                      .configure(tensor_fields=["tensor"])
+                    )
 
 preprocess_input_schema = pa.schema([
     pa.field('Date', pa.string()),
