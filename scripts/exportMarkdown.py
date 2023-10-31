@@ -254,11 +254,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # },
-    {
-        "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "pipeline_log_tutorial.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "pipeline_log_tutorial.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
