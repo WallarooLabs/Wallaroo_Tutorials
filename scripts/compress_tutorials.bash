@@ -41,7 +41,7 @@ tutorials=(
     # ["pipeline_log_tutorial"]=wallaroo-features/pipeline_log_tutorial
     # ["pipeline_api_log_tutorial"]=wallaroo-features/pipeline_api_log_tutorial
     # ["computer-vision"]=wallaroo-model-cookbooks/computer-vision
-    # ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
+    ["houseprice-saga"]=wallaroo-testing-tutorials/houseprice-saga
     # ["arbitrary-python-upload-tutorials"]=model_uploads/arbitrary-python-upload-tutorials
     # ["gpu-deployment"]=wallaroo-features/gpu-deployment
     # ["hugging-face-upload-tutorials"]=model_uploads/hugging-face-upload-tutorials
@@ -52,8 +52,8 @@ tutorials=(
     # ["tensorflow-upload-tutorials"]=model_uploads/tensorflow-upload-tutorials
     # ["xgboost-upload-tutorials"]=model_uploads/xgboost-upload-tutorials
     # ["pipeline_multiple_replicas_forecast_tutorial"]=wallaroo-features/pipeline_multiple_replicas_forecast_tutorial
-    ["wallaroo-arm-classification-finserv"]=pipeline-architecture/wallaroo-arm-classification-finserv
-    ["wallaroo-arm-computer-vision-yolov8"]=pipeline-architecture/wallaroo-arm-computer-vision-yolov8
+    # ["wallaroo-arm-classification-finserv"]=pipeline-architecture/wallaroo-arm-classification-finserv
+    # ["wallaroo-arm-computer-vision-yolov8"]=pipeline-architecture/wallaroo-arm-computer-vision-yolov8
     )
 
 currentDirectory=$PWD
