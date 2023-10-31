@@ -256,6 +256,11 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/edge-publish",
         "outputFile": "edge-observability-assays-reference.md"
     },
+    {
+        "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
+    },
     # wallaroo 101
     {
         "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
@@ -398,6 +403,11 @@ fileList = [
         "inputFile": "wallaroo-model-cookbooks/computer-vision-mitochondria-imaging/02_computer-vision-mitochondria-imaging-example.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-model-cookbooks/computer-vision-mitochondria",
         "outputFile": "02_computer-vision-mitochondria-imaging-example.md"
+    },
+    {
+        "inputFile": "wallaroo-model-cookbooks/computer-vision-yolov8/computer-vision-yolov8-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/computer-vision/yolov8",
+        "outputFile": "computer-vision-yolov8-demonstration-reference.md"
     },
     {
         "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
