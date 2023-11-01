@@ -193,7 +193,7 @@ These can be installed by running the command below in the Wallaroo JupyterHub s
 The Wallaroo SDK is provided by default with the Wallaroo instance's JupyterHub service.  To install the Wallaroo SDK manually, it is provided from the [Python Package Index](https://pypi.org/project/wallaroo/) and is installed with `pip`.  Verify that the same version of the Wallaroo SDK is the same version as the Wallaroo instance.  For example for Wallaroo release 2023.2, the SDK install command is:
 
 ```python
-pip install wallaroo==2023.2.1
+pip install wallaroo==2023.4.0
 ```
 
 See the [Wallaroo SDK Install Guides](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/) for full details.
