@@ -13,6 +13,11 @@ def actual_postprocess(log10price):
     log10price[0] = x
     return log10price
 
+'''Postprocess used outside wallaroo
+'''
+def postprocess(log10price):
+    return np.rint(np.power(10, log10price))
+
 '''
 This is the function that Wallaroo expects to call, to invoke the procedure above.
 It expects input of the form (as a json string):

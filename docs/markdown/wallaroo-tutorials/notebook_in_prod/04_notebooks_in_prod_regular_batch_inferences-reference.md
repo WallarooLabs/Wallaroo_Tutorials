@@ -106,10 +106,12 @@ Deploy the `housing-pipe` workspace established in Stage 3: Deploy the Model in 
 
 ```python
 pipeline = get_pipeline(pipeline_name)
-pipeline.deploy()
+
+deploy_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(0.5).memory("1Gi").build()
+pipeline.deploy(deployment_config=deploy_config)
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:37:27.074611+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-10-26 16:18:34.784680+00:00</td></tr><tr><th>last_updated</th> <td>2023-10-26 16:22:03.472269+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>67da1170-b201-418e-bf03-59908e1c547b, f5c2a6d8-2d10-4d89-8755-fac05a99634b, 933ec7f5-2612-497c-a571-a4bfa113d967</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Read In New House Listings
 
@@ -132,7 +134,7 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
 
     select * from house_listings where date > DATE(DATE(), '-1 month') AND sale_price is NULL
 
-    (1090, 22)
+    (964, 22)
 
 <table border="1" class="dataframe">
   <thead>
@@ -151,7 +153,7 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
     <tr>
       <th>0</th>
       <td>9215400105</td>
-      <td>2023-08-14</td>
+      <td>2023-09-27</td>
       <td>450000.0</td>
       <td>3</td>
       <td>1.75</td>
@@ -161,7 +163,7 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
     <tr>
       <th>1</th>
       <td>1695900060</td>
-      <td>2023-08-27</td>
+      <td>2023-10-10</td>
       <td>535000.0</td>
       <td>4</td>
       <td>1.00</td>
@@ -171,7 +173,7 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
     <tr>
       <th>2</th>
       <td>9545240070</td>
-      <td>2023-08-14</td>
+      <td>2023-09-27</td>
       <td>660500.0</td>
       <td>4</td>
       <td>2.25</td>
@@ -181,7 +183,7 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
     <tr>
       <th>3</th>
       <td>1432900240</td>
-      <td>2023-08-24</td>
+      <td>2023-10-07</td>
       <td>205000.0</td>
       <td>3</td>
       <td>1.00</td>
@@ -190,18 +192,8 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
     </tr>
     <tr>
       <th>4</th>
-      <td>6131600075</td>
-      <td>2023-08-13</td>
-      <td>225000.0</td>
-      <td>3</td>
-      <td>1.00</td>
-      <td>1300</td>
-      <td>8316</td>
-    </tr>
-    <tr>
-      <th>5</th>
       <td>1400300055</td>
-      <td>2023-08-14</td>
+      <td>2023-09-27</td>
       <td>425000.0</td>
       <td>2</td>
       <td>1.00</td>
@@ -209,9 +201,9 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
       <td>5040</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>5</th>
       <td>7960900060</td>
-      <td>2023-08-20</td>
+      <td>2023-10-03</td>
       <td>2900000.0</td>
       <td>4</td>
       <td>3.25</td>
@@ -219,9 +211,9 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
       <td>20100</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>6</th>
       <td>6378500125</td>
-      <td>2023-08-17</td>
+      <td>2023-09-30</td>
       <td>436000.0</td>
       <td>2</td>
       <td>1.00</td>
@@ -229,9 +221,9 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
       <td>7538</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>7</th>
       <td>2022069200</td>
-      <td>2023-08-21</td>
+      <td>2023-10-04</td>
       <td>455000.0</td>
       <td>4</td>
       <td>2.50</td>
@@ -239,14 +231,24 @@ display(newbatch.head(10).loc[:, ["id", "date", "list_price", "bedrooms", "bathr
       <td>49375</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>8</th>
       <td>9412900055</td>
-      <td>2023-08-21</td>
+      <td>2023-10-04</td>
       <td>405000.0</td>
       <td>3</td>
       <td>1.75</td>
       <td>2390</td>
       <td>6000</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>7424700045</td>
+      <td>2023-10-12</td>
+      <td>2050000.0</td>
+      <td>5</td>
+      <td>3.00</td>
+      <td>3830</td>
+      <td>8480</td>
     </tr>
   </tbody>
 </table>
@@ -286,7 +288,7 @@ display(predicted_prices[0:5])
     </tr>
     <tr>
       <th>4</th>
-      <td>191304.0</td>
+      <td>346586.0</td>
     </tr>
   </tbody>
 </table>
@@ -339,8 +341,8 @@ result_table.to_sql('results_table', conn, index=False, if_exists='append')
     </tr>
     <tr>
       <th>4</th>
-      <td>6131600075</td>
-      <td>191304.0</td>
+      <td>1400300055</td>
+      <td>346586.0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -348,33 +350,33 @@ result_table.to_sql('results_table', conn, index=False, if_exists='append')
       <td>...</td>
     </tr>
     <tr>
-      <th>1085</th>
+      <th>959</th>
       <td>3304300300</td>
       <td>577492.0</td>
     </tr>
     <tr>
-      <th>1086</th>
+      <th>960</th>
       <td>6453550090</td>
       <td>882930.0</td>
     </tr>
     <tr>
-      <th>1087</th>
+      <th>961</th>
       <td>1760650820</td>
       <td>271484.0</td>
     </tr>
     <tr>
-      <th>1088</th>
+      <th>962</th>
       <td>3345700207</td>
       <td>537434.0</td>
     </tr>
     <tr>
-      <th>1089</th>
+      <th>963</th>
       <td>7853420110</td>
       <td>634226.0</td>
     </tr>
   </tbody>
 </table>
-<p>1090 rows × 2 columns</p>
+<p>964 rows × 2 columns</p>
 
 ```python
 # Display the top of the table for confirmation
@@ -412,8 +414,8 @@ pd.read_sql_query("select * from results_table limit 5", conn)
     </tr>
     <tr>
       <th>4</th>
-      <td>6131600075</td>
-      <td>191304.0</td>
+      <td>1400300055</td>
+      <td>346586.0</td>
     </tr>
   </tbody>
 </table>
@@ -423,6 +425,6 @@ conn.close()
 pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-09-12 17:35:52.273091+00:00</td></tr><tr><th>last_updated</th> <td>2023-09-12 17:37:27.074611+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>d957ce8d-9d70-477e-bc03-d58b70cd047a, ba8a411e-9318-4ba5-95f5-22c22be8c064, ab42a8de-3551-4551-bc36-9a71d323f81c</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>housing-pipe</td></tr><tr><th>created</th> <td>2023-10-26 16:18:34.784680+00:00</td></tr><tr><th>last_updated</th> <td>2023-10-26 16:22:03.472269+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>67da1170-b201-418e-bf03-59908e1c547b, f5c2a6d8-2d10-4d89-8755-fac05a99634b, 933ec7f5-2612-497c-a571-a4bfa113d967</td></tr><tr><th>steps</th> <td>preprocess</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 From here, organizations can automate this process.  Other features could be used such as data analysis using Wallaroo assays, or other features such as shadow deployments to test champion and challenger models to find which models provide the best results.

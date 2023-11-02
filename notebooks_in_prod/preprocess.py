@@ -1,5 +1,3 @@
-# TODO: make this proper inline documentation
-
 import datetime
 import pandas as pd
 import numpy as np
@@ -21,10 +19,8 @@ def create_features(housing_data:pd.DataFrame):
     housing_data['house_age'] = thisyear - housing_data['yr_built']
     housing_data['renovated'] =  np.where((housing_data['yr_renovated'] > 0), 1, 0) 
     housing_data['yrs_since_reno'] =  np.where(housing_data['renovated'], housing_data['yr_renovated'] - housing_data['yr_built'], 0)
-    return pd.DataFrame({
-        "tensor": housing_data.loc[:, _vars].to_numpy().tolist()
-        }
-    )
+    return housing_data.loc[:, _vars]
+
 
 # If the data is a json string, call this wrapper instead
 # Expected input:
@@ -44,7 +40,14 @@ output_dict = {
 We don't need to re-convert it to pandas because the model takes numpy arrays as input.
 '''
 def wallaroo_json(data:pd.DataFrame):
+    df = create_features(data)
     
-    value = create_features(data).to_dict(orient="records")
+    # convert to the shape that the onnx model expects
+    df = pd.DataFrame({
+        'tensor': df.to_numpy().tolist()
+    })
+    
+    # then turn that into "json"
+    value = df.to_dict(orient="records")
     print(value)
     return value
