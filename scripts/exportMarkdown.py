@@ -251,11 +251,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
     # },
-    {
-        "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
-        "outputDir": "/wallaroo-tutorials/edge-publish",
-        "outputFile": "edge-observability-assays-reference.md"
-    },
+    # {
+    #     "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/edge-publish",
+    #     "outputFile": "edge-observability-assays-reference.md"
+    # },
     # {
     #     "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
@@ -476,6 +476,22 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/workload-orchestrations",
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # }
+    # use case tutorials
+    {
+        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+        "outputFile": "N1_deploy_a_model-with-code.md"
+    },
+    {
+        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+        "outputFile": "N2_automate-data-connections-with-code.md"
+    },
+    {
+        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N3_publsh_pipeline_for_edge-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+        "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
+    },
 ]
 
 def format(outputdir, document_file):
