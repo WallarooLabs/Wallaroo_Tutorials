@@ -364,6 +364,7 @@ fileList = [
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
     #     "outputFile": "wallaroo-inference-server-llama2-reference.md"
     # },
+    # cookbooks
     # {
     #     "inputFile": "wallaroo-model-cookbooks/aloha/aloha_demo.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -424,6 +425,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-mlflow-tutorial-reference.md"
     # },
+    {
+        "inputFile": "wallaroo-model-cookbooks/hf-clip-vit-base/er-clip-vit-hugging-face.ipynb",
+        "outputDir": "/wallaroo-tutorials",
+        "outputFile": "er-clip-vit-hugging-face-reference.md"
+    },
     # # testing section
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
@@ -477,21 +483,21 @@ fileList = [
     #     "outputFile": "data_connectors_and_orchestrators_simple_tutorial.md"
     # }
     # use case tutorials
-    {
-        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
-        "outputFile": "N1_deploy_a_model-with-code.md"
-    },
-    {
-        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
-        "outputFile": "N2_automate-data-connections-with-code.md"
-    },
-    {
-        "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N3_publsh_pipeline_for_edge-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
-        "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
-    },
+    # {
+    #     "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+    #     "outputFile": "N1_deploy_a_model-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+    #     "outputFile": "N2_automate-data-connections-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/LLM/Summarization/Notebooks-with-code/N3_publsh_pipeline_for_edge-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
+    #     "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
+    # },
 ]
 
 def format(outputdir, document_file):
