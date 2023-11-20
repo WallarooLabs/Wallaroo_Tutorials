@@ -426,9 +426,9 @@ fileList = [
     #     "outputFile": "wallaroo-mlflow-tutorial-reference.md"
     # },
     {
-        "inputFile": "wallaroo-model-cookbooks/hf-clip-vit-base/er-clip-vit-hugging-face.ipynb",
+        "inputFile": "wallaroo-model-cookbooks/hf-clip-vit-base/clip-vit-hugging-face.ipynb",
         "outputDir": "/wallaroo-tutorials",
-        "outputFile": "er-clip-vit-hugging-face-reference.md"
+        "outputFile": "clip-vit-hugging-face-reference.md"
     },
     # # testing section
     # {
