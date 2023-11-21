@@ -45,12 +45,6 @@ This is accomplished using the `wallaroo.Client()` command, which provides a URL
 If logging into the Wallaroo instance through the internal JupyterHub service, use `wl = wallaroo.Client()`.  For more information on Wallaroo Client settings, see the [Client Connection guide](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
 
 ```python
-## blank space to log in 
-
-wl = wallaroo.Client()
-
-## blank space to log in 
-
 wl = wallaroo.Client()
 ```
 
@@ -77,15 +71,6 @@ def get_workspace(name, client):
         workspace = wl.create_workspace(name)
     return workspace
 
-# get a pipeline by name in the workspace
-def get_pipeline(pipeline_name, workspace, client):
-    plist = workspace.pipelines()
-    pipeline = [p for p in plist if p.name() == pipeline_name]
-    if len(pipeline) <= 0:
-        pipeline = client.build_pipeline(pipeline_name)
-        return pipeline
-    return pipeline[0]
-
 ```
 
 ```python
@@ -99,7 +84,7 @@ workspace = get_workspace(workspace_name, wl)
 wl.set_current_workspace(workspace)
 display(wl.get_current_workspace())
 
-pipeline = get_pipeline(pipeline_name, workspace, wl)
+pipeline = wl.build_pipeline(pipeline_name)
 pipeline
 ```
 
@@ -206,6 +191,10 @@ deployment_config = wallaroo.DeploymentConfigBuilder() \
     .build()
 ```
 
+The pipeline is deployed with the specified engine deployment.
+
+Because the model is converted to the Wallaroo Containerized Runtime, the deployment step may timeout with the `status` still as `Starting`.  If this occurs, wait an additional 60 seconds, then run the `pipeline.status()` cell.  Once the status is `Running`, the rest of the tutorial can proceed.
+
 ```python
 pipeline.clear()
 pipeline.add_model_step(model)
@@ -213,12 +202,6 @@ pipeline.deploy(deployment_config=deployment_config)
 ```
 
 <table><tr><th>name</th> <td>clip-demo</td></tr><tr><th>created</th> <td>2023-11-20 18:57:55.550690+00:00</td></tr><tr><th>last_updated</th> <td>2023-11-20 20:51:59.304917+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>7a6168c2-f807-465f-a122-33fe7b5d8a3d, ff0e4846-f0f9-4fb0-bc06-d6daa21797bf</td></tr><tr><th>steps</th> <td>clip-vit</td></tr><tr><th>published</th> <td>False</td></tr></table>
-
-### Run Inference
-
-We verify the pipeline is deployed by checking the `status()`.
-
-The sample images in the `./data` directory are converted into numpy arrays, and the candidate labels added as inputs.  Both are set as DataFrame arrays where the field `inputs` are the image values, and `candidate_labels` the labels.
 
 ```python
 pipeline.status()
@@ -248,6 +231,12 @@ pipeline.status()
        'reason': None,
        'details': [],
        'statuses': '\n'}]}
+
+### Run Inference
+
+We verify the pipeline is deployed by checking the `status()`.
+
+The sample images in the `./data` directory are converted into numpy arrays, and the candidate labels added as inputs.  Both are set as DataFrame arrays where the field `inputs` are the image values, and `candidate_labels` the labels.
 
 ```python
 image_paths = [
