@@ -57,9 +57,8 @@ The next step is to create the Wallaroo workspace and pipeline used for the infe
   * [Wallaroo SDK Essentials Guide: Pipeline Management](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline/)
 
 ```python
-## convenience functions from the previous notebooks
-
 # return the workspace called <name> through the Wallaroo client.
+
 def get_workspace(name, client):
     workspace = None
     for ws in client.list_workspaces():
@@ -70,7 +69,6 @@ def get_workspace(name, client):
     if workspace==None:
         workspace = wl.create_workspace(name)
     return workspace
-
 ```
 
 ```python

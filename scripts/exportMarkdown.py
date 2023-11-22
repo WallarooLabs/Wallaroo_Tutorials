@@ -425,10 +425,15 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-mlflow-tutorial-reference.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/hf-clip-vit-base/clip-vit-hugging-face.ipynb",
+    #     "outputDir": "/wallaroo-tutorials",
+    #     "outputFile": "clip-vit-hugging-face-reference.md"
+    # },
     {
-        "inputFile": "wallaroo-model-cookbooks/hf-clip-vit-base/clip-vit-hugging-face.ipynb",
-        "outputDir": "/wallaroo-tutorials",
-        "outputFile": "clip-vit-hugging-face-reference.md"
+        "inputFile": "wallaroo-features/onnx-multi-input-demo/test_autoconv_pytorch_multi_io.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
     },
     # # testing section
     # {
