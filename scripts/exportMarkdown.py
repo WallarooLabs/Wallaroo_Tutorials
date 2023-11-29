@@ -430,11 +430,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "clip-vit-hugging-face-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/onnx-multi-input-demo/test_autoconv_pytorch_multi_io.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/onnx-multi-input-demo/test_autoconv_pytorch_multi_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
+    # },
     # # testing section
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
@@ -503,6 +503,17 @@ fileList = [
     #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
     #     "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
     # },
+    # mlops
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "wallaroo-mlops-tutorial-reference-users.md"
+    },
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "wallaroo-mlops-tutorial-reference-workspaces.md"
+    },
 ]
 
 def format(outputdir, document_file):
