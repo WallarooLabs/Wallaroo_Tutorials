@@ -514,6 +514,16 @@ fileList = [
         "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
         "outputFile": "wallaroo-mlops-tutorial-reference-workspaces.md"
     },
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "wallaroo-mlops-tutorial-reference-models.md"
+    },
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
+    },
 ]
 
 def format(outputdir, document_file):
