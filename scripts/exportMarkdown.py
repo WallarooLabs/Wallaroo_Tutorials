@@ -503,27 +503,47 @@ fileList = [
     #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
     #     "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
     # },
+    {
+        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N0-environment-prep-model-conversion.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+        "outputFile": "N0-environment-prep-model-conversion.md"
+    },
+    {
+        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+        "outputFile": "N1_deploy_a_model-with-code.md"
+    },
+    {
+        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+        "outputFile": "N2_automate-data-connections-with-code.md"
+    },
+    {
+        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N3_publish_pipeline_for_edge-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+        "outputFile": "N3_publish_pipeline_for_edge-with-code.md"
+    },
     # mlops
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "wallaroo-mlops-tutorial-reference-users.md"
-    },
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "wallaroo-mlops-tutorial-reference-workspaces.md"
-    },
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "wallaroo-mlops-tutorial-reference-models.md"
-    },
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
-    },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-users.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-workspaces.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-models.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
+    # },
 ]
 
 def format(outputdir, document_file):
