@@ -503,25 +503,41 @@ fileList = [
     #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
     #     "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
     # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N0-environment-prep-model-conversion.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N0-environment-prep-model-conversion.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N1_deploy_a_model-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N2_automate-data-connections-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N3_publish_pipeline_for_edge-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N3_publish_pipeline_for_edge-with-code.md"
+    # },
+    # workshop edge deployment
     {
-        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N0-environment-prep-model-conversion.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
-        "outputFile": "N0-environment-prep-model-conversion.md"
+        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/00-edge-computer-vision-yolov8n-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/edge",
+        "outputFile": "00-edge-computer-vision-yolov8n-with-code.md"
     },
     {
-        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
-        "outputFile": "N1_deploy_a_model-with-code.md"
+        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/02-edge-forecast-retail-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/edge",
+        "outputFile": "02-edge-forecast-retail-with-code.md"
     },
     {
-        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
-        "outputFile": "N2_automate-data-connections-with-code.md"
-    },
-    {
-        "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N3_publish_pipeline_for_edge-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
-        "outputFile": "N3_publish_pipeline_for_edge-with-code.md"
+        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/01-edge-llm-summarization-with-code.ipynb",
+        "outputDir": "/wallaroo-use-case-tutorials/edge",
+        "outputFile": "01-edge-llm-summarization-with-code.md"
     },
     # mlops
     # {
@@ -565,8 +581,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.0{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2023.4.0', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2023.4.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
