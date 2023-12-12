@@ -251,11 +251,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
     # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-observability-assays-reference.md"
-    # },
+    {
+        "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-observability-assays-reference.md"
+    },
     # {
     #     "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
@@ -268,11 +268,11 @@ fileList = [
     #     "outputFile": "wallaroo-101-reference.md"
     # },
     # # features section
-    # {
-    #     "inputFile": "wallaroo-features/assay-model-insights/model-insights.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "wallaroo-model-insights-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/assay-model-insights/model-insights.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "wallaroo-model-insights-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/gpu-deployment/wallaroo-llm-with-gpu-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -446,11 +446,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-anomaly-detection-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
-    #     "outputFile": "house-price-model-saga.md"
-    # },
+    {
+        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
+        "outputDir": "/wallaroo-tutorials/testing-tutorials",
+        "outputFile": "house-price-model-saga.md"
+    },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -524,21 +524,21 @@ fileList = [
     #     "outputFile": "N3_publish_pipeline_for_edge-with-code.md"
     # },
     # workshop edge deployment
-    {
-        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/00-edge-computer-vision-yolov8n-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/edge",
-        "outputFile": "00-edge-computer-vision-yolov8n-with-code.md"
-    },
-    {
-        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/02-edge-forecast-retail-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/edge",
-        "outputFile": "02-edge-forecast-retail-with-code.md"
-    },
-    {
-        "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/01-edge-llm-summarization-with-code.ipynb",
-        "outputDir": "/wallaroo-use-case-tutorials/edge",
-        "outputFile": "01-edge-llm-summarization-with-code.md"
-    },
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/00-edge-computer-vision-yolov8n-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "00-edge-computer-vision-yolov8n-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/02-edge-forecast-retail-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "02-edge-forecast-retail-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/01-edge-llm-summarization-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "01-edge-llm-summarization-with-code.md"
+    # },
     # mlops
     # {
     #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
@@ -559,6 +559,11 @@ fileList = [
     #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
     # },
 ]
 
