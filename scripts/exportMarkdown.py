@@ -251,11 +251,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
     # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-observability-assays-reference.md"
-    # },
+    {
+        "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-observability-assays-reference.md"
+    },
     # {
     #     "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
@@ -268,11 +268,11 @@ fileList = [
     #     "outputFile": "wallaroo-101-reference.md"
     # },
     # # features section
-    # {
-    #     "inputFile": "wallaroo-features/assay-model-insights/model-insights.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "wallaroo-model-insights-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/assay-model-insights/model-insights.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "wallaroo-model-insights-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/gpu-deployment/wallaroo-llm-with-gpu-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -430,11 +430,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "clip-vit-hugging-face-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/onnx-multi-input-demo/test_autoconv_pytorch_multi_io.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/onnx-multi-input-demo/test_autoconv_pytorch_multi_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
+    # },
     # # testing section
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
@@ -446,11 +446,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials",
     #     "outputFile": "wallaroo-anomaly-detection-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
-    #     "outputFile": "house-price-model-saga.md"
-    # },
+    {
+        "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-comprehensive.ipynb",
+        "outputDir": "/wallaroo-tutorials/testing-tutorials",
+        "outputFile": "house-price-model-saga.md"
+    },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
@@ -503,6 +503,68 @@ fileList = [
     #     "outputDir": "/wallaroo-use-case-tutorials/llm/summarization",
     #     "outputFile": "N3_publsh_pipeline_for_edge-with-code.md"
     # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N0-environment-prep-model-conversion.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N0-environment-prep-model-conversion.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N1_deploy_a_model-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N1_deploy_a_model-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N2_automate-data-connections-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N2_automate-data-connections-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Computer\ Vision/Healthcare/Notebooks-with-code/N3_publish_pipeline_for_edge-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/cv/medical",
+    #     "outputFile": "N3_publish_pipeline_for_edge-with-code.md"
+    # },
+    # workshop edge deployment
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/00-edge-computer-vision-yolov8n-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "00-edge-computer-vision-yolov8n-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/02-edge-forecast-retail-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "02-edge-forecast-retail-with-code.md"
+    # },
+    # {
+    #     "inputFile": "Workshops/Edge-Deployment/Notebooks-with-code/01-edge-llm-summarization-with-code.ipynb",
+    #     "outputDir": "/wallaroo-use-case-tutorials/edge",
+    #     "outputFile": "01-edge-llm-summarization-with-code.md"
+    # },
+    # mlops
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-users.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-workspaces.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-models.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
+    # },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
+    # },
 ]
 
 def format(outputdir, document_file):
@@ -524,8 +586,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.0{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2023.4.0', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2023.4.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
