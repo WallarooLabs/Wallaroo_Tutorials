@@ -72,6 +72,7 @@ tutorials=(
     ["orchestration_sdk_comprehensive_tutorial"]="workload-orchestrations/orchestration_sdk_comprehensive_tutorial"
     ["orchestration_sdk_simple_tutorial"]="workload-orchestrations/orchestration_sdk_simple_tutorial"
     ["hf-whisper"]="wallaroo-model-cookbooks/hf-whisper"
+    ["pipeline_api_log_tutorial_cv"]="wallaroo-features/pipeline_api_log_tutorial_cv"
     )
 
 currentDirectory=$PWD

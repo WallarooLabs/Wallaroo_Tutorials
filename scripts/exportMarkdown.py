@@ -338,6 +338,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
     #     "outputFile": "wallaroo-tags-guide-reference.md"
     # },
+    {
+        "inputFile": "wallaroo-features/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
+        "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
+    },
     # # wallaroo inference server section
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
@@ -435,11 +440,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "test_autoconv_pytorch_multi_io-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-model-cookbooks/hf-whisper/wallaroo-whisper_demo.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "wallaroo-whisper_demo-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/hf-whisper/wallaroo-whisper_demo.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "wallaroo-whisper_demo-reference.md"
+    # },
     # # testing section
     # {
     #     "inputFile": "wallaroo-testing-tutorials/abtesting/wallaroo-abtesting-tutorial.ipynb",
