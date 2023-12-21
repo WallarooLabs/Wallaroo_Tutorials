@@ -10,13 +10,15 @@ For this tutorial, the helper module `CVDemoUtils` and `WallarooUtils` are used 
 
 This demonstration follows these steps:
 
-* Upload the Yolo8 model to Wallaroo
-* Add the Yolo8 model as a Wallaroo pipeline step
-* Deploy the Wallaroo pipeline and allocate cluster resources to the pipeline
-* Perform sample inferences
-* Undeploy and return the resources to the cluster.
-* Publish the pipeline to the OCI registry configured in the Wallaroo Ops server.
-* Deploy the pipeline as a Wallaroo Server on an edge device through Docker.
+* In Wallaroo Ops:
+  * Upload the Yolo8 model to Wallaroo Ops
+  * Add the Yolo8 model as a Wallaroo pipeline step
+  * Deploy the Wallaroo pipeline and allocate cluster resources to the pipeline
+  * Perform sample inferences
+  * Undeploy and return the resources to the cluster.
+  * Publish the pipeline to the OCI registry configured in the Wallaroo Ops server.
+* In a remote aka edge device:
+  * Deploy the published pipeline as a Wallaroo Inference Server on an edge device through Docker.
 
 ## References
 

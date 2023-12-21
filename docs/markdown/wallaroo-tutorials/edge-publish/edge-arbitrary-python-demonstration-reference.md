@@ -6,9 +6,11 @@ This tutorial demonstrates how to use arbitrary python as a ML Model in Wallaroo
 
 ### Tutorial Goals
 
-* **Arbitrary Python Tutorial Deploy Model in Wallaroo Upload and Deploy**: Deploys the `KMeans` model in an arbitrary Python package in Wallaroo, and perform sample inferences.  The file `models/model-auto-conversion-BYOP-vgg16-clustering.zip` is provided so users can go right to testing deployment.
-* **Publish pipeline to Open Container Initiative Registry, registered in the Wallaroo instance as the Edge Deployment Registry.**:  This will containerize the pipeline and copy the engine, python steps, model, and deployment configuration to the registry service.
-* **Deploy the Pipeline to an Edge Device**:  The pipeline will be deployed to an Edge device through Docker.
+* In Wallaroo Ops:
+  * **Arbitrary Python Tutorial Deploy Model in Wallaroo Upload and Deploy**: Deploys the `KMeans` model in an arbitrary Python package in Wallaroo Ops, and perform sample inferences.  The file `models/model-auto-conversion-BYOP-vgg16-clustering.zip` is provided so users can go right to testing deployment.
+  * **Publish pipeline to Open Container Initiative Registry, registered in the Wallaroo Ops instance as the Edge Deployment Registry.**:  This will containerize the pipeline and copy the engine, python steps, model, and deployment configuration to the registry service.
+* In a remote aka edge device:
+  * **Deploy the Pipeline to an Edge Device**:  The pipeline will be deployed to an Edge device as a remote Wallaroo Inference Server through Docker.
 
 ### Arbitrary Python Script Requirements
 
@@ -27,13 +29,18 @@ The entry point of the arbitrary python model is any python script that **must**
 
 All other methods used for the functioning of these classes are optional, as long as they meet the requirements listed above.
 
-### Tutorial Prerequisites
-
-* A Wallaroo version 2023.3.0 or above instance.
-
 ### References
 
 * [Wallaroo SDK Essentials Guide: Model Uploads and Registrations: Arbitrary Python](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-model-uploads/wallaroo-sdk-model-arbitrary-python/)
+* [Wallaroo SDK Essentials Guide: Pipeline Edge Publication](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline-publication/)
+
+* ## Prerequisites
+
+* A deployed Wallaroo Ops instance.
+* A location with Docker or Kubernetes with `helm` for Wallaroo Inference server deployments.
+* The following Python libraries installed:
+  * [`wallaroo`](https://pypi.org/project/wallaroo/): The Wallaroo SDK. Included with the Wallaroo JupyterHub service by default.
+  * [`pandas`](https://pypi.org/project/pandas/): Pandas, mainly used for Pandas DataFrame
 
 ## Tutorial Steps
 

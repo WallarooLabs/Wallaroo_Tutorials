@@ -12,7 +12,7 @@ Scanning high resolution images of patient cells can be used to count how many m
 
 This tutorial will perform the following:
 
-1. As a Data Scientist:
+1. As a Data Scientist in the Wallaroo Ops instance:
     1. Upload and deploy the `mitochondria_epochs_15.onnx` model to a Wallaroo pipeline.
     1. Randomly select from from a selection of 256x256 images that were originally part of a larger 1536x2048 image.
     1. Convert the images into a numpy array inserted into a pandas DataFrame.
@@ -21,10 +21,14 @@ This tutorial will perform the following:
     1. Undeploy the pipeline and return the resources back to the Wallaroo instance.
     1. Publish the pipeline to an Edge deployment registry.
     1. Display different pipeline publishes functions.
-1. As a DevOps Engineer:
-    1. Deploy the published pipeline through a Docker based deployment.
+1. As a DevOps Engineer in a remote aka edge device:
+    1. Deploy the published pipeline as a Wallaroo Inference Server through a Docker based deployment.
     1. Perform inference requests using the same data samples as in the Wallaroo deployed pipeline.
     1. Display the results.
+
+## References
+
+* [Wallaroo SDK Essentials Guide: Pipeline Edge Publication](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-pipelines/wallaroo-sdk-essentials-pipeline-publication/)
 
 ## Prerequisites
 

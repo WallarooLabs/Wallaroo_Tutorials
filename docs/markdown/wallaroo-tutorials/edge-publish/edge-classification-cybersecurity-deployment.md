@@ -6,15 +6,15 @@ This notebook will walk through building Wallaroo pipeline with a a Classificati
 
 This demonstration will focus on deployment to the edge.  For further examples of using Wallaroo with this computer vision models, see [Wallaroo 101](https://docs.wallaroo.ai/wallaroo-101/).
 
-This demonstration will perform the following:
+This demonstration performs the following:
 
-1. As a Data Scientist:
+1. As a Data Scientist in Wallaroo Ops:
     1. Upload a computer vision model to Wallaroo, deploy it in a Wallaroo pipeline, then perform a sample inference.
     1. Publish the pipeline to an Open Container Initiative (OCI) Registry service.  This is configured in the Wallaroo instance.  See [Edge Deployment Registry Guide](https://staging.docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-edge-deployment/) for details on adding an OCI Registry Service to Wallaroo as the Edge Deployment Registry.  This demonstration uses a GitHub repository - see [Introduction to GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages) for setting up your own package repository using GitHub, which can then be used with this tutorial.
     1. View the pipeline publish details.
-1. As a DevOps Engineer:
-    1. Deploy the published pipeline into an edge instance.  This example will use Docker.
-    1. Perform a sample inference into the deployed pipeline with the same data used in the data scientist example.
+1. As a DevOps Engineer in a remote aka edge device:
+    1. Deploy the published pipeline as a Wallaroo Inference Server.  This example will use Docker.
+    1. Perform a sample inference through the Wallaroo Inference Server with the same data used in the data scientist example.
 
 ## Data Scientist Pipeline Publish Steps
 

@@ -405,6 +405,8 @@ services:
     image: sample-registry.com/engine:v2023.3.0-main-3707
     ports:
       - 8080:8080
+    volumes:
+      - ./data:/persist
     environment:
       PIPELINE_URL: sample-registry.com/pipelines/edge-cv-retail:bf70eaf7-8c11-4b46-b751-916a43b1a555
       OCI_REGISTRY: sample-registry.com

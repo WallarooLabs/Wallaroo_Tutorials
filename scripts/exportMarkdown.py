@@ -201,66 +201,66 @@ fileList = [
     #     "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
     # },
     # # pipeline edge section
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-arbitrary-python-demonstration-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-classification-cybersecurity-deployment.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-classification-finserv-deployment-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-cv/edge-cv-demonstration.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-cv-demonstration.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/00_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-llm-summarization/edge-hf-summarization.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-hf-summarization-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-observability-classification-finserv/edge-observabilty-classification-finserv-deployment.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-observabilty-classification-finserv-deployment-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-observability-classification-finserv-api/edge-observability-classification-finserv-deployment-via-api.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish",
-    #     "outputFile": "edge-observability-assays-reference.md"
-    # },
-    # {
-    #     "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
-    #     "outputFile": "edge-computer-vision-yolov8-reference.md"
-    # },
+    {
+        "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-arbitrary-python-demonstration-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-cybersecurity-deployment.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv/edge-cv-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-cv-demonstration.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/00_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-llm-summarization/edge-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-hf-summarization-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-observability-classification-finserv/edge-observabilty-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-observabilty-classification-finserv-deployment-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-observability-classification-finserv-api/edge-observability-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-observability-assays/edge-observability-assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "edge-observability-assays-reference.md"
+    },
+    {
+        "inputFile": "pipeline-edge-publish/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish/yolov8",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
+    },
     # # wallaroo 101
     # {
     #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
@@ -338,11 +338,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
     #     "outputFile": "wallaroo-tags-guide-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
-        "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
+    #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
+    # },
     # # wallaroo inference server section
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
