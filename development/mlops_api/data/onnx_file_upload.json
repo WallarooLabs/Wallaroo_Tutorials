@@ -1,1 +1,1 @@
-{"name": "api-upload-pytorch-multi-io", "visibility": "public", "workspace_id": 10, "conversion": {"framework": "pytorch", "python_version": "3.8", "requirements": []}}
+{"name": "api-sample-model", "visibility": "public", "workspace_id": 11, "conversion": {"framework": "onnx", "python_version": "3.8", "requirements": []}}
