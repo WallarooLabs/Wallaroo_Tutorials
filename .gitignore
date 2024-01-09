@@ -20,3 +20,12 @@ wallaroo-model-cookbooks/computer-vision/models/resnet50_v1.onnx
 model-auto-conversion_hugging-face_complex-pipelines_hf-summarisation-bart-large-samsun.zip
 pipeline-edge-publish/edge-llama2/models/raw-models_llama-text-generation-pipe.zip
 wallaroo-model-cookbooks/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
+pipeline-edge-publish/edge-observability-cv/models/model-with-pixel-intensity.zip
+pipeline-edge-publish/edge-observability-cv/models/frcnn-resnet.pt
+pipeline-edge-publish/edge-observability-cv/models/frcnn-resnet.pt.onnx
+pipeline-edge-publish/edge-observability-cv/models/mobilenet.pt
+pipeline-edge-publish/edge-observability-cv/models/mobilenet.pt.onnx
+pipeline-edge-publish/edge-observability-cv/models/resnet50_v1.onnx
+pipeline-edge-publish/edge-observability-cv/models/yolov5s6.onnx
+pipeline-edge-publish/edge-observability-cv/models/yolov8nOpset17.onnx
+pipeline-edge-publish/edge-observability-cv/models/yolov8xOpset17.onnx
