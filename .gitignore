@@ -29,3 +29,6 @@ pipeline-edge-publish/edge-observability-cv/models/resnet50_v1.onnx
 pipeline-edge-publish/edge-observability-cv/models/yolov5s6.onnx
 pipeline-edge-publish/edge-observability-cv/models/yolov8nOpset17.onnx
 pipeline-edge-publish/edge-observability-cv/models/yolov8xOpset17.onnx
+pipeline-edge-publish/edge-observability-cv/models/cv-retail-models.zip
+wallaroo-model-cookbooks/llama/models/model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
+scratch/
