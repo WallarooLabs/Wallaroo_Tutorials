@@ -338,11 +338,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
     #     "outputFile": "wallaroo-tags-guide-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
-        "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
+    #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
+    # },
     # # wallaroo inference server section
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
@@ -570,11 +570,11 @@ fileList = [
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
     # },
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    # },
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
+    },
 ]
 
 def format(outputdir, document_file):
