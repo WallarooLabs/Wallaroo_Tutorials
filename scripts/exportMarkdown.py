@@ -202,6 +202,16 @@ fileList = [
     # },
     # # pipeline edge section
     # {
+    #     "inputFile": "pipeline-edge-publish/edge-observability-cv/cv-retail-edge-observability.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/edge-publish",
+    #     "outputFile": "cv-retail-edge-observability-reference.md"
+    # },
+    {
+        "inputFile": "pipeline-edge-publish/edge-unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/edge-publish",
+        "outputFile": "unet_demonstration-reference.md"
+    },
+    # {
     #     "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "edge-arbitrary-python-demonstration-reference.md"
@@ -570,11 +580,11 @@ fileList = [
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "wallaroo-mlops-tutorial-reference-pipelines.md"
     # },
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
+    # },
 ]
 
 def format(outputdir, document_file):
