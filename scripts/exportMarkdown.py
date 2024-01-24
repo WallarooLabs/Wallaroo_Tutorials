@@ -200,17 +200,28 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
     #     "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
     # },
+    # gpu architecture section
+    # {
+    #     "inputFile": "pipeline-architecture/wallaroo-gpu-llm-summarization/wallaroo-gpu-llm-summarization-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "wallaroo-gpu-llm-summarization-demonstration-reference.md"
+    # },
+    {
+        "inputFile": "wallaroo-model-cookbooks/llamav2/llm-usage-norag.ipynb",
+        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+        "outputFile": "llm-usage-norag-reference.md"
+    },
     # # pipeline edge section
     # {
     #     "inputFile": "pipeline-edge-publish/edge-observability-cv/cv-retail-edge-observability.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
-    {
-        "inputFile": "pipeline-edge-publish/edge-unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/edge-publish",
-        "outputFile": "unet_demonstration-reference.md"
-    },
+    # {
+    #     "inputFile": "pipeline-edge-publish/edge-unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/edge-publish",
+    #     "outputFile": "unet_demonstration-reference.md"
+    # },
     # {
     #     "inputFile": "pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/edge-publish",
