@@ -206,11 +206,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
     #     "outputFile": "wallaroo-gpu-llm-summarization-demonstration-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-model-cookbooks/llamav2/llm-usage-norag.ipynb",
-        "outputDir": "/wallaroo-tutorials/pipeline-architecture",
-        "outputFile": "llm-usage-norag-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/llamav2/llm-usage-norag.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/pipeline-architecture",
+    #     "outputFile": "llm-usage-norag-reference.md"
+    # },
     # # pipeline edge section
     # {
     #     "inputFile": "pipeline-edge-publish/edge-observability-cv/cv-retail-edge-observability.ipynb",
@@ -482,6 +482,16 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
     #     "outputFile": "house-price-model-saga.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-testing-tutorials/houseprice-saga/house-price-model-saga-prep.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
+    #     "outputFile": "house-price-model-saga-prep-reference.md"
+    # },
+    {
+        "inputFile": "wallaroo-testing-tutorials/wallaro-assay-builder-tutorial/wallaroo_assay_builder_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/testing-tutorials",
+        "outputFile": "wallaroo_assay_builder_tutorial-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
