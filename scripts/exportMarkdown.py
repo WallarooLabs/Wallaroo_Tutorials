@@ -487,10 +487,15 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
     #     "outputFile": "house-price-model-saga-prep-reference.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-testing-tutorials/wallaro-assay-builder-tutorial/wallaroo_assay_builder_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/testing-tutorials",
+    #     "outputFile": "wallaroo_assay_builder_tutorial-reference.md"
+    # },
     {
-        "inputFile": "wallaroo-testing-tutorials/wallaro-assay-builder-tutorial/wallaroo_assay_builder_tutorial.ipynb",
+        "inputFile": "wallaroo-testing-tutorials/wallaro-model_observability_assays/wallaroo_model_observability_assays.ipynb",
         "outputDir": "/wallaroo-tutorials/testing-tutorials",
-        "outputFile": "wallaroo_assay_builder_tutorial-reference.md"
+        "outputFile": "wallaroo_model_observability_assays.md"
     },
     # {
     #     "inputFile": "wallaroo-testing-tutorials/shadow_deploy/shadow_deployment_tutorial.ipynb",
