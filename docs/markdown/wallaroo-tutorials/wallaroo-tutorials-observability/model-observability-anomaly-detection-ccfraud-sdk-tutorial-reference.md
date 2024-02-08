@@ -402,6 +402,19 @@ sample_pipeline = sample_pipeline.add_validations(
     in_between_2=(pl.col("out.dense_1").list.get(0) < 0.9) & (pl.col("out.dense_1").list.get(0) > 0.001)
 )
 
+deploy_config = wallaroo.deployment_config.DeploymentConfigBuilder() \
+    .cpus(0.1)\
+    .build()
+sample_pipeline.undeploy()
+sample_pipeline.deploy(deployment_config=deploy_config)
+```
+
+    Waiting for undeployment - this will take up to 45s ..................................... ok
+    Waiting for deployment - this will take up to 45s ......... ok
+
+<table><tr><th>name</th> <td>ccfraud-validation-demo</td></tr><tr><th>created</th> <td>2024-02-08 17:47:02.951799+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-08 17:48:39.387256+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>97fb284e-aa10-4192-a072-308a705b969c, 54982a2e-180b-4da6-ab50-e2940ec14ff5, 5d5a2272-5c80-4eb1-9712-0a342febb775, 7baa8bc8-2218-4b09-9436-00a40407a14d</td></tr><tr><th>steps</th> <td>ccfraud</td></tr><tr><th>published</th> <td>False</td></tr></table>
+
+```python
 results = sample_pipeline.infer_from_file("./data/cc_data_1k.df.json")
 
 results.loc[results['anomaly.in_between_2'] == True] 

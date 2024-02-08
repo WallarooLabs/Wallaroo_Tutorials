@@ -25,9 +25,14 @@ docs_directory = "docs/markdown"
 
 fileList = [
     {
-        "inputFile": "wallaroo-observe-tutorials/model-observabilty-anomaly-detection-ccfraud-sdk-tutorial/model-observabilty-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaro-tutorials-observability",
-        "outputFile": "model-observabilty-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "model-observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-houseprice-sdk-tutorial/model-observability-anomaly-detection-house-price-sdk-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
     },
 
 ]
