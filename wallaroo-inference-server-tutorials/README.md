@@ -1,1 +1,0 @@
-The following tutorials are used with the Wallaroo Inference Server.  For more details, see [https://docs.wallaroo.ai/wallaroo-inferencing-server/](https://docs.wallaroo.ai/wallaroo-inferencing-server/).
