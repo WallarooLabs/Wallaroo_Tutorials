@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "conda",
+        "cpus",
         "Databricks",
         "DBFS",
         "iopath",
@@ -9,6 +10,7 @@
         "LSTM",
         "mainpipeline",
         "modularizes",
+        "ONNX",
         "pyarrow",
         "quantile",
         "wallaroosdk"

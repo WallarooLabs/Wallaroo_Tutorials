@@ -611,6 +611,12 @@ fileList = [
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
     # },
+    # # observability section
+    # {
+    #     "inputFile": "model-observability/model-observabilty-anomaly-detection-ccfraud-sdk-tutorial/model-observabilty-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaro-tutorials-observability",
+    #     "outputFile": "model-observabilty-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+    # },
 ]
 
 def format(outputdir, document_file):
