@@ -40,6 +40,11 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
         "outputFile": "pipeline_log_tutorial-reference.md"
     },
+        {
+        "inputFile": "wallaroo-observe-tutorials/wallaro-model_observability_assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
 
 ]
 
