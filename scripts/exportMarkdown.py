@@ -24,6 +24,7 @@ c.NbConvertApp.export_format = "markdown"
 docs_directory = "docs/markdown"
 
 fileList = [
+    # wallaroo-observe-tutorials
     {
         "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
@@ -33,6 +34,11 @@ fileList = [
         "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-houseprice-sdk-tutorial/model-observability-anomaly-detection-house-price-sdk-tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
         "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-observe-tutorials/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "pipeline_log_tutorial-reference.md"
     },
 
 ]

@@ -17,7 +17,7 @@ pipeline.add_validations(
 ```
 
 * `validation_name`: The user provided name of the validation.  The names must match Python variable naming requirements.
-  * **IMPORTANT NOTE**: Using the name `count` as a validation name **returns an error**.  Any validation rules named `count` are dropped upon request and an error returned.
+  * **IMPORTANT NOTE**: Using the name `count` as a validation name **returns a warning**.  Any validation rules named `count` are dropped upon request and an warning returned.
 * `polars.col(in|out.{column_name})`: Specifies the **input** or **output** for a specific field aka "column" in an inference result.  Wallaroo inference requests are in the format `in.{field_name}` for **inputs**, and `out.{field_name}` for **outputs**.
   * More than one field can be selected, as long as they follow the rules of the [polars 0.18 Expressions library](https://docs.pola.rs/docs/python/version/0.18/reference/expressions/index.html).
 * `EXPRESSION`:  The expression to validate. When the expression returns **True**, that indicates an anomaly detected.
@@ -260,6 +260,7 @@ The inference request returns a pandas DataFrame.
 Each of the inference outputs will include the following fields:
 
 | Field | Type | Description |
+|---|---|---|
 | **time** | **DateTime** | The DateTime of the inference request. |
 | **in.{input_field_name}** | Input Dependent | Each input field submitted is labeled as `in.{input_field_name}` in the inference request result.  For our example, this is `tensor`, so the input field in the returned inference request is `in.tensor`. |
 | **out.{model_output_field_name}** | Output Dependent | Each field output by the ML model is labeled as `out.{model_output_field_name}` in the inference request result.  For our example, the ccfraud model returns `dense_1` as its output field, so the output field in the returned inference request is `out.dense_1`. |
