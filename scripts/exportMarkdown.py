@@ -36,15 +36,38 @@ fileList = [
         "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
     },
     {
-        "inputFile": "wallaroo-observe-tutorials/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
+        "inputFile": "wallaroo-observe-tutorials/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
         "outputFile": "pipeline_log_tutorial-reference.md"
     },
-        {
-        "inputFile": "wallaroo-observe-tutorials/wallaro-model_observability_assays/wallaroo_model_observability_assays.ipynb",
+    {
+        "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
         "outputFile": "wallaroo_model_observability_assays-reference.md"
     },
+    # wallaroo-model-upload-tutorials
+    {
+        "inputFile": "wallaroo-model-upload-tutorials/aloha-upload-deploy-tutorial/wallaroo-upload-aloha-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+        "outputFile": "wallaroo-upload-aloha-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+        "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+        "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
+    },
+    # wallaroo-run-anywhere-tutorials
+    {
+        "inputFile": "wallaroo-run-anywhere-tutorials/edge-unet-brain-segmentation-demonstration/unet-run-anywhere-demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "unet-run-anywhere-demonstration-reference.md"
+    },
+
 
 ]
 
@@ -67,8 +90,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2023.4.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
@@ -84,6 +107,11 @@ def format(outputdir, document_file):
      # obfuscate databricks url
     document = re.sub('https://adb-5939996465837398.18.azuredatabricks.net', 
                       'https://sample.registry.service.azuredatabricks.net', 
+                      document)
+
+    # change images to root
+    document = re.sub('"images/', 
+                      '"/images/', 
                       document)
 
     # remove edge bundle

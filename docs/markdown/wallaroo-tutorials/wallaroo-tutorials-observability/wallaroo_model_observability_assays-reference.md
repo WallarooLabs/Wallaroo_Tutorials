@@ -1,6 +1,6 @@
-This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-observe-tutorials/wallaro-model_observability_assays).
+This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-observe-tutorials/wallaro-model-observability-assays).
 
-#  Model Insights
+## Model Drift Observability with Assays
 
 The Model Insights feature lets you monitor how the environment that your model operates within may be changing in ways that affect it's predictions so that you can intervene (retrain) in an efficient and timely manner. Changes in the inputs, **data drift**, can occur due to errors in the data processing pipeline or due to changes in the environment such as user preference or behavior. 
 
@@ -82,25 +82,14 @@ warnings.filterwarnings('ignore')
 ```
 
 ```python
-def get_workspace(name):
+def get_workspace(name, client):
     workspace = None
-    for ws in wl.list_workspaces():
+    for ws in client.list_workspaces():
         if ws.name() == name:
             workspace= ws
     if(workspace == None):
-        workspace = wl.create_workspace(name)
+        workspace = client.create_workspace(name)
     return workspace
-
-def get_pipeline(name, workspace):
-    pipelines = workspace.pipelines()
-    pipe_filter = filter(lambda x: x.name() == name, pipelines)
-    pipes = list(pipe_filter)
-    # we can't have a pipe in the workspace with the same name, so it's always the first
-    if pipes:
-        pipeline = pipes[0]
-    else:
-        pipeline = wl.build_pipeline(name)
-    return pipeline
 ```
 
 ### Connect to the Wallaroo Instance
@@ -115,15 +104,6 @@ If logging into the Wallaroo instance through the internal JupyterHub service, u
 # Login through local Wallaroo instance
 
 wl = wallaroo.Client()
-
-wl = wallaroo.Client()
-
-wallarooPrefix = "doc-test."
-wallarooSuffix = "wallarooexample.ai"
-
-wl = wallaroo.Client(api_endpoint=f"https://{wallarooPrefix}api.{wallarooSuffix}", 
-                    auth_endpoint=f"https://{wallarooPrefix}keycloak.{wallarooSuffix}", 
-                    auth_type="sso")
 ```
 
 ### Create Workspace
@@ -133,12 +113,12 @@ We will create a workspace to manage our pipeline and models.  The following var
 Workspace, pipeline, and model names should be unique to each user, so we'll add in a randomly generated suffix so multiple people can run this tutorial in a Wallaroo instance without effecting each other.
 
 ```python
-workspace = get_workspace(workspace_name)
+workspace = get_workspace(workspace_name, wl)
 
 wl.set_current_workspace(workspace)
 ```
 
-    {'name': 'assay-demonstration-tutorial', 'id': 28, 'archived': False, 'created_by': 'df2b4a6c-b749-466a-95b4-60cf14fc354d', 'created_at': '2024-02-01T19:46:21.402729+00:00', 'models': [{'name': 'housepricesagacontrol', 'versions': 3, 'owner_id': '""', 'last_update_time': datetime.datetime(2024, 2, 2, 15, 45, 45, 978338, tzinfo=tzutc()), 'created_at': datetime.datetime(2024, 2, 1, 19, 46, 23, 228360, tzinfo=tzutc())}], 'pipelines': [{'name': 'assay-demonstration-tutorial', 'create_time': datetime.datetime(2024, 2, 1, 19, 46, 24, 140658, tzinfo=tzutc()), 'definition': '[]'}]}
+    {'name': 'assay-demonstration-tutorial', 'id': 7, 'archived': False, 'created_by': '784e4c99-ee08-4aab-9eaa-0d8ad8e1af53', 'created_at': '2024-02-12T18:15:52.065725+00:00', 'models': [], 'pipelines': []}
 
 ### Upload The Champion Model
 
@@ -159,7 +139,8 @@ This pipeline is made to be an example of an existing situation where a model is
 This pipeline will be a simple one - just a single pipeline step.
 
 ```python
-mainpipeline = get_pipeline(main_pipeline_name, workspace)
+mainpipeline = wl.build_pipeline(main_pipeline_name)
+# clear the steps if used before
 mainpipeline.clear()
 
 mainpipeline.add_model_step(housing_model_control)
@@ -170,7 +151,7 @@ deploy_config = wallaroo.DeploymentConfigBuilder().replica_count(1).cpus(0.5).me
 mainpipeline.deploy(deployment_config = deploy_config)
 ```
 
-<table><tr><th>name</th> <td>assay-demonstration-tutorial</td></tr><tr><th>created</th> <td>2024-02-01 19:46:24.140658+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-07 20:33:32.287940+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f02cf5cd-eece-4ebf-b563-d9d7fad963f6, eedae8d6-ab61-42ab-b9e8-5bf5e4511158, fece4440-2841-45f1-bb5f-95fcdc959327, 9c5a5b72-4976-406b-a4a3-f02e730bb9db, b917929a-01d0-4690-9c08-5edd2094761d</td></tr><tr><th>steps</th> <td>housepricesagacontrol</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>assay-demonstration-tutorial</td></tr><tr><th>created</th> <td>2024-02-12 18:16:18.335326+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-12 18:16:19.100769+00:00</td></tr><tr><th>deployed</th> <td>True</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>accel</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b6525c2a-c79d-4f36-a8d7-0f515d45e4fc, b65e67fb-135e-43ca-8ff0-96ee04d6de02</td></tr><tr><th>steps</th> <td>house-price-estimator</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
 ### Testing
 
@@ -189,13 +170,13 @@ display(result)
       <th>time</th>
       <th>in.tensor</th>
       <th>out.variable</th>
-      <th>check_failures</th>
+      <th>anomaly.count</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2024-02-07 20:33:49.207</td>
+      <td>2024-02-12 18:16:35.463</td>
       <td>[4.0, 2.5, 2900.0, 5505.0, 2.0, 0.0, 0.0, 3.0, 8.0, 2900.0, 0.0, 47.6063, -122.02, 2970.0, 5251.0, 12.0, 0.0, 0.0]</td>
       <td>[718013.7]</td>
       <td>0</td>
@@ -216,13 +197,13 @@ display(large_house_result)
       <th>time</th>
       <th>in.tensor</th>
       <th>out.variable</th>
-      <th>check_failures</th>
+      <th>anomaly.count</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2024-02-07 20:33:49.513</td>
+      <td>2024-02-12 18:16:35.773</td>
       <td>[4.0, 3.0, 3710.0, 20000.0, 2.0, 0.0, 2.0, 5.0, 10.0, 2760.0, 950.0, 47.6696, -122.261, 3970.0, 20000.0, 79.0, 0.0, 0.0]</td>
       <td>[1514079.4]</td>
       <td>0</td>
@@ -255,8 +236,8 @@ assay_baseline_start = datetime.datetime.now()
 # These inputs will be random samples of small priced houses.  Around 30,000 is a good number
 small_houses = small_houses_inputs.sample(baseline_size, replace=True).reset_index(drop=True)
 
-# Wait 30 seconds to set this data apart from the rest
-time.sleep(30)
+# Wait 60 seconds to set this data apart from the rest
+time.sleep(60)
 small_results = mainpipeline.infer(small_houses)
 
 # Set the baseline end
@@ -284,7 +265,7 @@ small_results_baseline = small_results_baseline_df['variable'].to_numpy()
 
 The following will generate inference data for us to test against the assay baseline.  For this, we will add in house data that generate higher house prices than the baseline data we used earlier.
 
-This process should take 4 minutes to generate the historical data we'll later use in our assays.  We store the DateTime `assay_window_start` to determine where to start out assay analyses.
+This process should take 6 minutes to generate the historical data we'll later use in our assays.  We store the DateTime `assay_window_start` to determine where to start out assay analyses.
 
 ```python
 # Get a spread of house values
@@ -314,6 +295,22 @@ inference_size = 1000
 # And a spread of large house values
 
 big_houses_inputs = pd.read_json('./data/biginputs.df.json', orient="records")
+big_houses = big_houses_inputs.sample(inference_size, replace=True).reset_index(drop=True)
+
+mainpipeline.infer(big_houses)
+
+time.sleep(65)
+```
+
+```python
+# Get a regular spread of values
+
+time.sleep(65)
+inference_size = 1000
+
+# And a spread of regular values
+
+big_houses_inputs = pd.read_json('./data/houseprice_5000_data.df.json', orient="records")
 big_houses = big_houses_inputs.sample(inference_size, replace=True).reset_index(drop=True)
 
 mainpipeline.infer(big_houses)
@@ -417,7 +414,7 @@ assay_builder_from_dates.baseline_histogram()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_27_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_28_0.png" width="800" label="png">}}
     
 
 ```python
@@ -425,7 +422,7 @@ assay_builder_from_numpy.baseline_histogram()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_28_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_29_0.png" width="800" label="png">}}
     
 
 #### Baseline KDE Chart
@@ -437,7 +434,7 @@ assay_builder_from_dates.baseline_kde()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_30_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_31_0.png" width="800" label="png">}}
     
 
 ```python
@@ -445,7 +442,7 @@ assay_builder_from_numpy.baseline_kde()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_31_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_32_0.png" width="800" label="png">}}
     
 
 #### Baseline ECDF Chart
@@ -457,7 +454,7 @@ assay_builder_from_dates.baseline_ecdf()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_33_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_34_0.png" width="800" label="png">}}
     
 
 ```python
@@ -465,7 +462,7 @@ assay_builder_from_numpy.baseline_ecdf()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_34_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_35_0.png" width="800" label="png">}}
     
 
 #### Baseline DataFrame
@@ -495,28 +492,28 @@ assay_builder_from_dates.baseline_dataframe().loc[:, ['time', 'output_variable_0
   <tbody>
     <tr>
       <th>0</th>
-      <td>1707338029513</td>
+      <td>1707761795773</td>
       <td>1.514079e+06</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1707338060042</td>
-      <td>7.367513e+05</td>
+      <td>1707761856628</td>
+      <td>3.553711e+05</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1707338060042</td>
-      <td>1.077279e+06</td>
+      <td>1707761856628</td>
+      <td>4.467690e+05</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1707338060042</td>
-      <td>3.685043e+05</td>
+      <td>1707761856628</td>
+      <td>2.425914e+05</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1707338060042</td>
-      <td>2.443519e+05</td>
+      <td>1707761856628</td>
+      <td>2.380780e+05</td>
     </tr>
     <tr>
       <th>...</th>
@@ -525,28 +522,28 @@ assay_builder_from_dates.baseline_dataframe().loc[:, ['time', 'output_variable_0
     </tr>
     <tr>
       <th>496</th>
-      <td>1707338060042</td>
-      <td>4.486278e+05</td>
+      <td>1707761856628</td>
+      <td>4.958226e+05</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>1707338060042</td>
-      <td>4.371780e+05</td>
+      <td>1707761856628</td>
+      <td>4.356287e+05</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>1707338060042</td>
-      <td>2.521929e+05</td>
+      <td>1707761856628</td>
+      <td>8.467751e+05</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>1707338060042</td>
-      <td>2.840815e+05</td>
+      <td>1707761856628</td>
+      <td>3.407645e+05</td>
     </tr>
     <tr>
       <th>500</th>
-      <td>1707338060042</td>
-      <td>6.278533e+05</td>
+      <td>1707761856628</td>
+      <td>3.407645e+05</td>
     </tr>
   </tbody>
 </table>
@@ -566,23 +563,23 @@ assay_builder_from_numpy.baseline_dataframe().loc[:, ['output_variable_0']]
   <tbody>
     <tr>
       <th>0</th>
-      <td>736751.30</td>
+      <td>355371.10</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1077279.10</td>
+      <td>446769.00</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>368504.30</td>
+      <td>242591.38</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>244351.92</td>
+      <td>238078.03</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>516278.63</td>
+      <td>467484.30</td>
     </tr>
     <tr>
       <th>...</th>
@@ -590,23 +587,23 @@ assay_builder_from_numpy.baseline_dataframe().loc[:, ['output_variable_0']]
     </tr>
     <tr>
       <th>495</th>
-      <td>448627.80</td>
+      <td>495822.63</td>
     </tr>
     <tr>
       <th>496</th>
-      <td>437177.97</td>
+      <td>435628.72</td>
     </tr>
     <tr>
       <th>497</th>
-      <td>252192.90</td>
+      <td>846775.06</td>
     </tr>
     <tr>
       <th>498</th>
-      <td>284081.53</td>
+      <td>340764.53</td>
     </tr>
     <tr>
       <th>499</th>
-      <td>627853.30</td>
+      <td>340764.53</td>
     </tr>
   </tbody>
 </table>
@@ -644,15 +641,15 @@ baseline_from_dates_run.baseline_stats()
     </tr>
     <tr>
       <th>mean</th>
-      <td>513975.778318</td>
+      <td>514078.818363</td>
     </tr>
     <tr>
       <th>median</th>
-      <td>448627.8125</td>
+      <td>450867.6875</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>227020.413509</td>
+      <td>231664.973507</td>
     </tr>
     <tr>
       <th>start</th>
@@ -687,19 +684,19 @@ baseline_from_numpy_run.baseline_stats()
     </tr>
     <tr>
       <th>max</th>
-      <td>1325960.8</td>
+      <td>1322835.6</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>511975.57226</td>
+      <td>512078.81888</td>
     </tr>
     <tr>
       <th>median</th>
-      <td>448627.8</td>
+      <td>450867.7</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>222793.468828</td>
+      <td>227534.604401</td>
     </tr>
     <tr>
       <th>start</th>
@@ -739,9 +736,6 @@ assay_builder_from_dates = wl.build_assay(assay_name="assays from date baseline"
                                           baseline_start=assay_baseline_start, 
                                           baseline_end=assay_baseline_end)
 
-# set metric PSI mode
-assay_builder_from_dates.summarizer_builder.add_metric(wallaroo.assay_config.Metric.SUMDIFF)
-
 # set the width, interval, and time period for the assay interactive run
 assay_builder_from_dates.add_run_until(datetime.datetime.now())
 assay_builder_from_dates.window_builder().add_width(minutes=1).add_interval(minutes=1).add_start(assay_window_start)
@@ -750,7 +744,7 @@ assay_builder_from_dates.build().interactive_run().chart_scores()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_43_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_44_0.png" width="800" label="png">}}
     
 
 #### Analysis List DataFrame
@@ -787,9 +781,6 @@ assay_builder_from_dates = wl.build_assay(assay_name="assays from date baseline"
                                           baseline_start=assay_baseline_start, 
                                           baseline_end=assay_baseline_end)
 
-# set metric PSI mode
-assay_builder_from_dates.summarizer_builder.add_metric(wallaroo.assay_config.Metric.SUMDIFF)
-
 # set the width, interval, and time period for the assay interactive run
 assay_builder_from_dates.add_run_until(datetime.datetime.now())
 assay_builder_from_dates.window_builder().add_width(minutes=1).add_interval(minutes=1).add_start(assay_window_start)
@@ -811,17 +802,24 @@ assay_builder_from_dates.build().interactive_run().to_dataframe().loc[:, ['score
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.028399</td>
-      <td>2024-02-07T20:35:20.144522+00:00</td>
+      <td>0.010825</td>
+      <td>2024-02-12T18:18:36.905868+00:00</td>
       <td>0.25</td>
       <td>Ok</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.000000</td>
-      <td>2024-02-07T20:37:20.144522+00:00</td>
+      <td>8.868920</td>
+      <td>2024-02-12T18:20:36.905868+00:00</td>
       <td>0.25</td>
       <td>Alert</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.027985</td>
+      <td>2024-02-12T18:28:36.905868+00:00</td>
+      <td>0.25</td>
+      <td>Ok</td>
     </tr>
   </tbody>
 </table>
@@ -862,36 +860,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.00520772807841052
-    scores = [0.0, 0.0008040331034294781, 0.00010009324303378128, 0.0005128718504664744, 0.0037778397193669257, 1.2890162113860805e-05, 0.0]
+    score = 0.010824679818960396
+    scores = [0.0, 0.002969815172154558, 0.005578645912763821, 0.0002298040928465568, 0.0013956367196008871, 0.0006507779215945722, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_47_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_48_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 8.8693965086548
-    scores = [0.0, 0.7361208231835864, 0.7736613502280227, 0.6528484073872128, 0.7174700740703411, 0.7174700740703411, 5.2718257797152965]
+    score = 8.868919890469542
+    scores = [0.0, 0.7174700740703411, 0.7548517748433896, 0.6896479439992407, 0.7454763738420332, 0.6896479439992407, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_47_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_48_3.png" width="800" label="png">}}
     
 
 #### Score Metric
@@ -927,36 +925,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.00520772807841052
-    scores = [0.0, 0.0008040331034294781, 0.00010009324303378128, 0.0005128718504664744, 0.0037778397193669257, 1.2890162113860805e-05, 0.0]
+    score = 0.010824679818960396
+    scores = [0.0, 0.002969815172154558, 0.005578645912763821, 0.0002298040928465568, 0.0013956367196008871, 0.0006507779215945722, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_49_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_50_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 8.8693965086548
-    scores = [0.0, 0.7361208231835864, 0.7736613502280227, 0.6528484073872128, 0.7174700740703411, 0.7174700740703411, 5.2718257797152965]
+    score = 8.868919890469542
+    scores = [0.0, 0.7174700740703411, 0.7548517748433896, 0.6896479439992407, 0.7454763738420332, 0.6896479439992407, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_49_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_50_3.png" width="800" label="png">}}
     
 
 ```python
@@ -969,7 +967,7 @@ assay_builder_from_dates = wl.build_assay(assay_name="assays from date baseline"
                                           baseline_start=assay_baseline_start, 
                                           baseline_end=assay_baseline_end)
 
-# set metric PSI mode
+# set metric MAXDIFF mode
 assay_builder_from_dates.summarizer_builder.add_metric(wallaroo.assay_config.Metric.MAXDIFF)
 
 # set the width, interval, and time period for the assay interactive run
@@ -980,36 +978,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = MaxDiff
     weighted = False
-    score = 0.028399201596806395
-    scores = [0.0, 0.012592814371257475, 0.004576846307385252, 0.009628742514970062, 0.028399201596806395, 0.001600798403193604, 0.0]
-    index = 4
+    score = 0.03541516966067865
+    scores = [0.0, 0.023600798403193624, 0.03541516966067865, 0.006612774451097814, 0.016588822355289412, 0.011387225548902176, 0.0]
+    index = 2
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_50_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_51_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = MaxDiff
     weighted = False
     score = 1.0
-    scores = [0.0, 0.20359281437125748, 0.21157684630738524, 0.18562874251497005, 0.1996007984031936, 0.1996007984031936, 1.0]
+    scores = [0.0, 0.1996007984031936, 0.20758483033932135, 0.1936127744510978, 0.2055888223552894, 0.1936127744510978, 1.0]
     index = 6
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_50_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_51_3.png" width="800" label="png">}}
     
 
 ```python
@@ -1022,7 +1020,7 @@ assay_builder_from_dates = wl.build_assay(assay_name="assays from date baseline"
                                           baseline_start=assay_baseline_start, 
                                           baseline_end=assay_baseline_end)
 
-# set metric PSI mode
+# set metric SUMDIFF mode
 assay_builder_from_dates.summarizer_builder.add_metric(wallaroo.assay_config.Metric.SUMDIFF)
 
 # set the width, interval, and time period for the assay interactive run
@@ -1033,36 +1031,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = SumDiff
     weighted = False
-    score = 0.028399201596806395
-    scores = [0.0, 0.012592814371257475, 0.004576846307385252, 0.009628742514970062, 0.028399201596806395, 0.001600798403193604, 0.0]
+    score = 0.046802395209580835
+    scores = [0.0, 0.023600798403193624, 0.03541516966067865, 0.006612774451097814, 0.016588822355289412, 0.011387225548902176, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_51_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_52_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = SumDiff
     weighted = False
     score = 1.0
-    scores = [0.0, 0.20359281437125748, 0.21157684630738524, 0.18562874251497005, 0.1996007984031936, 0.1996007984031936, 1.0]
+    scores = [0.0, 0.1996007984031936, 0.20758483033932135, 0.1936127744510978, 0.2055888223552894, 0.1936127744510978, 1.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_51_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_52_3.png" width="800" label="png">}}
     
 
 #### Alert Threshold
@@ -1104,17 +1102,24 @@ assay_builder_from_dates.build().interactive_run().to_dataframe().loc[:, ['score
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.005208</td>
-      <td>2024-02-07T20:35:20.144522+00:00</td>
+      <td>0.010825</td>
+      <td>2024-02-12T18:18:36.905868+00:00</td>
       <td>0.5</td>
       <td>Ok</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>8.869397</td>
-      <td>2024-02-07T20:37:20.144522+00:00</td>
+      <td>8.868920</td>
+      <td>2024-02-12T18:20:36.905868+00:00</td>
       <td>0.5</td>
       <td>Alert</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.027985</td>
+      <td>2024-02-12T18:28:36.905868+00:00</td>
+      <td>0.5</td>
+      <td>Ok</td>
     </tr>
   </tbody>
 </table>
@@ -1147,36 +1152,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.01936763341991274
-    scores = [0.0, 3.1984355629053614e-05, 0.0012104424748554526, 0.003504042612477055, 0.0054620786516716745, 4.575782500540267e-05, 0.0019006190378958556, 0.0070072870357337485, 7.291031454356322e-06, 4.7192338774114e-05, 0.00015093805641602358, 0.0]
+    score = 0.02621254075808954
+    scores = [0.0, 0.010569514437627874, 0.00037363078823020166, 0.0033781949078495045, 0.0022725850767459357, 0.0010566612077523828, 0.004511714130505298, 1.4147243707877562e-05, 0.0033457853900346513, 0.00017948501813203413, 0.0005108225575037834, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_55_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_56_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 8.122326388340474
-    scores = [0.0, 0.2916995446658736, 0.2916995446658736, 0.2681491896477076, 0.3480515998945155, 0.3076065878730085, 0.20735189427254225, 0.31561967084401865, 0.2526662455720835, 0.2916995446658736, 0.27595678652368016, 5.2718257797152965]
+    score = 8.12154551791522
+    scores = [0.0, 0.2838072039839983, 0.2838072039839983, 0.2838072039839983, 0.31561967084401865, 0.33988809231947975, 0.20735189427254225, 0.2916995446658736, 0.2996329479746256, 0.2681491896477076, 0.27595678652368016, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_55_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_56_3.png" width="800" label="png">}}
     
 
 #### Binning Mode
@@ -1214,36 +1219,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.00520772807841052
-    scores = [0.0, 0.0008040331034294781, 0.00010009324303378128, 0.0005128718504664744, 0.0037778397193669257, 1.2890162113860805e-05, 0.0]
+    score = 0.010824679818960396
+    scores = [0.0, 0.002969815172154558, 0.005578645912763821, 0.0002298040928465568, 0.0013956367196008871, 0.0006507779215945722, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_57_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_58_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 8.8693965086548
-    scores = [0.0, 0.7361208231835864, 0.7736613502280227, 0.6528484073872128, 0.7174700740703411, 0.7174700740703411, 5.2718257797152965]
+    score = 8.868919890469542
+    scores = [0.0, 0.7174700740703411, 0.7548517748433896, 0.6896479439992407, 0.7454763738420332, 0.6896479439992407, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_57_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_58_3.png" width="800" label="png">}}
     
 
 ```python
@@ -1267,36 +1272,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Equal
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.008987465547991026
-    scores = [0.0, 0.0011712702034010463, 0.005237576318668655, 0.002545490795026421, 3.3088350602235726e-05, 3.988029266812527e-08, 0.0]
+    score = 0.0035028394332936013
+    scores = [0.0, 2.980229110305778e-05, 0.000622915228940027, 0.0007762707808988463, 0.00074530078189759, 0.0013285503504540802, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_58_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_59_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Equal
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 9.44483410273556
-    scores = [0.0, 2.7496044806046247, 1.1041736833164175, 0.26038534988996587, 0.055402858712541976, 0.003441950496713961, 5.2718257797152965]
+    score = 9.44553462565066
+    scores = [0.0, 2.71520515570787, 1.1845568469857768, 0.2147793051333076, 0.04994766134541187, 0.009219876762995191, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_58_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_59_3.png" width="800" label="png">}}
     
 
 The following example manually sets the bin values.
@@ -1326,36 +1331,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Provided
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.005723257686942963
-    scores = [0.0, 4.15606712463904e-05, 0.0001219718347943107, 0.0016642742020801344, 0.001136918951920078, 0.0027585320269020493, 0.0]
+    score = 0.0044289194274896694
+    scores = [0.0, 2.0883795503916425e-05, 8.129210375338785e-06, 0.0007993288996432606, 0.0008420454950651045, 0.0027585320269020493, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_60_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_61_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Provided
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 9.17024867391807
-    scores = [0.0, 1.2862652851970542, 1.8558905053305796, 0.5005940445100993, 0.31561967084401865, 3.735674105718412, 1.4762050623179066]
+    score = 9.174813366112216
+    scores = [0.0, 1.44121120281246, 1.6306076742577449, 0.6073469373145474, 0.2681491896477076, 3.803547720179949, 1.4239506418998062]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_60_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_61_3.png" width="800" label="png">}}
     
 
 #### Aggregation Options
@@ -1389,36 +1394,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 0.00520772807841052
-    scores = [0.0, 0.0008040331034294781, 0.00010009324303378128, 0.0005128718504664744, 0.0037778397193669257, 1.2890162113860805e-05, 0.0]
+    score = 0.010824679818960396
+    scores = [0.0, 0.002969815172154558, 0.005578645912763821, 0.0002298040928465568, 0.0013956367196008871, 0.0006507779215945722, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_62_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_63_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Density
     metric = PSI
     weighted = False
-    score = 8.8693965086548
-    scores = [0.0, 0.7361208231835864, 0.7736613502280227, 0.6528484073872128, 0.7174700740703411, 0.7174700740703411, 5.2718257797152965]
+    score = 8.868919890469542
+    scores = [0.0, 0.7174700740703411, 0.7548517748433896, 0.6896479439992407, 0.7454763738420332, 0.6896479439992407, 5.2718257797152965]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_62_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_63_3.png" width="800" label="png">}}
     
 
 ```python
@@ -1443,36 +1448,36 @@ assay_builder_from_dates.build().interactive_run()[0].chart()
 assay_builder_from_dates.build().interactive_run()[1].chart()
 ```
 
-    baseline mean = 513975.7783183633
-    window mean = 516338.589359375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 515981.794078125
+    baseline median = 450867.6875
     window median = 448627.8125
     bin_mode = Quantile
     aggregation = Cumulative
     metric = PSI
     weighted = False
-    score = 0.05816167664670657
-    scores = [0.0, 0.012592814371257475, 0.017169660678642673, 0.02679840319361282, 0.001600798403193604, 0.0, 0.0]
+    score = 0.052003992015968
+    scores = [0.0, 0.023600798403193624, 0.011814371257485023, 0.00520159680638721, 0.011387225548902149, 0.0, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_63_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_64_1.png" width="800" label="png">}}
     
 
-    baseline mean = 513975.7783183633
-    window mean = 1883684.608375
-    baseline median = 448627.8125
+    baseline mean = 514078.81836327346
+    window mean = 1883044.252
+    baseline median = 450867.6875
     window median = 1946437.75
     bin_mode = Quantile
     aggregation = Cumulative
     metric = PSI
     weighted = False
-    score = 3.019960079840319
-    scores = [0.0, 0.20359281437125748, 0.4151696606786427, 0.6007984031936128, 0.8003992015968064, 1.0, 0.0]
+    score = 3.0139720558882237
+    scores = [0.0, 0.1996007984031936, 0.40718562874251496, 0.6007984031936128, 0.8063872255489022, 1.0, 0.0]
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_63_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_64_3.png" width="800" label="png">}}
     
 
 #### Compare Basic Stats
@@ -1494,7 +1499,7 @@ assay_builder_from_dates.add_run_until(datetime.datetime.now())
 assay_builder_from_dates.window_builder().add_width(minutes=1).add_interval(minutes=1).add_start(assay_window_start)
 ```
 
-    <wallaroo.assay_config.WindowBuilder at 0x14bfd0e80>
+    <wallaroo.assay_config.WindowBuilder at 0x288671880>
 
 ```python
 assay_builder_from_dates.build().interactive_run()[0].compare_basic_stats()
@@ -1528,42 +1533,42 @@ assay_builder_from_dates.build().interactive_run()[0].compare_basic_stats()
     <tr>
       <th>max</th>
       <td>1514079.375</td>
-      <td>1364149.875</td>
-      <td>-149929.500000</td>
-      <td>-9.902354</td>
+      <td>1412215.125</td>
+      <td>-101864.250000</td>
+      <td>-6.727801</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>513975.778318</td>
-      <td>516338.589359</td>
-      <td>2362.811041</td>
-      <td>0.459713</td>
+      <td>514078.818363</td>
+      <td>515981.794078</td>
+      <td>1902.975715</td>
+      <td>0.370172</td>
     </tr>
     <tr>
       <th>median</th>
+      <td>450867.6875</td>
       <td>448627.8125</td>
-      <td>448627.8125</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
+      <td>-2239.875000</td>
+      <td>-0.496792</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>227020.413509</td>
-      <td>226046.929731</td>
-      <td>-973.483778</td>
-      <td>-0.428809</td>
+      <td>231664.973507</td>
+      <td>228993.031693</td>
+      <td>-2671.941814</td>
+      <td>-1.153365</td>
     </tr>
     <tr>
       <th>start</th>
       <td>None</td>
-      <td>2024-02-07T20:35:20.144522+00:00</td>
+      <td>2024-02-12T18:18:36.905868+00:00</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>end</th>
       <td>None</td>
-      <td>2024-02-07T20:36:20.144522+00:00</td>
+      <td>2024-02-12T18:19:36.905868+00:00</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
@@ -1608,36 +1613,36 @@ assay_builder_from_dates.build().interactive_run()[1].compare_basic_stats()
     </tr>
     <tr>
       <th>mean</th>
-      <td>513975.778318</td>
-      <td>1883684.608375</td>
-      <td>1.369709e+06</td>
-      <td>266.492875</td>
+      <td>514078.818363</td>
+      <td>1883044.252</td>
+      <td>1.368965e+06</td>
+      <td>266.294853</td>
     </tr>
     <tr>
       <th>median</th>
-      <td>448627.8125</td>
+      <td>450867.6875</td>
       <td>1946437.75</td>
-      <td>1.497810e+06</td>
-      <td>333.864708</td>
+      <td>1.495570e+06</td>
+      <td>331.709303</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>227020.413509</td>
-      <td>162413.538263</td>
-      <td>-6.460688e+04</td>
-      <td>-28.458619</td>
+      <td>231664.973507</td>
+      <td>159158.122868</td>
+      <td>-7.250685e+04</td>
+      <td>-31.298150</td>
     </tr>
     <tr>
       <th>start</th>
       <td>None</td>
-      <td>2024-02-07T20:37:20.144522+00:00</td>
+      <td>2024-02-12T18:20:36.905868+00:00</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>end</th>
       <td>None</td>
-      <td>2024-02-07T20:38:20.144522+00:00</td>
+      <td>2024-02-12T18:21:36.905868+00:00</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
@@ -1672,7 +1677,7 @@ assay_builder_from_dates.build().interactive_run().chart_scores()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_69_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_70_0.png" width="800" label="png">}}
     
 
 ```python
@@ -1693,7 +1698,7 @@ assay_builder_from_dates.build().interactive_run().chart_scores()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_70_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_71_0.png" width="800" label="png">}}
     
 
 ### Create Assay
@@ -1725,7 +1730,7 @@ assay_id = assay_builder_from_dates.upload()
 
 The assay is now visible through the Wallaroo UI by selecting the workspace, then the pipeline, then **Insights**.
 
-{{<figure src="images/housepricesaga-sample-assay.png" width="800" label="Sample assay in the UI">}}
+{{<figure src="/images/housepricesaga-sample-assay.png" width="800" label="Sample assay in the UI">}}
 
 ### Get Assay Results
 
@@ -1739,6 +1744,8 @@ Assay results are retrieved with the `wallaroo.client.get_assay_results` method,
 | **start** | *Datetime.Datetime* (*Required*) | The start date and time of historical data from the pipeline to start analyses from. |
 | **end** | *Datetime.Datetime* (*Required*) | The end date and time of historical data from the pipeline to limit analyses to. |
 
+* **IMPORTANT NOTE**:  This process requires that additional historical data is generated from the time the assay is created to when the results are available. To add additional inference data, use the [Assay Test Data](#assay-test-data) section above.
+
 ```python
 assay_results = wl.get_assay_results(assay_id=assay_id,
                      start=assay_window_start,
@@ -1749,7 +1756,7 @@ assay_results.to_dataframe().loc[:, ['score', 'start', 'alert_threshold', 'statu
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_75_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_76_0.png" width="800" label="png">}}
     
 
 <table border="1" class="dataframe">
@@ -1765,17 +1772,24 @@ assay_results.to_dataframe().loc[:, ['score', 'start', 'alert_threshold', 'statu
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.005208</td>
-      <td>2024-02-07T20:35:20.144522+00:00</td>
+      <td>0.014419</td>
+      <td>2024-02-12T18:33:36.905868+00:00</td>
       <td>0.25</td>
       <td>Ok</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>8.869396</td>
-      <td>2024-02-07T20:37:20.144522+00:00</td>
+      <td>8.868920</td>
+      <td>2024-02-12T18:35:36.905868+00:00</td>
       <td>0.25</td>
       <td>Alert</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.005493</td>
+      <td>2024-02-12T18:37:36.905868+00:00</td>
+      <td>0.25</td>
+      <td>Ok</td>
     </tr>
   </tbody>
 </table>
@@ -1798,7 +1812,7 @@ for assay_analysis in assay_results:
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_76_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_77_1.png" width="800" label="png">}}
     
 
     baseline mean = 513975.7783183633
@@ -1814,7 +1828,7 @@ for assay_analysis in assay_results:
     index = None
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_76_3.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_77_3.png" width="800" label="png">}}
     
 
 #### List and Retrieve Assay
@@ -1839,7 +1853,7 @@ assay_results.chart_scores()
 ```
 
     
-{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_79_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_80_0.png" width="800" label="png">}}
     
 
 ### Pause and Resume Assay
@@ -1856,9 +1870,9 @@ retrieved_assay.turn_off()
 display(wl.list_assays())
 ```
 
-<table><tr><th>name</th><th>active</th><th>status</th><th>warning_threshold</th><th>alert_threshold</th><th>pipeline_name</th></tr><tr><td>assays from date baseline create sample</td><td>True</td><td>{"run_at": "2024-02-07T22:54:57.593288283+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date sample</td><td>True</td><td>{"run_at": "2024-02-07T22:54:57.569925617+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date baseline</td><td>True</td><td>{"run_at": "2024-02-07T22:54:57.582930785+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from numpy</td><td>True</td><td>created</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr></table>
+<table><tr><th>Assay ID</th><th>Assay Name</th><th>Active</th><th>Status</th><th>Warning Threshold</th><th>Alert Threshold</th><th>Pipeline ID</th><th>Pipeline Name</th></tr><tr><td>1</td><td>assays from date baseline create sample</td><td>True</td><td>{"run_at": "2024-02-12T18:38:36.972894731+00:00",  "num_ok": 1, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>7</td><td>assay-demonstration-tutorial</td></tr></table>
 
-<table><tr><th>name</th><th>active</th><th>status</th><th>warning_threshold</th><th>alert_threshold</th><th>pipeline_name</th></tr><tr><td>assays from date baseline create sample</td><td>False</td><td>{"run_at": "2024-02-07T22:54:57.593288283+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date sample</td><td>True</td><td>{"run_at": "2024-02-07T22:54:57.569925617+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date baseline</td><td>True</td><td>{"run_at": "2024-02-07T22:54:57.582930785+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from numpy</td><td>True</td><td>created</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr></table>
+<table><tr><th>Assay ID</th><th>Assay Name</th><th>Active</th><th>Status</th><th>Warning Threshold</th><th>Alert Threshold</th><th>Pipeline ID</th><th>Pipeline Name</th></tr><tr><td>1</td><td>assays from date baseline create sample</td><td>False</td><td>{"run_at": "2024-02-12T18:38:36.972894731+00:00",  "num_ok": 1, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>7</td><td>assay-demonstration-tutorial</td></tr></table>
 
 We resume the assay and verify its setting `Active` is `True`.
 
@@ -1867,7 +1881,7 @@ retrieved_assay.turn_on()
 display(wl.list_assays())
 ```
 
-<table><tr><th>name</th><th>active</th><th>status</th><th>warning_threshold</th><th>alert_threshold</th><th>pipeline_name</th></tr><tr><td>assays from date baseline create sample</td><td>True</td><td>{"run_at": "2024-02-07T22:57:12.041626554+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date sample</td><td>True</td><td>{"run_at": "2024-02-07T22:56:57.573088923+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from date baseline</td><td>True</td><td>{"run_at": "2024-02-07T22:56:57.586305174+00:00",  "num_ok": 0, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr><tr><td>assays from numpy</td><td>True</td><td>created</td><td>None</td><td>0.25</td><td>assay-demonstration-tutorial</td></tr></table>
+<table><tr><th>Assay ID</th><th>Assay Name</th><th>Active</th><th>Status</th><th>Warning Threshold</th><th>Alert Threshold</th><th>Pipeline ID</th><th>Pipeline Name</th></tr><tr><td>1</td><td>assays from date baseline create sample</td><td>True</td><td>{"run_at": "2024-02-12T18:38:36.972894731+00:00",  "num_ok": 1, "num_warnings": 0, "num_alerts": 0}</td><td>None</td><td>0.25</td><td>7</td><td>assay-demonstration-tutorial</td></tr></table>
 
 ### Undeploy Main Pipeline
 
@@ -1877,5 +1891,5 @@ With the examples and tutorial complete, we will undeploy the main pipeline and 
 mainpipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>assay-demonstration-tutorial</td></tr><tr><th>created</th> <td>2024-02-01 19:46:24.140658+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-07 20:33:32.287940+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>f02cf5cd-eece-4ebf-b563-d9d7fad963f6, eedae8d6-ab61-42ab-b9e8-5bf5e4511158, fece4440-2841-45f1-bb5f-95fcdc959327, 9c5a5b72-4976-406b-a4a3-f02e730bb9db, b917929a-01d0-4690-9c08-5edd2094761d</td></tr><tr><th>steps</th> <td>housepricesagacontrol</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>assay-demonstration-tutorial</td></tr><tr><th>created</th> <td>2024-02-12 18:16:18.335326+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-12 18:16:19.100769+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>accel</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>b6525c2a-c79d-4f36-a8d7-0f515d45e4fc, b65e67fb-135e-43ca-8ff0-96ee04d6de02</td></tr><tr><th>steps</th> <td>house-price-estimator</td></tr><tr><th>published</th> <td>False</td></tr></table>
 
