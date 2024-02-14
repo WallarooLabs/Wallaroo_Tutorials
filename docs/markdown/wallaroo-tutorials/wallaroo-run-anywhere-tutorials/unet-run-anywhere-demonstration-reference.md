@@ -18,6 +18,7 @@ The following example uses the [U-Net for brain segmentation model](https://gith
 ### References
 
 * [Edge Deployment Registry Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-edge-deployment/)
+* [Brain MRI segmentation](https://www.kaggle.com/datasets/mateuszbuda/lgg-mri-segmentation): The original evaluation and training images.  These can be used with this inference server.
 
 ## Tutorial Steps
 
@@ -104,7 +105,7 @@ workspace = get_workspace(workspace_name, wl)
 wl.set_current_workspace(workspace)
 ```
 
-    {'name': 'unet-detection', 'id': 80, 'archived': False, 'created_by': '2ea98261-c84d-44b1-ac86-ff932e65b285', 'created_at': '2024-01-18T18:30:08.286449+00:00', 'models': [], 'pipelines': []}
+    {'name': 'unet-detection-run-anywhere-demonstration', 'id': 8, 'archived': False, 'created_by': '784e4c99-ee08-4aab-9eaa-0d8ad8e1af53', 'created_at': '2024-02-12T18:37:09.788501+00:00', 'models': [{'name': 'pt-unet', 'versions': 1, 'owner_id': '""', 'last_update_time': datetime.datetime(2024, 2, 12, 18, 37, 14, 879178, tzinfo=tzutc()), 'created_at': datetime.datetime(2024, 2, 12, 18, 37, 14, 879178, tzinfo=tzutc())}], 'pipelines': [{'name': 'pt-unet', 'create_time': datetime.datetime(2024, 2, 12, 18, 41, 46, 924275, tzinfo=tzutc()), 'definition': '[]'}]}
 
 ### Upload Model
 
@@ -143,6 +144,52 @@ output_schema = pa.schema([
 ])
 
 ```
+
+```python
+models = workspace.models()
+model01 = models[0]
+model = model01.versions()[-1]
+model
+```
+
+<table>
+        <tr>
+          <td>Name</td>
+          <td>pt-unet</td>
+        </tr>
+        <tr>
+          <td>Version</td>
+          <td>09f27ed8-b9ca-46de-a416-e78b4cbe2ded</td>
+        </tr>
+        <tr>
+          <td>File Name</td>
+          <td>unet.pt</td>
+        </tr>
+        <tr>
+          <td>SHA</td>
+          <td>dfcd4b092e05564c36d28f1dfa7293f4233a384d81fe345c568b6bb68cafb0c8</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>ready</td>
+        </tr>
+        <tr>
+          <td>Image Path</td>
+          <td>proxy.replicated.com/proxy/wallaroo/ghcr.io/wallaroolabs/mlflow-deploy:v2023.4.1-4514</td>
+        </tr>
+        <tr>
+          <td>Architecture</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>Acceleration</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>Updated At</td>
+          <td>2024-12-Feb 18:41:44</td>
+        </tr>
+      </table>
 
 ```python
 modelpath = 'models/unet.pt'
@@ -212,7 +259,7 @@ pipeline = wl.build_pipeline(pipeline_name)
 pipeline.add_model_step(model)
 ```
 
-<table><tr><th>name</th> <td>pt-unet</td></tr><tr><th>created</th> <td>2024-01-18 18:38:16.925353+00:00</td></tr><tr><th>last_updated</th> <td>2024-01-18 18:38:16.925353+00:00</td></tr><tr><th>deployed</th> <td>(none)</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>4cbe7bae-2839-490f-b053-d164d2ec2fa4</td></tr><tr><th>steps</th> <td></td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>pt-unet</td></tr><tr><th>created</th> <td>2024-02-12 18:41:46.924275+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-12 20:10:29.154891+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>accel</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>6e7ee5b0-2bab-4ee8-bbd6-19b53a978112, 12025957-4d0f-4fc7-813e-c4e0a28d667b, a96ba824-4218-4ba0-a099-21dfafd91de4, 261fdb55-be0b-4ba3-8453-66cbd27c8367, 235fac70-4f80-49d8-8e7b-b9b4457e9191</td></tr><tr><th>steps</th> <td>pt-unet</td></tr><tr><th>published</th> <td>True</td></tr></table>
 
 Next we configure the hardware we want to use for deployment. If we plan on eventually deploying to edge, this is a good way to simulate edge hardware conditions.
 
@@ -231,24 +278,24 @@ pipeline.status()
 
     {'status': 'Running',
      'details': [],
-     'engines': [{'ip': '10.244.11.14',
-       'name': 'engine-5474f857f5-2hf6l',
+     'engines': [{'ip': '10.100.1.132',
+       'name': 'engine-6f8dc97cdf-r6tm4',
        'status': 'Running',
        'reason': None,
        'details': [],
        'pipeline_statuses': {'pipelines': [{'id': 'pt-unet',
           'status': 'Running'}]},
        'model_statuses': {'models': [{'name': 'pt-unet',
-          'version': '5a0f70fc-e33b-487c-80c9-24e23e5621b5',
+          'version': '09f27ed8-b9ca-46de-a416-e78b4cbe2ded',
           'sha': 'dfcd4b092e05564c36d28f1dfa7293f4233a384d81fe345c568b6bb68cafb0c8',
           'status': 'Running'}]}}],
-     'engine_lbs': [{'ip': '10.244.14.40',
-       'name': 'engine-lb-584f54c899-rt426',
+     'engine_lbs': [{'ip': '10.100.0.135',
+       'name': 'engine-lb-dcd9c8cd7-dw5vh',
        'status': 'Running',
        'reason': None,
        'details': []}],
-     'sidekicks': [{'ip': '10.244.11.13',
-       'name': 'engine-sidekick-pt-unet-33-7656bfd59c-l94l8',
+     'sidekicks': [{'ip': '10.100.0.136',
+       'name': 'engine-sidekick-pt-unet-5-5656c776f7-x4qq6',
        'status': 'Running',
        'reason': None,
        'details': [],
@@ -277,7 +324,7 @@ nimage.shape
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-run-anywhere-tutorials/unet-run-anywhere-demonstration-reference_files/unet-run-anywhere-demonstration-reference_16_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-run-anywhere-tutorials/unet-run-anywhere-demonstration-reference_files/unet-run-anywhere-demonstration-reference_17_0.png" width="800" label="png">}}
     
 
     (1, 3, 256, 256)
@@ -305,10 +352,11 @@ For this demonstration and to save space in the notebook, only the first few ele
 ```python
 # inference via the Wallaroo SDK
 result = pipeline.infer(dataframe)
+# display(result)
 result['out.output'][0][0][0][0:5]
 ```
 
-    [1.471237e-05, 1.4594775e-05, 1.3948557e-05, 1.3920214e-05, 1.4539372e-05]
+    [1.471237e-05, 1.45947615e-05, 1.3948585e-05, 1.3920239e-05, 1.453936e-05]
 
 ```python
 # inference via the Wallaroo Pipeline Inference URL
@@ -338,7 +386,7 @@ With the inference tests complete, we can undeploy the pipeline and return the r
 pipeline.undeploy()
 ```
 
-<table><tr><th>name</th> <td>pt-unet</td></tr><tr><th>created</th> <td>2024-01-18 18:38:16.925353+00:00</td></tr><tr><th>last_updated</th> <td>2024-01-18 18:38:22.401026+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>eb58f095-c1a1-4a92-af7b-7b8305a5dd65, 4cbe7bae-2839-490f-b053-d164d2ec2fa4</td></tr><tr><th>steps</th> <td>pt-unet</td></tr><tr><th>published</th> <td>False</td></tr></table>
+<table><tr><th>name</th> <td>pt-unet</td></tr><tr><th>created</th> <td>2024-02-12 18:41:46.924275+00:00</td></tr><tr><th>last_updated</th> <td>2024-02-12 20:10:33.250867+00:00</td></tr><tr><th>deployed</th> <td>False</td></tr><tr><th>arch</th> <td>None</td></tr><tr><th>accel</th> <td>None</td></tr><tr><th>tags</th> <td></td></tr><tr><th>versions</th> <td>690dfb86-d76c-4022-b7c5-b500f8a40495, 6e7ee5b0-2bab-4ee8-bbd6-19b53a978112, 12025957-4d0f-4fc7-813e-c4e0a28d667b, a96ba824-4218-4ba0-a099-21dfafd91de4, 261fdb55-be0b-4ba3-8453-66cbd27c8367, 235fac70-4f80-49d8-8e7b-b9b4457e9191</td></tr><tr><th>steps</th> <td>pt-unet</td></tr><tr><th>published</th> <td>True</td></tr></table>
 
 ### Publish the Pipeline for Edge Deployment
 
