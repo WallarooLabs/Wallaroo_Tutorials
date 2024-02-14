@@ -403,6 +403,12 @@ assay_config_from_numpy = assay_builder_from_numpy.build()
 assay_results_from_numpy = assay_config_from_numpy.interactive_run()
 ```
 
+    Please log into the following URL in a web browser:
+    
+    	https://doc-test.keycloak.wallarooexample.ai/auth/realms/master/device?user_code=KQAS-TSHP
+    
+    Login successful!
+
 #### Baseline DataFrame
 
 The method [`wallaroo.assay_config.AssayBuilder.baseline_dataframe`](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-reference-guide/assay_config/#AssayBuilder.baseline_dataframe) returns a DataFrame of the assay baseline generated from the provided parameters.  This includes:
@@ -782,7 +788,13 @@ The method `wallaroo.assay.AssayAnalysis.baseline_stats()` returns a `pandas.cor
 The baseline stats for each assay are displayed in the examples below.
 
 ```python
-assay_results_from_dates[0].baseline_stats()
+len(assay_results_from_dates)
+```
+
+    2
+
+```python
+assay_results_from_dates[1].baseline_stats()
 ```
 
 <table border="1" class="dataframe">
@@ -884,7 +896,7 @@ assay_builder_from_dates.baseline_histogram()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_32_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_33_0.png" width="800" label="png">}}
     
 
 #### Baseline KDE Chart
@@ -896,7 +908,7 @@ assay_builder_from_dates.baseline_kde()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_34_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_35_0.png" width="800" label="png">}}
     
 
 #### Baseline ECDF Chart
@@ -908,7 +920,7 @@ assay_builder_from_dates.baseline_ecdf()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_36_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_37_0.png" width="800" label="png">}}
     
 
 ### Assay Preview
@@ -943,7 +955,7 @@ assay_results_from_dates.chart_scores()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_39_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_40_0.png" width="800" label="png">}}
     
 
 #### Analysis List DataFrame
@@ -1227,7 +1239,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_45_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_46_1.png" width="800" label="png">}}
     
 
 #### Score Metric
@@ -1277,7 +1289,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_47_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_48_1.png" width="800" label="png">}}
     
 
 ```python
@@ -1315,7 +1327,7 @@ assay_results_from_dates[0].chart()
     index = 5
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_48_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_49_1.png" width="800" label="png">}}
     
 
 ```python
@@ -1353,7 +1365,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_49_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_50_1.png" width="800" label="png">}}
     
 
 #### Alert Threshold
@@ -1480,7 +1492,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_53_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_54_1.png" width="800" label="png">}}
     
 
 #### Binning Mode
@@ -1532,7 +1544,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_55_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_56_1.png" width="800" label="png">}}
     
 
 ```python
@@ -1570,7 +1582,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_56_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_57_1.png" width="800" label="png">}}
     
 
 The following example manually sets the bin values.
@@ -1614,7 +1626,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_58_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_59_1.png" width="800" label="png">}}
     
 
 #### Aggregation Options
@@ -1662,7 +1674,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_60_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_61_1.png" width="800" label="png">}}
     
 
 ```python
@@ -1701,7 +1713,7 @@ assay_results_from_dates[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_61_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_62_1.png" width="800" label="png">}}
     
 
 #### Compare Basic Stats
@@ -1724,24 +1736,78 @@ assay_builder_from_dates.window_builder().add_width(minutes=1).add_interval(minu
 assay_config_from_dates = assay_builder_from_dates.build()
 assay_results_from_dates = assay_config_from_dates.interactive_run()
 
-assay_results_from_dates[0].chart()
+assay_results_from_dates[0].compare_basic_stats()
 ```
 
-    baseline mean = 528747.089375
-    window mean = 503127.956625
-    baseline median = 450867.6875
-    window median = 448627.8125
-    bin_mode = Quantile
-    aggregation = Density
-    metric = PSI
-    weighted = False
-    score = 0.01514337711118979
-    scores = [0.0, 0.0, 0.0021338298517208126, 0.004531207722385977, 0.0013341057430248191, 0.00714423379405818, 0.0]
-    index = None
-
-    
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_63_1.png" width="800" label="png">}}
-    
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Baseline</th>
+      <th>Window</th>
+      <th>diff</th>
+      <th>pct_diff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>500.0</td>
+      <td>1000.0</td>
+      <td>500.000000</td>
+      <td>100.000000</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>236238.671875</td>
+      <td>236238.671875</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1489624.25</td>
+      <td>1489624.25</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>528747.089375</td>
+      <td>503127.956625</td>
+      <td>-25619.132750</td>
+      <td>-4.845253</td>
+    </tr>
+    <tr>
+      <th>median</th>
+      <td>450867.6875</td>
+      <td>448627.8125</td>
+      <td>-2239.875000</td>
+      <td>-0.496792</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>233850.215184</td>
+      <td>209423.814215</td>
+      <td>-24426.400969</td>
+      <td>-10.445319</td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td>None</td>
+      <td>2024-02-14T15:45:17.990389+00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td>None</td>
+      <td>2024-02-14T15:46:17.990389+00:00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
 
 #### Window Interval and Window Width
 
@@ -1773,7 +1839,7 @@ assay_results_from_dates.chart_scores()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_65_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_66_0.png" width="800" label="png">}}
     
 
 ```python
@@ -1796,12 +1862,12 @@ assay_results_from_dates.chart_scores()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_66_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_67_0.png" width="800" label="png">}}
     
 
 ### Create Assay
 
-With the assay created and fully tested, we officially create it by uploading it to the Wallaroo instance.  Once it is uploaded, the assay runs an analysis based on the window width, interval, and the other settings configured.
+With the assay previewed and configuration options determined, we officially create it by uploading it to the Wallaroo instance.  Once it is uploaded, the assay runs an analysis based on the window width, interval, and the other settings configured.
 
 Assays are uploaded with the `wallaroo.assay_config.upload()` method. This uploads the assay into the Wallaroo database with the configurations applied and returns the assay id. Note that assay names **must be unique across the Wallaroo instance**; attempting to upload an assay with the same name as an existing one will return an error.
 
@@ -1817,13 +1883,13 @@ assay_builder_from_dates = wl.build_assay(assay_name="assays creation example",
                                           baseline_start=assay_baseline_start, 
                                           baseline_end=assay_baseline_end)
 
-# set the width, interval, and time period 
-assay_builder_from_dates.add_run_until(datetime.datetime.now())
+# set the width, interval, and assay start date and time
 assay_builder_from_dates.window_builder().add_width(minutes=1).add_interval(minutes=1).add_start(assay_window_start)
+# add other options
 
 assay_id = assay_builder_from_dates.upload()
 
-# wait 60 seconds for the first analysis run performed
+# wait 65 seconds for the first analysis run performed
 time.sleep(65)
 
 ```
@@ -1855,7 +1921,7 @@ assay_results.chart_scores()
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_71_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_72_0.png" width="800" label="png">}}
     
 
 ```python
@@ -1875,7 +1941,7 @@ assay_results[0].chart()
     index = None
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_72_1.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_73_1.png" width="800" label="png">}}
     
 
 #### List and Retrieve Assay
@@ -1891,16 +1957,16 @@ wl.list_assays()
 ```python
 retrieved_assay = wl.list_assays()[0]
 
-assay_results = wl.get_assay_results(assay_id=retrieved_assay._id,
+live_assay_results = wl.get_assay_results(assay_id=retrieved_assay._id,
                      start=assay_window_start,
                      end=datetime.datetime.now())
 
-assay_results.chart_scores()
+live_assay_results.chart_scores()
 
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_75_0.png" width="800" label="png">}}
+{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-tutorials-observability/wallaroo_model_observability_assays-reference_files/wallaroo_model_observability_assays-reference_76_0.png" width="800" label="png">}}
     
 
 ### Pause and Resume Assay
