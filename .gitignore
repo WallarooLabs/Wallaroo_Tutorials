@@ -33,3 +33,8 @@ pipeline-edge-publish/edge-observability-cv/models/cv-retail-models.zip
 wallaroo-model-cookbooks/llama/models/model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
 scratch/
 wallaroo-model-cookbooks/llamav2/models/model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
+wallaroo-model-upload-tutorials/computer-vision/models/coco_classes.pickle
+wallaroo-model-upload-tutorials/computer-vision/models/frcnn-resnet.pt
+wallaroo-model-upload-tutorials/computer-vision/models/frcnn-resnet.pt.onnx
+wallaroo-model-upload-tutorials/computer-vision/models/mobilenet.pt
+wallaroo-model-upload-tutorials/computer-vision/models/mobilenet.pt.onnx
