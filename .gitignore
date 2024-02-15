@@ -32,3 +32,4 @@ pipeline-edge-publish/edge-observability-cv/models/yolov8xOpset17.onnx
 pipeline-edge-publish/edge-observability-cv/models/cv-retail-models.zip
 scratch/
 model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
+clip-vit-base-patch-32.zip
