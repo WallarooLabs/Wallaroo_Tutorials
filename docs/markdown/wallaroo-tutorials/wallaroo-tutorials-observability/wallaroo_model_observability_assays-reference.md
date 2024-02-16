@@ -1163,7 +1163,7 @@ assay_results_from_dates[0].chart()
 | **alert_threshold** | *Float/None* | The alert threshold of the assay window.
 | **status** | *String* | The assay window status.  Values are:  <ul><li>`OK`: The score is within accepted thresholds.</li><li>`Warning`: The score has triggered the `warning_threshold` if exists, but not the `alert_threshold`.</li><li>`Alert`: The score has triggered the the `alert_threshold`.</li></ul> |
 
-For this example, the assay analysis list DataFrame is listed.  For space reasons, only the `score`, `start`, `alert_threshold` and `status` are shown.
+For this example, the assay analysis list DataFrame is listed.  
 
 From this tutorial, we should have 2 windows of dta to look at, each one minute apart.  The first window should show `status: OK`, with the second window with the very large house prices will show `status: alert`
 
