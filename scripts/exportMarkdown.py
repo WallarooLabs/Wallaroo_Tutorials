@@ -61,6 +61,12 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
         "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
     },
+    ## deploy and serve tutorials
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+        "outputFile": "unet_demonstration-reference.md"
+    },
     # wallaroo-run-anywhere-tutorials
     {
         "inputFile": "wallaroo-run-anywhere-tutorials/edge-unet-brain-segmentation-demonstration/unet-run-anywhere-demonstration.ipynb",
@@ -90,8 +96,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2023.4.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 

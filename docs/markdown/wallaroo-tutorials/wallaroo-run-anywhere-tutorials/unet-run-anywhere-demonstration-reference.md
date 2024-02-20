@@ -324,7 +324,7 @@ nimage.shape
 ```
 
     
-{{<figure src="/images/2024.1/wallaroo-tutorials/wallaroo-run-anywhere-tutorials/unet-run-anywhere-demonstration-reference_files/unet-run-anywhere-demonstration-reference_17_0.png" width="800" label="png">}}
+{{<figure src="/images/2023.4.1/wallaroo-tutorials/wallaroo-run-anywhere-tutorials/unet-run-anywhere-demonstration-reference_files/unet-run-anywhere-demonstration-reference_17_0.png" width="800" label="png">}}
     
 
     (1, 3, 256, 256)
