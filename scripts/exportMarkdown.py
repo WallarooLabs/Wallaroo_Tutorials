@@ -616,27 +616,27 @@ fileList = [
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
     # },
-    ## Wallaroo-observe-tutorials
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    # },
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    # },
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    # },
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus.md"
-    # },
+    # wallaroo-observe-tutorials
+    {
+        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "model-observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-houseprice-sdk-tutorial/model-observability-anomaly-detection-house-price-sdk-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-observe-tutorials/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "pipeline_log_tutorial-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
 ]
 
 def format(outputdir, document_file):
