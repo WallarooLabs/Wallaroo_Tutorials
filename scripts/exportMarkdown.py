@@ -25,54 +25,87 @@ docs_directory = "docs/markdown"
 
 fileList = [
     # wallaroo-observe-tutorials
+    # {
+    #     "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+    #     "outputFile": "model-observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-houseprice-sdk-tutorial/model-observability-anomaly-detection-house-price-sdk-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+    #     "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-observe-tutorials/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+    #     "outputFile": "pipeline_log_tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
+    # },
+    # # wallaroo-model-upload-tutorials
+    # {
+    #     "inputFile": "wallaroo-model-upload-tutorials/aloha-upload-deploy-tutorial/wallaroo-upload-aloha-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+    #     "outputFile": "wallaroo-upload-aloha-tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+    #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
+    #     "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
+    # },
+    # ## deploy and serve tutorials
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "unet_demonstration-reference.md"
+    # },
+    # # wallaroo-run-anywhere-tutorials
+    # {
+    #     "inputFile": "wallaroo-run-anywhere-tutorials/edge-unet-brain-segmentation-demonstration/unet-run-anywhere-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "unet-run-anywhere-demonstration-reference.md"
+    # },
+    # wallaroo free tutorials
+    # wallaroo inference server tutorials
     {
-        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "model-observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
     },
     {
-        "inputFile": "wallaroo-observe-tutorials/model-observability-anomaly-detection-houseprice-sdk-tutorial/model-observability-anomaly-detection-house-price-sdk-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-cv-frcnn-reference.md"
     },
     {
-        "inputFile": "wallaroo-observe-tutorials/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "pipeline_log_tutorial-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-resnet/wallaroo-inference-server-cv-resnet.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-cv-resnet-reference.md"
     },
     {
-        "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "wallaroo_model_observability_assays-reference.md"
-    },
-    # wallaroo-model-upload-tutorials
-    {
-        "inputFile": "wallaroo-model-upload-tutorials/aloha-upload-deploy-tutorial/wallaroo-upload-aloha-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
-        "outputFile": "wallaroo-upload-aloha-tutorial-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-cv-yolov8-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
-        "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-hf-summarizer/wallaroo-inference-server-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-hf-summarization-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-upload-tutorials/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-upload-tutorials",
-        "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-llama2/wallaroo-inference-server-llama2.ipynb",
+        "outputDir": "/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-llama2-reference.md"
     },
-    ## deploy and serve tutorials
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/unet-brain-segmentation-demonstration/unet_demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-        "outputFile": "unet_demonstration-reference.md"
-    },
-    # wallaroo-run-anywhere-tutorials
-    {
-        "inputFile": "wallaroo-run-anywhere-tutorials/edge-unet-brain-segmentation-demonstration/unet-run-anywhere-demonstration.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "unet-run-anywhere-demonstration-reference.md"
-    },
+
 
 
 ]
