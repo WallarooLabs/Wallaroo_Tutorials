@@ -1,0 +1,24 @@
+{"msg":"registering event source with poller: token=Token(134644669172864), interests=READABLE | WRITABLE","level":"TRCE","ts":"2024-02-21T16:22:42.622086739Z","file_line":"/usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/mio-0.8.8/src/poll.rs:531"}
+{"msg":"deregistering event source from poller","level":"TRCE","ts":"2024-02-21T16:22:42.622722445Z","file_line":"/usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/mio-0.8.8/src/poll.rs:662"}
+{"msg":"28250822-d0d5-4a23-b59a-4e4632e0cd07: Sending record to pipeline","level":"INFO","ts":"2024-02-21T16:22:50.6112309Z","file_line":"src/serialization.rs:794"}
+{"msg":"start execution for pipeline housing-pipe","level":"TRCE","ts":"2024-02-21T16:22:50.611276619Z","file_line":"src/pipeline/steps.rs:230"}
+{"msg":"Send inference to preprocess/d71703dc45c84cd0768aed6a6731a8d97f8639b7c8385dff8b65701090f12253","level":"DEBG","ts":"2024-02-21T16:22:50.61128372Z","file_line":"src/pipeline/steps/model_inference.rs:83"}
+{"msg":"beginning inference for preprocess","level":"TRCE","ts":"2024-02-21T16:22:50.611289097Z","file_line":"src/model/manager.rs:415"}
+{"msg":"creating new connection to http://localhost:39409/","level":"INFO","ts":"2024-02-21T16:22:50.61129446Z","file_line":"src/runtimes/rpc/flight/runtime.rs:24"}
+{"msg":"registering event source with poller: token=Token(134644669172864), interests=READABLE | WRITABLE","level":"TRCE","ts":"2024-02-21T16:22:50.612339215Z","file_line":"/usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/mio-0.8.8/src/poll.rs:531"}
+{"msg":"sending inference","level":"DEBG","ts":"2024-02-21T16:22:50.612767276Z","file_line":"src/runtimes/rpc/flight/connection.rs:163"}
+{"msg":"performing schema exchange","level":"DEBG","ts":"2024-02-21T16:22:50.61288736Z","file_line":"src/runtimes/rpc/flight/connection.rs:130"}
+{"msg":"input schema sent","level":"DEBG","ts":"2024-02-21T16:22:50.612995109Z","file_line":"src/runtimes/rpc/flight/connection.rs:139"}
+{"msg":"getting first message with schema definition","level":"DEBG","ts":"2024-02-21T16:22:50.613106501Z","file_line":"src/runtimes/rpc/flight/connection.rs:147"}
+{"msg":"handshake complete; connection active","level":"INFO","ts":"2024-02-21T16:22:50.637115803Z","file_line":"src/runtimes/rpc/flight/connection.rs:151"}
+{"msg":"result received and parsed","level":"DEBG","ts":"2024-02-21T16:22:50.637498703Z","file_line":"src/runtimes/rpc/flight/connection.rs:188"}
+{"msg":"inference complete for preprocess","level":"TRCE","ts":"2024-02-21T16:22:50.637579165Z","file_line":"src/model/manager.rs:423"}
+{"msg":"Send inference to housepricemodel/5fb8203bea7ede846a24d24452e7cd1b9aa5ec2cbf68ed8f4dd5e3fe65321597","level":"DEBG","ts":"2024-02-21T16:22:50.637656245Z","file_line":"src/pipeline/steps/model_inference.rs:83"}
+{"msg":"beginning inference for housepricemodel","level":"TRCE","ts":"2024-02-21T16:22:50.637708309Z","file_line":"src/model/manager.rs:415"}
+{"msg":"Inference error: type mismatch: FixedSizeList(Field { name: \"inner\", data_type: Float32, is_nullable: false, metadata: {} }, 18) != List(Field { name: \"item\", data_type: Float64, is_nullable: true, metadata: {} })","level":"ERRO","ts":"2024-02-21T16:22:50.638056923Z","file_line":"src/runtimes/utils.rs:35"}
+{"msg":"Inference Error: \"Error getting tensor from inference data\"","level":"ERRO","ts":"2024-02-21T16:22:50.638076338Z","file_line":"src/runtimes/utils.rs:149"}
+{"msg":"inference complete for housepricemodel","level":"TRCE","ts":"2024-02-21T16:22:50.638081799Z","file_line":"src/model/manager.rs:423"}
+{"msg":"Error executing pipeline: Error running inference: \"Error getting tensor from inference data\"","level":"ERRO","ts":"2024-02-21T16:22:50.638087126Z","file_line":"src/pipeline/manager.rs:124"}
+{"msg":"Error sending error message SendError { .. }","level":"ERRO","ts":"2024-02-21T16:22:50.638092414Z","file_line":"src/runtimes/utils.rs:42"}
+{"msg":"registering event source with poller: token=Token(134644669173376), interests=READABLE | WRITABLE","level":"TRCE","ts":"2024-02-21T16:22:52.621750128Z","file_line":"/usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/mio-0.8.8/src/poll.rs:531"}
+{"msg":"deregistering event source from poller","level":"TRCE","ts":"2024-02-21T16:22:52.622108398Z","file_line":"/usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/mio-0.8.8/src/poll.rs:662"}
