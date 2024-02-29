@@ -638,10 +638,22 @@ fileList = [
     #     "outputFile": "wallaroo_model_observability_assays-reference.md"
     # },
     {
-        "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
-        "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
+        "inputFile": "wallaroo-observe-tutorials/edge-observability-assays/00_wallaroo-run-anywhere-model-drift-detection-prep.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "00_wallaroo-run-anywhere-model-drift-detection-prep-reference.md"
     },
+    {
+        "inputFile": "wallaroo-observe-tutorials/edge-observability-assays/01_wallaroo-run-anywhere-model-drift-detection-examples.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "01_wallaroo-run-anywhere-model-drift-detection-examples-reference.md"
+    },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
+    #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
+    # },
+
+
 ]
 
 def format(outputdir, document_file):
@@ -663,8 +675,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2023.4.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2023.4.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
