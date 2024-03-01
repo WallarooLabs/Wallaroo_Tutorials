@@ -42,3 +42,4 @@ model-with-pixel-intensity.zip
 yolov5s6.onnx
 yolov8nOpset17.onnx
 yolov8xOpset17.onnx
+docs/
