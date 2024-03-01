@@ -638,14 +638,14 @@ fileList = [
     #     "outputFile": "wallaroo_model_observability_assays-reference.md"
     # },
     {
-        "inputFile": "wallaroo-observe-tutorials/edge-observability-assays/00_wallaroo-run-anywhere-model-drift-detection-prep.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "00_wallaroo-run-anywhere-model-drift-detection-prep-reference.md"
+        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/00_drift-detection-for-edge-deployments-tutorial-prep.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep.md"
     },
     {
-        "inputFile": "wallaroo-observe-tutorials/edge-observability-assays/01_wallaroo-run-anywhere-model-drift-detection-examples.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-        "outputFile": "01_wallaroo-run-anywhere-model-drift-detection-examples-reference.md"
+        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
     },
     # {
     #     "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
@@ -680,12 +680,15 @@ def format(outputdir, document_file):
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
+    # move the assay image for UI
+    document = re.sub('"images/housepricesaga-sample-assay.png"', '"/images/housepricesaga-sample-assay.png"', document)
+
     # remove gib
-    document = re.sub('gib.bhojraj@wallaroo.ai	', 
+    document = re.sub('gib.bhojraj@wallaroo.ai', 
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release
-    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/20231011-2023.4.0-testing/', 
+    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.1_tutorials/', 
                       'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
                       document)
     
