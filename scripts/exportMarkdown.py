@@ -640,7 +640,7 @@ fileList = [
     {
         "inputFile": "wallaroo-run-anywhere/edge-observability-assays/00_drift-detection-for-edge-deployments-tutorial-prep.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep.md"
+        "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
     },
     {
         "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
@@ -706,6 +706,10 @@ def format(outputdir, document_file):
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
     document = re.sub(r'\n[\n]+', r'\n\n', document)
+
+    # remove the whitespace before a table
+    document = re.sub(r"^ +<", r"<", document, flags = re.MULTILINE)
+    #document.strip() # - test this for whitespace before and after
 
     # save the file for publishing
     newdocument = open(f'{docs_directory}{outputdir}/{document_file}', "w")
