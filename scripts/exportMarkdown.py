@@ -637,21 +637,36 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
     #     "outputFile": "wallaroo_model_observability_assays-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/00_drift-detection-for-edge-deployments-tutorial-prep.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/00_drift-detection-for-edge-deployments-tutorial-prep.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
     #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
+    {
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
+    },
+        {
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    },
 
 
 ]
