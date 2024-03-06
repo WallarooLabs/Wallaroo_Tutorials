@@ -49,4 +49,4 @@ def wallaroo_json(data:pandas.DataFrame):
 
     df = data.copy()
 
-    return pandas.DataFrame(df.variable.apply(actual_postprocess)).to_dict(orient="records")
+    return pandas.DataFrame(df["out.variable"].apply(actual_postprocess)).to_dict(orient="records")
