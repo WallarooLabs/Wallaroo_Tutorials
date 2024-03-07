@@ -309,11 +309,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "parallel-infer-with-aloha-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "pipeline_api_log_tutorial.md"
-    # },
+    {
+        "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+        "outputFile": "pipeline_api_log_tutorial.md"
+    },
     # {
     #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -364,12 +364,13 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
+
     # # wallaroo inference server section
-    {
-        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
-        "outputDir": "/wallaroo-services/wallaroo-inference-server",
-        "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
+    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
+    #     "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
