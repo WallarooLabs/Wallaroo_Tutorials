@@ -365,11 +365,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # # wallaroo inference server section
-    # {
-    #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
-    #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
-    #     "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
+        "outputDir": "/wallaroo-services/wallaroo-inference-server",
+        "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-frcnn/wallaroo-inference-server-cv-frcnn.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
@@ -637,11 +637,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
     #     "outputFile": "wallaroo_model_observability_assays-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
-        "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-cookbooks/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
+    #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
+    # },
 ]
 
 def format(outputdir, document_file):
