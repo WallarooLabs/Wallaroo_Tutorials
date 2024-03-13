@@ -320,31 +320,6 @@ fileList = [
     #     "outputFile": "pipeline_log_tutorial.md"
     # },
     # {
-    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-    #     "outputFile": "00_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-    #     "outputFile": "01_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-    #     "outputFile": "02_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/03_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-    #     "outputFile": "03_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-features/pipeline_multiple_replicas_forecast_tutorial/04_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/statsmodel/",
-    #     "outputFile": "04_multiple_replicas_forecast.md"
-    # },
-    # {
     #     "inputFile": "wallaroo-features/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-endpoints",
     #     "outputFile": "wallaroo-model-endpoints-api-tutorial-reference.md"
@@ -364,7 +339,29 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features/",
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
-    # # wallaroo inference server section
+    # deploy and serve
+    ### parallel infer sdk with aloha
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/parallel-inferences-sdk-aloha-tutorial/wallaroo-parallel-infer-sdk-with-aloha.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/deploy-and-serve",
+    #     "outputFile": "wallaroo-parallel-infer-sdk-with-aloha-reference.md"
+    # },
+    ### multiple replicas forecast updates
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
+        "outputFile": "00_multiple_replicas_forecast.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
+        "outputFile": "01_multiple_replicas_forecast.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
+        "outputFile": "02_multiple_replicas_forecast.md"
+    },
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
@@ -652,21 +649,21 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-upload-serve-models",
     #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
-    },
-        {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
+    # },
+    #     {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    # },
 
 
 ]

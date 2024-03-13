@@ -23,7 +23,7 @@ def get_forecast_days() :
 def mk_dt_range_query(*, tablename: str, forecast_day: str) -> str:
     assert isinstance(tablename, str)
     assert isinstance(forecast_day, str)
-    query = f"select cnt from {tablename} where date > DATE(DATE('{forecast_day}'), '-1 month') AND date <= DATE('{forecast_day}')"
+    query = f"select count from {tablename} where date > DATE(DATE('{forecast_day}'), '-1 month') AND date <= DATE('{forecast_day}')"
     return query
 
 
