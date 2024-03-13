@@ -144,31 +144,32 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/model-uploads/model-registry",
     #     "outputFile": "wallaroo-model-registry-demonstration.md"
     # },
-    # {
-    #     "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-    #     "outputFile": "_index.md"
-    # },
-    # {
-    #     "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-    #     "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
-    # },
-    # {
-    #     "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-    #     "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
-    # },
-    # {
-    #     "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-    #     "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
-    # },
-    # {
-    #     "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/notebook_in_prod",
-    #     "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
-    # },
+    ## notebooks in production
+    {
+        "inputFile": "notebooks_in_prod/00_notebooks_in_prod_Introduction.ipynb",
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "_index.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/03_notebooks_in_prod_deploy_model.ipynb",
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
+    },
+    {
+        "inputFile": "notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+        "outputDir": "/wallaroo-tutorials/notebook_in_prod",
+        "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
+    },
     # # arm architecture section
     # {
     #     "inputFile": "pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
@@ -309,11 +310,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
     #     "outputFile": "parallel-infer-with-aloha-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-        "outputFile": "pipeline_api_log_tutorial.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-features/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
+    #     "outputFile": "pipeline_api_log_tutorial.md"
+    # },
     # {
     #     "inputFile": "wallaroo-features/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
@@ -442,11 +443,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/computer-vision/yolov8",
     #     "outputFile": "computer-vision-yolov8-demonstration-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
-    #     "outputDir": "/wallaroo-tutorials",
-    #     "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-cookbooks/demand_curve/demandcurve_demo.ipynb",
+        "outputDir": "/wallaroo-tutorials",
+        "outputFile": "wallaroo-quick-start-demandcurve-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-model-cookbooks/imdb/imdb_sample.ipynb",
     #     "outputDir": "/wallaroo-tutorials",
