@@ -682,26 +682,26 @@ fileList = [
     #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
     ## run anywhere
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-observability-low-no-connection/edge-observability-low-no-connection-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "edge-observability-low-no-connection-tutorial-reference.md"
+    # },
     {
-        "inputFile": "wallaroo-run-anywhere/edge-observability-low-no-connection/edge-observability-low-no-connection-tutorial.ipynb",
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "edge-observability-low-no-connection-tutorial-reference.md"
+        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
     },
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-    #     "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
-    # },
-    #     {
-    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
-    # },
+        {
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-run-anywhere/in-line-edge-model-replacements-tutorial/in-line-edge-model-replacements-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
@@ -743,9 +743,9 @@ def format(outputdir, document_file):
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release
-    document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.1_tutorials/', 
-                      'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
-                      document)
+    # document = re.sub('https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.1_tutorials/', 
+    #                   'https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/', 
+    #                   document)
     
      # obfuscate databricks url
     document = re.sub('https://adb-5939996465837398.18.azuredatabricks.net', 
