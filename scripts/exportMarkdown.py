@@ -687,26 +687,31 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
     #     "outputFile": "edge-observability-low-no-connection-tutorial-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
-    },
-        {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
+    # },
+    #     {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    # },
     # {
     #     "inputFile": "wallaroo-run-anywhere/in-line-edge-model-replacements-tutorial/in-line-edge-model-replacements-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
     #     "outputFile": "in-line-edge-model-replacements-tutorial-reference.md"
     # },
+    {
+        "inputFile": "wallaroo-run-anywhere/run-anywhere-acceleration-aloha/run-anywhere-acceleration-aloha.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+        "outputFile": "run-anywhere-acceleration-aloha-reference.md"
+    },
 
 
 ]
