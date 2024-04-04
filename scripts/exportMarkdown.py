@@ -661,11 +661,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
     #     "outputFile": "pipeline_log_tutorial-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
-    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe-tutorials/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observability",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
     # {
     #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/00_drift-detection-for-edge-deployments-tutorial-prep.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
@@ -707,11 +707,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
     #     "outputFile": "in-line-edge-model-replacements-tutorial-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-acceleration-aloha/run-anywhere-acceleration-aloha.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
-        "outputFile": "run-anywhere-acceleration-aloha-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-acceleration-aloha/run-anywhere-acceleration-aloha.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-run-anywhere-tutorials",
+    #     "outputFile": "run-anywhere-acceleration-aloha-reference.md"
+    # },
 
 
 ]
