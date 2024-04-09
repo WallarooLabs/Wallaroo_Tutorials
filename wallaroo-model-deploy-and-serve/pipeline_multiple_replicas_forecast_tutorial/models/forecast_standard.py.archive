@@ -10,9 +10,9 @@ def _fit_model(dataframe):
     return model
 
 
-def wallaroo_json(data):
-    obj = json.loads(data)
-    evaluation_frame = pd.DataFrame.from_dict(obj)
+def wallaroo_json(data: pd.DataFrame):
+
+    evaluation_frame = pd.DataFrame({"count": data.loc[0, 'count']})
 
     nforecast = 7
     model = _fit_model(evaluation_frame)
@@ -20,4 +20,11 @@ def wallaroo_json(data):
     forecast =  model.forecast(steps=nforecast).round().to_numpy()
     forecast = forecast.astype(int)
 
-    return {"forecast": forecast.tolist()}
+    # get the average across the week
+    weekly_average = forecast.mean()
+
+    return [
+        { "forecast" : forecast.tolist(),
+          "weekly_average": [weekly_average] 
+        }
+    ]
