@@ -1,53 +1,38 @@
 import numpy as np
 import pandas as pd
-import statistics 
-from statistics import mean
-import json
-
+import logging
 from mac.types import InferenceData
 
 from statsmodels.tsa.arima.model import ARIMA
 
+#logger = logging.getLogger(__name__)
+
+
 def _fit_model(dataframe):
-    model = ARIMA(dataframe['count'], 
-                    order=(1, 0, 1)
-                    ).fit()
+    model = ARIMA(dataframe["count"], order=(1, 0, 1)).fit()
     return model
 
-def process_data(input_data: InferenceData)-> InferenceData:
-    evaluation_frame = pd.DataFrame({"count": input_data['count']})
 
-    nforecast = 7
-    model = _fit_model(evaluation_frame)
+def process_data(input_data: InferenceData) -> InferenceData:
+    n_forecast = 7
+    forecasts = []
+    weekly_averages = []
 
-    # get a numpy array
-    forecast = model.forecast(steps=nforecast).round().to_numpy()
-    forecast = forecast.astype(int)
+    for row in input_data["count"]:
+        evaluation_frame = pd.DataFrame({"count": row})
+        model = _fit_model(evaluation_frame)
 
-    # get the average across the week
-    weekly_average = np.array([forecast.mean()])
+        # get a numpy array
+        forecast = model.forecast(steps=n_forecast).round().to_numpy()
+        forecast = forecast.astype(int)
 
-    return { 
-            "forecast" : forecast,
-            "weekly_average": weekly_average
-        }
+        # get the average across the week
+        weekly_average = forecast.mean()
 
+        forecasts.append(forecast)
+        weekly_averages.append(weekly_average)
 
-# def wallaroo_json(data: pd.DataFrame):
-
-#     evaluation_frame = pd.DataFrame({"count": data.loc[0, 'count']})
-
-#     nforecast = 7
-#     model = _fit_model(evaluation_frame)
-
-#     forecast =  model.forecast(steps=nforecast).round().to_numpy()
-#     forecast = forecast.astype(int)
-
-#     # get the average across the week
-#     weekly_average = forecast.mean()
-
-#     return [
-#         { "forecast" : forecast.tolist(),
-#           "weekly_average": [weekly_average] 
-#         }
-#     ]
+    return {
+        "forecast": np.array(forecasts),
+        "weekly_average": np.array(weekly_averages),
+    }
