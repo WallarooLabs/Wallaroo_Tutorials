@@ -219,6 +219,22 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
         "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
     },
+    ### multiple replicas forecast updates
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/statsmodel/",
+        "outputFile": "00_multiple_replicas_forecast-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/statsmodel/",
+        "outputFile": "01_multiple_replicas_forecast-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/statsmodel/",
+        "outputFile": "02_multiple_replicas_forecast-reference.md"
+    },
 
 
 
@@ -426,22 +442,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/deploy-and-serve",
     #     "outputFile": "wallaroo-parallel-infer-sdk-with-aloha-reference.md"
     # },
-    ### multiple replicas forecast updates
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
-    #     "outputFile": "00_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
-    #     "outputFile": "01_multiple_replicas_forecast.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/deploy-and-serve/statsmodel/",
-    #     "outputFile": "02_multiple_replicas_forecast.md"
-    # },
+    
     # {
     #     "inputFile": "wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-unet/wallaroo-inference-server-cv-unet.ipynb",
     #     "outputDir": "/wallaroo-services/wallaroo-inference-server",
