@@ -32,29 +32,12 @@ if "bigquery_connection_output_name" in arguments:
 else:
     bigquery_connection_output_name = "bigqueryhouseoutputs"
 
-# helper methods to retrieve workspaces and pipelines
-
-def get_workspace(name):
-    workspace = None
-    for ws in wl.list_workspaces():
-        if ws.name() == name:
-            workspace= ws
-    if(workspace == None):
-        workspace = wl.create_workspace(name)
-    return workspace
-
-def get_pipeline(name):
-    try:
-        pipeline = wl.pipelines_by_name(name)[0]
-    except EntityNotFoundError:
-        pipeline = wl.build_pipeline(name)
-    return pipeline
 
 # set the workspace and pipeline
-workspace = get_workspace(workspace_name)
+workspace = wl.get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 
-pipeline = get_pipeline(pipeline_name)
+pipeline = wl.get_pipeline(pipeline_name)
 
 # deploy the pipeline
 pipeline.deploy()
@@ -96,7 +79,7 @@ output_table = bigqueryoutputclient.get_table(f"{big_query_output_connection.det
 
 bigqueryoutputclient.insert_rows_from_dataframe(
     output_table, 
-    dataframe=result.rename(columns={"in.tensor":"in_tensor", "out.variable":"out_variable"})
+    dataframe=result.rename(columns={"in.tensor":"in_tensor", "out.variable":"out_variable", 'anomaly.count':'anomaly_count'})
 )
 
 # close the bigquery clients
