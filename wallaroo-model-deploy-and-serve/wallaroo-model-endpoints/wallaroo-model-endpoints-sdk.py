@@ -1,6 +1,6 @@
 # %% [markdown]
 # 
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-features/wallaroo-model-endpoints).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.1_tutorials/wallaroo-model-deploy-and-serve/wallaroo-model-endpoints).
 # 
 # ## Wallaroo SDK Inference Tutorial
 # 
@@ -39,19 +39,7 @@
 # %% [markdown]
 # ## Open a Connection to Wallaroo
 # 
-# The first step is to connect to Wallaroo through the Wallaroo client.  This example will store the user's credentials into the file `./creds.json` which contains the following:
-# 
-# ```json
-# {
-#     "username": "{Connecting User's Username}", 
-#     "password": "{Connecting User's Password}", 
-#     "email": "{Connecting User's Email Address}"
-# }
-# ```
-# 
-# Replace the `username`, `password`, and `email` fields with the user account connecting to the Wallaroo instance.  This allows a seamless connection to the Wallaroo instance and bypasses the standard browser based confirmation link.  For more information, see the [Wallaroo SDK Essentials Guide:  Client Connection](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
-# 
-# If running this example within the internal Wallaroo JupyterHub service, use the `wallaroo.Client(auth_type="user_password")` method. If connecting externally via the [Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-install-guides/wallaroo-sdk-local-guide/s/), use the following to specify the URL of the Wallaroo instance as defined in the [Wallaroo DNS Integration Guide](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-dns-guide/), replacing `wallarooPrefix` and `wallarooSuffix` with your Wallaroo instance's DNS prefix and suffix.
+# The first step is to connect to Wallaroo through the Wallaroo client.
 
 # %%
 import wallaroo
@@ -66,21 +54,8 @@ pd.set_option('display.max_colwidth', None)
 
 import requests
 
-# Used to create unique workspace and pipeline names
-import string
-import random
-
-# make a random 4 character prefix to prevent workspace and pipeline name clobbering
-suffix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
-
 # %%
-# Retrieve the login credentials.
-os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
-
-# Client connection from local Wallaroo instance
-
-wl = wallaroo.Client(auth_type="user_password")
-
+wl = wallaroo.Client()
 
 # %% [markdown]
 # ## Create the Workspace
@@ -90,30 +65,13 @@ wl = wallaroo.Client(auth_type="user_password")
 # The model to be uploaded and used for inference will be labeled as `ccfraud`.
 
 # %%
-workspace_name = f'sdkinferenceexampleworkspace{suffix}'
-pipeline_name = f'sdkinferenceexamplepipeline{suffix}'
-model_name = f'ccfraud{suffix}'
+workspace_name = f'sdkinferenceexampleworkspace'
+pipeline_name = f'sdkinferenceexamplepipeline'
+model_name = f'ccfraud'
 model_file_name = './ccfraud.onnx'
 
 # %%
-def get_workspace(name):
-    workspace = None
-    for ws in wl.list_workspaces():
-        if ws.name() == name:
-            workspace= ws
-    if(workspace == None):
-        workspace = wl.create_workspace(name)
-    return workspace
-
-def get_pipeline(name):
-    try:
-        pipeline = wl.pipelines_by_name(name)[0]
-    except EntityNotFoundError:
-        pipeline = wl.build_pipeline(name)
-    return pipeline
-
-# %%
-workspace = get_workspace(workspace_name)
+workspace = wl.get_workspace(name=workspace_name, create_if_not_exist=True)
 
 wl.set_current_workspace(workspace)
 
@@ -131,7 +89,7 @@ wl.set_current_workspace(workspace)
 # %%
 # Create or select the current pipeline
 
-ccfraudpipeline = get_pipeline(pipeline_name)
+ccfraudpipeline = wl.build_pipeline(pipeline_name)
 
 # Add ccfraud model as the pipeline step
 

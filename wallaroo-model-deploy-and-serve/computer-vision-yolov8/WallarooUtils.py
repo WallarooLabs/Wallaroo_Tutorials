@@ -15,42 +15,7 @@ import os
 #from botocore.client import Config
 #from botocore.exceptions import ClientError
 
-wl = wallaroo.Client()
-
 class Util():
-    def __init__(self):
-        wl = wallaroo.Client()
-    
-    def get_workspace(self, name):
-        wl = wallaroo.Client()
-        workspace = None
-        for ws in wl.list_workspaces():
-            if ws.name() == name:
-                workspace= ws
-        if(workspace == None):
-            workspace = wl.create_workspace(name)
-        return workspace
-
-    def get_pipeline(self, name):
-        try:
-            pipeline = wl.pipelines_by_name(pipeline_name)[0]
-        #except EntityNotFoundError:
-        except:
-            pipeline = wl.build_pipeline(pipeline_name)
-        return pipeline
-
-    def get_model(self, mname):
-        modellist = wl.get_current_workspace().models()
-        model = [m.versions()[0] for m in modellist if m.name() == mname]
-        if len(model) <= 0:
-            #raise KeyError(f"model {mname} not found in this workspace")
-            mobilenet_model = wl.upload_model(model_name, model_file_name)
-            modellist = wl.get_current_workspace().models()
-            model = [m.versions()[0] for m in modellist if m.name() == mname]
-            if len(model) <= 0:
-                    #raise KeyError(f"model {mname} not found in this workspace")
-                    mobilenet_model = wl.upload_model(model_name, model_file_name)
-        return model[0]
 
     def convert_data(self,tensor,name):
         # get npArray from the tensorFloat

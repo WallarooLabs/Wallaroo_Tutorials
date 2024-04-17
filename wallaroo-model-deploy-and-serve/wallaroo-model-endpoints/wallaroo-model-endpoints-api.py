@@ -1,5 +1,5 @@
 # %% [markdown]
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/tree/main/wallaroo-features/wallaroo-model-endpoints).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.1_tutorials/wallaroo-model-deploy-and-serve/wallaroo-model-endpoints).
 # 
 # ## Wallaroo API Inference Tutorial
 # 
@@ -65,40 +65,20 @@
 # %% [markdown]
 # ### Connect to Wallaroo
 # 
-# For this example, a connection to the Wallaroo SDK is used.  This will be used to retrieve the JWT token for the MLOps API calls.  
-# 
-# This example will store the user's credentials into the file `./creds.json` which contains the following:
-# 
-# ```json
-# {
-#     "username": "{Connecting User's Username}", 
-#     "password": "{Connecting User's Password}", 
-#     "email": "{Connecting User's Email Address}"
-# }
-# ```
-# 
-# Replace the `username`, `password`, and `email` fields with the user account connecting to the Wallaroo instance.  This allows a seamless connection to the Wallaroo instance and bypasses the standard browser based confirmation link.  For more information, see the [Wallaroo SDK Essentials Guide:  Client Connection](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-sdk-guides/wallaroo-sdk-essentials-guide/wallaroo-sdk-essentials-client/).
-# 
-# Update `wallarooPrefix = "YOUR PREFIX"` and `wallarooSuffix = "YOUR SUFFIX"` to match the Wallaroo instance used for this demonstration.
+# For this example, a connection to the Wallaroo SDK is used.  This will be used to retrieve the JWT token for the MLOps API calls.
 
 # %%
 import wallaroo
 from wallaroo.object import EntityNotFoundError
+
 import pandas as pd
 import os
+import base64
 
 import pyarrow as pa
 
 import requests
 from requests.auth import HTTPBasicAuth
-
-# Used to create unique workspace and pipeline names
-import string
-import random
-
-# make a random 4 character prefix
-prefix= ''.join(random.choice(string.ascii_lowercase) for i in range(4))
-display(prefix)
 
 import json
 
@@ -107,27 +87,22 @@ from IPython.display import display
 pd.set_option('display.max_colwidth', None)
 
 # %%
-# Retrieve the login credentials.
-os.environ["WALLAROO_SDK_CREDENTIALS"] = './creds.json'
+# Login through local Wallaroo instance
 
-# Client connection from local Wallaroo instance
-
-wl = wallaroo.Client(auth_type="user_password")
-
-# %%
-APIURL=f"https://{wallarooPrefix}.api.{wallarooSuffix}"
+wl = wallaroo.Client()
 
 # %% [markdown]
 # ## Retrieve the JWT Token
 # 
 # As mentioned earlier, there are multiple methods of authenticating to the Wallaroo instance for MLOps API calls.  This tutorial will use the Wallaroo SDK method Wallaroo Client `wl.auth.auth_header()` method, extracting the token from the response.
 # 
+# We will also use the `wallaroo.client.Client.api_endpoint` that provides the MLOps API URL for the rest of our methods.  This saved us from having to derive it from the DNS address.  See the [Wallaroo Documentation Site](https://docs.wallaroo.ai) for more details on using the MLOps API and connection methods.
+# 
 # Reference:  [MLOps API Retrieve Token Through Wallaroo SDK](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/#through-the-wallaroo-sdk)
 
 # %%
-# Retrieve the token
-headers = wl.auth.auth_header()
-display(headers)
+display(wl.api_endpoint)
+display(wl.auth.auth_header())
 
 # %% [markdown]
 # ## Create Workspace
@@ -146,9 +121,9 @@ headers = wl.auth.auth_header()
 headers['Content-Type']='application/json'
 
 # Create workspace
-apiRequest = f"{APIURL}/v1/api/workspaces/create"
+apiRequest = f"{wl.api_endpoint}/v1/api/workspaces/create"
 
-workspace_name = f"{prefix}apiinferenceexampleworkspace"
+workspace_name = f"apiinferenceexampleworkspace"
 
 data = {
   "workspace_name": workspace_name
@@ -162,7 +137,7 @@ workspaceId = response['workspace_id']
 # %% [markdown]
 # ## Upload Model
 # 
-# The model is uploaded using the `/v1/api/models/upload` command.  This uploads a ML Model to a Wallaroo workspace via POST with `Content-Type: multipart/form-data` and takes the following parameters:
+# The model is uploaded using the `/v1/api/models/upload_and_convert` command.  This uploads a ML Model to a Wallaroo workspace via POST with `Content-Type: multipart/form-data` and takes the following parameters:
 # 
 # * **Parameters**
 #   * **name** - (*REQUIRED string*): Name of the model
@@ -171,7 +146,20 @@ workspaceId = response['workspace_id']
 # 
 # Directly after we will use the `/models/list_versions` to retrieve model details used for later steps.
 # 
-# Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace]https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/)
+# Reference: [Wallaroo MLOps API Essentials Guide: Model Management: Upload Model to Workspace](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-models/)
+
+# %%
+import onnx
+
+model = onnx.load("./ccfraud.onnx")
+output =[node.name for node in model.graph.output]
+
+input_all = [node.name for node in model.graph.input]
+input_initializer =  [node.name for node in model.graph.initializer]
+net_feed_input = list(set(input_all)  - set(input_initializer))
+
+print('Inputs: ', net_feed_input)
+print('Outputs: ', output)
 
 # %%
 ## upload model
@@ -179,22 +167,31 @@ workspaceId = response['workspace_id']
 # Retrieve the token
 headers = wl.auth.auth_header()
 
-apiRequest = f"{APIURL}/v1/api/models/upload"
+apiRequest = f"{wl.api_endpoint}/v1/api/models/upload_and_convert"
 
-model_name = f"{prefix}ccfraud"
+framework='onnx'
+
+model_name = f"ccfraud"
 
 data = {
-    "name":model_name,
-    "visibility":"public",
-    "workspace_id": workspaceId
+    "name": model_name,
+    "visibility": "public",
+    "workspace_id": workspaceId,
+    "conversion": {
+        "framework": framework,
+        "python_version": "3.8",
+        "requirements": [],
+        "tensor_fields": ["tensor"]
+    }
 }
 
 files = {
-    'file': (model_name, open('./ccfraud.onnx', 'rb'))
+    "metadata": (None, json.dumps(data), "application/json"),
+    'file': (model_name, open('./ccfraud.onnx', 'rb'), "application/octet-stream")
     }
 
 
-response = requests.post(apiRequest, files=files, data=data, headers=headers).json()
+response = requests.post(apiRequest, files=files, headers=headers).json()
 display(response)
 modelId=response['insert_models']['returning'][0]['models'][0]['id']
 
@@ -207,7 +204,7 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/models/get_by_id"
+apiRequest = f"{wl.api_endpoint}/v1/api/models/get_by_id"
 
 data = {
   "id": modelId
@@ -225,7 +222,7 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/models/list_versions"
+apiRequest = f"{wl.api_endpoint}/v1/api/models/list_versions"
 
 data = {
   "model_id": model_name,
@@ -236,10 +233,35 @@ response = requests.post(apiRequest, json=data, headers=headers, verify=True).js
 display(response)
 
 # %%
+model_version_id = response[0]['id']
 model_version = response[0]['model_version']
 display(model_version)
 model_sha = response[0]['sha']
 display(model_sha)
+
+# %% [markdown]
+# For our ONNX model, we will insert a model configuration that will allow us to submit the field `tensor` for an input.
+
+# %%
+# Get the model details
+
+# Retrieve the token
+headers = wl.auth.auth_header()
+
+# set Content-Type type
+headers['Content-Type']='application/json'
+
+apiRequest = f"{wl.api_endpoint}/v1/api/models/insert_model_config"
+
+data = {
+  "model_version_id": model_version_id,
+  "tensor_fields": [
+    "tensor"
+  ]
+}
+
+response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
+display(response)
 
 # %% [markdown]
 # ## Create Pipeline
@@ -264,9 +286,9 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/pipelines/create"
+apiRequest = f"{wl.api_endpoint}/v1/api/pipelines/create"
 
-pipeline_name=f"{prefix}apiinferenceexamplepipeline"
+pipeline_name=f"apiinferenceexamplepipeline"
 
 data = {
   "pipeline_id": pipeline_name,
@@ -312,7 +334,7 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/pipelines/deploy"
+apiRequest = f"{wl.api_endpoint}/v1/api/pipelines/deploy"
 
 exampleModelDeployId=pipeline_name
 
@@ -353,7 +375,7 @@ headers['Content-Type']='application/json'
 
 # Get model pipeline deployment
 
-api_request = f"{APIURL}/v1/api/status/get_deployment"
+api_request = f"{wl.api_endpoint}/v1/api/status/get_deployment"
 
 data = {
   "name": f"{pipeline_name}-{exampleModelDeploymentId}"
@@ -386,7 +408,7 @@ headers['Content-Type']='application/json'
 
 ## Retrieve the pipeline's External Inference URL
 
-apiRequest = f"{APIURL}/v1/api/admin/get_pipeline_external_url"
+apiRequest = f"{wl.api_endpoint}/v1/api/admin/get_pipeline_external_url"
 
 data = {
     "workspace_id": workspaceId,
@@ -507,7 +529,7 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{APIURL}/v1/api/pipelines/undeploy"
+apiRequest = f"{wl.api_endpoint}/v1/api/pipelines/undeploy"
 
 data = {
     "pipeline_id": pipeline_id,
