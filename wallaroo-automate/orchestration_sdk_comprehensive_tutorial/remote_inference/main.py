@@ -26,32 +26,13 @@ if "connection_name" in arguments:
 else:
     connection_name = "houseprice_arrow_table"
 
-
-# helper methods to retrieve workspaces and pipelines
-
-def get_workspace(name):
-    workspace = None
-    for ws in wl.list_workspaces():
-        if ws.name() == name:
-            workspace= ws
-    if(workspace == None):
-        workspace = wl.create_workspace(name)
-    return workspace
-
-def get_pipeline(name):
-    try:
-        pipeline = wl.pipelines_by_name(name)[0]
-    except EntityNotFoundError:
-        pipeline = wl.build_pipeline(name)
-    return pipeline
-
 print(f"Getting the workspace {workspace_name}")
-workspace = get_workspace(workspace_name)
+workspace = wl.get_workspace(workspace_name)
 wl.set_current_workspace(workspace)
 
 
 print(f"Getting the pipeline {pipeline_name}")
-pipeline = get_pipeline(pipeline_name)
+pipeline = wl.get_pipeline(pipeline_name)
 pipeline.deploy()
 # Get the connection - assuming it will be the only one
 
