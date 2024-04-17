@@ -24,19 +24,20 @@ c.NbConvertApp.export_format = "markdown"
 docs_directory = "docs/markdown"
 
 fileList = [
-    # @TODO: UNPUBLISHED
-    # {
-    #     "inputFile": "wallaroo-features/parallel-inference-aloha-tutorial/parallel-infer-with-aloha.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorial-features",
-    #     "outputFile": "parallel-infer-with-aloha-reference.md"
-    # },
     # wallaroo 101
     {
         "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-        "outputDir": "/wallaroo-101/",
+        "outputDir": "/wallaroo-101",
         "outputFile": "wallaroo-101-reference.md"
     },
-    ## deploy and serve
+    # ## deploy and serve
+    ### parallel infer with aloha
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/parallel-inferences-sdk-aloha-tutorial/wallaroo-parallel-infer-sdk-with-aloha.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+        "outputFile": "parallel-infer-with-aloha-reference.md"
+    },
+
     ## onnx multi io
     {
         "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
@@ -341,12 +342,6 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
         "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial-reference.md"
     },
-    ### orchestration sdk bigquery statsmodel
-    {
-        "inputFile": "wallaroo-automate/orchestration_sdk_bigquery_statsmodel_tutorial/orchestration_sdk_bigquery_statsmodel_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
-        "outputFile": "orchestration_sdk_bigquery_statsmodel_tutorial-reference.md"
-    },
     ### orchestration sdk comprehensive 
     {
         "inputFile": "wallaroo-automate/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
@@ -442,12 +437,6 @@ fileList = [
         "inputFile": "wallaroo-observe/pipeline_api_log_tutorial_cv/pipeline_api_log_tutorial_computer_vision.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
         "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
-    },
-    ### pipeline log tutorial
-    {
-        "inputFile": "wallaroo-observe/pipeline_log_tutorial/pipeline_log_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "pipeline_log_tutorial-reference.md"
     },
     ### assay builder
     {
@@ -676,7 +665,13 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
         "outputFile": "cv-retail-edge-observability-reference.md"
     },
-
+    ## tools
+    ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
+    {
+        "inputFile": "tools/convert_wallaroo_data_to_pandas_arrow/convert_wallaroo_inference_data.ipynb",
+        "outputDir": "/wallaroo-tutorials/tools",
+        "outputFile": "convert_wallaroo_inference_data-reference.md"
+    },
 
 ]
 
@@ -720,12 +715,17 @@ def format(outputdir, document_file):
     document = re.sub('https://adb-5939996465837398.18.azuredatabricks.net', 
                       'https://sample.registry.service.azuredatabricks.net', 
                       document)
+    
+    # obfuscate gcp registry URL url
+    document = re.sub('us-central1-docker.pkg.dev/wallaroo-dev-253816', 
+                      'sample.registry.example.com', 
+                      document)
 
     # remove edge bundle
-    # obfuscate databricks url
     document = re.sub("'EDGE_BUNDLE': '.*?'", 
                       "'EDGE_BUNDLE': 'abcde'", 
                       document)
+
    # document = re.sub('![png](', 'bob', document)
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
