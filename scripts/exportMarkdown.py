@@ -438,23 +438,6 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
         "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     },
-    ### assay builder
-    {
-        "inputFile": "wallaroo-observe/wallaro-assay-builder-tutorial/wallaroo_assay_builder_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_assay_builder_tutorial-reference.md"
-    },
-    ### model observability assays two part
-    {
-        "inputFile": "wallaroo-observe/wallaro-assay-builder-tutorial/wallaroo_assay_builder_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_assay_builder_tutorial-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-observe/wallaro-assay-builder-tutorial/wallaroo_model_observability_assays.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_model_observability_assays-reference.md"
-    },
     ### model observability assays single 
     {
         "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
