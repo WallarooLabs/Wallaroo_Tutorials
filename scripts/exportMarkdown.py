@@ -732,9 +732,9 @@ def move_images(image_directory):
     reference_directories = [ name for name in os.listdir(source_directory) if os.path.isdir(os.path.join(source_directory, name)) ]
     # copy only the directories to their image location
     for reference in reference_directories:
-        print(f"cp -rf ./{source_directory}/{reference} {target_directory}")
+        print(f"mkdir -p {target_directory} && cp -rf ./{source_directory}/{reference} {target_directory}")
         # print(f"To: {target_directory}/{reference}")
-        os.system(f"cp -rf ./{source_directory}/{reference} {target_directory}")
+        os.system(f"mkdir -p {target_directory} &&  cp -rf ./{source_directory}/{reference} {target_directory}")
 
 def main():
     for currentFile in fileList:
@@ -746,6 +746,7 @@ def main():
         move_images(currentFile["outputDir"])
     # get rid of any extra markdown files
     os.system("find ./images -name '*.md' -type f -delete")
+    os.system("find ./docs/markdown -name '*.png' -type f -delete")
 
 if __name__ == '__main__':
     main()
