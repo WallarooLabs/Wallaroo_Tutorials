@@ -1,1 +1,0 @@
-The following tutorials are created to highlight specific features in Wallaroo.

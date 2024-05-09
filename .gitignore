@@ -22,7 +22,6 @@ pipeline-edge-publish/edge-llama2/models/raw-models_llama-text-generation-pipe.z
 wallaroo-model-cookbooks/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
 wallaroo-model-cookbooks/llama/models/model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
 scratch/
-wallaroo-model-cookbooks/llamav2/models/model-auto-conversion_BYOP_llama_byop_llamav2_new2.zip
 wallaroo-model-upload-tutorials/computer-vision/models/coco_classes.pickle
 frcnn-resnet.pt
 frcnn-resnet.pt.onnx
@@ -32,6 +31,6 @@ model-with-pixel-intensity.zip
 yolov5s6.onnx
 yolov8nOpset17.onnx
 yolov8xOpset17.onnx
-resnet50_v1.onnx
-cv-retail-models.zip
 docs/
+images/
+resnet50_v1.onnx

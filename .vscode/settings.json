@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "BYOP",
         "conda",
         "Databricks",
         "DBFS",
@@ -9,6 +10,7 @@
         "LSTM",
         "mainpipeline",
         "modularizes",
+        "nodepools",
         "pyarrow",
         "quantile",
         "wallaroosdk"
