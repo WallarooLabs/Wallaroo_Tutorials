@@ -148,6 +148,116 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/tensorflow",
     #     "outputFile": "wallaroo-upload-tensorflow-reference.md"
     # },
+    # ## onnx multi io
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "test_autoconv_onnx_multi_io-reference.md"
+    # },
+    # ## model registry
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/model-registry",
+    #     "outputFile": "Wallaroo-model-registry-demonstration-reference.md"
+    # },
+    # ## keras
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/keras-upload-tutorials/wallaroo-upload-keras_sequential_model_single_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/keras",
+    #     "outputFile": "wallaroo-upload-keras_sequential_model_single_io-reference.md"
+    # },
+    # ## hugging face
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/hugging-face",
+    #     "outputFile": "wallaroo-api-upload-hf-zero_shot_classification.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/hugging-face-upload-tutorials/wallaroo-sdk-upload-hf-zero_shot_classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/hugging-face",
+    #     "outputFile": "wallaroo-sdk-upload-hf-zero_shot_classification.md"
+    # },
+    # ## computer vision
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision/00_computer_vision_tutorial_intro.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/computer-vision",
+    #     "outputFile": "00-computer-vision-tutorial-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision/01_computer_vision_tutorial_mobilenet.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/computer-vision",
+    #     "outputFile": "01_computer_vision_tutorial_mobilenet-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision/02_computer_vision_tutorial_resnet50.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/computer-vision",
+    #     "outputFile": "02_computer_vision_tutorial_resnet50-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision/03_computer_vision_tutorial_shadow_deploy.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/computer-vision",
+    #     "outputFile": "03_computer_vision_tutorial_shadow_deploy-reference.md"
+    # },
+    # ## BYOP
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/arbitrary-python",
+    #     "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/arbitrary-python",
+    #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+    # },
+    # ## Python steps
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
+    # },
+    # ## notebooks in prod
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/00_notebooks_in_prod_introduction.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/notebook_in_prod",
+    #     "outputFile": "_index.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/notebook_in_prod",
+    #     "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/notebook_in_prod",
+    #     "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/03_notebooks_in_prod_deploy_model_python.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/notebook_in_prod",
+    #     "outputFile": "03_notebooks_in_prod_deploy_model-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/notebook_in_prod",
+    #     "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
+    # },
+    # ## pytorch
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/pytorch-upload-tutorials/wallaroo-upload-pytorch-multi-input-output.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/pytorch",
+    #     "outputFile": "wallaroo-upload-pytorch-multi-input-output-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/pytorch-upload-tutorials/wallaroo-upload-pytorch-single-input-output.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/pytorch",
+    #     "outputFile": "wallaroo-upload-pytorch-single-input-output-reference.md"
+    # },
+    # ## tensorflow
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/tensorflow-upload-tutorials/wallaroo-upload-tensorflow.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/tensorflow",
+    #     "outputFile": "wallaroo-upload-tensorflow-reference.md"
+    # },
 
     # ## xgboost
     # {
