@@ -1,0 +1,5 @@
+google-auth==2.14.1
+google-cloud-bigquery==2.34.3
+numpy==1.22.3
+pandas==1.3.4
+scikit-learn==1.3.0
