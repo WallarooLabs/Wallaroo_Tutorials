@@ -35,3 +35,4 @@ docs/
 images/
 resnet50_v1.onnx
 wallaroo-llms/llamav2/models/llama_byop_llamav2.zip
+wallaroo-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
