@@ -767,15 +767,21 @@ fileList = [
     # },
     ## LLMs
     ### in-line monitoring
+    # {
+    #     "inputFile": "wallaroo-llms/llm-monitoring/llm-in-line-monitoring/summary_quality_revised.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "summary_quality_revised-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-monitoring/llm-listener-monitoring/llm-monitoring-orchestration-setup.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llm-monitoring-orchestration-setup.md"
+    # },
+    ### RAG LLM Orchestration
     {
-        "inputFile": "wallaroo-llms/llm-monitoring/llm-in-line-monitoring/summary_quality_revised.ipynb",
+        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "summary_quality_revised-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-llms/llm-monitoring/llm-listener-monitoring/llm-monitoring-orchestration-setup.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llm-monitoring-orchestration-setup.md"
+        "outputFile": "Batch_Embedding_Computation-reference.md"
     },
 
 ]
