@@ -24,7 +24,7 @@ c.NbConvertApp.export_format = "markdown"
 docs_directory = "docs/markdown"
 
 fileList = [
-    # # wallaroo 101
+    ### wallaroo 101
     # {
     #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
     #     "outputDir": "/wallaroo-101",
@@ -39,11 +39,11 @@ fileList = [
     # },
 
     # ## onnx multi io
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-    #     "outputFile": "test_autoconv_onnx_multi_io-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+        "outputFile": "test_autoconv_onnx_multi_io-reference.md"
+    },
     # ## model registry
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
@@ -260,82 +260,82 @@ fileList = [
     # },
 
     # ## xgboost
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-binary-classification-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-binary-classification-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-multi-classification-softmax-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-multi-classification-softmax-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-multi-classification-softprob-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-multi-classification-softprob-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-regression-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-regression-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-rf-classification-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-rf-classification-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-rf-regression-conversion.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-booster-rf-regression-conversion-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-xbg-classification-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-regressor.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-xbg-regressor-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-xbg-rf-classification-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
-        "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-binary-classification-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-binary-classification-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-multi-classification-softmax-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-multi-classification-softmax-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-multi-classification-softprob-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-multi-classification-softprob-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-regression-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-regression-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-rf-classification-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-rf-classification-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-booster-rf-regression-conversion.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-booster-rf-regression-conversion-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-classification-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-regressor.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-regressor-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-classification.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-rf-classification-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/xgboost-upload-tutorials/wallaroo-sdk-upload-xbg-rf-regressor.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/xgboost-upload-tutorials",
+    #     "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor-reference.md"
+    # },
     # ## sklearn
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-    #     "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-    #     "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-    #     "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
+    },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+        "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
+    },
     # ### multiple replicas forecast updates
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
@@ -782,6 +782,12 @@ fileList = [
     #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
+    # },
+    ### Development
+    # {
+    #     "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+    #     "outputDir": "/wallaroo-sdk-guides",
+    #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     # },
 
 ]
