@@ -210,11 +210,11 @@ fileList = [
     #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
     # },
     # ## Python steps
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-    #     "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+        "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
+    },
     # ## notebooks in prod
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/00_notebooks_in_prod_introduction.ipynb",
