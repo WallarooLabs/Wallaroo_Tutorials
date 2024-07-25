@@ -39,11 +39,11 @@ fileList = [
     # },
 
     # ## onnx multi io
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-        "outputFile": "test_autoconv_onnx_multi_io-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/onnx-multi-input-demo/test_autoconv_onnx_multi_io.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "test_autoconv_onnx_multi_io-reference.md"
+    # },
     # ## model registry
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/mlflow-registries-upload-tutorials/Wallaroo-model-registry-demonstration.ipynb",
@@ -311,31 +311,31 @@ fileList = [
     #     "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor-reference.md"
     # },
     # ## sklearn
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
-    },
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
-        "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-kmeans.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-kmeans.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm-pca.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm-pca.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-clustering-svm.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-clustering-svm.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-linear-regression.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-linear-regression.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/sklearn-upload-tutorials/wallaroo-upload-sklearn-logistic-regression.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/sklearn",
+    #     "outputFile": "wallaroo-upload-sklearn-logistic-regression.md"
+    # },
     # ### multiple replicas forecast updates
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
