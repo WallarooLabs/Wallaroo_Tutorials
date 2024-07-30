@@ -209,12 +209,12 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/arbitrary-python",
     #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
     # },
-    # ## Python steps
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-        "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
-    },
+    # # ## Python steps
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
+    # },
     # ## notebooks in prod
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/notebooks_in_prod/00_notebooks_in_prod_introduction.ipynb",
@@ -784,11 +784,20 @@ fileList = [
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
     ### Development
+    #### SDK install
     # {
     #     "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
     #     "outputDir": "/wallaroo-sdk-guides",
     #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     # },
+    ## MLOps API
+    #### MLOps API Assays
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    # },
+
 
 ]
 
