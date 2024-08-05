@@ -783,6 +783,18 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
+    ### Managed Inference Endpoint Models with OpenAI
+    {
+        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "managed-inference-endpoint-openai.md"
+    },
+    ### Managed Inference Endpoint Models with Google Vertex
+    {
+        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "managed-inference-endpoint-vertex-reference.md"
+    },
     ### Development
     #### SDK install
     # {
