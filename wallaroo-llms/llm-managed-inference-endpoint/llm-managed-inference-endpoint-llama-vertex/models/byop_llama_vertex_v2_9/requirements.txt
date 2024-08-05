@@ -1,0 +1,6 @@
+requests == 2.32.2
+google-cloud-aiplatform == 1.54.1
+google-auth == 2.30.0
+google-auth-oauthlib == 1.2.0
+google-auth-httplib2 == 0.2.0
+google-api-python-client == 2.133.0
