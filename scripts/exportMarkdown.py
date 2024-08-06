@@ -765,8 +765,8 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/tools",
     #     "outputFile": "convert_wallaroo_inference_data-reference.md"
     # },
-    # ## LLMs
-    # ### in-line monitoring
+    ## LLMs
+    ### in-line monitoring
     # {
     #     "inputFile": "wallaroo-llms/llm-monitoring/llm-in-line-monitoring/summary_quality_revised.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
