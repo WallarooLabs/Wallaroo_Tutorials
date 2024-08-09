@@ -24,7 +24,7 @@ c.NbConvertApp.export_format = "markdown"
 docs_directory = "docs/markdown"
 
 fileList = [
-    # # wallaroo 101
+    ### wallaroo 101
     # {
     #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
     #     "outputDir": "/wallaroo-101",
@@ -88,7 +88,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/computer-vision",
     #     "outputFile": "03_computer_vision_tutorial_shadow_deploy-reference.md"
     # },
-    # ## BYOP
+    # # ## BYOP
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/arbitrary-python",
@@ -209,7 +209,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/arbitrary-python",
     #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
     # },
-    # ## Python steps
+    # # ## Python steps
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/python-upload-tutorials/python-step-dataframe-output-logging-example-sdk.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
@@ -393,11 +393,11 @@ fileList = [
     #     "outputFile": "clip-vit-hugging-face-reference.md"
     # },
     # ## whisper demo
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/hf-whisper/wallaroo-whisper_demo.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-    #     "outputFile": "wallaroo-whisper_demo-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/hf-whisper/wallaroo-whisper_demo.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+        "outputFile": "wallaroo-whisper_demo-reference.md"
+    },
     # ## imdb
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/imdb/imdb_sample.ipynb",
@@ -778,11 +778,38 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
     ### RAG LLM Orchestration
+    # {
+    #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "Batch_Embedding_Computation-reference.md"
+    # },
+    ### Managed Inference Endpoint Models with OpenAI
     {
-        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
+        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "Batch_Embedding_Computation-reference.md"
+        "outputFile": "managed-inference-endpoint-openai.md"
     },
+    ### Managed Inference Endpoint Models with Google Vertex
+    {
+        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "managed-inference-endpoint-vertex-reference.md"
+    },
+    ### Development
+    #### SDK install
+    # {
+    #     "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
+    #     "outputDir": "/wallaroo-sdk-guides",
+    #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
+    # },
+    ## MLOps API
+    #### MLOps API Assays
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    # },
+
 
 ]
 
@@ -805,8 +832,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.2{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.2', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
