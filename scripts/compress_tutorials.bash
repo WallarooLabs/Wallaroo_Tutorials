@@ -85,8 +85,11 @@ tutorials=(
     [orchestration_sdk_bigquery_statsmodel_tutorial]="workload-orchestrations/orchestration_sdk_bigquery_statsmodel_tutorial"
     [orchestration_sdk_comprehensive_tutorial]="workload-orchestrations/orchestration_sdk_comprehensive_tutorial"
     [orchestration_sdk_simple_tutorial]="workload-orchestrations/orchestration_sdk_simple_tutorial"
-
-
+    [llm-in-line-monitoring]="wallaroo-llms/llm-monitoring/llm-in-line-monitoring"
+    [llm-listener-monitoring]="wallaroo-llms/llm-monitoring/llm-listener-monitoring"
+    [vector-database-embedding-with-ml-orchestrations]="wallaroo-llms/vector-database-embedding-with-ml-orchestrations"
+    [mlops_api]="development/mlops_api"
+    [sdk-install-guides]="development/sdk-install-guides"
     )
 
 currentDirectory=$PWD

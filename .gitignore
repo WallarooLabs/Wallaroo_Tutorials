@@ -35,6 +35,10 @@ docs/
 images/
 resnet50_v1.onnx
 wallaroo-llms/llamav2/models/llama_byop_llamav2.zip
-wallaroo-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
 wallaroo-llms/vector-database-embedding-with-ml-orchestrations/vector_db_orch.zip
-clip-vit-base-patch-32.zip
+wallaroo-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
+wallaroo-model-deploy-and-serve/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-2024-02-fail.ipynb
+wallaroo-model-deploy-and-serve/computer-vision/01_computer_vision_tutorial_mobilenet-2024-2-test.ipynb
+wallaroo-model-deploy-and-serve/computer-vision/02_computer_vision_tutorial_resnet50-2024-2-test.ipynb
+wallaroo-model-deploy-and-serve/hf-clip-vit-base.zip
+wallaroo-model-deploy-and-serve/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
