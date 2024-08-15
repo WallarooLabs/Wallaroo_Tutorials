@@ -783,6 +783,12 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
+    ### IBM Granite 8B Code Instruct
+    {
+        "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
+    },
     ### Managed Inference Endpoint Models with OpenAI
     {
         "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
