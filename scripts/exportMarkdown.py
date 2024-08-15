@@ -778,12 +778,17 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
     ### RAG LLM Orchestration
+    # {
+    #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "Batch_Embedding_Computation-reference.md"
+    # },
+    ### IBM Granite 8B Code Instruct
     {
-        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
+        "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "Batch_Embedding_Computation-reference.md"
+        "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
     },
-
 ]
 
 def format(outputdir, document_file):
