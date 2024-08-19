@@ -393,11 +393,11 @@ fileList = [
     #     "outputFile": "clip-vit-hugging-face-reference.md"
     # },
     # ## whisper demo
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/hf-whisper/wallaroo-whisper_demo.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
-        "outputFile": "wallaroo-whisper_demo-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/hf-whisper/wallaroo-whisper_demo.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve",
+    #     "outputFile": "wallaroo-whisper_demo-reference.md"
+    # },
     # ## imdb
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/imdb/imdb_sample.ipynb",
@@ -783,18 +783,30 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
+    ### RAG LLM Inference
+    {
+        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "RAG-LLM-Inferencing.md"
+    },
+    ### IBM Granite 8B Code Instruct
+    # {
+    #     "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
+    # },
     ### Managed Inference Endpoint Models with OpenAI
-    {
-        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "managed-inference-endpoint-openai.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "managed-inference-endpoint-openai.md"
+    # },
     ### Managed Inference Endpoint Models with Google Vertex
-    {
-        "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "managed-inference-endpoint-vertex-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "managed-inference-endpoint-vertex-reference.md"
+    # },
     ### Development
     #### SDK install
     # {
