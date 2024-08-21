@@ -549,11 +549,18 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    # {
-    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
+    # ### assays v2
+    # ### model observability assays single 
+    {
+        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays-v2.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "wallaroo_model_observability_assays-v2-reference.md"
+    },
     # ## optimize
     # ### ab testing
     # {
@@ -784,11 +791,11 @@ fileList = [
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
     ### RAG LLM Inference
-    {
-        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "RAG-LLM-Inferencing.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "RAG-LLM-Inferencing.md"
+    # },
     ### IBM Granite 8B Code Instruct
     # {
     #     "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
@@ -816,11 +823,11 @@ fileList = [
     # },
     ## MLOps API
     #### MLOps API Assays
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
-    # },
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    },
 
 
 ]
