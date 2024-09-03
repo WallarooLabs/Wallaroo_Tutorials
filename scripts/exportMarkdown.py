@@ -554,13 +554,6 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
         "outputFile": "wallaroo_model_observability_assays-reference.md"
     },
-    # ### assays v2
-    # ### model observability assays single 
-    {
-        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays-v2.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_model_observability_assays-v2-reference.md"
-    },
     # ## optimize
     # ### ab testing
     # {
@@ -814,6 +807,18 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "managed-inference-endpoint-vertex-reference.md"
     # },
+    ### Llama 3 8B Instruct with vLLM
+    # {
+    #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+    # },
+    # ### Quantized Llava 34B Deployment using Llama.cpp
+    # {
+    #     "inputFile": "wallaroo-llms/llamacpp-llava/llava-llamacpp-deployment.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llava-llamacpp-deployment-reference.md"
+    # },
     ### Development
     #### SDK install
     # {
@@ -823,11 +828,11 @@ fileList = [
     # },
     ## MLOps API
     #### MLOps API Assays
-    {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
-    },
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    # },
 
 
 ]
