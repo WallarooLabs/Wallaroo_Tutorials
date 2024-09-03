@@ -42,3 +42,4 @@ wallaroo-model-deploy-and-serve/computer-vision/01_computer_vision_tutorial_mobi
 wallaroo-model-deploy-and-serve/computer-vision/02_computer_vision_tutorial_resnet50-2024-2-test.ipynb
 wallaroo-model-deploy-and-serve/hf-clip-vit-base.zip
 wallaroo-model-deploy-and-serve/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
+./environment.env
