@@ -554,13 +554,6 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
         "outputFile": "wallaroo_model_observability_assays-reference.md"
     },
-    ### assays v2
-    ### model observability assays single 
-    {
-        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays-v2.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_model_observability_assays-v2-reference.md"
-    },
     # ## optimize
     # ### ab testing
     # {
