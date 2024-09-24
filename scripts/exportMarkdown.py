@@ -446,6 +446,12 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "data_orchestrators_api_simple_tutorial-reference.md"
     # },
+    # ### multiple pipelines tutorial
+    {
+        "inputFile": "wallaroo-automate/orchestration_sdk_multiple_pipelines_tutorials/orchestration_sdk_multiple_pipelines_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
+        "outputFile": "orchestration_sdk_multiple_pipelines_tutorial-reference.md"
+    },
     # ### orchestration sdk bigquery houseprice
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
@@ -784,11 +790,11 @@ fileList = [
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
     ### RAG LLM Inference
-    {
-        "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "RAG-LLM-Inferencing.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "RAG-LLM-Inferencing.md"
+    # },
     ### IBM Granite 8B Code Instruct
     # {
     #     "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
