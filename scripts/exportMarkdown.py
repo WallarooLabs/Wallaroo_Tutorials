@@ -447,10 +447,16 @@ fileList = [
     #     "outputFile": "data_orchestrators_api_simple_tutorial-reference.md"
     # },
     # ### multiple pipelines tutorial
+    # {
+    #     "inputFile": "wallaroo-automate/orchestration_sdk_multiple_pipelines_tutorials/orchestration_sdk_multiple_pipelines_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
+    #     "outputFile": "orchestration_sdk_multiple_pipelines_tutorial-reference.md"
+    # },
+    # ### run continuously tutorial
     {
-        "inputFile": "wallaroo-automate/orchestration_sdk_multiple_pipelines_tutorials/orchestration_sdk_multiple_pipelines_tutorial.ipynb",
+        "inputFile": "wallaroo-automate/orchestration_sdk_run_continuously_tutorial/orchestration_sdk_run_continuously_tutorial.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
-        "outputFile": "orchestration_sdk_multiple_pipelines_tutorial-reference.md"
+        "outputFile": "orchestration_sdk_run_continuously_tutorial-reference.md"
     },
     # ### orchestration sdk bigquery houseprice
     # {
