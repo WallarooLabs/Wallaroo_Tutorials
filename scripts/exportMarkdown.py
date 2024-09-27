@@ -358,6 +358,12 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
     #     "outputFile": "aloha_demo.ipynb-reference.md"
     # },
+    # ## aloha async infer
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
+        "outputFile": "aloha_async_infer_tutorial-reference.md"
+    },
     # ## computer vision mitochondria
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
@@ -453,11 +459,11 @@ fileList = [
     #     "outputFile": "orchestration_sdk_multiple_pipelines_tutorial-reference.md"
     # },
     # ### run continuously tutorial
-    {
-        "inputFile": "wallaroo-automate/orchestration_sdk_run_continuously_tutorial/orchestration_sdk_run_continuously_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
-        "outputFile": "orchestration_sdk_run_continuously_tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-automate/orchestration_sdk_run_continuously_tutorial/orchestration_sdk_run_continuously_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
+    #     "outputFile": "orchestration_sdk_run_continuously_tutorial-reference.md"
+    # },
     # ### orchestration sdk bigquery houseprice
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
