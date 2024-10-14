@@ -359,11 +359,11 @@ fileList = [
     #     "outputFile": "aloha_demo.ipynb-reference.md"
     # },
     # ## aloha async infer
-    {
-        "inputFile": "wallaroo-model-deploy-and-serve/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
-        "outputFile": "aloha_async_infer_tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-deploy-and-serve/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
+    #     "outputFile": "aloha_async_infer_tutorial-reference.md"
+    # },
     # ## computer vision mitochondria
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
@@ -795,6 +795,18 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
+    ### Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
+    # {
+    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
+    # },
+    ### Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
+    {
+        "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
+    },
     ### RAG LLM Orchestration
     # {
     #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
