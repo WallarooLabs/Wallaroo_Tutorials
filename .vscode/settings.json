@@ -14,6 +14,7 @@
         "nodepools",
         "pyarrow",
         "quantile",
+        "Runtimes",
         "wallaroosdk"
     ]
 }
