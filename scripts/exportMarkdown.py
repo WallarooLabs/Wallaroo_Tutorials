@@ -446,37 +446,37 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "connection_api_bigquery_tutorial-reference.md"
     # },
-    # ### connection simple tutorial
+    # # ### connection simple tutorial
     # {
     #     "inputFile": "wallaroo-automate/orchestration_api_simple_tutorial/data_orchestrators_api_simple_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "data_orchestrators_api_simple_tutorial-reference.md"
     # },
-    # ### multiple pipelines tutorial
+    # # ### multiple pipelines tutorial
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_multiple_pipelines_tutorials/orchestration_sdk_multiple_pipelines_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "orchestration_sdk_multiple_pipelines_tutorial-reference.md"
     # },
-    # ### run continuously tutorial
+    # # ### run continuously tutorial
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_run_continuously_tutorial/orchestration_sdk_run_continuously_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "orchestration_sdk_run_continuously_tutorial-reference.md"
     # },
-    # ### orchestration sdk bigquery houseprice
+    # # ### orchestration sdk bigquery houseprice
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_bigquery_houseprice_tutorial/orchestration_sdk_bigquery_houseprice_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "orchestration_sdk_bigquery_houseprice_tutorial-reference.md"
     # },
-    # ### orchestration sdk comprehensive 
+    # # ### orchestration sdk comprehensive 
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_comprehensive_tutorial/data_connectors_and_orchestrators_comprehensive_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
     #     "outputFile": "data_connectors_and_orchestrators_comprehensive_tutorial-reference.md"
     # },
-    # ### orchestration sdk simple 
+    # # ### orchestration sdk simple 
     # {
     #     "inputFile": "wallaroo-automate/orchestration_sdk_simple_tutorial/data_connectors_and_orchestrators_simple_tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-automate",
@@ -802,10 +802,16 @@ fileList = [
     #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
     # },
     ### Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
+    # {
+    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
+    # },
+    ### Llama 3 8B Instruct Inference with vLLM
     {
-        "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
+        "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
+        "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
     },
     ### RAG LLM Orchestration
     # {
