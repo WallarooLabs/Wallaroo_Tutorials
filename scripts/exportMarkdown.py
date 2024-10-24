@@ -808,10 +808,16 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
     # },
     ### Llama 3 8B Instruct Inference with vLLM
+    # {
+    #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+    # },
+    ### Autoscale Triggers with Llamacpp
     {
-        "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+        "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+        "outputFile": "autoscale_triggers_llamacpp_sdk-reference.md"
     },
     ### RAG LLM Orchestration
     # {
