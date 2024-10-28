@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "Autoscale",
         "BYOP",
         "conda",
         "Databricks",
@@ -14,6 +15,7 @@
         "nodepools",
         "pyarrow",
         "quantile",
+        "Runtimes",
         "wallaroosdk"
     ]
 }

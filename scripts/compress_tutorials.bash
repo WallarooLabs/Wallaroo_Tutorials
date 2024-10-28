@@ -90,6 +90,7 @@ tutorials=(
     [vector-database-embedding-with-ml-orchestrations]="wallaroo-llms/vector-database-embedding-with-ml-orchestrations"
     [mlops_api]="development/mlops_api"
     [sdk-install-guides]="development/sdk-install-guides"
+    [aloha_async_infer]="wallaroo-model-deploy-and-serve/aloha_async_infer"
     )
 
 currentDirectory=$PWD

@@ -117,7 +117,7 @@ pipeline = wl.pipelines_by_name(pipeline_name)[0]
 display(pipeline)
 
 # %% [markdown]
-# ## Interferences via SDK
+# ## Inferences via SDK
 # 
 # Once a pipeline has been deployed, an inference can be run.  This will submit data to the pipeline, where it is processed through each of the pipeline's steps with the output of the previous step providing the input for the next step.  The final step will then output the result of all of the pipeline's steps.
 # 
