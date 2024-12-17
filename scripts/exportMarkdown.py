@@ -833,7 +833,7 @@ fileList = [
     },
     ## LLM Harmful Language Listener Tutorial
     {
-        "inputFile": "wallaroo-llms/llamacpp-with-safeguards/llamacpp_sdk_withsafeguards.ipynb",
+        "inputFile": "wallaroo-llms/llamacpp-with-safeguards/llamacpp_sdk_with_safeguards.ipynb",
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
         "outputFile": "llamacpp_sdk_withsafeguards_reference.md"
     },
