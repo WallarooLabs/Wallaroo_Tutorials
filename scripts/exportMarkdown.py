@@ -831,6 +831,12 @@ fileList = [
         "outputDir": "/wallaroo-tutorials/wallaroo-llms",
         "outputFile": "RAG-LLM-Inferencing.md"
     },
+    ## LLM Harmful Language Listener Tutorial
+    {
+        "inputFile": "wallaroo-llms/llamacpp-with-safeguards/llamacpp_sdk_withsafeguards.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "llamacpp_sdk_withsafeguards_reference.md"
+    },
     ## IBM Granite 8B Code Instruct
     {
         "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
