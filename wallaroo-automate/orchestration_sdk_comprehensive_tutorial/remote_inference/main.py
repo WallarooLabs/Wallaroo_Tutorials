@@ -37,7 +37,7 @@ pipeline = wl.get_pipeline(pipeline_name)
 pipeline.deploy(wait_for_status=False)
 
 # check the pipeline status before performing an inference
-if pipeline.status()['status'] != 'Running':
+while pipeline.status()['status'] != 'Running':
    time.sleep(15)
 
 print(pipeline.status())
