@@ -776,6 +776,18 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
+    # ### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    },
+    # ### ## Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 in Wallaroo Custom Model Framework for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    },
     # ## tools
     # ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
     # {
