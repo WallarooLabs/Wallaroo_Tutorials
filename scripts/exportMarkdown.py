@@ -646,11 +646,11 @@ fileList = [
     #     "outputFile": "edge-computer-vision-yolov8-reference.md"
     # },
     # ### Classification Financial Services Edge Deployment
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
-    #     "outputFile": "edge-classification-finserv-deployment-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-run-anywhere/pipeline-edge-publish/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
+    },
     # ### Classification Financial Services Edge Deployment Demonstration via API
     # {
     #     "inputFile": "wallaroo-run-anywhere/pipeline-edge-publish/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
