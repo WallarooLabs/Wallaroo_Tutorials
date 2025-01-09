@@ -663,7 +663,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "edge-classification-cybersecurity-deployment-reference.md"
     # },
-    # ### Arbitrary Python Edge Deploy
+    # ### Custom Model Edge Deploy
     # {
     #     "inputFile": "wallaroo-run-anywhere/pipeline-edge-publish/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
@@ -705,7 +705,7 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "arm-classification-cybersecurity-reference.md"
     # },
-    # ### Arbitrary Python ARM Deployment Tutorial
+    # ### Custom Model ARM Deployment Tutorial
     # {
     #     "inputFile": "wallaroo-run-anywhere/pipeline-architecture/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
@@ -776,6 +776,18 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
+    # ### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    },
+    # ### ## Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 in Wallaroo Custom Model Framework for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    },
     # ## tools
     # ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
     # {
@@ -783,8 +795,8 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/tools",
     #     "outputFile": "convert_wallaroo_inference_data-reference.md"
     # },
-    ## LLMs
-    ### in-line monitoring
+    # # LLMs
+    # ## in-line monitoring
     # {
     #     "inputFile": "wallaroo-llms/llm-monitoring/llm-in-line-monitoring/summary_quality_revised.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
@@ -795,69 +807,81 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
-    ### Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
+    # ## Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
     # {
     #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
     # },
-    ### Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
+    # ## Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
     # },
-    ### Llama 3 8B Instruct Inference with vLLM
+    # ## Llama 3 8B Instruct Inference with vLLM
     # {
     #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
     # },
-    ### Autoscale Triggers with Llamacpp
-    {
-        "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "autoscale_triggers_llamacpp_sdk-reference.md"
-    },
-    ### RAG LLM Orchestration
+    # ## Autoscale Triggers with Llamacpp
+    # {
+    #     "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "autoscale_triggers_llamacpp_sdk-reference.md"
+    # },
+    # ## RAG LLM Orchestration
     # {
     #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/Batch_Embedding_Computation.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "Batch_Embedding_Computation-reference.md"
     # },
-    ### RAG LLM Inference
+    # ## RAG LLM Inference
     # {
     #     "inputFile": "wallaroo-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "RAG-LLM-Inferencing.md"
     # },
-    ### IBM Granite 8B Code Instruct
+    # ## LLM Harmful Language Listener Tutorial
+    # {
+    #     "inputFile": "wallaroo-llms/llamacpp-with-safeguards/llamacpp_sdk_with_safeguards.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llamacpp_sdk_withsafeguards_reference.md"
+    # },
+    # ## IBM Granite 8B Code Instruct
     # {
     #     "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
     # },
-    ### Managed Inference Endpoint Models with OpenAI
+    # ## Llamacpp Deploy on IBM Power10 Tutorial
+    {
+        "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "llamacpp_sdk_power-reference.md"
+    },
+    # ## Managed Inference Endpoint Models with OpenAI
     # {
     #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "managed-inference-endpoint-openai.md"
     # },
-    ### Managed Inference Endpoint Models with Google Vertex
+    # ## Managed Inference Endpoint Models with Google Vertex
     # {
     #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
     #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
     #     "outputFile": "managed-inference-endpoint-vertex-reference.md"
     # },
-    ### Development
-    #### SDK install
+    # ## Development
+    # ### SDK install
     # {
     #     "inputFile": "development/sdk-install-guides/standard-install/install-wallaroo-sdk-standard-guide.ipynb",
     #     "outputDir": "/wallaroo-sdk-guides",
     #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     # },
-    ## MLOps API
-    #### MLOps API Assays
+    # # MLOps API
+    # ### MLOps API Assays
     # {
     #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
     #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
@@ -886,8 +910,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.2{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.2', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.4', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 

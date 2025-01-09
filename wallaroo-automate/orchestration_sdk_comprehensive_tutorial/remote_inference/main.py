@@ -3,6 +3,7 @@ from wallaroo.object import EntityNotFoundError
 import pandas as pd
 import pyarrow as pa
 import requests
+import time
 
 wl = wallaroo.Client()
 
@@ -33,7 +34,15 @@ wl.set_current_workspace(workspace)
 
 print(f"Getting the pipeline {pipeline_name}")
 pipeline = wl.get_pipeline(pipeline_name)
-pipeline.deploy()
+pipeline.deploy(wait_for_status=False)
+
+# check the pipeline status before performing an inference
+while pipeline.status()['status'] != 'Running':
+   time.sleep(15)
+
+print(pipeline.status())
+
+
 # Get the connection - assuming it will be the only one
 
 inference_source_connection = wl.get_connection(name=connection_name)
