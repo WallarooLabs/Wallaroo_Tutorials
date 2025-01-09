@@ -10,7 +10,7 @@ from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
 
 pip_command = (
-    f'{sys.executable} -m pip install https://github.com/vllm-project/vllm/releases/download/v0.5.2/vllm-0.5.2+cu118-cp38-cp38-manylinux1_x86_64.whl --extra-index-url https://download.pytorch.org/whl/cu118'
+    f'{sys.executable} -m pip install https://github.com/vllm-project/vllm/releases/download/v0.5.2/vllm-0.5.2+cu118-cp310-cp310-manylinux1_x86_64.whl --extra-index-url https://download.pytorch.org/whl/cu118'
 )
 
 subprocess.check_call(pip_command, shell=True)
