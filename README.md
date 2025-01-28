@@ -14,3 +14,4 @@ From there each directory contains a self-contained guide to help you understand
 
 See the releases for individual .zip files for each tutorial.
 
+Removed Workshops.
