@@ -549,11 +549,11 @@ fileList = [
     #     "outputFile": "model-observability-anomaly-detection-house-price-sdk-tutorial-reference.md"
     # },
     # ### Pipeline Log Tutorial SDK
-    # {
-    #     "inputFile": "wallaroo-observe/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-    #     "outputFile": "pipeline_log_tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "pipeline_log_tutorial-reference.md"
+    },
     # ### Pipeline Log Tutorial API
     # {
     #     "inputFile": "wallaroo-observe/pipeline_api_log_tutorial/pipeline_api_log_tutorial.ipynb",
@@ -777,17 +777,17 @@ fileList = [
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
     # ### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    # },
     # ### ## Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 in Wallaroo Custom Model Framework for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    # },
     # ## tools
     # ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
     # {
@@ -856,11 +856,11 @@ fileList = [
     #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
     # },
     # ## Llamacpp Deploy on IBM Power10 Tutorial
-    {
-        "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llamacpp_sdk_power-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llamacpp_sdk_power-reference.md"
+    # },
     # ## Managed Inference Endpoint Models with OpenAI
     # {
     #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
