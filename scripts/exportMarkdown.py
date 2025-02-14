@@ -359,11 +359,11 @@ fileList = [
     #     "outputFile": "aloha_demo.ipynb-reference.md"
     # },
     # ## aloha async infer
-    # {
-    #     "inputFile": "wallaroo-model-deploy-and-serve/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
-    #     "outputFile": "aloha_async_infer_tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-deploy-and-serve/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-model-deploy-and-serve/",
+        "outputFile": "aloha_async_infer_tutorial-reference.md"
+    },
     # ## computer vision mitochondria
     # {
     #     "inputFile": "wallaroo-model-deploy-and-serve/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
@@ -777,17 +777,17 @@ fileList = [
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
     # ### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    # },
     # ### ## Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 in Wallaroo Custom Model Framework for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    # },
     # ## tools
     # ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
     # {
@@ -856,11 +856,11 @@ fileList = [
     #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
     # },
     # ## Llamacpp Deploy on IBM Power10 Tutorial
-    {
-        "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llamacpp_sdk_power-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llamacpp_sdk_power-reference.md"
+    # },
     # ## Managed Inference Endpoint Models with OpenAI
     # {
     #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
@@ -910,8 +910,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks_in_prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.5{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.5', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.4', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
@@ -941,6 +941,9 @@ def format(outputdir, document_file):
     document = re.sub("'EDGE_BUNDLE': '.*?'", 
                       "'EDGE_BUNDLE': 'abcde'", 
                       document)
+    
+    # fix pyarrow outputs
+    # document = re.sub(r"pyarrow.Table\ntime: timestamp[ms]")
 
    # document = re.sub('![png](', 'bob', document)
 
@@ -971,7 +974,13 @@ def move_images(image_directory):
 
 def main():
     for currentFile in fileList:
-        convert_cmd = f'jupyter nbconvert --to markdown --output-dir {docs_directory}{currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
+        convert_cmd = f'''
+            jupyter nbconvert \
+                 --to markdown \
+                 --output-dir {docs_directory}{currentFile["outputDir"]} \
+                 --output {currentFile["outputFile"]} {currentFile["inputFile"]} \
+                 --TemplateExporter.extra_template_basedirs=scripts/nbconvert/templates
+        '''
         print(convert_cmd)
         os.system(convert_cmd)
         # format(f'{docs_directory}{currentFile["outputDir"]}/{currentFile["outputFile"]}')
