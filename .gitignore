@@ -46,3 +46,5 @@ environment.env
 wallaroo-llms/llamacpp-with-safeguards/credentials.json
 model-auto-conversion_auto-packaging_byop_safeguards listeners_byop_llamacpp_safeguards.zip
 model-auto-conversion_auto-packaging_byop_safeguards listeners_byop-safeguards-harmful.zip
+wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/vector_db_orch.zip
+wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
