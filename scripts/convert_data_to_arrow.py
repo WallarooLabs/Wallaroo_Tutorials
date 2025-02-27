@@ -12,8 +12,8 @@ jsonFileList = [
     # }
     {
         "data_type_dict": None,
-        "inputFile": "wallaroo-features/pipeline_log_tutorial/data/xtest-1.df.json",
-        "arrowOutputFile": "wallaroo-features/pipeline_log_tutorial/data/xtest-1.arrow"
+        "inputFile": "wallaroo-features/pipeline-log-tutorial/data/xtest-1.df.json",
+        "arrowOutputFile": "wallaroo-features/pipeline-log-tutorial/data/xtest-1.arrow"
     }
 ]
 

@@ -34,31 +34,31 @@ fileList = [
     # ### MLOps API
     # #### MLOps API Workspace Management
     # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Workspace-Management.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Workspace-Management-reference.md"
     # },
     # #### MLOps API User Management
     # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-User-Management.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-User-Management-reference.md"
     # },
     # #### MLOps API Pipeline Management
     # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Pipeline-Management.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Pipeline-Management-reference.md"
     # },
     # #### MLOps API Model Management
     # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
     # },
     # #### MLOps API Assays
     # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
     # },
@@ -85,7 +85,7 @@ fileList = [
     # {
     #     "inputFile": "development/sdk-install-guides/databricks-azure-sdk-install/install-wallaroo-sdk-databricks-azure-guide.ipynb",
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-sdk-guides",
-    #     "outputFile": "install-wallaroo-sdk-azureml-guide-reference.md"
+    #     "outputFile": "install-wallaroo-sdk-databricks-azure-guide-reference.md"
     # },
     # #### SDK Google Vertex Install
     # {
@@ -130,44 +130,26 @@ fileList = [
     #     "outputDir": "/reference//wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
     #     "outputFile": "wallaroo-inference-server-llama2-reference.md"
     # },
-    # ## LLMs
-    # ### Autoscale Triggers with Llamacpp
-    # {
-    #     "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
-    #     "outputDir": "/reference/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "autoscale_triggers_llamacpp_sdk-reference.md"
-    # },
-    # ### Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
-    #     "outputDir": "/reference//wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
-    # },
-    # ## Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
-    #     "outputDir": "/reference//wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
-    # },
-    # ## IBM Granite 8B Code Instruct
-    # {
-    #     "inputFile": "wallaroo-llms/ibm-granite-llms/deployment_ibm_granite_8b_code_instruct.ipynb",
-    #     "outputDir": "/reference/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
-    # },
     # ## Model Operations
     # ### Model Deploy
     # #### Model Deploy by Framework
-    # ##### BYOP VGG16
+    # ##### BYOP
+    # ###### BYOP VGG16
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP/arbitrary-python-upload-tutorials/00_wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP/arbitrary-python-upload-tutorials/00-wallaroo-upload-arbitrary-python-vgg16-model-generation.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP",
-    #     "outputFile": "00_wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
+    #     "outputFile": "00-wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP/arbitrary-python-upload-tutorials/01-wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP",
-    #     "outputFile": "01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+    #     "outputFile": "01-wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
+    # },
+    # ###### BYOP CV
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP/wallaroo-model-upload-deploy-byop-cv-tutorial/wallaroo-model-upload-deploy-byop-cv-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/BYOP",
+    #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
     # ##### Hugging Face Clip Vit
     # {
@@ -177,20 +159,20 @@ fileList = [
     # },
     # ##### Hugging Face Upload
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero_shot_classification.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face/hugging-face-upload-tutorials/wallaroo-api-upload-hf-zero-shot-classification.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face",
-    #     "outputFile": "wallaroo-api-upload-hf-zero_shot_classification-reference.md"
+    #     "outputFile": "wallaroo-api-upload-hf-zero-shot-classification-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face/hugging-face-upload-tutorials/wallaroo-sdk-upload-hf-zero_shot_classification.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face/hugging-face-upload-tutorials/wallaroo-sdk-upload-hf-zero-shot-classification.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/hugging-face",
-    #     "outputFile": "wallaroo-sdk-upload-hf-zero_shot_classification-reference.md"
+    #     "outputFile": "wallaroo-sdk-upload-hf-zero-shot-classification-reference.md"
     # },
     # ##### Keras
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/keras/wallaroo-upload-keras_sequential_model_single_io.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/keras/wallaroo-upload-keras-sequential-model-single-io.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/keras",
-    #     "outputFile": "wallaroo-upload-keras_sequential_model_single_io-reference.md"
+    #     "outputFile": "wallaroo-upload-keras-sequential-model-single-io-reference.md"
     # },
     # ##### MLFlow
     # {
@@ -207,15 +189,15 @@ fileList = [
     # ##### ONNX
     # ##### Demand Curve
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx/demand_curve/demandcurve_demo.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx/demand-curve/demandcurve-demo.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx",
-    #     "outputFile": "demand_curve/demandcurve_demo-reference.md"
+    #     "outputFile": "demandcurve-demo-reference.md"
     # },
     # ##### IMDB
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx/imdb/imdb_sample.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx/imdb/imdb-sample.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/onnx",
-    #     "outputFile": "imdb_sample-reference.md"
+    #     "outputFile": "imdb-sample-reference.md"
     # },
     # ##### Multi Input Demo
     # {
@@ -323,104 +305,104 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-framework/xgboost",
     #     "outputFile": "wallaroo-sdk-upload-xbg-rf-regressor-reference.md"
     # },
-    # #### Model Deploy by Use Case
-    # ##### Automatic Speech Detection
+    # # #### Model Deploy by Use Case
+    # # ##### Automatic Speech Detection
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/automatic-speech-detection/wallaroo-whisper_demo.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/automatic-speech-detection/wallaroo-whisper-demo.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case",
-    #     "outputFile": "wallaroo-whisper_demo-reference.md"
+    #     "outputFile": "wallaroo-whisper-demo-reference.md"
     # },
-    # ##### Computer Vision
+    # # ##### Computer Vision
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/00_computer_vision_tutorial_intro.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/00-computer-vision-tutorial-intro.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision",
-    #     "outputFile": "00_computer_vision_tutorial_intro-reference.md"
+    #     "outputFile": "00-computer-vision-tutorial-intro-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/01_computer_vision_tutorial_mobilenet.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/01-computer-vision-tutorial-mobilenet.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision",
-    #     "outputFile": "01_computer_vision_tutorial_mobilenet-reference.md"
+    #     "outputFile": "01-computer-vision-tutorial-mobilenet-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/02_computer_vision_tutorial_resnet50.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/02-computer-vision-tutorial-resnet50.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision",
-    #     "outputFile": "02_computer_vision_tutorial_resnet50-reference.md"
+    #     "outputFile": "02-computer-vision-tutorial-resnet50-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/03_computer_vision_tutorial_shadow_deploy.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision/03-computer-vision-tutorial-shadow-deploy.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision",
-    #     "outputFile": "03_computer_vision_tutorial_shadow_deploy-reference.md"
+    #     "outputFile": "03-computer-vision-tutorial-shadow-deploy-reference.md"
     # },
-    # ##### Computer Vision Healthcare Imaging
+    # # ##### Computer Vision Healthcare Imaging
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/00_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/00-computer-vision-mitochondria-imaging-example.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging",
-    #     "outputFile": "00_computer-vision-mitochondria-imaging-example-reference.md"
+    #     "outputFile": "00-computer-vision-mitochondria-imaging-example-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/01_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/01-computer-vision-mitochondria-imaging-example.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging",
-    #     "outputFile": "01_computer-vision-mitochondria-imaging-example-reference.md"
+    #     "outputFile": "01-computer-vision-mitochondria-imaging-example-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/02_computer-vision-mitochondria-imaging-example.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging/02-computer-vision-mitochondria-imaging-example.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-mitochondria-imaging",
-    #     "outputFile": "02_computer-vision-mitochondria-imaging-example-reference.md"
+    #     "outputFile": "02-computer-vision-mitochondria-imaging-example-reference.md"
     # },
-    # ##### Computer Vision Yolo8
+    # # ##### Computer Vision Yolo8
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/computer-vision-yolov8/computer-vision-yolov8-demonstration.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case",
     #     "outputFile": "computer-vision-yolov8-demonstration-reference.md"
     # },
-    # ##### Notebooks in Production
+    # # ##### Notebooks in Production
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod/00_notebooks_in_prod_introduction.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod",
-    #     "outputFile": "00_notebooks_in_prod_introduction-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod/00-notebooks-in-prod-introduction.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod",
+    #     "outputFile": "00-notebooks-in-prod-introduction-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod/01_notebooks_in_prod_explore_and_train.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod",
-    #     "outputFile": "01_notebooks_in_prod_explore_and_train-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod/01-notebooks-in-prod-explore-and-train.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod",
+    #     "outputFile": "01-notebooks-in-prod-explore-and-train-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod/02_notebooks_in_prod_automated_training_process.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod",
-    #     "outputFile": "02_notebooks_in_prod_automated_training_process-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod/02-notebooks-in-prod-automated-training-process.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod",
+    #     "outputFile": "02-notebooks-in-prod-automated-training-process-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod/03_notebooks_in_prod_deploy_model_python.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod",
-    #     "outputFile": "03_notebooks_in_prod_deploy_model_python-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod/03-notebooks-in-prod-deploy-model-python.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod",
+    #     "outputFile": "03-notebooks-in-prod-deploy-model-python-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod/04_notebooks_in_prod_regular_batch_inferences.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks_in_prod",
-    #     "outputFile": "04_notebooks_in_prod_regular_batch_inferences-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod/04-notebooks-in-prod-regular-batch-inferences.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/notebooks-in-prod",
+    #     "outputFile": "04-notebooks-in-prod-regular-batch-inferences-reference.md"
     # },
-    # ##### Multiple Replicas Tutorial
+    # # ##### Multiple Replicas Tutorial
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial/00_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial",
-    #     "outputFile": "00_multiple_replicas_forecast-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial/01_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial",
-    #     "outputFile": "01_multiple_replicas_forecast-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial/00-multiple-replicas-forecast.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial",
+    #     "outputFile": "00-multiple-replicas-forecast-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial/02_multiple_replicas_forecast.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline_multiple_replicas_forecast_tutorial",
-    #     "outputFile": "02_multiple_replicas_forecast-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial/01-multiple-replicas-forecast.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial",
+    #     "outputFile": "01-multiple-replicas-forecast-reference.md"
     # },
-    # ### Model Inference
-    # #### Async Infer
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-inference/aloha_async_infer/aloha_async_infer_tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial/02-multiple-replicas-forecast.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-deploy/packaging-and-deployment-by-use-case/pipeline-multiple-replicas-forecast-tutorial",
+    #     "outputFile": "02-multiple-replicas-forecast-reference.md"
+    # },
+    # # ### Model Inference
+    # # #### Async Infer
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-inference/aloha-async-infer/aloha-async-infer-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-inference",
-    #     "outputFile": "aloha_async_infer_tutorial-reference.md"
+    #     "outputFile": "aloha-async-infer-tutorial-reference.md"
     # },
     # #### Parallel Infer
     # {
@@ -430,9 +412,9 @@ fileList = [
     # },
     # #### Inference Results aka Pipeline Logs
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-inference/pipeline-log-tutorial/pipeline_log_tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-inference/pipeline-log-tutorial/pipeline-log-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-inference",
-    #     "outputFile": "pipeline_log_tutorial-reference.md"
+    #     "outputFile": "pipeline-log-tutorial-reference.md"
     # },
     # #### Inference Endpoints
     # {
@@ -454,15 +436,15 @@ fileList = [
     # },
     # #### Model Hot Swap
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-management/model_hot_swap/wallaroo_hot_swap_tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-management/model-hot-swap/wallaroo-hot-swap-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-management",
-    #     "outputFile": "wallaroo_hot_swap_tutorial-reference.md"
+    #     "outputFile": "wallaroo-hot-swap-tutorial-reference.md"
     # },
     # #### Shadow Deploy
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-management/shadow_deploy/shadow_deployment_tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-management/shadow-deploy/shadow-deployment-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-management",
-    #     "outputFile": "shadow_deployment_tutorial-reference.md"
+    #     "outputFile": "shadow-deployment-tutorial-reference.md"
     # },
     # #### Tag Management
     # {
@@ -471,12 +453,344 @@ fileList = [
     #     "outputFile": "wallaroo-tags-guide-reference.md"
     # },
     # ### Model Observability
-    # ##### Houseprice Saga
+    # ##### Anomaly Detection
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/model-management/wallaroo-tag-management/wallaroo-tags-guide.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-management",
-    #     "outputFile": "wallaroo-tags-guide-reference.md"
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-observability/model-observability-anomaly-detection-ccfraud-sdk-tutorial/model-observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-observability",
+    #     "outputFile": "model-observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
     # },
+    # ##### Model Drift aka Assays
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-observability/wallaro-model-observability-assays/wallaroo-model-observability-assays.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-observability",
+    #     "outputFile": "wallaroo-model-observability-assays-reference.md"
+    # },
+    # ### Model Automation
+    # #### Automation and Connections Tutorial
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/automation-and-connections-tutorial/data-connectors-and-orchestrators-simple-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "data-connectors-and-orchestrators-simple-tutorial-reference.md"
+    # },
+    # #### MLOps API Connections and Automations with Google BigQuery
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/connection-api-bigquery-tutorial/connection-api-bigquery-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "connection-api-bigquery-tutorial-reference.md"
+    # },
+    # ##### MLOps API Connections
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/orchestration-api-simple-tutorial/data-orchestrators-api-simple-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "data-orchestrators-api-simple-tutorial-reference.md"
+    # },
+    # ##### Orchestrations and Connection with BigQuery
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/orchestration-sdk-bigquery-houseprice-tutorial/orchestration-sdk-bigquery-houseprice-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "orchestration-sdk-bigquery-houseprice-tutorial-reference.md"
+    # },
+    # ##### Orchestrations and Connections Comprehensive Tutorial
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/orchestration-sdk-comprehensive-tutorial/data-connectors-and-orchestrators-comprehensive-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "data-connectors-and-orchestrators-comprehensive-tutorial-reference.md"
+    # },
+    # ##### Multiple Pipeline Deployment with Orchestrations
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/orchestration-sdk-multiple-pipelines-tutorials/orchestration-sdk-multiple-pipelines-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "orchestration-sdk-multiple-pipelines-tutorial-reference.md"
+    # },
+    # ##### Orchestrations and Connections Run Continuously
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/model-automation/orchestration-sdk-run-continuously-tutorial/orchestration-sdk-run-continuously-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/model-automation",
+    #     "outputFile": "orchestration-sdk-run-continuously-tutorial-reference.md"
+    # },
+    ## LLMs
+    ### LLM Deploy
+    #### IBM Granite 8B Code Instruct Large Language Model (LLM) with GPU
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/ibm-granite-llms/deployment-ibm-granite-8b-code-instruct.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy",
+        "outputFile": "deployment-ibm-granite-8b-code-instruct-reference.md"
+    },
+    #### Llamacpp Deploy on IBM Power10 Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/power10-deploy-llamacpp/llamacpp-sdk-power.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy",
+        "outputFile": "llamacpp-sdk-power-reference.md"
+    },
+    #### Inference Endpoint Tutorials
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+        "outputFile": "managed-inference-endpoint-vertex-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+        "outputFile": "managed-inference-endpoint-openai-reference.md"
+    },
+    ### LLM Monitoring
+    #### LLM Harmful Language Listener Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-monitoring/llamacpp-with-safeguards/llamacpp-sdk-with-safeguards.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+        "outputFile": "llamacpp-sdk-with-safeguards-reference.md"
+    },
+    #### LLM Validation Listener Example
+    {
+        "inputFile": "wallaroo-llms/llm-monitoring/llm-in-line-monitoring/summary-quality-revised.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+        "outputFile": "summary-quality-revised-reference.md"
+    },
+    #### LLM Listener Monitoring with Llama V3 Instruct
+    {
+        "inputFile": "wallaroo-llms/llm-monitoring/llm-listener-monitoring/llm-monitoring-orchestration-setup.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+        "outputFile": "llm-monitoring-orchestration-setup-reference.md"
+    },
+    ### RAG LLMs
+    #### RAG LLMs: Automated Vector Database Enrichment in Wallaroo
+    {
+        "inputFile": "wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/Batch-Embedding-Computation.ipynb",
+        "outputDir": "/reference/wallaroo-llms/rag-llms",
+        "outputFile": "Batch-Embedding-Computation-reference.md"
+    },
+    #### RAG LLMs: Inference in Wallaroo
+    {
+        "inputFile": "wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/RAG-LLM-Inferencing.ipynb",
+        "outputDir": "/reference/wallaroo-llms/rag-llms",
+        "outputFile": "RAG-LLM-Inferencing-reference.md"
+    },
+    ### Performance Optimizations
+    #### RAG LLMs: Inference in Wallaroo
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/autoscale-triggers-llamacpp/autoscale-triggers-llamacpp-sdk.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
+    },
+    #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
+    },
+    #### Dynamic Batching with Llama 3 8B Instruct vLLM Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
+    },
+    #### Llama 3 8B Instruct Inference with vLLM
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/llama3-8b-instruct-vllm/deployment-llama3-8b-instruct-vllm.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "deployment-llama3-8b-instruct-vllm-reference.md"
+    },
+    ## Run Anywhere
+    ### Inference on ARM
+    #### Custom Model ARM Deployment Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
+    },
+    #### Classification Cybersecurity with Arm Architecture
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-classification-cybersecurity/arm-classification-cybersecurity.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "arm-classification-cybersecurity-reference.md"
+    },
+    #### Classification Financial Services with Arm Architecture
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-classification-finserv/arm-classification-finserv.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "arm-classification-finserv-reference.md"
+    },
+    #### Computer Vision Yolov8n ARM Deployment in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "wallaroo-arm-cv-yolov8-demonstration-reference.md"
+    },
+    #### Computer Vision Yolov8n ARM Deployment in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-cv-arrow/arm-computer-vision-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "arm-computer-vision-demonstration-reference.md"
+    },
+    #### LLM Summarization ARM Edge Deployment
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-llm-summarization/wallaroo-arm-llm-summarization-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
+        "outputFile": "wallaroo-arm-llm-summarization-demonstration-reference.md"
+    },
+    ### GPU
+    #### Large Language Model with GPU Pipeline Deployment in Wallaroo Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/gpu/gpu-deployment/wallaroo-llm-with-gpu-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/gpu",
+        "outputFile": "wallaroo-llm-with-gpu-demonstration-reference.md"
+    },
+    #### LLM Summarization GPU Edge Deployment on Cuda
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/gpu/wallaroo-gpu-llm-summarization/wallaroo-gpu-llm-summarization-demonstration-accelerator.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/gpu",
+        "outputFile": "wallaroo-gpu-llm-summarization-demonstration-accelerator-reference.md"
+    },
+    #### LLM Summarization GPU Edge Deployment Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/gpu/wallaroo-gpu-llm-summarization/wallaroo-gpu-llm-summarization-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/gpu",
+        "outputFile": "wallaroo-gpu-llm-summarization-demonstration-reference.md"
+    },
+    ### Model Management
+    #### In-Line Model Updates at the Edge Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/model-management/in-line-edge-model-replacements-tutorial/in-line-edge-model-replacements-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/model-management",
+        "outputFile": "in-line-edge-model-replacements-tutorial-reference.md"
+    },
+    ### Observability
+    #### Wallaroo Edge Observability with Assays Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/observability/edge-observability-assays/edge-observability-assays.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/observability",
+        "outputFile": "edge-observability-assays-reference.md"
+    },
+    #### Model Drift Detection for Edge Deployments Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/observability/edge-observability-assays-complete/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/observability",
+        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
+    },
+    #### Classification Financial Services Edge Deployment Demonstration
+    {
+        "inputFile": "wallaroo-run-anywhere/observability/edge-observability-classification-finserv/edge-observabilty-classification-finserv-deployment.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/observability",
+        "outputFile": "edge-observabilty-classification-finserv-deployment-reference.md"
+    },
+    #### Edge Deployment and Observability via the Wallaroo MLOps API
+    {
+        "inputFile": "wallaroo-run-anywhere/observability/edge-observability-classification-finserv-api/edge-observability-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/observability",
+        "outputFile": "edge-observability-classification-finserv-deployment-via-api-reference.md"
+    },
+    #### Airgapped Edge Observability with No/Low Connection Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/observability/edge-observability-low-no-connection/edge-observability-low-no-connection-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/observability",
+        "outputFile": "edge-observability-low-no-connection-tutorial-reference.md"
+    },
+    ### Inference on Any Hardware
+    #### ARM
+    ##### Run Anywhere for ARM Architecture Tutorial: Custom Inference Computer Vision with Resnet50
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    },
+    ##### Run Anywhere for ARM Architecture Tutorial: Hugging Face Summarization Model
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    },
+    ##### Run Anywhere for ARM Architecture Tutorial: House Price Predictor Model
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
+    },
+    #### Jetson
+    ##### Run Anywhere With Jetson Acceleration Tutorial: Aloha Model
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/jetson/run-anywhere-acceleration-aloha.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/jetson",
+        "outputFile": "run-anywhere-acceleration-aloha-reference.md"
+    },
+    #### power10
+    ##### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    },
+    ##### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 with Post Processing for IBM Power10
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
+        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    },
+    #### x86
+    ##### U-Net for Brain Segmentation Deployment in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-unet-brain-segmentation-demonstration/unet-run-anywhere-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "unet-run-anywhere-demonstration-reference.md"
+    },
+    ##### Custom Model Edge Deploy
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-arbitrary-python/edge-arbitrary-python-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-arbitrary-python-demonstration-reference.md"
+    },
+    ##### Classification Cybersecurity Services Edge Deployment Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-classification-cybersecurity-deployment-reference.md"
+    },
+    ##### Classification Financial Services Edge Deployment Tutorial
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-classification-finserv-deployment-reference.md"
+    },
+    ##### Classification Financial Services Edge Deployment Demonstration via API
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-classification-finserv-deployment-via-api-reference.md"
+    },
+    ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
+    },
+    ##### Image Detection for Health Care Computer Vision Tutorial Part 00: Prerequisites
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images/00_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images",
+        "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images",
+        "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    },
+    ##### Summarization Text Edge Deployment Demonstration
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-llm-summarization/edge-hf-summarization.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-hf-summarization-reference.md"
+    },
+    ##### Computer Vision for Object Detection for Edge Deployments in Retail
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-observability-cv/cv-retail-edge-observability.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "cv-retail-edge-observability-reference.md"
+    },
+
+
+
+
+
+
 
 
 ]
@@ -498,10 +812,10 @@ def format(outputdir, document_file):
     document = re.sub('wallaroocommunity.ninja', 'wallarooexample.ai', document)
 
     # fix image directories
-    # ](01_notebooks_in_prod_explore_and_train-reference_files
+    # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.4', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2025.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2025.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
