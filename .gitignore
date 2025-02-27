@@ -44,5 +44,5 @@ wallaroo-model-deploy-and-serve/hf-clip-vit-base.zip
 wallaroo-model-deploy-and-serve/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
 environment.env
 wallaroo-llms/llamacpp-with-safeguards/credentials.json
-wallaroo-llms/llamacpp-with-safeguards/models/model-auto-conversion_auto-packaging_byop_safeguards listeners_byop_llamacpp_safeguards.zip
-wallaroo-llms/llamacpp-with-safeguards/models/model-auto-conversion_auto-packaging_byop_safeguards listeners_byop-safeguards-harmful.zip
+model-auto-conversion_auto-packaging_byop_safeguards listeners_byop_llamacpp_safeguards.zip
+model-auto-conversion_auto-packaging_byop_safeguards listeners_byop-safeguards-harmful.zip
