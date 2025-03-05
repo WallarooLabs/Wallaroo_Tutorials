@@ -9,11 +9,6 @@ from mac.inference import Inference
 from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
 
-pip_command = (
-    f'{sys.executable} -m pip install https://github.com/vllm-project/vllm/releases/download/v0.7.3/vllm-0.7.3+cu121-cp310-cp310-manylinux1_x86_64.whl --extra-index-url https://download.pytorch.org/whl/cu121'
-)
-
-subprocess.check_call(pip_command, shell=True)
 
 from vllm import LLM, SamplingParams
 
