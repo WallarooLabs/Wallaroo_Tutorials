@@ -10,7 +10,10 @@ from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
 
 
-from vllm import LLM, SamplingParams
+from vllm import SamplingParams, AsyncLLMEngine
+from vllm.engine.arg_utils import AsyncEngineArgs
+import uuid
+
 
 class VLLMInference(Inference):
     @property
