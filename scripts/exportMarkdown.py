@@ -567,11 +567,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    # {
-    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
     # ## optimize
     # ### ab testing
     # {
@@ -741,11 +741,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
-    #     "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
+        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
+    },
     # ### Run Anywhere for ARM Architecture Tutorial: House Price Predictor Model
     # {
     #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
