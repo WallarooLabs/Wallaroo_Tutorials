@@ -567,11 +567,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    {
-        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_model_observability_assays-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
+    # },
     # ## optimize
     # ### ab testing
     # {
@@ -808,11 +808,11 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
     # ## Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
+    },
     # ## Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -820,11 +820,11 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
     # },
     # ## Llama 3 8B Instruct Inference with vLLM
-    # {
-    #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+    },
     # ## Autoscale Triggers with Llamacpp
     # {
     #     "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
