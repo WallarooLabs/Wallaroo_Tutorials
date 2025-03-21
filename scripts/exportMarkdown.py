@@ -25,11 +25,11 @@ docs_directory = "docs/markdown"
 
 fileList = [
     ### wallaroo 101
-    # {
-    #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-    #     "outputDir": "/wallaroo-101",
-    #     "outputFile": "wallaroo-101-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+        "outputDir": "/wallaroo-101",
+        "outputFile": "wallaroo-101-reference.md"
+    },
     # # ## deploy and serve
     # ### parallel infer with aloha
     # {
@@ -941,6 +941,11 @@ def format(outputdir, document_file):
     document = re.sub("'EDGE_BUNDLE': '.*?'", 
                       "'EDGE_BUNDLE': 'abcde'", 
                       document)
+    
+    # remove bearer tokens
+    document = re.sub('"Authorization: Bearer .*?"', 
+                      '"Authorization: Bearer abcde"', 
+                      document)
 
    # document = re.sub('![png](', 'bob', document)
 
@@ -971,7 +976,11 @@ def move_images(image_directory):
 
 def main():
     for currentFile in fileList:
-        convert_cmd = f'jupyter nbconvert --to markdown --output-dir {docs_directory}{currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
+        convert_cmd = f'jupyter nbconvert \
+                 --to markdown \
+                 --output-dir {docs_directory}{currentFile["outputDir"]} \
+                 --output {currentFile["outputFile"]} {currentFile["inputFile"]} \
+                 --TemplateExporter.extra_template_basedirs=scripts/nbconvert/templates'
         print(convert_cmd)
         os.system(convert_cmd)
         # format(f'{docs_directory}{currentFile["outputDir"]}/{currentFile["outputFile"]}')
