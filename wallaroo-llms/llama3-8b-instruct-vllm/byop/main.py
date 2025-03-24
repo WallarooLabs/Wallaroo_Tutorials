@@ -8,14 +8,9 @@ from mac.config.inference import CustomInferenceConfig
 from mac.inference import Inference
 from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
-
-pip_command = (
-    f'{sys.executable} -m pip install https://github.com/vllm-project/vllm/releases/download/v0.5.2/vllm-0.5.2+cu118-cp310-cp310-manylinux1_x86_64.whl --extra-index-url https://download.pytorch.org/whl/cu118'
-)
-
-subprocess.check_call(pip_command, shell=True)
-
-from vllm import LLM, SamplingParams
+from vllm import SamplingParams, AsyncLLMEngine
+from vllm.engine.arg_utils import AsyncEngineArgs
+import uuid
 
 class VLLMInference(Inference):
     @property
