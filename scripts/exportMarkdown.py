@@ -25,11 +25,11 @@ docs_directory = "docs/markdown"
 
 fileList = [
     ### wallaroo 101
-    # {
-    #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-    #     "outputDir": "/wallaroo-101",
-    #     "outputFile": "wallaroo-101-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+        "outputDir": "/wallaroo-101",
+        "outputFile": "wallaroo-101-reference.md"
+    },
     # # ## deploy and serve
     # ### parallel infer with aloha
     # {
@@ -567,11 +567,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    # {
-    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
     # ## optimize
     # ### ab testing
     # {
@@ -741,11 +741,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
-    #     "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
+        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
+    },
     # ### Run Anywhere for ARM Architecture Tutorial: House Price Predictor Model
     # {
     #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
@@ -808,11 +808,11 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
     # ## Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
+    },
     # ## Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -820,11 +820,11 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
     # },
     # ## Llama 3 8B Instruct Inference with vLLM
-    # {
-    #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-    #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+        "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+    },
     # ## Autoscale Triggers with Llamacpp
     # {
     #     "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
@@ -941,6 +941,11 @@ def format(outputdir, document_file):
     document = re.sub("'EDGE_BUNDLE': '.*?'", 
                       "'EDGE_BUNDLE': 'abcde'", 
                       document)
+    
+    # remove bearer tokens
+    document = re.sub('"Authorization: Bearer .*?"', 
+                      '"Authorization: Bearer abcde"', 
+                      document)
 
    # document = re.sub('![png](', 'bob', document)
 
@@ -971,7 +976,11 @@ def move_images(image_directory):
 
 def main():
     for currentFile in fileList:
-        convert_cmd = f'jupyter nbconvert --to markdown --output-dir {docs_directory}{currentFile["outputDir"]} --output {currentFile["outputFile"]} {currentFile["inputFile"]}'
+        convert_cmd = f'jupyter nbconvert \
+                 --to markdown \
+                 --output-dir {docs_directory}{currentFile["outputDir"]} \
+                 --output {currentFile["outputFile"]} {currentFile["inputFile"]} \
+                 --TemplateExporter.extra_template_basedirs=scripts/nbconvert/templates'
         print(convert_cmd)
         os.system(convert_cmd)
         # format(f'{docs_directory}{currentFile["outputDir"]}/{currentFile["outputFile"]}')
