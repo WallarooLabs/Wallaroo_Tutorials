@@ -52,9 +52,9 @@ fileList = [
     },
     #### MLOps API Model Management
     {
-        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-management.ipynb",
+        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
         "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-management-reference.md"
+        "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
     },
     #### MLOps API Assays
     {
@@ -141,9 +141,9 @@ fileList = [
         "outputFile": "00-wallaroo-upload-arbitrary-python-vgg16-model-generation-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/BYOP/arbitrary-python-upload-tutorials/01-wallaroo-upload-arbitrary-python-vgg16-deployment.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/BYOP/arbitrary-python-upload-tutorials/01-wallaroo-upload-arbitrary-python-vgg16-model-deployment.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/BYOP",
-        "outputFile": "01-wallaroo-upload-arbitrary-python-vgg16-deployment-reference.md"
+        "outputFile": "01-wallaroo-upload-arbitrary-python-vgg16-model-deployment-reference.md"
     },
     ###### BYOP CV
     {
@@ -455,15 +455,15 @@ fileList = [
     ### Model Observability
     ##### Anomaly Detection
     {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/observability-anomaly-detection-ccfraud-sdk-tutorial/observability-anomaly-detection-ccfraud-sdk-tutorial.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/observability/observability-anomaly-detection-sdk-tutorial/observability-anomaly-detection-sdk-tutorial.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "observability-anomaly-detection-ccfraud-sdk-tutorial-reference.md"
+        "outputFile": "observability-anomaly-detection-sdk-tutorial-reference.md"
     },
     ##### Model Drift aka Assays
     {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/wallaro-observability-assays/wallaroo-observability-assays.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/observability/wallaroo-model-observability-assays/wallaroo-model-observability-assays.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "wallaroo-observability-assays-reference.md"
+        "outputFile": "wallaroo-model-observability-assays-reference.md"
     },
     ### Model Automation
     #### Automation and Connections Tutorial
@@ -594,9 +594,9 @@ fileList = [
     ### Inference on ARM
     #### Custom Model ARM Deployment Tutorial
     {
-        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-deployment.ipynb",
+        "inputFile": "wallaroo-run-anywhere/inference/arm/wallaroo-arm-byop-vgg16/wallaroo-arm-arbitrary-python-vgg16-model-deployment.ipynb",
         "outputDir": "/reference/wallaroo-run-anywhere/inference/arm",
-        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-deployment-reference.md"
+        "outputFile": "wallaroo-arm-arbitrary-python-vgg16-model-deployment-reference.md"
     },
     #### Classification Cybersecurity with Arm Architecture
     {
@@ -650,9 +650,9 @@ fileList = [
     ### Model Management
     #### In-Line Model Updates at the Edge Tutorial
     {
-        "inputFile": "wallaroo-run-anywhere/management/in-line-edge-model-replacements-tutorial/in-line-edge-model-replacements-tutorial.ipynb",
+        "inputFile": "wallaroo-run-anywhere/model-management/inline-edge-model-replacements-tutorial/inline-edge-model-replacements-tutorial.ipynb",
         "outputDir": "/reference/wallaroo-run-anywhere/management",
-        "outputFile": "in-line-edge-model-replacements-tutorial-reference.md"
+        "outputFile": "inline-edge-model-replacements-tutorial-reference.md"
     },
     ### Observability
     #### Wallaroo Edge Observability with Assays Tutorial
