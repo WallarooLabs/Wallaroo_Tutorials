@@ -881,12 +881,7 @@ fileList = [
     #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     # },
     # # MLOps API
-    # ### MLOps API Assays
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
-    # },
+    
 
 
 ]
