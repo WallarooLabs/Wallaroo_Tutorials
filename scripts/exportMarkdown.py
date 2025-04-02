@@ -406,9 +406,9 @@ fileList = [
     },
     #### Parallel Infer
     {
-        "inputFile": "wallaroo-model-operations-tutorials/inference/parallel-inferences-sdk-aloha-tutorial/wallaroo-parallel-infer-sdk-with-aloha.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/inference/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
-        "outputFile": "wallaroo-parallel-infer-sdk-with-aloha-reference.md"
+        "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
     },
     #### Inference Results aka Pipeline Logs
     {
