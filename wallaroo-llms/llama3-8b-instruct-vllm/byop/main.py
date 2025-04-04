@@ -9,8 +9,8 @@ from mac.inference import Inference
 from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
 from vllm import SamplingParams
-#from vllm import AsyncLLMEngine
-#from vllm.engine.arg_utils import AsyncEngineArgs
+#from vllm import AsyncLLMEngine (not supported in 2024.4 for dynamic batching)
+#from vllm.engine.arg_utils import AsyncEngineArgs (not supported in 2024.4 for dynamic batching)
 import uuid
 
 class VLLMInference(Inference):
