@@ -9,7 +9,7 @@ from mac.inference import Inference
 from mac.inference.creation import InferenceBuilder
 from mac.types import InferenceData
 from vllm import SamplingParams, AsyncLLMEngine
-from vllm.engine.arg_utils import AsyncEngineArgs
+#from vllm.engine.arg_utils import AsyncEngineArgs
 import uuid
 
 class VLLMInference(Inference):
