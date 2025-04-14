@@ -455,15 +455,15 @@ fileList = [
     ### Model Observability
     ##### Anomaly Detection
     {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/observability-anomaly-detection-sdk-tutorial/observability-anomaly-detection-sdk-tutorial.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/observability/anomaly-detection-tutorial/anomaly-detection-tutorial.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "observability-anomaly-detection-sdk-tutorial-reference.md"
+        "outputFile": "anomaly-detection-tutorial-reference.md"
     },
     ##### Model Drift aka Assays
     {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/wallaroo-model-observability-assays/wallaroo-model-observability-assays.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/observability/model-observability-with-assays/model-observability-with-assays.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "wallaroo-model-observability-assays-reference.md"
+        "outputFile": "model-observability-with-assays-reference.md"
     },
     ### Model Automation
     #### Automation and Connections Tutorial
