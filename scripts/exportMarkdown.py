@@ -25,11 +25,11 @@ docs_directory = "docs/markdown"
 
 fileList = [
     ### wallaroo 101
-    {
-        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-        "outputDir": "/wallaroo-101",
-        "outputFile": "wallaroo-101-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+    #     "outputDir": "/wallaroo-101",
+    #     "outputFile": "wallaroo-101-reference.md"
+    # },
     # # ## deploy and serve
     # ### parallel infer with aloha
     # {
@@ -567,11 +567,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    {
-        "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-        "outputFile": "wallaroo_model_observability_assays-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
+    # },
     # ## optimize
     # ### ab testing
     # {
@@ -741,11 +741,11 @@ fileList = [
     #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
     #     "outputFile": "00_drift-detection-for-edge-deployments-tutorial-prep-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
-        "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/edge-observability-assays/01_drift-detection-for-edge-deployments-tutorial-examples.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere",
+    #     "outputFile": "01_drift-detection-for-edge-deployments-tutorial-examples-reference.md"
+    # },
     # ### Run Anywhere for ARM Architecture Tutorial: House Price Predictor Model
     # {
     #     "inputFile": "wallaroo-run-anywhere/edge-architecture-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
@@ -777,17 +777,17 @@ fileList = [
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
     # ### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    # },
     # ### ## Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 in Wallaroo Custom Model Framework for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/run-anywhere-power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-run-anywhere/power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    # },
     # ## tools
     # ### Wallaroo JSON Inference Data to DataFrame and Arrow Tutorials
     # {
@@ -808,11 +808,11 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup.md"
     # },
     # ## Dynamic Batching with Llama 3 8B Instruct LLM Tutorial
-    {
-        "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_vllm/llama3-8b-vllm-dynamic-batching-benchmarks.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llama3-8b-vllm-dynamic-batching-benchmarks-reference.md"
+    # },
     # ## Dynamic Batching with Llama 3 8B quantized with llama-cpp and dynamic batching on CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/dynamic_batching_tutorial_llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -820,11 +820,11 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-dynamic-batching-tutorial-reference.md"
     # },
     # ## Llama 3 8B Instruct Inference with vLLM
-    {
-        "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llama3-8b-instruct-vllm/deployment_llama3_8b_instruct_vllm.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "deployment_llama3_8b_instruct_vllm-reference.md"
+    # },
     # ## Autoscale Triggers with Llamacpp
     # {
     #     "inputFile": "wallaroo-llms/autoscale_triggers_llamacpp/autoscale_triggers_llamacpp_sdk.ipynb",
@@ -856,11 +856,11 @@ fileList = [
     #     "outputFile": "deployment_ibm_granite_8b_code_instruct-reference.md"
     # },
     # ## Llamacpp Deploy on IBM Power10 Tutorial
-    {
-        "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
-        "outputDir": "/wallaroo-tutorials/wallaroo-llms",
-        "outputFile": "llamacpp_sdk_power-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/power10-deploy-llamacpp/llamacpp_sdk_power.ipynb",
+    #     "outputDir": "/wallaroo-tutorials/wallaroo-llms",
+    #     "outputFile": "llamacpp_sdk_power-reference.md"
+    # },
     # ## Managed Inference Endpoint Models with OpenAI
     # {
     #     "inputFile": "wallaroo-llms/llm-managed-inference-endpoint/llm-managed-inference-endpoint-openai/managed-inference-endpoint-openai.ipynb",
@@ -881,12 +881,13 @@ fileList = [
     #     "outputFile": "install-wallaroo-sdk-standard-guide-reference.md"
     # },
     # # MLOps API
-    # ### MLOps API Assays
-    # {
-    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
-    # },
+    ## Assays
+    {
+        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    },
+    
 
 
 ]
