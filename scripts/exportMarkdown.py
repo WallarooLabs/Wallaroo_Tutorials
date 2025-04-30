@@ -882,12 +882,39 @@ fileList = [
     # },
     # # MLOps API
     ## Assays
+    # {
+    #     "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
+    #     "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+    # },
+    # ## Run Anywhere
+    # ### Infer
+    # #### Publish
+    # ##### YoloV8
     {
-        "inputFile": "development/mlops_api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
-        "outputDir": "/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
+        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
+        "outputDir": "/wallaroo-tutorials-run-anywhere/inference/publish",
+        "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
     },
-    
+    # ##### Unet
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
+        "outputDir": "/wallaroo-tutorials-run-anywhere/inference/publish",
+        "outputFile": "unet-run-anywhere-publish-reference.md"
+    },
+    # #### Deploy
+    # ##### YoloV8
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
+        "outputDir": "/wallaroo-tutorials-run-anywhere/inference/deploy",
+        "outputFile": "edge-computer-vision-yolov8-deploy-reference.md"
+    },
+    # ##### Unet
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-unet-brain-segmentation-deploy/unet-run-anywhere-deploy.ipynb",
+        "outputDir": "/wallaroo-tutorials-run-anywhere/inference/deploy",
+        "outputFile": "unet-run-anywhere-deploy-reference.md"
+    },
 
 
 ]
