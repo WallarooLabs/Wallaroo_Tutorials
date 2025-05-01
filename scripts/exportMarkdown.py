@@ -567,11 +567,11 @@ fileList = [
     #     "outputFile": "pipeline_api_log_tutorial_computer_vision-reference.md"
     # },
     # ### model observability assays single 
-    # {
-    #     "inputFile": "wallaroo-observe/wallaro-model-observability-assays/wallaroo_model_observability_assays.ipynb",
-    #     "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
-    #     "outputFile": "wallaroo_model_observability_assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-observe/model-observability-with-assays/model-observability-with-assays.ipynb",
+        "outputDir": "/wallaroo-tutorials/wallaroo-tutorials-observe",
+        "outputFile": "wallaroo_model_observability_assays-reference.md"
+    },
     # ## optimize
     # ### ab testing
     # {
