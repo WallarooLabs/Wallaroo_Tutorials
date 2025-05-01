@@ -1,0 +1,6 @@
+[
+  {
+    "inputs": "Wallaroo.AI is an AI platform that enables developers to build, deploy, and manage AI and machine learning models at scale. It provides a cloud-based infrastructure for building, training, and deploying AI models, as well as a set of tools and APIs for integrating AI into various applications.\n\nWallaroo.AI is designed to make it easy for developers to build and deploy AI models, regardless of their level of expertise in machine learning. It provides a range of features, including support for popular machine learning frameworks such as TensorFlow and PyTorch, as well as a set of pre-built AI models and APIs for common use cases such as image and speech recognition, natural language processing, and predictive analytics.\n\nWallaroo.AI is particularly well-suited for developers who are looking to build AI-powered applications, but may not have extensive expertise in machine learning or AI development. It provides a range of tools and resources to help developers get started with building AI-powered applications, including a cloud-based development environment, a set of pre-built AI models and APIs, and a range of tutorials and documentation.",
+    "top_k": 6
+  }
+]

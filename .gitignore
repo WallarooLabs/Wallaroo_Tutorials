@@ -37,12 +37,15 @@ resnet50_v1.onnx
 wallaroo-llms/llamav2/models/llama_byop_llamav2.zip
 wallaroo-llms/vector-database-embedding-with-ml-orchestrations/vector_db_orch.zip
 wallaroo-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
-wallaroo-model-deploy-and-serve/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-model-deployment-2024-02-fail.ipynb
-wallaroo-model-deploy-and-serve/computer-vision/01_computer_vision_tutorial_mobilenet-2024-2-test.ipynb
-wallaroo-model-deploy-and-serve/computer-vision/02_computer_vision_tutorial_resnet50-2024-2-test.ipynb
-wallaroo-model-deploy-and-serve/hf-clip-vit-base.zip
-wallaroo-model-deploy-and-serve/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
+wallaroo-deploy-and-serve/arbitrary-python-upload-tutorials/01_wallaroo-upload-arbitrary-python-vgg16-deployment-2024-02-fail.ipynb
+wallaroo-deploy-and-serve/computer-vision/01_computer_vision_tutorial_mobilenet-2024-2-test.ipynb
+wallaroo-deploy-and-serve/computer-vision/02_computer_vision_tutorial_resnet50-2024-2-test.ipynb
+wallaroo-deploy-and-serve/hf-clip-vit-base.zip
+wallaroo-deploy-and-serve/hf-clip-vit-base/models/clip-vit-base-patch-32.zip
 environment.env
 wallaroo-llms/llamacpp-with-safeguards/credentials.json
-wallaroo-llms/llamacpp-with-safeguards/models/model-auto-conversion_auto-packaging_byop_safeguards listeners_byop_llamacpp_safeguards.zip
-wallaroo-llms/llamacpp-with-safeguards/models/model-auto-conversion_auto-packaging_byop_safeguards listeners_byop-safeguards-harmful.zip
+model-auto-conversion_auto-packaging_byop_safeguards listeners_byop_llamacpp_safeguards.zip
+model-auto-conversion_auto-packaging_byop_safeguards listeners_byop-safeguards-harmful.zip
+wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/vector_db_orch.zip
+wallaroo-llms/rag-llms/vector-database-embedding-with-ml-orchestrations/models/byop_bge_base2.zip
+unitary-toxic-bert.zip

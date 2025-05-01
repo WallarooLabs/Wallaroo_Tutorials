@@ -34,8 +34,8 @@
 
 [ ] Verify images are replaced into /images where needed.
 [ ] Notebooks in prod:  Look for `/opt/conda/lib` and `<style>` to remove them.
-[ ] Notebooks in prod:  Replace `(01_notebooks_in_prod_explore_and_train-reference_files` with `(/images/wallaroo-tutorials/notebooks_in_prod/01_notebooks_in_prod_explore_and_train-reference_files`
-[ ] Notebooks in prod: Replace `(02_notebooks_in_prod_automated_training_process-reference_files` with `(/images/wallaroo-tutorials/notebooks_in_prod/02_notebooks_in_prod_automated_training_process-reference_files`
+[ ] Notebooks in prod:  Replace `(01_notebooks-in-prod_explore_and_train-reference_files` with `(/images/wallaroo-tutorials/notebooks-in-prod/01_notebooks-in-prod_explore_and_train-reference_files`
+[ ] Notebooks in prod: Replace `(02_notebooks-in-prod_automated_training_process-reference_files` with `(/images/wallaroo-tutorials/notebooks-in-prod/02_notebooks-in-prod_automated_training_process-reference_files`
 [ ] Replace:
 
 Check notebooks in prod - something still fishy there.

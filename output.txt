@@ -1,0 +1,3 @@
+
+            jupyter nbconvert                  --to markdown                  --output-dir docs/markdown/reference/wallaroo-101                  --output wallaroo-101-reference.md wallaroo-101/Wallaroo-101.ipynb                  --TemplateExporter.extra_template_basedirs=scripts/nbconvert/templates
+        
