@@ -1,5 +1,5 @@
 # %% [markdown]
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2025.1_tutorials/wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4_tutorials/wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints).
 # 
 # ## Wallaroo API Inference Tutorial
 # 
