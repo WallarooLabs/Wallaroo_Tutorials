@@ -312,6 +312,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
     #     "outputFile": "wallaroo-whisper-demo-reference.md"
     # },
+    # # ##### Sentiment Analysis
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/sentiment-analysis-hugging-face/sentiment-analysis-hugging-face-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
+        "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
+    },
     # # ##### Computer Vision
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision/00-computer-vision-tutorial-intro.ipynb",
