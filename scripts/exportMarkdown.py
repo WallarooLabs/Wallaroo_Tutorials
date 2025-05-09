@@ -424,14 +424,14 @@ fileList = [
     },
     #### Inference Endpoints
     {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-sdk-reference.md"
+        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+        "outputFile": "infer-sdk-reference.md"
     },
     {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
-        "outputFile": "wallaroo-model-endpoints-api-reference.md"
+        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+        "outputFile": "infer-api-reference.md"
     },
     # ### Model Management
     # #### AB Testing
