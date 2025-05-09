@@ -1,5 +1,5 @@
 # %% [markdown]
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/infer).
 # 
 # ## Wallaroo API Inference Tutorial
 # 
@@ -9,7 +9,7 @@
 # 
 # * `ccfraud.onnx`:  A pre-trained credit card fraud detection model.
 # * `data/cc_data_1k.arrow`, `data/cc_data_10k.arrow`: Sample testing data in Apache Arrow format with 1,000 and 10,000 records respectively.
-# * `wallaroo-model-endpoints-api.py`:  A code-only version of this tutorial as a Python script.
+# * `infer-api.py`:  A code-only version of this tutorial as a Python script.
 # 
 # This tutorial and sample data comes from the Machine Learning Group's demonstration on [Credit Card Fraud detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
 # 
@@ -17,7 +17,7 @@
 # 
 # The following is required for this tutorial:
 # 
-# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
+# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * `os`
 #   * `requests`
@@ -107,7 +107,7 @@ display(wl.auth.auth_header())
 # %% [markdown]
 # ## Create Workspace
 # 
-# In a production environment, the Wallaroo workspace that contains the pipeline and models would be created and deployed.  We will quickly recreate those steps using the MLOps API.  If the workspace and pipeline have already been created through the [Wallaroo SDK Inference Tutorial](https://docs.wallaroo.ai/wallaroo-tutorials/wallaroo-tutorial-features/wallaroo-model-endpoints/wallaroo-external-inference-tutorial/), then we can skip directly to [Deploy Pipeline](#deploy-pipeline).
+# In a production environment, the Wallaroo workspace that contains the pipeline and models would be created and deployed.  We will quickly recreate those steps using the MLOps API.  If the workspace and pipeline have already been created through the [Wallaroo SDK Inference Tutorial](https://docs.wallaroo.ai/wallaroo-tutorials/wallaroo-tutorial-features/infer/wallaroo-external-inference-tutorial/), then we can skip directly to [Deploy Pipeline](#deploy-pipeline).
 # 
 # Workspaces are created through the MLOps API with the `/v1/api/workspaces/create` command.  This requires the workspace name be provided, and that the workspace not already exist in the Wallaroo instance.
 # 

@@ -1,6 +1,6 @@
 # %% [markdown]
 # 
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/infer).
 # 
 # ## Wallaroo SDK Inference Tutorial
 # 
@@ -10,7 +10,7 @@
 # 
 # * `ccfraud.onnx`:  A pre-trained credit card fraud detection model.
 # * `data/cc_data_1k.arrow`, `data/cc_data_10k.arrow`: Sample testing data in Apache Arrow format with 1,000 and 10,000 records respectively.
-# * `wallaroo-model-endpoints-sdk.py`: A code-only version of this tutorial as a Python script.
+# * `infer-sdk.py`: A code-only version of this tutorial as a Python script.
 # 
 # This tutorial and sample data comes from the Machine Learning Group's demonstration on [Credit Card Fraud detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud).
 # 
@@ -18,7 +18,7 @@
 # 
 # The following is required for this tutorial:
 # 
-# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/)
+# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * [`pandas`](https://pypi.org/project/pandas/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -225,7 +225,7 @@ display(headers)
 # The Pipeline Inference URL is retrieved via the Wallaroo SDK with the Pipeline `._deployment._url()` method.
 # 
 # * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.
-#   * External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and [Model Endpoints](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-configuration/wallaroo-model-endpoints-guide/) are enabled in the Wallaroo configuration options.
+#   * External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and [Model Endpoints](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/) are enabled in the Wallaroo configuration options.
 
 # %%
 deploy_url = pipeline._deployment._url()
