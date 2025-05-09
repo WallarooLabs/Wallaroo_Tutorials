@@ -17,7 +17,7 @@
 # 
 # The following is required for this tutorial:
 # 
-# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
+# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://staging.docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * `os`
 #   * `requests`
