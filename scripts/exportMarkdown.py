@@ -313,11 +313,11 @@ fileList = [
     #     "outputFile": "wallaroo-whisper-demo-reference.md"
     # },
     # # ##### Sentiment Analysis
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/sentiment-analysis-hugging-face/sentiment-analysis-hugging-face-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
-        "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/sentiment-analysis-hugging-face/sentiment-analysis-hugging-face-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
+    #     "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
+    # },
     # # ##### Computer Vision
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision/00-computer-vision-tutorial-intro.ipynb",
@@ -405,34 +405,34 @@ fileList = [
     # },
     # # ### Model Inference
     # # #### Async Infer
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
-    #     "outputFile": "async-infer-tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+        "outputFile": "async-infer-tutorial-reference.md"
+    },
     # #### Parallel Infer
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
-    #     "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+        "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
+    },
     # #### Inference Results aka Pipeline Logs
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
-    #     "outputFile": "inference-log-tutorial-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+        "outputFile": "inference-log-tutorial-reference.md"
+    },
     # #### Inference Endpoints
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
-    #     "outputFile": "wallaroo-model-endpoints-sdk-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
-    #     "outputFile": "wallaroo-model-endpoints-api-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-sdk-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
+        "outputFile": "wallaroo-model-endpoints-api-reference.md"
+    },
     # ### Model Management
     # #### AB Testing
     # {
@@ -600,30 +600,30 @@ fileList = [
     # ### Infer
     # #### Publish
     # ##### U-Net for Brain Segmentation Publish in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-        "outputFile": "unet-run-anywhere-publish-reference.md"
-    },
-    # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-        "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
-    },
-    # #### Deploy
-    # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-unet-brain-segmentation-deploy/unet-run-anywhere-deploy.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
-        "outputFile": "unet-run-anywhere-deploy-reference.md"
-    },
-    ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
-        "outputFile": "edge-computer-vision-yolov8-deploy-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
+    #     "outputFile": "unet-run-anywhere-publish-reference.md"
+    # },
+    # # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
+    #     "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
+    # },
+    # # #### Deploy
+    # # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-unet-brain-segmentation-deploy/unet-run-anywhere-deploy.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
+    #     "outputFile": "unet-run-anywhere-deploy-reference.md"
+    # },
+    # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
+    #     "outputFile": "edge-computer-vision-yolov8-deploy-reference.md"
+    # },
     # ### Inference on ARM
     # #### Custom Model ARM Deployment Tutorial
     # {
