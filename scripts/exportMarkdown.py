@@ -406,31 +406,31 @@ fileList = [
     # # ### Model Inference
     # # #### Async Infer
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/inference/async-infer/async-infer-tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
     #     "outputFile": "async-infer-tutorial-reference.md"
     # },
     # #### Parallel Infer
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/inference/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
     #     "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
     # },
     # #### Inference Results aka Pipeline Logs
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/inference/inference-log-tutorial/inference-log-tutorial.ipynb",
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference",
     #     "outputFile": "inference-log-tutorial-reference.md"
     # },
     # #### Inference Endpoints
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints",
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-sdk.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
     #     "outputFile": "wallaroo-model-endpoints-sdk-reference.md"
     # },
     # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/inference/wallaroo-model-endpoints",
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints/wallaroo-model-endpoints-api.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints",
     #     "outputFile": "wallaroo-model-endpoints-api-reference.md"
     # },
     # ### Model Management
@@ -467,9 +467,9 @@ fileList = [
     # },
     # ##### Model Drift aka Assays
     {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/model-observability-with-assays/model-observability-with-assays.ipynb",
+        "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
         "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "model-observability-with-assays-reference.md"
+        "outputFile": "model-drift-detection-with-assays-reference.md"
     },
     # ### Model Automation
     # #### Automation and Connections Tutorial
