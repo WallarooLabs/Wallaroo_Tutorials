@@ -405,34 +405,34 @@ fileList = [
     # },
     # # ### Model Inference
     # # #### Async Infer
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "async-infer-tutorial-reference.md"
-    },
-    # #### Parallel Infer
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
-    },
-    # #### Inference Results aka Pipeline Logs
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "inference-log-tutorial-reference.md"
-    },
-    # #### Inference Endpoints
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-        "outputFile": "infer-sdk-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-        "outputFile": "infer-api-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "async-infer-tutorial-reference.md"
+    # },
+    # # #### Parallel Infer
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
+    # },
+    # # #### Inference Results aka Pipeline Logs
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "inference-log-tutorial-reference.md"
+    # },
+    # # #### Inference Endpoints
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+    #     "outputFile": "infer-sdk-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+    #     "outputFile": "infer-api-reference.md"
+    # },
     # ### Model Management
     # #### AB Testing
     # {
@@ -465,12 +465,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
     #     "outputFile": "anomaly-detection-tutorial-reference.md"
     # },
-    # ##### Model Drift aka Assays
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "model-drift-detection-with-assays-reference.md"
-    },
+    # # ##### Model Drift aka Assays
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+    #     "outputFile": "model-drift-detection-with-assays-reference.md"
+    # },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
@@ -578,6 +578,18 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
+    # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-custom-llama.md"
+    },
+    # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-standard-llama/continuous-batching-standard-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-standard-llama-reference.md"
+    },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -839,6 +851,11 @@ def format(outputdir, document_file):
 
     # remove gib
     document = re.sub('gib.bhojraj@wallaroo.ai', 
+                      'sample.user@wallaroo.ai', 
+                      document)
+    
+    # remove younes
+    document = re.sub('younes.amar@wallaroo.ai', 
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release
