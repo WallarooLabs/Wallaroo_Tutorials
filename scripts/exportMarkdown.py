@@ -582,7 +582,7 @@ fileList = [
     {
         "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
         "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-custom-llama.md"
+        "outputFile": "continuous-batching-custom-llama-reference.md"
     },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
     {
