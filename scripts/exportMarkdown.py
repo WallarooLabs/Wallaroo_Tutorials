@@ -579,17 +579,17 @@ fileList = [
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
     # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-    #     "outputFile": "continuous-batching-custom-llama-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-custom-llama-reference.md"
+    },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-standard-llama/continuous-batching-standard-llama.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-    #     "outputFile": "continuous-batching-standard-llama-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-standard-llama/continuous-batching-standard-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-standard-llama-reference.md"
+    },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -795,29 +795,29 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images",
     #     "outputFile": "00_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images",
-        "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images/01_computer-vision-mitochondria-imaging-edge-deployment-example.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-cv-healthcare-images",
+    #     "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
+    # },
     # ##### Summarization Text Edge Deployment Demonstration
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-llm-summarization/edge-hf-summarization.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-        "outputFile": "edge-hf-summarization-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-llm-summarization/edge-hf-summarization.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "edge-hf-summarization-reference.md"
+    # },
     # ##### Computer Vision for Object Detection for Edge Deployments in Retail
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-observability-cv/cv-retail-edge-observability.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-        "outputFile": "cv-retail-edge-observability-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-observability-cv/cv-retail-edge-observability.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "cv-retail-edge-observability-reference.md"
+    # },
     # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-        "outputFile": "edge-computer-vision-yolov8-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "edge-computer-vision-yolov8-reference.md"
+    # },
 
 
 
