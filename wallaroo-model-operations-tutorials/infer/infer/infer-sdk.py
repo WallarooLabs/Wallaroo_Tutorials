@@ -1,6 +1,6 @@
 # %% [markdown]
 # 
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/infer).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024_tutorials/wallaroo-model-operations-tutorials/infer/infer).
 # 
 # ## Wallaroo SDK Inference Tutorial
 # 
