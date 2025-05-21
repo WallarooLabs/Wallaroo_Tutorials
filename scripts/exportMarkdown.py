@@ -466,11 +466,11 @@ fileList = [
     #     "outputFile": "anomaly-detection-tutorial-reference.md"
     # },
     # # ##### Model Drift aka Assays
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-    #     "outputFile": "model-drift-detection-with-assays-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+        "outputFile": "model-drift-detection-with-assays-reference.md"
+    },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
