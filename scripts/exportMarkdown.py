@@ -586,9 +586,9 @@ fileList = [
     },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
     {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-standard-llama/continuous-batching-standard-llama.ipynb",
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
         "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-standard-llama-reference.md"
+        "outputFile": "continuous-batching-native-llama-reference.md"
     },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
