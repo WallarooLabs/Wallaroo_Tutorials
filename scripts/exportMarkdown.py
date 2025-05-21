@@ -25,11 +25,11 @@ docs_directory = "docs/markdown"
 
 fileList = [
     # ## wallaroo 101
-    {
-        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-        "outputDir": "/reference/wallaroo-101",
-        "outputFile": "wallaroo-101-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+    #     "outputDir": "/reference/wallaroo-101",
+    #     "outputFile": "wallaroo-101-reference.md"
+    # },
     # ## Development
     # ### MLOps API
     # #### MLOps API Workspace Management
@@ -113,11 +113,11 @@ fileList = [
     #     "outputFile": "wallaroo-inference-server-cv-unet-reference.md"
     # },
     # ### computer vision yolov8
-    # {
-    #     "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
-    #     "outputDir": "/reference/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
-    #     "outputFile": "wallaroo-inference-server-cv-yolov8-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-cv-yolov8/wallaroo-inference-server-cv-yolov8.ipynb",
+        "outputDir": "/reference/wallaroo-free-tutorials/wallaroo-inference-server-tutorials",
+        "outputFile": "wallaroo-inference-server-cv-yolov8-reference.md"
+    },
     # ### hf summarizer
     # {
     #     "inputFile": "wallaroo-free-tutorials/wallaroo-inference-server-tutorials/wallaroo-inference-server-hf-summarizer/wallaroo-inference-server-hf-summarization.ipynb",
@@ -356,11 +356,11 @@ fileList = [
     #     "outputFile": "02-computer-vision-mitochondria-imaging-example-reference.md"
     # },
     # # ##### Computer Vision Yolo8
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision-yolov8/computer-vision-yolov8-demonstration.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
-    #     "outputFile": "computer-vision-yolov8-demonstration-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision-yolov8/computer-vision-yolov8-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
+        "outputFile": "computer-vision-yolov8-demonstration-reference.md"
+    },
     # # ##### Notebooks in Production
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/notebooks-in-prod/00-notebooks-in-prod-introduction.ipynb",
@@ -466,11 +466,11 @@ fileList = [
     #     "outputFile": "anomaly-detection-tutorial-reference.md"
     # },
     # # ##### Model Drift aka Assays
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "model-drift-detection-with-assays-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+    #     "outputFile": "model-drift-detection-with-assays-reference.md"
+    # },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
@@ -523,11 +523,11 @@ fileList = [
     #     "outputFile": "deployment-ibm-granite-8b-code-instruct-reference.md"
     # },
     # #### Llamacpp Deploy on IBM Power10 Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-deploy/power10-deploy-llamacpp/llamacpp-sdk-power.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy",
-        "outputFile": "llamacpp-sdk-power-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/power10-deploy-llamacpp/llamacpp-sdk-power.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy",
+    #     "outputFile": "llamacpp-sdk-power-reference.md"
+    # },
     # #### Inference Endpoint Tutorials
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
@@ -579,17 +579,17 @@ fileList = [
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
     # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-custom-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-custom-llama-reference.md"
+    # },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-native-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-native-llama-reference.md"
+    # },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -612,17 +612,17 @@ fileList = [
     # ### Infer
     # #### Publish
     # ##### U-Net for Brain Segmentation Publish in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-        "outputFile": "unet-run-anywhere-publish-reference.md"
-    },
-    # # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
     # {
-    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
+    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-    #     "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
+    #     "outputFile": "unet-run-anywhere-publish-reference.md"
     # },
+    # # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
+        "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
+    },
     # # #### Deploy
     # # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
     # {
@@ -631,11 +631,11 @@ fileList = [
     #     "outputFile": "unet-run-anywhere-deploy-reference.md"
     # },
     # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
-    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
-    #     "outputFile": "edge-computer-vision-yolov8-deploy-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
+        "outputFile": "edge-computer-vision-yolov8-deploy-reference.md"
+    },
     # ### Inference on ARM
     # #### Custom Model ARM Deployment Tutorial
     # {
@@ -733,44 +733,50 @@ fileList = [
     # ### Inference on Any Hardware
     # #### ARM
     # ##### Run Anywhere for ARM Architecture Tutorial: Custom Inference Computer Vision with Resnet50
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-cv-resnet-model/wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-cv-resnet-model-reference.md"
+    # },
     # ##### Run Anywhere for ARM Architecture Tutorial: Hugging Face Summarization Model
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-hf-summarization-model/wallaroo-run-anywhere-model-architecture-publish-hf-summarization.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-publish-hf-summarization-reference.md"
+    # },
     # ##### Run Anywhere for ARM Architecture Tutorial: House Price Predictor Model
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
-        "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/edge-arm-publish-linear-regression-houseprice-model/wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+    #     "outputFile": "wallaroo-run-anywhere-model-architecture-linear-regression-houseprice-tutorial-reference.md"
+    # },
     # #### Jetson
     # ##### Run Anywhere With Jetson Acceleration Tutorial: Aloha Model
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/jetson/run-anywhere-acceleration-aloha.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/jetson",
-        "outputFile": "run-anywhere-acceleration-aloha-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/jetson/run-anywhere-acceleration-aloha.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/jetson",
+    #     "outputFile": "run-anywhere-acceleration-aloha-reference.md"
+    # },
     # #### power10
     # ##### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 for IBM Power10
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50-benchmarking.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-benchmarking-reference.md"
+    # },
     # ##### Run Anywhere:  Deploy and Publish Computer Vision Model Resnet50 with Post Processing for IBM Power10
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
+    #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+    # },
+    # ##### Computer Vision Yolov8n ARM Deployment in Wallaroo
     {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10/run-anywhere-power10-computer-vision-resnet50.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
-        "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+        "outputFile": "wallaroo-arm-cv-yolov8-demonstration.md"
     },
-    # #### x86 - @JOHN rename to infer
+    # #### x86 
     # ##### Classification Cybersecurity Services Edge Deployment Tutorial
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
@@ -778,11 +784,11 @@ fileList = [
     #     "outputFile": "edge-classification-cybersecurity-deployment-reference.md"
     # },
     # ##### Classification Financial Services Edge Deployment Tutorial
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-        "outputFile": "edge-classification-finserv-deployment-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-finserv/edge-classification-finserv-deployment.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "edge-classification-finserv-deployment-reference.md"
+    # },
     # ##### Classification Financial Services Edge Deployment Demonstration via API
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-finserv-api/edge-classification-finserv-deployment-via-api.ipynb",
@@ -813,11 +819,12 @@ fileList = [
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
     # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
-    # {
-    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
-    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-    #     "outputFile": "edge-computer-vision-yolov8-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
+    },
+
 
 
 
