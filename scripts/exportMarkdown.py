@@ -758,7 +758,7 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
     #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
     # },
-    # #### x86 - @JOHN rename to infer
+    # #### x86 - 
     # ##### Classification Cybersecurity Services Edge Deployment Tutorial
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
@@ -800,6 +800,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
+    # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
+    {
+        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+        "outputFile": "edge-computer-vision-yolov8-reference.md"
+    },
 
 
 
