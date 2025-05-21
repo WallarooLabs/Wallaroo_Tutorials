@@ -25,11 +25,11 @@ docs_directory = "docs/markdown"
 
 fileList = [
     # ## wallaroo 101
-    # {
-    #     "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
-    #     "outputDir": "/reference/wallaroo-101",
-    #     "outputFile": "wallaroo-101-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-101/Wallaroo-101.ipynb",
+        "outputDir": "/reference/wallaroo-101",
+        "outputFile": "wallaroo-101-reference.md"
+    },
     # ## Development
     # ### MLOps API
     # #### MLOps API Workspace Management
