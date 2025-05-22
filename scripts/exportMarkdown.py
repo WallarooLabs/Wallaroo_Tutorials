@@ -318,6 +318,11 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
     #     "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/sentiment-analysis-hugging-face/sentiment-analysis-hugging-face-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
+    #     "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
+    # },
     # # ##### Computer Vision
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision/00-computer-vision-tutorial-intro.ipynb",
@@ -404,35 +409,35 @@ fileList = [
     #     "outputFile": "02-multiple-replicas-forecast-reference.md"
     # },
     # # ### Model Inference
-    # #### Async Infer
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "async-infer-tutorial-reference.md"
-    },
-    #### Parallel Infer
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
-    },
-    #### Inference Results aka Pipeline Logs
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "inference-log-tutorial-reference.md"
-    },
-    #### Inference Endpoints
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-        "outputFile": "infer-sdk-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-        "outputFile": "infer-api-reference.md"
-    },
+    # # #### Async Infer
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/async-infer/async-infer-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "async-infer-tutorial-reference.md"
+    # },
+    # # #### Parallel Infer
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/parallel-infer-tutorial/wallaroo-parallel-infer-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "wallaroo-parallel-infer-tutorial-reference.md"
+    # },
+    # # #### Inference Results aka Pipeline Logs
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/inference-log-tutorial/inference-log-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "inference-log-tutorial-reference.md"
+    # },
+    # # #### Inference Endpoints
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+    #     "outputFile": "infer-sdk-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+    #     "outputFile": "infer-api-reference.md"
+    # },
     # ### Model Management
     # #### AB Testing
     # {
@@ -465,12 +470,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
     #     "outputFile": "anomaly-detection-tutorial-reference.md"
     # },
-    # ##### Model Drift aka Assays
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "model-drift-detection-with-assays-reference.md"
-    },
+    # # ##### Model Drift aka Assays
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/observability/model-drift-detection-with-assays/model-drift-detection-with-assays.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+    #     "outputFile": "model-drift-detection-with-assays-reference.md"
+    # },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
@@ -578,6 +583,18 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
+    # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-custom-llama-reference.md"
+    },
+    # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+        "outputFile": "continuous-batching-native-llama-reference.md"
+    },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -605,20 +622,20 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
     #     "outputFile": "unet-run-anywhere-publish-reference.md"
     # },
-    # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
+    # # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
     #     "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
     # },
-    # #### Deploy
-    # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
+    # # #### Deploy
+    # # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-unet-brain-segmentation-deploy/unet-run-anywhere-deploy.ipynb",
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
     #     "outputFile": "unet-run-anywhere-deploy-reference.md"
     # },
-    ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
+    # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference/deploy/edge-computer-vision-yolov8-deploy/edge-computer-vision-yolov8-deploy.ipynb",
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference/deploy",
@@ -758,7 +775,13 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/power10/computer-vision-resnet-power10",
     #     "outputFile": "run-anywhere-power10-computer-vision-resnet50-reference.md"
     # },
-    # #### x86 - @JOHN rename to infer
+    # ##### Computer Vision Yolov8n ARM Deployment in Wallaroo
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/arm/wallaroo-arm-computer-vision-yolov8/wallaroo-arm-cv-yolov8-demonstration.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/arm",
+    #     "outputFile": "wallaroo-arm-cv-yolov8-demonstration.md"
+    # },
+    # #### x86 
     # ##### Classification Cybersecurity Services Edge Deployment Tutorial
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-classification-cybersecurity/edge-classification-cybersecurity-deployment.ipynb",
@@ -800,6 +823,13 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
     #     "outputFile": "cv-retail-edge-observability-reference.md"
     # },
+    # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "edge-computer-vision-yolov8-reference.md"
+    # },
+
 
 
 
@@ -839,6 +869,11 @@ def format(outputdir, document_file):
 
     # remove gib
     document = re.sub('gib.bhojraj@wallaroo.ai', 
+                      'sample.user@wallaroo.ai', 
+                      document)
+    
+    # remove younes
+    document = re.sub('younes.amar@wallaroo.ai', 
                       'sample.user@wallaroo.ai', 
                       document)
     # fix github link for final release

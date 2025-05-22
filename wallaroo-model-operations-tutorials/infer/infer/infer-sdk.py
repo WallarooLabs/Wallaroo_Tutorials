@@ -1,8 +1,8 @@
 # %% [markdown]
 # 
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2024.4.3_tutorials/wallaroo-model-operations-tutorials/infer/infer).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2025.1_tutorials/wallaroo-model-operations-tutorials/infer/infer).
 # 
-# ## Wallaroo SDK Inference Tutorial
+# ## Wallaroo SDK Infer Tutorial
 # 
 # Wallaroo provides the ability to perform inferences through deployed pipelines via the Wallaroo SDK and the Wallaroo MLOps API.  This tutorial demonstrates performing inferences using the Wallaroo SDK.
 # 
@@ -18,7 +18,7 @@
 # 
 # The following is required for this tutorial:
 # 
-# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
+# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * [`pandas`](https://pypi.org/project/pandas/)
 #   * [`pyarrow`](https://pypi.org/project/pyarrow/)
@@ -225,7 +225,7 @@ display(headers)
 # The Pipeline Inference URL is retrieved via the Wallaroo SDK with the Pipeline `._deployment._url()` method.
 # 
 # * **IMPORTANT NOTE**:  The `_deployment._url()` method will return an **internal** URL when using Python commands from within the Wallaroo instance - for example, the Wallaroo JupyterHub service.  When connecting via an external connection, `_deployment._url()` returns an **external** URL.
-#   * External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and [Model Endpoints](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/) are enabled in the Wallaroo configuration options.
+#   * External URL connections requires [the authentication be included in the HTTP request](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/), and [Model Endpoints](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/) are enabled in the Wallaroo configuration options.
 
 # %%
 deploy_url = pipeline._deployment._url()
