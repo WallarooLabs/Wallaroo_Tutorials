@@ -318,6 +318,11 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
     #     "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
     # },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/sentiment-analysis-hugging-face/sentiment-analysis-hugging-face-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-use-case",
+    #     "outputFile": "sentiment-analysis-hugging-face-tutorial-reference.md"
+    # },
     # # ##### Computer Vision
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-use-case/computer-vision/00-computer-vision-tutorial-intro.ipynb",
@@ -854,8 +859,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2025.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2025.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2024.4', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
