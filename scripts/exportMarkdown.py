@@ -544,6 +544,16 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
     #     "outputFile": "managed-inference-endpoint-openai-reference.md"
     # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+        "outputFile": "vllm-llama-simple-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+        "outputFile": "vllm-openai-byop-reference.md"
+    },
     # ### LLM Monitoring
     # #### LLM Harmful Language Listener Tutorial
     # {
@@ -584,17 +594,17 @@ fileList = [
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
     # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-custom-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-custom-llama-reference.md"
+    # },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-native-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-native-llama-reference.md"
+    # },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
