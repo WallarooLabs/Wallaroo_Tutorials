@@ -533,6 +533,18 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy",
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
+    # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    },
+    # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
+    },
     # #### Inference Endpoint Tutorials
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
@@ -544,16 +556,16 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
     #     "outputFile": "managed-inference-endpoint-openai-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
-        "outputFile": "vllm-llama-simple-reference.md"
-    },
-    {
-        "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
-        "outputFile": "vllm-openai-byop-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+    #     "outputFile": "vllm-llama-simple-reference.md"
+    # },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
+    #     "outputFile": "vllm-openai-byop-reference.md"
+    # },
     # ### LLM Monitoring
     # #### LLM Harmful Language Listener Tutorial
     # {
