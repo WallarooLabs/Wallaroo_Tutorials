@@ -534,16 +534,22 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
     # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    # },
+    # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
+    # },
+    # #### Deploy RAG with Custom vLLM with QAIC Acceleration
     {
-        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag/vllm-custom-rag-llama-qaic.ipynb",
         "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
-    },
-    # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
-    {
-        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-        "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
+        "outputFile": "vllm-custom-rag-llama-qaic-reference.md"
     },
     # #### Inference Endpoint Tutorials
     # {
