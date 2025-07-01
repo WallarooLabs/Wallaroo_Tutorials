@@ -562,16 +562,17 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
     #     "outputFile": "managed-inference-endpoint-openai-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
-    #     "outputFile": "vllm-llama-simple-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
-    #     "outputFile": "vllm-openai-byop-reference.md"
-    # },
+    # #### OpenAI Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-llama-simple-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-openai-byop-reference.md"
+    },
     # ### LLM Monitoring
     # #### LLM Harmful Language Listener Tutorial
     # {
@@ -887,8 +888,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.4', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2025.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2025.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
