@@ -534,22 +534,28 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
     # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
+    },
     # #### Deploy RAG with Custom vLLM with QAIC Acceleration
     {
         "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag/vllm-custom-rag-llama-qaic.ipynb",
         "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
         "outputFile": "vllm-custom-rag-llama-qaic-reference.md"
+    },
+    # #### Deploy Custom LLM using QAIC Acceleration with a MongoDB Vector Database Connection for RAG with OpenAI API Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag-openai/llm-deploy-qaic-llama-qaic-rag-openai.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "llm-deploy-qaic-llama-qaic-rag-openai-reference.md"
     },
     # #### Inference Endpoint Tutorials
     # {
