@@ -533,6 +533,30 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy",
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
+    # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    },
+    # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-reference.md"
+    },
+    # #### Deploy RAG with Custom vLLM with QAIC Acceleration
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag/vllm-custom-rag-llama-qaic.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "vllm-custom-rag-llama-qaic-reference.md"
+    },
+    # #### Deploy Custom LLM using QAIC Acceleration with a MongoDB Vector Database Connection for RAG with OpenAI API Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag-openai/llm-deploy-qaic-llama-qaic-rag-openai.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "llm-deploy-qaic-llama-qaic-rag-openai-reference.md"
+    },
     # #### Inference Endpoint Tutorials
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
@@ -544,6 +568,17 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-managed-inference-endpoint",
     #     "outputFile": "managed-inference-endpoint-openai-reference.md"
     # },
+    # #### OpenAI Compatibility
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-llama-simple-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-openai-byop-reference.md"
+    },
     # ### LLM Monitoring
     # #### LLM Harmful Language Listener Tutorial
     # {
@@ -584,17 +619,17 @@ fileList = [
     #     "outputFile": "autoscale-triggers-llamacpp-sdk-reference.md"
     # },
     # #### Continuous Batching with Llama 3 8B Instruct Custom Config Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-custom-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-custom-llama/continuous-batching-custom-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-custom-llama-reference.md"
+    # },
     # #### Continuous Batching with Llama 3 8B Instruct Standard Framework Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
-        "outputFile": "continuous-batching-native-llama-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-performance-optimizations/continuous-batching-native-llama/continuous-batching-native-llama.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-performance-optimizations",
+    #     "outputFile": "continuous-batching-native-llama-reference.md"
+    # },
     # #### Dynamic Batching with Llama 3 8B with Llama.cpp CPUs Tutorial
     # {
     #     "inputFile": "wallaroo-llms/llm-performance-optimizations/dynamic-batching-tutorial-llamacpp/llamacpp-sdk-dynamic-batching-tutorial.ipynb",
@@ -859,8 +894,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2024.4{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2024.4', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2025.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2025.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 

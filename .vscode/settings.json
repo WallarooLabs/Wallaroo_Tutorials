@@ -3,8 +3,10 @@
         "Autoscale",
         "BYOP",
         "conda",
+        "cpus",
         "Databricks",
         "DBFS",
+        "embedder",
         "iopath",
         "ipykernel",
         "Jetson",
@@ -14,6 +16,7 @@
         "modularizes",
         "nodepools",
         "pyarrow",
+        "QAIC",
         "quantile",
         "Runtimes",
         "wallaroosdk"
