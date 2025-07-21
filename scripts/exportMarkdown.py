@@ -534,11 +534,11 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
     # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
