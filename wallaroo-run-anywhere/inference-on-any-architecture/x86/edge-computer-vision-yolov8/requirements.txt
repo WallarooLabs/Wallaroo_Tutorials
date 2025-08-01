@@ -1,0 +1,13 @@
+opencv-python==4.10.0.84
+ultralytics==8.2.65
+tensorflow==2.13.1
+requests
+torchvision==0.15.2
+torch==2.0.1
+onnx==1.14.1
+onnxruntime==1.16
+imutils
+pytz
+ipywidgets
+Pillow
+typing_extensions==4.14.1
