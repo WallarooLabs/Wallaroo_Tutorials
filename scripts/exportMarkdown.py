@@ -62,6 +62,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
     # },
+    # #### MLOps API Metric Request
+    {
+        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Metrics-Retrieval.ipynb",
+        "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Metrics-Retrieval-reference.md"
+    },
     # ### SDK Install Guildes
     # #### SDK Standard Install
     # {
