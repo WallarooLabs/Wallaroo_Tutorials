@@ -482,6 +482,18 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
     #     "outputFile": "model-drift-detection-with-assays-reference.md"
     # },
+    # #### Metrics Retrieval:  Classification
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-classification/metrics-retrieval-classification.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+        "outputFile": "metrics-retrieval-classification-reference.md"
+    },
+    # #### Metrics Retrieval:  Summarization
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-summarization/metrics-retrieval-summarization.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+        "outputFile": "metrics-retrieval-summarization-reference.md"
+    },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
