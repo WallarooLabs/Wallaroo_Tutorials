@@ -616,6 +616,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-monitoring",
     #     "outputFile": "llm-monitoring-orchestration-setup-reference.md"
     # },
+    # #### LLM Harmful Language Listener Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-monitoring/llm-metrics-retrieval/llm-metrics-retrieval-ttft-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+        "outputFile": "llm-metrics-retrieval-ttft-tutorial-reference.md"
+    },
     # ### RAG LLMs
     # #### RAG LLMs: Automated Vector Database Enrichment in Wallaroo
     # {
@@ -962,6 +968,10 @@ def format(outputdir, document_file):
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
     document = re.sub(r'\n[\n]+', r'\n\n', document)
+
+    # strip any repeated lines only in previous lines
+    #document = re.sub(r'((^[^\S$]*?(?=\S)(?:.*)+$)[\S\s]*?)^\2$(?:\n)?', r'\1', document)
+    document = re.sub(r"^(.*)(\r?\n\1)+$", r"\1", document, flags=re.MULTILINE)
 
     # remove the whitespace before a table
     document = re.sub(r"^ +<", r"<", document, flags = re.MULTILINE)
