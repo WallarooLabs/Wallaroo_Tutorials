@@ -62,6 +62,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
     # },
+    # #### MLOps API Metric Request
+    {
+        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Metrics-Retrieval.ipynb",
+        "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Metrics-Retrieval-reference.md"
+    },
     # ### SDK Install Guildes
     # #### SDK Standard Install
     # {
@@ -476,6 +482,18 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
     #     "outputFile": "model-drift-detection-with-assays-reference.md"
     # },
+    # #### Metrics Retrieval:  Classification
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-classification/metrics-retrieval-classification.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+        "outputFile": "metrics-retrieval-classification-reference.md"
+    },
+    # #### Metrics Retrieval:  Summarization
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-summarization/metrics-retrieval-summarization.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+        "outputFile": "metrics-retrieval-summarization-reference.md"
+    },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
@@ -598,6 +616,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-llms/llm-monitoring",
     #     "outputFile": "llm-monitoring-orchestration-setup-reference.md"
     # },
+    # #### LLM Harmful Language Listener Tutorial
+    {
+        "inputFile": "wallaroo-llms/llm-monitoring/llm-metrics-retrieval/llm-metrics-retrieval-ttft-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+        "outputFile": "llm-metrics-retrieval-ttft-tutorial-reference.md"
+    },
     # ### RAG LLMs
     # #### RAG LLMs: Automated Vector Database Enrichment in Wallaroo
     # {
@@ -944,6 +968,10 @@ def format(outputdir, document_file):
 
     # strip the excess newlines - match any pattern of newline plus another one or more empty newlines
     document = re.sub(r'\n[\n]+', r'\n\n', document)
+
+    # strip any repeated lines only in previous lines
+    #document = re.sub(r'((^[^\S$]*?(?=\S)(?:.*)+$)[\S\s]*?)^\2$(?:\n)?', r'\1', document)
+    document = re.sub(r"^(.*)(\r?\n\1)+$", r"\1", document, flags=re.MULTILINE)
 
     # remove the whitespace before a table
     document = re.sub(r"^ +<", r"<", document, flags = re.MULTILINE)
