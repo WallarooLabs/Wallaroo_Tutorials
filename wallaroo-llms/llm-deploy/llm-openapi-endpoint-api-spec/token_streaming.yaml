@@ -1,0 +1,316 @@
+
+openapi: 3.1.1
+info:
+  title: tinyllama-openai
+  description: |
+    The Wallaroo Inference API allows you to perform real-time inference on deployed machine learning models and pipelines.
+        
+    ## OpenAI Compatibility
+    
+    Wallaroo provides OpenAI-compatible endpoints for seamless integration with existing OpenAI workflows:
+    - **Completions API**: Text completion compatible with OpenAI's legacy completions API
+    - **Chat Completions API**: Chat completion compatible with OpenAI's chat completions API
+    
+    ## Authentication
+    
+    All requests require authentication using Bearer tokens obtained through the Wallaroo platform.
+    
+  version: 3454c2e8-fe0f-4b9b-bfc3-8fa80b79881b
+
+servers:
+  - url: https://autoscale-uat-gcp.wallaroo.dev/v1/api/pipelines/infer/tinyllama-openai-414/tinyllama-openai
+    description: Wallaroo Platform API
+
+paths:
+  /openai/v1/completions:
+    post:
+      summary: OpenAI-compatible text completion
+      description: |
+        OpenAI-compatible text completion endpoint. This endpoint provides the ability to use standard [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions) requests, or use the official OpenAI of compatible SDKs (e.g., lightllm) for pipelines configured to be OpenAI compatible.
+        
+        As this functionality is provided by the vLLM framework, the request and response schemas as outlined in the [vLLM Documentation](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#completions-api).
+
+      operationId: openaiCompletion
+      tags:
+        - OpenAI Compatibility
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              simple_completion:
+                summary: Simple text completion
+                description: |
+                  A standard [OpenAI Completion API](https://platform.openai.com/docs/api-reference/completions) request, that also supports [vLLM's extra parameters](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#completions-api).
+
+                  The only deviation from the standard OpenAI/vLLM API is that the `model` property is optional. Its value, even if provided is ignored, since the model is determined by the pipeline.
+                value:
+                  model: "my_pipeline"
+                  prompt: "The capital of France is"
+                  max_tokens: 50
+                  temperature: 0.7
+              streaming_text_completion:
+                summary: Text completion with Token Streaming
+                description: |
+                  A standard [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions) request, that also supports [vLLM's extra parameters](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#completions-api).
+
+                  The only deviation from the standard OpenAI/vLLM API is that the `model` property is optional. Its value, even if provided is ignored, since the model is determined by the pipeline.
+                value:
+                  model: "my_pipeline"
+                  prompt: "The capitals of the countries of Europe are"
+                  max_tokens: 200
+                  temperature: 0.7
+                  stream: true
+      responses:
+        '200':
+          description: Successful completion
+          content:
+            application/json:
+              examples:
+                completion_response:
+                  summary: Completion response
+                  description: |
+                    A standard [OpenAI Completions API](https://platform.openai.com/docs/api-reference/completions) response.
+                  value:
+                    id: "cmpl-abc123"
+                    object: "completion"
+                    created: 1677652288
+                    model: "my_pipeline"
+                    choices:
+                      - text: " Paris."
+                        index: 0
+                        finish_reason: "stop"
+                        logprobs: null
+                    usage:
+                      prompt_tokens: 5
+                      completion_tokens: 2
+                      total_tokens: 7
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Pipeline type conflict
+          content:
+            application/json:
+              description: Pandas records format response
+              schema:
+                $ref: '#/components/responses/Conflict'
+              example:
+                code: 409
+                status: error
+                error: "Inference failed. Please apply the appropriate OpenAI configurations to the models deployed in this pipeline. For additional help contact support@wallaroo.ai or your Wallaroo technical representative."
+                source: engine
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+  /openai/v1/chat/completions:
+    post:
+      summary: OpenAI-compatible chat completion
+      description: |
+        OpenAI-compatible text completion endpoint. This endpoint provides the ability to use standard [OpenAI Completions API](https://platform.openai.com/docs/api-reference/chat/create) requests, or use the official OpenAI of compatible SDKs (e.g., lightllm) for pipelines configured to be OpenAI compatible.
+        
+        As this functionality is provided by the vLLM framework, the request and response schemas as outlined in the [vLLM Documentation](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#chat-api).
+      operationId: openaiChatCompletion
+      tags:
+        - OpenAI Compatibility
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              simple_chat:
+                summary: Simple chat completion
+                description: |
+                  A standard [OpenAI Completion API](https://platform.openai.com/docs/api-reference/chat/create) request, that also supports [vLLM's extra parameters](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#chat-api).
+
+                  The only deviation from the standard OpenAI/vLLM API is that the `model` property is optional. Its value, even if provided is ignored, since the model is determined by the pipeline.
+                value:
+                  model: ""
+                  messages:
+                    - role: "user"
+                      content: "What is the capital of France?"
+                  max_tokens: 50
+                  temperature: 0.7
+              streaming_simple_chat:
+                summary: Chat completion with Token Streaming
+                description: |
+                  A standard [OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat/create) request, that also supports [vLLM's extra parameters](https://docs.vllm.ai/en/v0.6.6/serving/openai_compatible_server.html#chat-api).
+
+                  The only deviation from the standard OpenAI/vLLM API is that the `model` property is optional. Its value, even if provided is ignored, since the model is determined by the pipeline.
+                value:
+                  model: ""
+                  messages:
+                    - role: "user"
+                      content: "What is the capital of France?"
+                  max_tokens: 50
+                  temperature: 0.7
+                  stream: true
+      responses:
+        '200':
+          description: Successful chat completion
+          content:
+            application/json:
+              examples:
+                chat_response:
+                  summary: Chat completion response
+                  description: |
+                    A standard [OpenAI Chat Completions API](https://platform.openai.com/docs/api-reference/chat/create) response.
+                  value:
+                    id: "chatcmpl-abc123"
+                    object: "chat.completion"
+                    created: 1677652288
+                    model: ""
+                    choices:
+                      - message:
+                          role: "assistant"
+                          content: "The capital of France is Paris."
+                        index: 0
+                        finish_reason: "stop"
+                        logprobs: null
+                    usage:
+                      prompt_tokens: 12
+                      completion_tokens: 8
+                      total_tokens: 20
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Successful inference result
+          content:
+            application/json:
+              description: Pandas records format response
+              schema:
+                $ref: '#/components/responses/Conflict'
+              example:
+                code: 409
+                status: error
+                error: "Inference failed. Please apply the appropriate OpenAI configurations to the models deployed in this pipeline. For additional help contact support@wallaroo.ai or your Wallaroo technical representative."
+                source: engine
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Authentication token obtained through the Wallaroo platform.
+        Use the SDK authentication methods to obtain a valid token.
+        
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP status code
+          example: 400
+        status:
+          type: string
+          description: Error status message
+          example: "error"
+        error:
+          type: string
+          description: Detailed error message
+          example: "Invalid input format"
+        source:
+          type: string
+          description: Source of the error (e.g., engine, sidekick)
+          example: "engine"
+      required:
+        - code
+        - error
+        
+  responses:
+    BadRequest:
+      description: Invalid request format or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            invalid_tensor:
+              summary: Invalid tensor format
+              value:
+                code: 400
+                status: "error"
+                error: "tensor values may not be null"
+                source: "engine"
+                
+    Unauthorized:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 401
+            status: "error"
+            error: "Jwt is missing"
+            source: "platform"
+            
+    NotFound:
+      description: Deployment or pipeline not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 404
+            status: "error"
+            error: "Deployment not found"
+            source: "platform"
+            
+    Conflict:
+      description: Endpoint doesn't match pipeline type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 500
+            status: "error"
+            error: "Internal processing error"
+            source: "engine"
+            
+    ServiceUnavailable:
+      description: Service temporarily unavailable or insufficient resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            pipeline_being_activated:
+              summary: Pipeline being activated
+              value:
+                code: 503
+                status: "error"
+                error: "The resources required to run this request are not available. Please check the inference endpoint status and try again"
+                source: "engine"
+    
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: OpenAI Compatibility
+    description: OpenAI-compatible completion and chat completion endpoints 
