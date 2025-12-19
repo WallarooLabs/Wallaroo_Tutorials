@@ -433,6 +433,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
     #     "outputFile": "inference-log-tutorial-reference.md"
     # },
+    # #### Generate Inference Endpoint API Spec
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/infer-spec/inference-spec-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+        "outputFile": "inference-spec-tutorial-reference.md"
+    },
     # # #### Inference Endpoints
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
@@ -483,17 +489,17 @@ fileList = [
     #     "outputFile": "model-drift-detection-with-assays-reference.md"
     # },
     # #### Metrics Retrieval:  Classification
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-classification/metrics-retrieval-classification.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "metrics-retrieval-classification-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-classification/metrics-retrieval-classification.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+    #     "outputFile": "metrics-retrieval-classification-reference.md"
+    # },
     # #### Metrics Retrieval:  Summarization
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-summarization/metrics-retrieval-summarization.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
-        "outputFile": "metrics-retrieval-summarization-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/observability/metrics-retrieval-summarization/metrics-retrieval-summarization.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/observability",
+    #     "outputFile": "metrics-retrieval-summarization-reference.md"
+    # },
     # ### Model Automation
     # #### Automation and Connections Tutorial
     # {
@@ -552,10 +558,16 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
     # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    # },
+    # #### Inference Endpoint API Spec for OpenAI Compatibility Enabled Models Tutorial
     {
-        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+        "inputFile": "wallaroo-llms/llm-deploy/llm-openapi-endpoint-api-spec/vllm-openai-generate-api-spec-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy",
+        "outputFile": "vllm-openai-generate-api-spec-reference.md"
     },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
     # {
@@ -617,11 +629,11 @@ fileList = [
     #     "outputFile": "llm-monitoring-orchestration-setup-reference.md"
     # },
     # #### LLM Harmful Language Listener Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-monitoring/llm-metrics-retrieval/llm-metrics-retrieval-ttft-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-monitoring",
-        "outputFile": "llm-metrics-retrieval-ttft-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-monitoring/llm-metrics-retrieval/llm-metrics-retrieval-ttft-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-monitoring",
+    #     "outputFile": "llm-metrics-retrieval-ttft-tutorial-reference.md"
+    # },
     # ### RAG LLMs
     # #### RAG LLMs: Automated Vector Database Enrichment in Wallaroo
     # {
@@ -676,17 +688,17 @@ fileList = [
     # ### Infer
     # #### Publish
     # ##### U-Net for Brain Segmentation Publish in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-        "outputFile": "unet-run-anywhere-publish-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-unet-brain-segmentation-publish/unet-run-anywhere-publish.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
+    #     "outputFile": "unet-run-anywhere-publish-reference.md"
+    # },
     # # ##### Computer Vision Yolov8n Edge Publish in Wallaroo
-    {
-        "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
-        "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference/publish/edge-computer-vision-yolov8-publish/edge-computer-vision-yolov8-publish.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference/publish",
+    #     "outputFile": "edge-computer-vision-yolov8-publish-reference.md"
+    # },
     # # #### Deploy
     # # ##### U-Net for Brain Segmentation Deploy and Inference in Wallaroo @JOHN rename to infer
     # {
@@ -883,11 +895,11 @@ fileList = [
     #     "outputFile": "01_computer-vision-mitochondria-imaging-edge-deployment-example-reference.md"
     # },
     # ##### Summarization Text Edge Deployment Demonstration
-    {
-        "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-llm-summarization/edge-hf-summarization.ipynb",
-        "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
-        "outputFile": "edge-hf-summarization-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-llm-summarization/edge-hf-summarization.ipynb",
+    #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
+    #     "outputFile": "edge-hf-summarization-reference.md"
+    # },
     # ##### Computer Vision Yolov8n Edge Deployment in Wallaroo
     # {
     #     "inputFile": "wallaroo-run-anywhere/inference-on-any-architecture/x86/edge-computer-vision-yolov8/edge-computer-vision-yolov8.ipynb",
@@ -924,8 +936,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2025.1{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2025.1', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2025.2{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2025.2', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 

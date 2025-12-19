@@ -1,0 +1,401 @@
+
+openapi: 3.1.1
+info:
+  title: vgg16-clustering-pipeline
+  description: |
+    The Wallaroo Inference API allows you to perform real-time inference on deployed machine learning models and pipelines.
+    
+    ## Supported Data Formats
+    
+    The API supports multiple input and output formats:
+    - **Pandas Records**: JSON format compatible with pandas DataFrame.to_json(orient="records")
+    - **Apache Arrow**: Binary format for high-performance data exchange
+    
+    ## Authentication
+    
+    All requests require authentication using Bearer tokens obtained through the Wallaroo platform.
+    
+  version: 86bd3bd1-1b8d-46ba-97e7-2c9b0b0feffe
+
+servers:
+  - url: https://autoscale-uat-gcp.wallaroo.dev/v1/api/pipelines/infer/vgg16-clustering-pipeline-65/vgg16-clustering-pipeline
+    description: Wallaroo API
+
+paths:
+  /:
+    post:
+      summary: Perform inference on a deployed pipeline
+      description: |
+        Performs inference on a deployed pipeline. The pipeline processes data sequentially
+        through a series of steps, where each step's output becomes the input for the next step.
+        The final output represents the result of the entire pipeline's processing.
+        
+        The request body format and response format depend on the Content-Type header:
+        - `application/json; format=pandas-records`: Pandas records format  
+        - `application/vnd.apache.arrow.file`: Apache Arrow binary format
+        
+      operationId: runInference
+      tags:
+        - Native Inference
+      parameters:
+        - name: dataset[]
+          in: query
+          required: false
+          description: |
+            Dataset fields to include in response. Defaults to ["*"] which returns
+            ["time", "in", "out", "anomaly", "metadata"].
+          schema:
+            type: array
+            items:
+              type: string
+            default: ["*"]
+          style: form
+          explode: true
+          example: ["time", "in", "out"]
+        - name: dataset.exclude[]
+          in: query
+          required: false
+          description: Dataset fields to exclude from response
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+          example: ["metadata"]
+        - name: dataset.flatten
+          in: query
+          required: false
+          description: |
+            Determines whether to flatten nested dataset fields using dot notation.
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json; format=pandas-records:
+            description: Pandas records format (list of dictionaries)
+            schema:
+              $ref: '#/components/schemas/PandasRecordsInput'
+          application/vnd.apache.arrow.file:
+            description: Apache Arrow binary format
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Successful inference result
+          content:
+            application/json; format=pandas-records:
+              description: Pandas records format response
+              schema:
+                $ref: '#/components/schemas/PandasRecordsOutput'
+            application/vnd.apache.arrow.file:
+              description: Apache Arrow binary format response
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Pipeline type conflict
+          content:
+            application/json:
+              description: Pandas records format response
+              schema:
+                $ref: '#/components/responses/Conflict'
+              example:
+                code: 409
+                status: error
+                error: "Inference failed. Please apply the appropriate OpenAI extensions to the inference endpoint. For additional help contact support@wallaroo.ai or your Wallaroo technical representative."
+                source: engine
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Authentication token obtained through the Wallaroo platform.
+        Use the SDK authentication methods to obtain a valid token.
+        
+  schemas:
+    InferenceInputObject:
+      type: object
+      description: Object-based input for inference
+      additionalProperties: true
+      example:
+        tensor: [1.0, 2.0, 3.0, 4.0]
+        
+    InferenceInputArray:
+      type: array
+      description: Array-based input for inference
+      items:
+        type: array
+        items:
+          type: number
+      example:
+        - [1.0, 2.0, 3.0]
+        - [4.0, 5.0, 6.0]
+        
+    PandasRecordsInput:
+      type: array
+      items:
+        type: object
+        properties:
+          images:
+            type: array
+            items:
+              type: array
+              items:
+                type: array
+                items:
+                  type: integer
+                  format: int64
+                minItems: 3
+                maxItems: 3
+              minItems: 32
+              maxItems: 32
+            minItems: 32
+            maxItems: 32
+        required: []
+    
+    InferenceOutputObject:
+      type: object
+      description: Object-based output from inference
+      additionalProperties: true
+      example:
+        prediction: [0.95, 0.05]
+        confidence: 0.98
+        
+    InferenceOutputArray:
+      type: array
+      description: Array-based output from inference
+      items:
+        type: array
+        items:
+          type: number
+      example:
+        - [0.95, 0.05]
+        - [0.87, 0.13]
+        
+    PandasRecordsOutput:
+      type: array
+      description: Pandas records output format
+      items:
+        oneOf:
+        - type: object
+          description: When flatten is `false`
+          properties:
+            time:
+              type: integer
+              format: int64
+              description: Timestamp of the inference in milliseconds since epoch
+              example: 1670564317817
+            in:
+              $ref: '#/components/schemas/PandasRecordsInput'
+            out:
+              type: object
+              properties:
+                predictions:
+                  type: integer
+                  format: int64
+              required: []
+            metadata:
+              type: object
+              properties:
+                last_model:
+                  type: object
+                  properties:
+                    model_name:
+                      type: string
+                    model_sha:
+                      type: string
+                pipeline_version:
+                  type: string
+                elapsed:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                dropped:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                partition:
+                  type: string
+            anomaly:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  format: int64
+          required:
+            - time
+        - type: Object
+          description: When flatten is `true`
+          properties:
+            time:
+              type: integer
+              format: int64
+              description: Timestamp of the inference in milliseconds since epoch
+              example: 1670564317817
+            metadata.last_model:
+              type: object
+              properties:
+                model_name:
+                  type: string
+                model_sha:
+                  type: string
+            metadata.pipeline_version:
+              type: string
+            metadata.elapsed:
+              type: array
+              items:
+                type: integer
+                format: int64
+            metadata.dropped:
+              type: array
+              items:
+                type: integer
+                format: int64
+            metadata.partition:
+              type: string
+            anomaly.count:
+              type: integer
+              format: int64
+            in.images:
+              type: array
+              items:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+                  minItems: 3
+                  maxItems: 3
+                minItems: 32
+                maxItems: 32
+              minItems: 32
+              maxItems: 32
+            out.predictions:
+              type: integer
+              format: int64
+
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP status code
+          example: 400
+        status:
+          type: string
+          description: Error status message
+          example: "error"
+        error:
+          type: string
+          description: Detailed error message
+          example: "Invalid input format"
+        source:
+          type: string
+          description: Source of the error (e.g., engine, sidekick)
+          example: "engine"
+      required:
+        - code
+        - error
+        
+  responses:
+    BadRequest:
+      description: Invalid request format or parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            invalid_tensor:
+              summary: Invalid tensor format
+              value:
+                code: 400
+                status: "error"
+                error: "tensor values may not be null"
+                source: "engine"
+                
+    Unauthorized:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 401
+            status: "error"
+            error: "Jwt is missing"
+            source: "platform"
+            
+    NotFound:
+      description: Deployment or pipeline not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 404
+            status: "error"
+            error: "Deployment not found"
+            source: "platform"
+            
+    Conflict:
+      description: Endpoint doesn't match pipeline type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: 500
+            status: "error"
+            error: "Internal processing error"
+            source: "engine"
+            
+    ServiceUnavailable:
+      description: Service temporarily unavailable or insufficient resources
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            pipeline_being_activated:
+              summary: Pipeline being activated
+              value:
+                code: 503
+                status: "error"
+                error: "The resources required to run this request are not available. Please check the inference endpoint status and try again"
+                source: "engine"
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Native Inference
+    description: Wallaroo's native inference API with multiple data format support
