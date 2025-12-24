@@ -1,1 +1,1 @@
-wallaroo==2025.2.0.0
+wallaroo==2025.2.1
