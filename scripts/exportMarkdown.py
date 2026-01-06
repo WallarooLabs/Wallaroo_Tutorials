@@ -51,11 +51,11 @@ fileList = [
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Pipeline-Management-reference.md"
     # },
     # #### MLOps API Model Management
-    # {
-    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
-    #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
-    #     "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
-    # },
+    {
+        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+        "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
+        "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
+    },
     # #### MLOps API Assays
     # {
     #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
@@ -63,11 +63,11 @@ fileList = [
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Assay-Management-Plus-reference.md"
     # },
     # #### MLOps API Metric Request
-    {
-        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Metrics-Retrieval.ipynb",
-        "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-Metrics-Retrieval-reference.md"
-    },
+    # {
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Metrics-Retrieval.ipynb",
+    #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Metrics-Retrieval-reference.md"
+    # },
     # ### SDK Install Guildes
     # #### SDK Standard Install
     # {
@@ -434,22 +434,22 @@ fileList = [
     #     "outputFile": "inference-log-tutorial-reference.md"
     # },
     # #### Generate Inference Endpoint API Spec
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer-spec/inference-spec-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
-        "outputFile": "inference-spec-tutorial-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer-spec/inference-spec-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer",
+    #     "outputFile": "inference-spec-tutorial-reference.md"
+    # },
     # # #### Inference Endpoints
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-sdk.ipynb",
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
     #     "outputFile": "infer-sdk-reference.md"
     # },
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-    #     "outputFile": "infer-api-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+        "outputFile": "infer-api-reference.md"
+    },
     # ### Model Management
     # #### AB Testing
     # {
@@ -564,11 +564,11 @@ fileList = [
     #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
     # },
     # #### Inference Endpoint API Spec for OpenAI Compatibility Enabled Models Tutorial
-    {
-        "inputFile": "wallaroo-llms/llm-deploy/llm-openapi-endpoint-api-spec/vllm-openai-generate-api-spec-tutorial.ipynb",
-        "outputDir": "/reference/wallaroo-llms/llm-deploy",
-        "outputFile": "vllm-openai-generate-api-spec-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-llms/llm-deploy/llm-openapi-endpoint-api-spec/vllm-openai-generate-api-spec-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-llms/llm-deploy",
+    #     "outputFile": "vllm-openai-generate-api-spec-reference.md"
+    # },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",

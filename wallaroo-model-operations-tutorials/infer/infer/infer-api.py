@@ -1,5 +1,5 @@
 # %% [markdown]
-# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2025.2_tutorials/wallaroo-model-operations-tutorials/infer/infer).
+# This tutorial and the assets can be downloaded as part of the [Wallaroo Tutorials repository](https://github.com/WallarooLabs/Wallaroo_Tutorials/blob/wallaroo2025.2_tutorials/wallaroo-model-operations-tutorials/infer/wallaroo-model-endpoints).
 # 
 # ## Wallaroo API Infer Tutorial
 # 
@@ -17,7 +17,7 @@
 # 
 # The following is required for this tutorial:
 # 
-# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-install/wallaroo-platform-operations-install-configure/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
+# * A [deployed Wallaroo instance](https://docs.wallaroo.ai/wallaroo-operations-guide/wallaroo-install-guides/) with [Model Endpoints Enabled](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-configure/wallaroo-model-endpoints-guide/)
 # * The following Python libraries:
 #   * `os`
 #   * `requests`
@@ -50,17 +50,16 @@
 # 
 # All Wallaroo API endpoints follow the format:
 # 
-# * `https://$URLPREFIX.api.$URLSUFFIX/v1/api$COMMAND`
+# * `https://$WALLAROODOMAIN/v1/api$COMMAND`
 # 
 # Where `$COMMAND` is the specific endpoint.  For example, for the command to list of workspaces in the Wallaroo instance would use the above format based on these settings:
 # 
-# * `$URLPREFIX`: `smooth-moose-1617`
-# * `$URLSUFFIX`: `example.wallaroo.ai`
+# * `$WALLAROODOMAIN`: `example.wallaroo.ai`
 # * `$COMMAND`: `/workspaces/list`
 # 
 # This would create the following API endpoint:
 # 
-# * `https://smooth-moose-1617.api.example.wallaroo.ai/v1/api/workspaces/list`
+# * `https://example.wallaroo.ai/v1/api/workspaces/list`
 
 # %% [markdown]
 # ### Connect to Wallaroo
@@ -85,6 +84,7 @@ import json
 # used to display dataframe information without truncating
 from IPython.display import display
 pd.set_option('display.max_colwidth', None)
+pd.set_option('display.max_columns', None)
 
 # %%
 # Login through local Wallaroo instance
@@ -107,32 +107,22 @@ display(wl.auth.auth_header())
 # %% [markdown]
 # ## Create Workspace
 # 
-# In a production environment, the Wallaroo workspace that contains the pipeline and models would be created and deployed.  We will quickly recreate those steps using the MLOps API.  If the workspace and pipeline have already been created through the [Wallaroo SDK Inference Tutorial](https://docs.wallaroo.ai/wallaroo-tutorials/wallaroo-tutorial-features/infer/wallaroo-external-inference-tutorial/), then we can skip directly to [Deploy Pipeline](#deploy-pipeline).
+# In a production environment, the Wallaroo workspace that contains the pipeline and models would be created and deployed.  We will quickly recreate those steps using the MLOps API.  If the workspace and pipeline have already been created through the [Wallaroo SDK Inference Tutorial](https://docs.wallaroo.ai/wallaroo-platform-operations/wallaroo-platform-operations-configure/infer-guide/), then we can skip directly to [Deploy Pipeline](#deploy-pipeline).
 # 
-# Workspaces are created through the MLOps API with the `/v1/api/workspaces/create` command.  This requires the workspace name be provided, and that the workspace not already exist in the Wallaroo instance.
+# Workspaces are created through the MLOps API with the `/v1/api/workspaces/create` command.  This requires the workspace name be provided, and that the workspace not already exist in the Wallaroo instance.  For this example, we will use the Wallaroo SDK `get_workspace` method which will either retrieve an existing workspace **OR** create a new one; this will help avoid issues trying to create an existing workspace and getting an error.
 # 
 # Reference: [MLOps API Create Workspace](https://docs.wallaroo.ai/wallaroo-developer-guides/wallaroo-api-guide/wallaroo-mlops-api-essential-guide/wallaroo-mlops-api-essential-guide-workspaces/#create-workspace)
 
 # %%
-# Retrieve the token
-headers = wl.auth.auth_header()
+workspace_name = f"api-inference-example-workspace"
 
-# set Content-Type type
-headers['Content-Type']='application/json'
+workspace = wl.get_workspace(workspace_name, create_if_not_exist=True)
 
-# Create workspace
-apiRequest = f"{wl.api_endpoint}/v1/api/workspaces/create"
+wl.set_current_workspace(workspace)
 
-workspace_name = f"apiinferenceexampleworkspace"
-
-data = {
-  "workspace_name": workspace_name
-}
-
-response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-display(response)
 # Stored for future examples
-workspaceId = response['workspace_id']
+workspaceId = workspace.id()
+workspaceId
 
 # %% [markdown]
 # ## Upload Model
@@ -172,6 +162,8 @@ apiRequest = f"{wl.api_endpoint}/v1/api/models/upload_and_convert"
 framework='onnx'
 
 model_name = f"ccfraud"
+model_file_name = "ccfraud.onnx"
+model_file_path = "./ccfraud.onnx"
 
 data = {
     "name": model_name,
@@ -187,7 +179,7 @@ data = {
 
 files = {
     "metadata": (None, json.dumps(data), "application/json"),
-    'file': (model_name, open('./ccfraud.onnx', 'rb'), "application/octet-stream")
+    'file': (model_file_name, open(model_file_path, 'rb'), "application/octet-stream")
     }
 
 
@@ -204,39 +196,17 @@ headers = wl.auth.auth_header()
 # set Content-Type type
 headers['Content-Type']='application/json'
 
-apiRequest = f"{wl.api_endpoint}/v1/api/models/get_by_id"
+endpoint = f"{wl.api_endpoint}/v1/api/models/get_version_by_id"
 
 data = {
-  "id": modelId
+  "model_version_id": modelId
 }
 
-response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-display(response)
-
-# %%
-# Get the model details
-
-# Retrieve the token
-headers = wl.auth.auth_header()
-
-# set Content-Type type
-headers['Content-Type']='application/json'
-
-apiRequest = f"{wl.api_endpoint}/v1/api/models/list_versions"
-
-data = {
-  "model_id": model_name,
-  "models_pk_id" : modelId
-}
-
-response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
-display(response)
-
-# %%
-model_version_id = response[0]['id']
-model_version = response[0]['model_version']
+response = requests.post(endpoint, json=data, headers=headers, verify=True).json()
+#display(response)
+model_version = response['model_version']['model_version']['file_info']['version']
 display(model_version)
-model_sha = response[0]['sha']
+model_sha = response['model_version']['model_version']['file_info']['sha']
 display(model_sha)
 
 # %% [markdown]
@@ -254,7 +224,7 @@ headers['Content-Type']='application/json'
 apiRequest = f"{wl.api_endpoint}/v1/api/models/insert_model_config"
 
 data = {
-  "model_version_id": model_version_id,
+  "model_version_id": modelId,
   "tensor_fields": [
     "tensor"
   ]
@@ -293,7 +263,11 @@ pipeline_name=f"apiinferenceexamplepipeline"
 data = {
   "pipeline_id": pipeline_name,
   "workspace_id": workspaceId,
-  "definition": {'steps': [{'ModelInference': {'models': [{'name': f'{model_name}', 'version': model_version, 'sha': model_sha}]}}]}
+  "definition": {'steps': [{'ModelInference': {
+      'models': [{
+          'name': f'{model_name}', 
+          'version': model_version, 
+          'sha': model_sha}]}}]}
 }
 
 response = requests.post(apiRequest, json=data, headers=headers, verify=True).json()
@@ -382,7 +356,14 @@ data = {
 }
 
 response = requests.post(api_request, json=data, headers=headers, verify=True).json()
-response
+
+status = ""
+
+while status != "Running":
+    response = requests.post(api_request, json=data, headers=headers, verify=True).json()
+    status = response['status']
+    display(status)
+display(response)
 
 # %% [markdown]
 # ## Get External Inference URL

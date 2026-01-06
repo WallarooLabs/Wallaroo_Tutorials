@@ -1,1 +1,1 @@
-{"name": "api-sample-model", "visibility": "public", "workspace_id": 18, "conversion": {"framework": "onnx", "python_version": "3.8", "requirements": []}}
+{"name": "api-sample-model", "visibility": "public", "workspace_id": 108, "conversion": {"framework": "onnx", "python_version": "3.8", "requirements": []}}
