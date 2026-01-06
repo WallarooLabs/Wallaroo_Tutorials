@@ -20,5 +20,6 @@
         "quantile",
         "Runtimes",
         "wallaroosdk"
-    ]
+    ],
+    "envFile": "${workspaceFolder}/environment.env"
 }
