@@ -51,11 +51,11 @@ fileList = [
     #     "outputFile": "Wallaroo-MLOps-Tutorial-Pipeline-Management-reference.md"
     # },
     # #### MLOps API Model Management
-    {
-        "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
-        "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
-        "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
-    },
+    # {
+    #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Model-Management.ipynb",
+    #     "outputDir": "/reference/wallaroo-developer-guides/wallaroo-api-guides",
+    #     "outputFile": "Wallaroo-MLOps-Tutorial-Model-Management-reference.md"
+    # },
     # #### MLOps API Assays
     # {
     #     "inputFile": "development/mlops-api/Wallaroo-MLOps-Tutorial-Assay-Management-Plus.ipynb",
@@ -445,11 +445,11 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
     #     "outputFile": "infer-sdk-reference.md"
     # },
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
-        "outputFile": "infer-api-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/infer/infer/infer-api.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/infer/infer",
+    #     "outputFile": "infer-api-reference.md"
+    # },
     # ### Model Management
     # #### AB Testing
     # {
@@ -906,14 +906,14 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-run-anywhere/inference-on-any-architecture/x86",
     #     "outputFile": "edge-computer-vision-yolov8-reference.md"
     # },
-
-
-
-
-
-
-
-
+    # ## Start Here
+    # ### IBM WASK
+    # #### Wallaroo AI Starter Kit for IBM: Virtual Assistant Deployment Guide
+    {
+        "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant/wallaroo-starter-kit-ibm-virtual-assistant.ipynb",
+        "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant",
+        "outputFile": "wallaroo-starter-kit-ibm-virtual-assistant.md"
+    }
 
 ]
 
