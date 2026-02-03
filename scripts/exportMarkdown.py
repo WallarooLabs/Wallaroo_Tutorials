@@ -157,6 +157,12 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/BYOP",
     #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
+    # ##### BYOP Best Practices
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/BYOP/wallaroo-byop-example/wallaroo-byop-example.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/BYOP",
+        "outputFile": "wallaroo-byop-example-reference.md"
+    },
     # ##### Hugging Face Clip Vit
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/hugging-face/hf-clip-vit-base/clip-vit-hugging-face.ipynb",
@@ -501,6 +507,12 @@ fileList = [
     #     "outputFile": "metrics-retrieval-summarization-reference.md"
     # },
     # ### Model Automation
+    # #### Connections Tutorial
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/automation/connections-sdk-tutorial/data-connectors-tutorial.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/automation",
+    #     "outputFile": "data-connectors-tutorial-reference.md"
+    # }
     # #### Automation and Connections Tutorial
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/automation/automation-and-connections-tutorial/data-connectors-and-orchestrators-simple-tutorial.ipynb",
@@ -909,11 +921,11 @@ fileList = [
     # ## Start Here
     # ### IBM WASK
     # #### Wallaroo AI Starter Kit for IBM: Virtual Assistant Deployment Guide
-    {
-        "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant/wallaroo-starter-kit-ibm-virtual-assistant.ipynb",
-        "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant",
-        "outputFile": "wallaroo-starter-kit-ibm-virtual-assistant.md"
-    }
+    # {
+    #     "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant/wallaroo-starter-kit-ibm-virtual-assistant.ipynb",
+    #     "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant",
+    #     "outputFile": "wallaroo-starter-kit-ibm-virtual-assistant.md"
+    # }
 
 ]
 
