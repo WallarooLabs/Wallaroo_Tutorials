@@ -76,6 +76,6 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.2
-wallaroo==2025.2.1
+wallaroo==2025.2.2
 wcwidth==0.2.14
 yarl==1.22.0
