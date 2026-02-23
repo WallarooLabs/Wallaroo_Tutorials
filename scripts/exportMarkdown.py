@@ -158,11 +158,11 @@ fileList = [
     #     "outputFile": "wallaroo-model-upload-deploy-byop-cv-tutorial-reference.md"
     # },
     # ##### BYOP Best Practices
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/BYOP/wallaroo-byop-example/wallaroo-byop-example.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/BYOP",
-        "outputFile": "wallaroo-byop-example-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/BYOP/wallaroo-byop-example/wallaroo-byop-example.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/BYOP",
+    #     "outputFile": "wallaroo-byop-example-reference.md"
+    # },
     # ##### Hugging Face Clip Vit
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/hugging-face/hf-clip-vit-base/clip-vit-hugging-face.ipynb",
@@ -218,11 +218,11 @@ fileList = [
     #     "outputFile": "onnx-multi-io-reference.md"
     # },
     # ##### Python Models
-    # {
-    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/python-models/python-step-dataframe-output-logging-example-sdk.ipynb",
-    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/python-models",
-    #     "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/python-models/python-step-dataframe-output-logging-example-sdk.ipynb",
+        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/python-models",
+        "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
+    },
     # ##### Pytorch
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/pytorch/wallaroo-upload-pytorch-multi-input-output.ipynb",
