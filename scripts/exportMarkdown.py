@@ -926,6 +926,11 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-virtual-assistant",
     #     "outputFile": "wallaroo-starter-kit-ibm-virtual-assistant.md"
     # }
+    {
+        "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-description/wask-image-based-product-description.ipynb",
+        "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-description",
+        "outputFile": "wask-image-based-product-description-reference.md"
+    }
 
 ]
 
