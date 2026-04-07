@@ -19,6 +19,7 @@
         "QAIC",
         "quantile",
         "Runtimes",
+        "undeployed",
         "wallaroosdk"
     ],
     "envFile": "${workspaceFolder}/environment.env"

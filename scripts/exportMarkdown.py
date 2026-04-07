@@ -581,6 +581,12 @@ fileList = [
         "outputDir": "/reference/wallaroo-llms/llm-deploy",
         "outputFile": "vllm-openai-generate-api-spec-reference.md"
     },
+    # #### Llama 8B in SGLang Framework with ROCm AI Acceleration Example
+    {
+        "inputFile": "wallaroo-llms/sglang-with-rocm-sample/sglang-rocm-example.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "sglang-rocm-example-reference.md"
+    },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
