@@ -218,11 +218,11 @@ fileList = [
     #     "outputFile": "onnx-multi-io-reference.md"
     # },
     # ##### Python Models
-    {
-        "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/python-models/python-step-dataframe-output-logging-example-sdk.ipynb",
-        "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/python-models",
-        "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
-    },
+    # {
+    #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/python-models/python-step-dataframe-output-logging-example-sdk.ipynb",
+    #     "outputDir": "/reference/wallaroo-model-operations-tutorials/deploy/by-framework/python-models",
+    #     "outputFile": "python-step-dataframe-output-logging-example-sdk-reference.md"
+    # },
     # ##### Pytorch
     # {
     #     "inputFile": "wallaroo-model-operations-tutorials/deploy/by-framework/pytorch/wallaroo-upload-pytorch-multi-input-output.ipynb",
@@ -570,17 +570,17 @@ fileList = [
     #     "outputFile": "llamacpp-sdk-power-reference.md"
     # },
     # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration using OpenAI Compatibility
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-    #     "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-openai/qaic_vllm_llama31_8b_async_deployment-openAI.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "qaic_vllm_llama31_8b_async_deployment-openAI-reference.md"
+    },
     # #### Inference Endpoint API Spec for OpenAI Compatibility Enabled Models Tutorial
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-openapi-endpoint-api-spec/vllm-openai-generate-api-spec-tutorial.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy",
-    #     "outputFile": "vllm-openai-generate-api-spec-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-openapi-endpoint-api-spec/vllm-openai-generate-api-spec-tutorial.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy",
+        "outputFile": "vllm-openai-generate-api-spec-reference.md"
+    },
     # # #### Llama with Continuous Batching Using Native vLLM Framework and QAIC AI Acceleration
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-async/qaic_vllm_llama31_8b_async_deployment.ipynb",
@@ -594,11 +594,11 @@ fileList = [
     #     "outputFile": "vllm-custom-rag-llama-qaic-reference.md"
     # },
     # #### Deploy Custom LLM using QAIC Acceleration with a MongoDB Vector Database Connection for RAG with OpenAI API Compatibility
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag-openai/llm-deploy-qaic-llama-qaic-rag-openai.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
-    #     "outputFile": "llm-deploy-qaic-llama-qaic-rag-openai-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/llm-deploy-qaic/llm-deploy-qaic-llama-qaic-rag-openai/llm-deploy-qaic-llama-qaic-rag-openai.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/llm-deploy-qaic",
+        "outputFile": "llm-deploy-qaic-llama-qaic-rag-openai-reference.md"
+    },
     # #### Inference Endpoint Tutorials
     # {
     #     "inputFile": "wallaroo-llms/llm-deploy/llm-managed-inference-endpoint/llm-managed-inference-endpoint-llama-vertex/managed-inference-endpoint-vertex.ipynb",
@@ -611,16 +611,16 @@ fileList = [
     #     "outputFile": "managed-inference-endpoint-openai-reference.md"
     # },
     # #### OpenAI Compatibility
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
-    #     "outputFile": "vllm-llama-simple-reference.md"
-    # },
-    # {
-    #     "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
-    #     "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
-    #     "outputFile": "vllm-openai-byop-reference.md"
-    # },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-llama-openai/vllm-llama-simple.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-llama-simple-reference.md"
+    },
+    {
+        "inputFile": "wallaroo-llms/llm-deploy/vllm-rag-llama-openai/vllm-openai-byop.ipynb",
+        "outputDir": "/reference/wallaroo-llms/llm-deploy/openai",
+        "outputFile": "vllm-openai-byop-reference.md"
+    },
     # ### LLM Monitoring
     # #### LLM Harmful Language Listener Tutorial
     # {
@@ -931,11 +931,11 @@ fileList = [
     #     "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-description",
     #     "outputFile": "wask-image-based-product-description-reference.md"
     # }
-    {
-        "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-recommendation/WASK-Image-Based-Product-Recommendation-Deployment-Guide.ipynb",
-        "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-recommendation",
-        "outputFile": "WASK-Image-Based-Product-Recommendation-Deployment-Guide-reference.md"
-    }
+    # {
+    #     "inputFile": "wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-recommendation/WASK-Image-Based-Product-Recommendation-Deployment-Guide.ipynb",
+    #     "outputDir": "/reference/wallaroo-get-started/wallaroo-starter-kit-ibm/wask-image-based-product-recommendation",
+    #     "outputFile": "WASK-Image-Based-Product-Recommendation-Deployment-Guide-reference.md"
+    # }
 
 ]
 
@@ -958,8 +958,8 @@ def format(outputdir, document_file):
     # fix image directories
     # ](01_notebooks-in-prod_explore_and_train-reference_files
     # image_replace = f'![png]({outputdir}'
-    document = re.sub('!\[png\]\(', f'![png](/images/2025.2{outputdir}/', document)
-    document = re.sub('\(./images', '(/images/2025.2', document)
+    document = re.sub('!\[png\]\(', f'![png](/images/2026.1{outputdir}/', document)
+    document = re.sub('\(./images', '(/images/2026.1', document)
     # move them all to Docsy figures
     document = re.sub(r'!\[(.*?)\]\((.*?)\)', r'{{<figure src="\2" width="800" label="\1">}}', document)
 
